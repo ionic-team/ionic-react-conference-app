@@ -1,0 +1,5 @@
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ * Built with http://stenciljs.com
+ */
+ion-skeleton-text{display:inline-block;width:100%;pointer-events:none;user-select:none}ion-skeleton-text span{display:inline-block;font-size:.8rem;background-color:#ececec}ion-item-divider.💎,ion-item-option.💎,ion-item-options.💎,ion-item-sliding.💎,ion-item.💎,ion-label.💎,ion-list-header.💎,ion-list.💎,ion-skeleton-text.💎{visibility:inherit}
