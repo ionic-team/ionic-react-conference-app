@@ -11,6 +11,8 @@ import SpeakerList from './pages/SpeakerList';
 import SpeakerDetail from './pages/SpeakerDetail';
 import Support from './pages/Support';
 import Signup from './pages/Signup';
+import { PrivateRoute } from './utils/routing';
+
 
 const routes = {
   appPages: [
@@ -20,9 +22,9 @@ const routes = {
     { title: 'About', path: '/about', icon: 'information-circle', component: About }
   ],
   loggedInPages: [
-    { title: 'Account', path: '/account', icon: 'person', component: Account },
+    { title: 'Account', path: '/account', icon: 'person', component: Account, private: true },
     { title: 'Support', path: '/support', icon: 'help', component: Support },
-    { title: 'Logout', icon: 'log-out' }
+    { title: 'Logout', path: '/logout', icon: 'log-out' }
   ],
   loggedOutPages: [
     { title: 'Login', path: '/login', icon: 'log-in', component: Login },
@@ -39,6 +41,14 @@ const App = () => (
           .reduce((finalList, key) => finalList.concat(routes[key]), [])
           .filter(route => !! route.path)
           .map((route, index) => (
+        (route.private) ?
+        <PrivateRoute
+          exact={route.exact}
+          key={index}
+          path={route.path}
+          component={route.component}
+        />
+        :
         <Route
           exact={route.exact}
           key={index}

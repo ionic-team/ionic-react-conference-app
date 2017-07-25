@@ -8,7 +8,7 @@ import {
 const defaultState = {
   pictureLocation: null,
   userName: null,
-  loggedIn: false
+  isAuthenticated: false
 };
 
 const user = (state = defaultState, action) => {

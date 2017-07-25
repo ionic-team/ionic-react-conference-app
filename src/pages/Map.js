@@ -1,7 +1,8 @@
 import React from 'react';
-import LocationList from '../containers/LocationList';
+import LocationContainer from '../containers/Location';
+import Map from '../components/Map';
 
-const Map = () => (
+const MapPage = () => (
   <ion-page>
     <ion-header>
       <ion-navbar>
@@ -13,9 +14,13 @@ const Map = () => (
     </ion-header>
 
     <ion-content class="map-page">
-      <LocationList />
+      <LocationContainer>
+        {({locations}) => (
+          <Map locations={locations} />
+        )}
+      </LocationContainer>
     </ion-content>
   </ion-page>
 )
 
-export default Map;
+export default MapPage;

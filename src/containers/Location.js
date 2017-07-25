@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import Map from '../components/Map'
 
 const mapStateToProps = state => {
   return {
@@ -9,6 +8,8 @@ const mapStateToProps = state => {
 
 const LocationList = connect(
   mapStateToProps
-)(Map)
+)(
+  ({children, ...props}) => children(props)
+);
 
 export default LocationList;

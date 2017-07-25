@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux'
 import {
   signUpUser,
@@ -6,12 +5,6 @@ import {
   logOutUser,
   updatePicture
 } from '../actions';
-
-const AccountInfo = ({children, ...props}) => {
-  return (
-    <div>{children(props)}</div>
-  );
-}
 
 const mapStateToProps = (state) => {
   return {
@@ -31,6 +24,8 @@ const mapDispatchToProps = (dispatch) => {
 const UserAccount = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountInfo);
+)(
+  ({children, ...props}) => children(props)
+);
 
 export default UserAccount;

@@ -1,9 +1,14 @@
 import React from 'react';
-import VisibleSessionList from '../containers/VisibleSessionList';
+import SessionContainer from '../containers/Session';
+import Schedule from '../components/Schedule';
 
 const SchedulePage = () => (
   <ion-page>
-    <VisibleSessionList />
+    <SessionContainer>
+      {(props) => (
+      <Schedule {...props}/>
+      )}
+    </SessionContainer>
   </ion-page>
 );
 

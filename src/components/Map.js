@@ -6,7 +6,6 @@ export default class Map extends Component {
       center: this.props.locations.mapCenter,
       zoom: 16
     });
-
     this.props.locations.locations.forEach((markerData) => {
       let infoWindow = new window.google.maps.InfoWindow({
         content: `<h5>${markerData.name}</h5>`

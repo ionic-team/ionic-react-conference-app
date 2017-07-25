@@ -1,7 +1,7 @@
 import React from 'react';
 import IonButton from './IonButton';
 
-export default ({appPages, loggedOutPages, loggedInPages, isLoggedIn, history}) => {
+export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, history}) => {
 
   function renderlistItems(list) {
     return list
@@ -32,7 +32,7 @@ export default ({appPages, loggedOutPages, loggedInPages, isLoggedIn, history}) 
           <ion-list-header>
             Account
           </ion-list-header>
-          { isLoggedIn ?
+          { isAuthenticated ?
             renderlistItems(loggedOutPages) :
             renderlistItems(loggedInPages) }
         </ion-list>

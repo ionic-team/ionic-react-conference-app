@@ -6,7 +6,6 @@ import {
   addFavoriteFilter,
   removeFavoriteFilter
 } from '../actions';
-import Schedule from '../components/Schedule';
 
 const getVisibleSessions = (sessions, trackFilters, searchText, favoriteSessions, filterFavorites) => {
   let filteredSessions = sessions;
@@ -56,6 +55,8 @@ const mapDispatchToProps = (dispatch) => {
 const VisibleSessionList = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Schedule)
+)(
+  ({children, ...props}) => children(props)
+);
 
 export default VisibleSessionList
