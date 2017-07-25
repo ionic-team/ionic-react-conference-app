@@ -4,6 +4,8 @@ export const REMOVE_TRACK_FILTER = 'REMOVE_TRACK_FILTER';
 export const REFRESH_TRACK_FILTERS = 'REFRESH_TRACK_FILTERS';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
+export const ADD_FAVORITE_FILTER = 'ADD_FAVORITE_FILTER';
+export const REMOVE_FAVORITE_FILTER = 'REMOVE_FAVORITE_FILTER';
 
 export const searchSessionsByName = (text) => (
   {
@@ -46,3 +48,15 @@ export const removeFavoriteSession = (sessionId) => (
     sessionId
   }
 );
+
+export const addFavoriteFilter = () => (
+  {
+    type: ADD_FAVORITE_FILTER
+  }
+)
+
+export const removeFavoriteFilter = () => (
+  {
+    type: REMOVE_FAVORITE_FILTER
+  }
+)

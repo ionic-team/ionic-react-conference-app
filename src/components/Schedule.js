@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import VisibleSessionList from '../containers/VisibleSessionList';
-
+import SessionList from './SessionList';
 
 export default class Schedule extends Component {
-  updateSchedule() {}
-  goToSessionDetail(session) {}
-  addFavorite() {}
-  removeFavorite() {}
-  openSocial() {}
   render() {
     return (
       <ion-page>
@@ -48,7 +42,7 @@ export default class Schedule extends Component {
             <ion-refresher-content></ion-refresher-content>
           </ion-refresher>
 
-          <VisibleSessionList />
+          <SessionList />
 
           <ion-fab bottom right>
             <ion-button ion-fab><ion-icon name="share"></ion-icon></ion-button>

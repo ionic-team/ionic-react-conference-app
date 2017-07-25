@@ -1,7 +1,7 @@
 import React from 'react';
 import IonButton from './IonButton';
 
-export default ({sessions, groups}) => {
+export default ({sessions, groups, addFavorite, removeFavorite}) => {
   return (
     <ion-list>
       { groups.map((group, index) => (group.hide ? null :
@@ -23,12 +23,12 @@ export default ({sessions, groups}) => {
               </IonButton>
               <ion-item-options>
                 { segment === 'all' ?
-                  <ion-button color="favorite" onClick={() => this.addFavorite(session)}>
+                  <ion-button color="favorite" onClick={() => addFavorite(session)}>
                     Favorite
                   </ion-button>
                   : null }
                 { segment === 'favorites' ?
-                  <ion-button color="danger" onClick={() => this.removeFavorite(session, 'Remove Favorite')}>
+                  <ion-button color="danger" onClick={() => removeFavorite(session, 'Remove Favorite')}>
                     Remove
                   </ion-button>
                   : null }

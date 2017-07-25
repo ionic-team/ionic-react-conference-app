@@ -1,5 +1,10 @@
-import { connect } from 'react-redux'
-import SessionList from '../components/SessionList'
+import { connect } from 'react-redux';
+import {
+  searchSessionsByName,
+  addFavoriteSession,
+  removeFavoriteSession
+} from '../actions';
+import Schedule from '../components/Schedule';
 
 const getVisibleSessions = (sessions, trackFilters, searchText) => {
   let filteredSessions = sessions;
@@ -19,14 +24,25 @@ const getVisibleSessions = (sessions, trackFilters, searchText) => {
   return filteredSessions;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sessions: getVisibleSessions(state.sessions, state.trackFilters, state.searchText)
+    filteredSessions: getVisibleSessions(state.sessions, state.trackFilters, state.searchText),
+    allSessions: state.sessions,
+    filterFavorites: state.filterFavorites
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    searchSessionsByName: (text) => dispatch(searchSessionsByName(text)),
+    addFavoriteSession: (sessionId) => dispatch(addFavoriteSession(sessionId)),
+    removeFavoriteSession: (sessionId) => dispatch(removeFavoriteSession(sessionId)),
   }
 }
 
 const VisibleSessionList = connect(
-  mapStateToProps
-)(SessionList)
+  mapStateToProps,
+  mapDispatchToProps
+)(Schedule)
 
 export default VisibleSessionList

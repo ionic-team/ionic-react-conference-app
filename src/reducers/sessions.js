@@ -4,7 +4,9 @@ import {
   REMOVE_TRACK_FILTER,
   REFRESH_TRACK_FILTERS,
   ADD_FAVORITE,
-  REMOVE_FAVORITE
+  REMOVE_FAVORITE,
+  ADD_FAVORITE_FILTER,
+  REMOVE_FAVORITE_FILTER
 } from '../actions'
 
 
@@ -12,7 +14,8 @@ const defaultState = {
   searchText: '',
   trackFilters: [],
   sessions: [],
-  favoriteSessions: []
+  favoriteSessions: [],
+  filterFavorites: false
 };
 
 const sessions = (state = defaultState, action) => {
@@ -46,6 +49,16 @@ const sessions = (state = defaultState, action) => {
     return {
       ...state,
       favoriteSessions: state.favoriteSessions.filter(sid => sid !== action.sessionId)
+    };
+  case ADD_FAVORITE_FILTER:
+    return {
+      ...state,
+      filterFavorites: true
+    };
+  case REMOVE_FAVORITE_FILTER:
+    return {
+      ...state,
+      filterFavorites: false
     };
   default:
     return state;
