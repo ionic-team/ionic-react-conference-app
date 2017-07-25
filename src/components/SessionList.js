@@ -32,7 +32,7 @@ function groupByStartTime(sessions) {
 
 export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites}) => {
   const groups = groupByStartTime(sessions);
-  console.log(groups);
+
   return (
     <ion-list>
       { groups.map((group, index) => (

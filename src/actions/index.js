@@ -7,6 +7,11 @@ export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 export const ADD_FAVORITE_FILTER = 'ADD_FAVORITE_FILTER';
 export const REMOVE_FAVORITE_FILTER = 'REMOVE_FAVORITE_FILTER';
 
+export const SIGN_UP_USER = 'SIGN_UP_USER';
+export const LOG_IN_USER = 'LOG_IN_USER';
+export const LOG_OUT_USER = 'LOG_OUT_USER';
+export const UPDATE_USER_PICTURE = 'UPDATE_USER_PICTURE';
+
 export const searchSessionsByName = (text) => (
   {
     type: SEARCH_TEXT,
@@ -53,10 +58,39 @@ export const addFavoriteFilter = () => (
   {
     type: ADD_FAVORITE_FILTER
   }
-)
+);
 
 export const removeFavoriteFilter = () => (
   {
     type: REMOVE_FAVORITE_FILTER
   }
+);
+
+export const signUpUser = (userName) => (
+  {
+    type: SIGN_UP_USER,
+    userName
+  }
 )
+
+export const logInUser = (userName) => (
+  {
+    type: LOG_IN_USER,
+    userName
+  }
+);
+
+export const logOutUser = (userName) => (
+  {
+    type: LOG_OUT_USER,
+    userName
+  }
+);
+
+export const updatePicture = (userName, pictureLocation) => (
+  {
+    type: UPDATE_USER_PICTURE,
+    userName,
+    pictureLocation
+  }
+);
