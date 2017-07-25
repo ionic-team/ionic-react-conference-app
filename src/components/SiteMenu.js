@@ -1,5 +1,5 @@
 import React from 'react';
-import IonButton from './components/IonButton';
+import IonButton from './IonButton';
 
 export default ({appPages, loggedOutPages, loggedInPages, isLoggedIn, history}) => {
 
