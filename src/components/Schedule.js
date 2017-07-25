@@ -11,11 +11,11 @@ export default class Schedule extends Component {
               <ion-icon name="menu"></ion-icon>
             </ion-button>
 
-            <ion-segment ionChange={() => this.updateSchedule()}>
-              <ion-segment-button value="all">
+            <ion-segment ionChange={(e) => this.props.updateSchedule(e.value === 'true')}>
+              <ion-segment-button value="false">
                 All
               </ion-segment-button>
-              <ion-segment-button value="favorites">
+              <ion-segment-button value="true">
                 Favorites
               </ion-segment-button>
             </ion-segment>
@@ -30,7 +30,7 @@ export default class Schedule extends Component {
           <ion-toolbar no-border-top>
             <ion-searchbar
               color="primary"
-              ionInput={() => this.updateSchedule()}
+              ionInput={(e) => this.props.searchSessionsByName(e.value)}
               placeholder="Search"
             >
             </ion-searchbar>
@@ -42,7 +42,12 @@ export default class Schedule extends Component {
             <ion-refresher-content></ion-refresher-content>
           </ion-refresher>
 
-          <SessionList />
+          <SessionList
+            sessions={this.props.filteredSessions}
+            addFavoriteSession={this.props.addFavoriteSession}
+            removeFavoriteSession={this.props.removeFavoriteSession}
+            filterFavorites={this.props.filterFavorites}
+          />
 
           <ion-fab bottom right>
             <ion-button ion-fab><ion-icon name="share"></ion-icon></ion-button>

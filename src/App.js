@@ -5,7 +5,7 @@ import About from './pages/About';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import MapPage from './pages/Map';
-import Schedule from './pages/Schedule';
+import SchedulePage from './pages/SchedulePage';
 import SessionDetail from './pages/SessionDetail';
 import SpeakerList from './pages/SpeakerList';
 import SpeakerDetail from './pages/SpeakerDetail';
@@ -14,7 +14,7 @@ import Signup from './pages/Signup';
 
 const routes = {
   appPages: [
-    { title: 'Schedule', exact: true, path: '/', icon: 'calendar', component: Schedule },
+    { title: 'Schedule', exact: true, path: '/', icon: 'calendar', component: SchedulePage },
     { title: 'Speakers', exact: true, path: '/speakers', icon: 'contacts', component: SpeakerList },
     { title: 'Map', path: '/map', icon: 'map', component: MapPage },
     { title: 'About', path: '/about', icon: 'information-circle', component: About }
