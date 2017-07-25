@@ -13,7 +13,7 @@ const AccountInfo = ({children, ...props}) => {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.user
   }

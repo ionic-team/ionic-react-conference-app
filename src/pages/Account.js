@@ -11,9 +11,9 @@ export default class Account extends Component {
       <ion-page>
         <ion-header>
           <ion-navbar>
-            <button ion-button menuToggle>
+            <ion-button menuToggle>
               <ion-icon name="menu"></ion-icon>
-            </button>
+            </ion-button>
             <ion-title>Account</ion-title>
           </ion-navbar>
         </ion-header>

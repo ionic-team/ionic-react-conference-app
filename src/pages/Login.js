@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import UserAccount from '../containers/UserAccount';
 
 export default class Login extends Component {
-  onLogin(){}
-  onSignup(){}
   render() {
     return (
       <ion-page>
@@ -17,17 +15,22 @@ export default class Login extends Component {
         </ion-header>
 
         <ion-content>
-          <div class="logo">
+          <div className="logo">
             <img src="assets/img/appicon.svg" alt="Ionic logo"/>
           </div>
 
           <UserAccount>
-          {({logInUser, signUpUser}) => (
-            <form novalidate>
+            {({logInUser, signUpUser}) => (
+            <form noValidate>
               <ion-list no-lines>
                 <ion-item>
                   <ion-label stacked color="primary">Username</ion-label>
-                  <ion-input name="username" type="text" spellcheck="false" autocapitalize="off"
+                  <ion-input
+                    ref={(input) => (this.usernameInput = input)}
+                    name="username"
+                    type="text"
+                    spellcheck="false"
+                    autocapitalize="off"
                     required>
                   </ion-input>
                 </ion-item>
@@ -39,14 +42,18 @@ export default class Login extends Component {
 
               <ion-row responsive-sm>
                 <ion-col>
-                  <ion-button onClick={() => logInUser()} type="submit" block>Login</ion-button>
+                  <ion-button onClick={() => logInUser(this.usernameInput.value)} type="submit" block>
+                    Login
+                  </ion-button>
                 </ion-col>
                 <ion-col>
-                  <ion-button onClick={() => signUpUser()} color="light" block>Signup</ion-button>
+                  <ion-button onClick={() => signUpUser(this.usernameInput.value)} color="light" block>
+                    Signup
+                  </ion-button>
                 </ion-col>
               </ion-row>
             </form>
-          )}
+            )}
           </UserAccount>
 
         </ion-content>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
