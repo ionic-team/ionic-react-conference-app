@@ -1,21 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import './index.scss';
 import SiteMenu from './SiteMenu';
 import About from './pages/About';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import Map from './pages/Map';
 import Schedule from './pages/Schedule';
+import SessionDetail from './pages/SessionDetail';
 import SpeakerList from './pages/SpeakerList';
+import SpeakerDetail from './pages/SpeakerDetail';
 import Support from './pages/Support';
 import Signup from './pages/Signup';
 
 const routes = {
   appPages: [
     { title: 'Schedule', exact: true, path: '/', icon: 'calendar', component: Schedule },
-    { title: 'Speakers', path: '/speakers', icon: 'contacts', component: SpeakerList },
+    { title: 'Speakers', exact: true, path: '/speakers', icon: 'contacts', component: SpeakerList },
     { title: 'Map', path: '/map', icon: 'map', component: Map },
     { title: 'About', path: '/about', icon: 'information-circle', component: About }
   ],
@@ -33,7 +34,7 @@ const routes = {
 
 ReactDOM.render((
   <Router>
-    <ion-split-pane>
+    <div>
       <SiteMenu {...routes}></SiteMenu>
       { Object.keys(routes)
           .reduce((finalList, key) => finalList.concat(routes[key]), [])
@@ -46,6 +47,8 @@ ReactDOM.render((
           component={route.component}
         />
       ))}
-    </ion-split-pane>
+      <Route path="/speakers/:speakerId" component={SpeakerDetail} />
+      <Route path="/sessions/:sessionId" component={SessionDetail} />
+    </div>
   </Router>
 ), document.getElementById('root'));

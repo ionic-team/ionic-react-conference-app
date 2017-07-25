@@ -7,7 +7,7 @@ export default class About extends Component {
 
   render() {
     return (
-      <div>
+      <ion-page>
         <ion-header>
           <ion-navbar>
             <ion-button menuToggle>
@@ -59,7 +59,7 @@ export default class About extends Component {
             </p>
           </div>
         </ion-content>
-      </div>
+      </ion-page>
     );
   }
 }

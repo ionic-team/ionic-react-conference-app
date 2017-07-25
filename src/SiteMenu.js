@@ -15,13 +15,13 @@ export default ({appPages, loggedOutPages, loggedInPages, isLoggedIn, history}) 
   }
 
   return (
-    <ion-menu>
+    <ion-page>
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content className="outer-content">
+      <ion-content class="outer-content">
         <ion-list>
           <ion-list-header>
             Navigate
@@ -46,6 +46,6 @@ export default ({appPages, loggedOutPages, loggedInPages, isLoggedIn, history}) 
           </ion-button>
         </ion-list>
       </ion-content>
-    </ion-menu>
+    </ion-page>
   );
 }
