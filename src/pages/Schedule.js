@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import * as data from '../data.json';
-
-
-const IonButton = withRouter(({history, children, path, location, match, ...props}) => (
-  <ion-button {...props} onClick={() => history.push(props.path)}>
-    {children}
-  </ion-button>
-));
+import VisibleSessionList from '../containers/VisibleSessionList';
 
 
 export default class Schedule extends Component {
@@ -17,9 +9,6 @@ export default class Schedule extends Component {
   removeFavorite() {}
   openSocial() {}
   render() {
-    const groups = data.schedule[0].groups;
-    const segment = 'all';
-
     return (
       <ion-page>
         <ion-header>
@@ -59,41 +48,7 @@ export default class Schedule extends Component {
             <ion-refresher-content></ion-refresher-content>
           </ion-refresher>
 
-          <ion-list>
-            { groups.map((group, index) => (group.hide ? null :
-              <ion-item-group key={`group-${index}`}>
-                <ion-item-divider sticky>
-                  <ion-label>
-                    {group.time}
-                  </ion-label>
-                </ion-item-divider>
-                { group.sessions.map((session, sessionIndex) => (session.hide ? null :
-                  <ion-item-sliding key={`group-${index}-${sessionIndex}`}>
-                    <IonButton ion-item path={`/sessions/${session.id}`}>
-                      <h3>{session.name}</h3>
-                      <p>
-                        {session.timeStart} &mdash;
-                        {session.timeEnd}:
-                        {session.location}
-                      </p>
-                    </IonButton>
-                    <ion-item-options>
-                      { segment === 'all' ?
-                        <ion-button color="favorite" onClick={() => this.addFavorite(session)}>
-                          Favorite
-                        </ion-button>
-                        : null }
-                      { segment === 'favorites' ?
-                        <ion-button color="danger" onClick={() => this.removeFavorite(session, 'Remove Favorite')}>
-                          Remove
-                        </ion-button>
-                        : null }
-                    </ion-item-options>
-                  </ion-item-sliding>
-                )) }
-              </ion-item-group>
-            )) }
-          </ion-list>
+          <VisibleSessionList />
 
           <ion-fab bottom right>
             <ion-button ion-fab><ion-icon name="share"></ion-icon></ion-button>

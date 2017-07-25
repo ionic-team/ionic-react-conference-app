@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-export default withRouter(({children, path, history}) => (
-  <ion-button ion-item menuClose onClick={() => { history.push(path); }}>
+export default withRouter(({history, children, path, location, match, ...props}) => (
+  <ion-button {...props} onClick={() => history.push(props.path)}>
     {children}
   </ion-button>
 ));

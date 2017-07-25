@@ -11,7 +11,11 @@ import * as speakers from './data/speakers.json';
 
 let store = createStore(conferenceApp, {
   locations: locations,
-  sessions: sessions,
+  sessions: {
+    searchText: '',
+    trackFilters: [],
+    sessions
+  },
   speakers: speakers
 });
 
