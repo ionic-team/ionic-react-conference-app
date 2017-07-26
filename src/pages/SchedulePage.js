@@ -3,13 +3,11 @@ import SessionContainer from '../containers/Session';
 import Schedule from '../components/Schedule';
 
 const SchedulePage = () => (
-  <ion-page>
-    <SessionContainer>
-      {(props) => (
-      <Schedule {...props}/>
-      )}
-    </SessionContainer>
-  </ion-page>
+  <SessionContainer>
+    {(props) => (
+    <Schedule {...props}/>
+    )}
+  </SessionContainer>
 );
 
 export default SchedulePage;

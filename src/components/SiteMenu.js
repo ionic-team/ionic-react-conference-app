@@ -15,7 +15,7 @@ export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, histo
   }
 
   return (
-    <ion-page>
+    <div>
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -46,6 +46,6 @@ export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, histo
           </ion-button>
         </ion-list>
       </ion-content>
-    </ion-page>
+    </div>
   );
 }

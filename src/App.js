@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { PrivateRoute } from './utils/routing';
 import SiteMenu from './components/SiteMenu';
 import About from './pages/About';
 import Account from './pages/Account';
@@ -11,7 +12,6 @@ import SpeakerList from './pages/SpeakerList';
 import SpeakerDetail from './pages/SpeakerDetail';
 import Support from './pages/Support';
 import Signup from './pages/Signup';
-import { PrivateRoute } from './utils/routing';
 
 
 const routes = {
@@ -35,7 +35,7 @@ const routes = {
 
 const App = () => (
   <Router>
-    <div>
+    <ion-app>
       <SiteMenu {...routes}></SiteMenu>
       { Object.keys(routes)
           .reduce((finalList, key) => finalList.concat(routes[key]), [])
@@ -58,7 +58,11 @@ const App = () => (
       ))}
       <Route path="/speakers/:speakerId" component={SpeakerDetail} />
       <Route path="/sessions/:sessionId" component={SessionDetail} />
-    </div>
+        <ion-button tabTitle="Schedule" tabIcon="calendar"></ion-button>
+        <ion-button tabTitle="Speakers" tabIcon="contacts"></ion-button>
+        <ion-button tabTitle="Map" tabIcon="map"></ion-button>
+        <ion-button tabTitle="About" tabIcon="information-circle"></ion-button>
+    </ion-app>
   </Router>
 );
 

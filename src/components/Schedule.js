@@ -48,17 +48,28 @@ export default class Schedule extends Component {
             removeFavoriteSession={this.props.removeFavoriteSession}
             filterFavorites={this.props.filterFavorites}
           />
-
+        </ion-content>
+        <ion-fixed>
           <ion-fab bottom right>
-            <ion-button ion-fab><ion-icon name="share"></ion-icon></ion-button>
+            <ion-fab-button ion-fab>
+              <ion-icon name="share"></ion-icon>
+            </ion-fab-button>
             <ion-fab-list side="top">
-              <ion-button ion-fab color="vimeo" onClick={() => this.openSocial('Vimeo')}><ion-icon name="logo-vimeo"></ion-icon></ion-button>
-              <ion-button ion-fab color="google" onClick={() => this.openSocial('Google+')}><ion-icon name="logo-googleplus"></ion-icon></ion-button>
-              <ion-button ion-fab color="twitter" onClick={() => this.openSocial('Twitter')}><ion-icon name="logo-twitter"></ion-icon></ion-button>
-              <ion-button ion-fab color="facebook" onClick={() => this.openSocial('Facebook')}><ion-icon name="logo-facebook"></ion-icon></ion-button>
+              <ion-fab-button color="vimeo" onClick={() => this.openSocial('Vimeo')}>
+                <ion-icon name="logo-vimeo"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button color="google" onClick={() => this.openSocial('Google+')}>
+                <ion-icon name="logo-googleplus"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button color="twitter" onClick={() => this.openSocial('Twitter')}>
+                <ion-icon name="logo-twitter"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button color="facebook" onClick={() => this.openSocial('Facebook')}>
+                <ion-icon name="logo-facebook"></ion-icon>
+              </ion-fab-button>
             </ion-fab-list>
           </ion-fab>
-        </ion-content>
+        </ion-fixed>
       </ion-page>
     );
   }
