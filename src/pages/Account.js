@@ -11,9 +11,11 @@ export default class Account extends Component {
       <ion-page>
         <ion-header>
           <ion-navbar>
-            <ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="start">
+              <ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </ion-button>
+            </ion-buttons>
             <ion-title>Account</ion-title>
           </ion-navbar>
         </ion-header>
@@ -26,11 +28,11 @@ export default class Account extends Component {
               <h2>{user.userName}</h2>
 
               <ion-list inset>
-                <ion-button ion-item onClick={() => this.updatePicture()}>Update Picture</ion-button>
-                <ion-button ion-item onClick={() => this.changeUsername()}>Change Username</ion-button>
-                <ion-button ion-item onClick={() => this.changePassword()}>Change Password</ion-button>
-                <ion-button ion-item onClick={() => this.support()}>Support</ion-button>
-                <ion-button ion-item onClick={() => logOutUser(logOutUser)}>Logout</ion-button>
+                <ion-item onClick={() => this.updatePicture()}>Update Picture</ion-item>
+                <ion-item onClick={() => this.changeUsername()}>Change Username</ion-item>
+                <ion-item onClick={() => this.changePassword()}>Change Password</ion-item>
+                <ion-item onClick={() => this.support()}>Support</ion-item>
+                <ion-item onClick={() => logOutUser(logOutUser)}>Logout</ion-item>
               </ion-list>
             </div>
             )}

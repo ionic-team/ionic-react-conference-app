@@ -8,7 +8,7 @@ export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, histo
       .filter(route => !!route.path)
       .map((p) => (
         <IonButton key={p.title} path={p.path}>
-          <ion-icon item-start name={p.icon}></ion-icon>
+          <ion-icon slot="start" name={p.icon}></ion-icon>
           {p.title}
         </IonButton>
       ));
@@ -40,10 +40,10 @@ export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, histo
           <ion-list-header>
             Tutorial
           </ion-list-header>
-          <ion-button ion-item menuClose onClick={() => {}}>
-            <ion-icon item-start name="hammer"></ion-icon>
+          <ion-item menuClose onClick={() => {}}>
+            <ion-icon slot="start" name="hammer"></ion-icon>
             Show Tutorial
-          </ion-button>
+          </ion-item>
         </ion-list>
       </ion-content>
     </div>

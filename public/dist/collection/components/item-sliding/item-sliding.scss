@@ -1,0 +1,177 @@
+@import "../../themes/ionic.globals";
+
+// Item Sliding
+// --------------------------------------------------
+// The hidden buttons that can be exposed under a list item by dragging
+
+ion-item-sliding {
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  width: 100%;
+}
+
+ion-item-sliding ion-item {
+  position: static;
+}
+
+ion-item-options {
+  position: absolute;
+  z-index: $z-index-item-options;
+  display: none;
+
+  height: 100%;
+
+  font-size: 14px;
+  visibility: hidden;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    top: 0;
+
+    right: 0;
+  }
+
+  @include ltr() {
+    justify-content: flex-end;
+  }
+
+  @include rtl() {
+    justify-content: flex-start;
+
+    &:not([side=right]) {
+      justify-content: flex-end;
+
+      // scss-lint:disable PropertySpelling
+      right: auto;
+      left: 0;
+    }
+  }
+}
+
+ion-item-options[side=left] {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: auto;
+    left: 0;
+  }
+
+  @include ltr() {
+    justify-content: flex-start;
+  }
+
+  @include rtl() {
+    justify-content: flex-end;
+  }
+}
+
+.item-option-button {
+  @include margin(0);
+  @include border-radius(0);
+
+  @include padding(0, .7em);
+
+  border: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  height: 100%;
+
+  box-shadow: none;
+
+  box-sizing: border-box;
+}
+
+.item-option-button::before {
+  @include margin(0, auto);
+}
+
+ion-item-options:not([icon-start]) .item-option-button:not([icon-only]) {
+  .button-inner {
+    flex-direction: column;
+  }
+}
+
+ion-item-sliding.active-slide {
+  @include rtl() {
+    &.active-options-left ion-item-options:not([side=right]) {
+      width: 100%;
+
+      visibility: visible;
+     }
+  }
+
+  ion-item,
+  ion-item.activated {
+    position: relative;
+    z-index: $z-index-item-options + 1;
+
+    opacity: 1;
+    transition: transform 500ms cubic-bezier(.36, .66, .04, 1);
+
+    pointer-events: none;
+
+    will-change: transform;
+  }
+
+  ion-item-options {
+    display: flex;
+  }
+
+  &.active-options-left ion-item-options[side=left],
+  &.active-options-right ion-item-options:not([side=left]) {
+    width: 100%;
+
+    visibility: visible;
+  }
+}
+
+// Item Expandable Animation
+// --------------------------------------------------
+
+ion-item-option[expandable] .item-option-button {
+  flex-shrink: 0;
+
+  transition-duration: 0;
+  transition-property: none;
+  transition-timing-function: cubic-bezier(.65, .05, .36, 1);
+}
+
+ion-item-sliding.active-swipe-right ion-item-option[expandable] .item-option-button {
+  transition-duration: .6s;
+  transition-property: padding-left;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    padding-left: 90%;
+  }
+
+  @include ltr() {
+    order: 1;
+  }
+
+  @include rtl() {
+    order: -1;
+  }
+}
+
+ion-item-sliding.active-swipe-left ion-item-option[expandable] .item-option-button {
+  transition-duration: .6s;
+  transition-property: padding-right;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    padding-right: 90%;
+  }
+
+  @include ltr() {
+    order: -1;
+  }
+
+  @include rtl() {
+    order: 1;
+  }
+}

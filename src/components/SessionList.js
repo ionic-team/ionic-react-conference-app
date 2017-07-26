@@ -44,23 +44,25 @@ export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavo
           </ion-item-divider>
           { group.sessions.map((session, sessionIndex) => (
             <ion-item-sliding key={`group-${index}-${sessionIndex}`}>
-              <IonButton ion-item path={`/sessions/${session.id}`}>
-                <h3>{session.name}</h3>
-                <p>
-                  {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;
-                  {formatTime(session.dateTimeEnd, "h: MM tt")}:
-                  {session.location}
-                </p>
-              </IonButton>
+              <ion-item href={`/sessions/${session.id}`}>
+                <ion-label>
+                  <h3>{session.name}</h3>
+                  <p>
+                    {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;
+                    {formatTime(session.dateTimeEnd, "h:MM tt")}: &nbsp;
+                    {session.location}
+                  </p>
+                </ion-label>
+              </ion-item>
               <ion-item-options>
                 { filterFavorites ?
-                  <ion-button color="danger" onClick={() => removeFavoriteSession(session.id)}>
+                  <ion-item-option color="danger" onClick={() => removeFavoriteSession(session.id)}>
                     Remove
-                  </ion-button>
+                  </ion-item-option>
                   :
-                  <ion-button color="favorite" onClick={() => addFavoriteSession(session.id)}>
+                  <ion-item-option color="favorite" onClick={() => addFavoriteSession(session.id)}>
                     Favorite
-                  </ion-button>
+                  </ion-item-option>
                 }
               </ion-item-options>
             </ion-item-sliding>

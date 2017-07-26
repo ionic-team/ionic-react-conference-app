@@ -31,13 +31,13 @@ export default class About extends Component {
 
             <ion-list no-lines>
               <ion-item>
-                <ion-icon name="calendar" item-start></ion-icon>
+                <ion-icon name="calendar" slot="start"></ion-icon>
                 <ion-label>Date</ion-label>
                 <ion-datetime displayFormat="MMM DD, YYYY" max="2056" data={this.props.conferenceDate}></ion-datetime>
               </ion-item>
 
               <ion-item>
-                <ion-icon name="pin" item-start></ion-icon>
+                <ion-icon name="pin" slot="start"></ion-icon>
                 <ion-label>Location</ion-label>
                 <ion-select>
                   <ion-option value="madison" selected>Madison, WI</ion-option>

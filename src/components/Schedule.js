@@ -7,9 +7,11 @@ export default class Schedule extends Component {
       <ion-page>
         <ion-header>
           <ion-navbar no-border-bottom>
-            <ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="start">
+              <ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </ion-button>
+            </ion-buttons>
 
             <ion-segment ionChange={(e) => this.props.updateSchedule(e.value === 'true')}>
               <ion-segment-button value="false">
@@ -20,7 +22,7 @@ export default class Schedule extends Component {
               </ion-segment-button>
             </ion-segment>
 
-            <ion-buttons end>
+            <ion-buttons slot="end">
               <ion-button icon-only onClick={() => this.presentFilter()}>
                 <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
               </ion-button>
@@ -51,7 +53,7 @@ export default class Schedule extends Component {
         </ion-content>
         <ion-fixed>
           <ion-fab bottom right>
-            <ion-fab-button ion-fab>
+            <ion-fab-button>
               <ion-icon name="share"></ion-icon>
             </ion-fab-button>
             <ion-fab-list side="top">

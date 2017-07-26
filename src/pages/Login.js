@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import UserAccount from '../containers/UserAccount';
+import './Login.scss'
 
 export default class Login extends Component {
   render() {
     return (
-      <ion-page>
+      <ion-page class="page-user">
         <ion-header>
           <ion-navbar>
             <ion-button ion-button menuToggle>

@@ -3,12 +3,12 @@
   "components": [
     [
       "ION-APP",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1
     ],
@@ -34,7 +34,7 @@
     ],
     [
       "ION-BUTTON",
-      "8zvoky1silq3",
+      "6yr0icokf26m",
       {
         "ios": "larpbgqrpkno",
         "md": "mgekeaoebvgm",
@@ -118,7 +118,7 @@
     ],
     [
       "ION-BUTTONS",
-      "8zvoky1silq3",
+      "6yr0icokf26m",
       {
         "ios": "larpbgqrpkno",
         "md": "mgekeaoebvgm",
@@ -167,6 +167,41 @@
       1
     ],
     [
+      "ION-CHIP",
+      "i3z6xoj13lkg",
+      {
+        "ios": "4yowblhjoq5d",
+        "md": "fn2im8qqqb9b",
+        "wp": "oqytulazn3kr"
+      },
+      1
+    ],
+    [
+      "ION-CHIP-BUTTON",
+      "i3z6xoj13lkg",
+      {
+        "ios": "4yowblhjoq5d",
+        "md": "fn2im8qqqb9b",
+        "wp": "oqytulazn3kr"
+      },
+      1,
+      [
+        [
+          "clear",
+          0,
+          1
+        ],
+        [
+          "disabled",
+          0,
+          1
+        ],
+        [
+          "href"
+        ]
+      ]
+    ],
+    [
       "ION-COL",
       "mvy6pg4yo2jt",
       {
@@ -175,12 +210,12 @@
     ],
     [
       "ION-CONTENT",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1,
       [
@@ -202,7 +237,7 @@
     ],
     [
       "ION-FAB",
-      "2reyiwqfow57",
+      "9dgbh5lmb0cr",
       {
         "ios": "ypmqdmpb5iby",
         "md": "7pnu40i1merr",
@@ -212,7 +247,7 @@
     ],
     [
       "ION-FAB-BUTTON",
-      "2reyiwqfow57",
+      "9dgbh5lmb0cr",
       {
         "ios": "ypmqdmpb5iby",
         "md": "7pnu40i1merr",
@@ -232,7 +267,7 @@
     ],
     [
       "ION-FAB-LIST",
-      "2reyiwqfow57",
+      "9dgbh5lmb0cr",
       {
         "ios": "ypmqdmpb5iby",
         "md": "7pnu40i1merr",
@@ -242,29 +277,29 @@
     ],
     [
       "ION-FIXED",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1
     ],
     [
       "ION-FOOTER",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1
     ],
     [
       "ION-GESTURE",
-      "0yccozi6jp6i",
+      "eexj3bdskwz6",
       0,
       0,
       [
@@ -337,18 +372,18 @@
     ],
     [
       "ION-HEADER",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1
     ],
     [
       "ION-ICON",
-      "8zvoky1silq3",
+      "6yr0icokf26m",
       {
         "ios": "larpbgqrpkno",
         "md": "mgekeaoebvgm",
@@ -369,7 +404,7 @@
     ],
     [
       "ION-ITEM",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -391,7 +426,7 @@
     ],
     [
       "ION-ITEM-DIVIDER",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -402,7 +437,7 @@
     ],
     [
       "ION-ITEM-OPTION",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -423,7 +458,7 @@
     ],
     [
       "ION-ITEM-OPTIONS",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -439,7 +474,7 @@
     ],
     [
       "ION-ITEM-SLIDING",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -450,7 +485,7 @@
     ],
     [
       "ION-LABEL",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -461,7 +496,7 @@
     ],
     [
       "ION-LIST",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -472,7 +507,7 @@
     ],
     [
       "ION-LIST-HEADER",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -483,7 +518,7 @@
     ],
     [
       "ION-LOADING",
-      "cbzm4nal8eyy",
+      "s4zjjinnp6es",
       {
         "$": "4yjnkw2c0zwz",
         "ios": "gja1wgzcrlbt",
@@ -526,7 +561,7 @@
     ],
     [
       "ION-LOADING-CONTROLLER",
-      "cbzm4nal8eyy",
+      "s4zjjinnp6es",
       {
         "$": "4yjnkw2c0zwz",
         "ios": "gja1wgzcrlbt",
@@ -536,7 +571,7 @@
     ],
     [
       "ION-MENU",
-      "nhiqbyrgghzi",
+      "n3n3knhcvi3h",
       {
         "ios": "iyaucfekjft4",
         "md": "n7znxsls9wwm",
@@ -590,7 +625,7 @@
     ],
     [
       "ION-MODAL",
-      "mdfn03owlkoi",
+      "9wx6njxxvfba",
       {
         "$": "j7nnnvwngtie",
         "ios": "o8ztoclokvgn",
@@ -637,7 +672,7 @@
     ],
     [
       "ION-MODAL-CONTROLLER",
-      "mdfn03owlkoi",
+      "9wx6njxxvfba",
       {
         "$": "j7nnnvwngtie",
         "ios": "o8ztoclokvgn",
@@ -647,12 +682,12 @@
     ],
     [
       "ION-NAVBAR",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       2,
       [
@@ -676,12 +711,12 @@
     ],
     [
       "ION-PAGE",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1
     ],
@@ -694,7 +729,7 @@
     ],
     [
       "ION-SCROLL",
-      "0yccozi6jp6i",
+      "eexj3bdskwz6",
       0,
       1,
       [
@@ -721,7 +756,7 @@
     ],
     [
       "ION-SEARCHBAR",
-      "7b9dhm9prgbc",
+      "ysxk1wwghvnb",
       {
         "ios": "ldue8ztl68p3",
         "md": "inuypkmrxuvc",
@@ -799,7 +834,7 @@
     ],
     [
       "ION-SEGMENT",
-      "p4malfjx7r81",
+      "wk47blkv9gdr",
       {
         "ios": "qe3rrrtiqxpf",
         "md": "gjriv8dbkjn4",
@@ -823,7 +858,7 @@
     ],
     [
       "ION-SEGMENT-BUTTON",
-      "p4malfjx7r81",
+      "wk47blkv9gdr",
       {
         "ios": "qe3rrrtiqxpf",
         "md": "gjriv8dbkjn4",
@@ -853,7 +888,7 @@
     ],
     [
       "ION-SKELETON-TEXT",
-      "dqcjhnfmmrsd",
+      "q5xqin0fv8qe",
       {
         "$": "n0efedrwwekl",
         "ios": "b1vxirhlndkp",
@@ -869,7 +904,7 @@
     ],
     [
       "ION-SLIDE",
-      "bxgc1sqr1bue",
+      "i0sdfsxmt4sx",
       {
         "$": "a9zp9z7ke5jh"
       },
@@ -877,7 +912,7 @@
     ],
     [
       "ION-SLIDES",
-      "bxgc1sqr1bue",
+      "i0sdfsxmt4sx",
       {
         "$": "a9zp9z7ke5jh"
       },
@@ -947,7 +982,7 @@
     ],
     [
       "ION-SPINNER",
-      "sef1nwoe6hqn",
+      "8mthmxte2al5",
       {
         "ios": "ig4ukbngpbyi",
         "md": "3ymfoluojrz1",
@@ -978,7 +1013,7 @@
     ],
     [
       "ION-TAB",
-      "snbkpcd75qej",
+      "j4hubzqizlmk",
       {
         "ios": "fy9jsgdjxd2y",
         "md": "biyxag35ivur",
@@ -1026,7 +1061,7 @@
     ],
     [
       "ION-TAB-BAR",
-      "snbkpcd75qej",
+      "j4hubzqizlmk",
       {
         "ios": "fy9jsgdjxd2y",
         "md": "biyxag35ivur",
@@ -1052,7 +1087,7 @@
     ],
     [
       "ION-TAB-BUTTON",
-      "snbkpcd75qej",
+      "j4hubzqizlmk",
       {
         "ios": "fy9jsgdjxd2y",
         "md": "biyxag35ivur",
@@ -1080,7 +1115,7 @@
     ],
     [
       "ION-TAB-HIGHLIGHT",
-      "snbkpcd75qej",
+      "j4hubzqizlmk",
       {
         "ios": "fy9jsgdjxd2y",
         "md": "biyxag35ivur",
@@ -1089,7 +1124,7 @@
     ],
     [
       "ION-TABS",
-      "snbkpcd75qej",
+      "j4hubzqizlmk",
       {
         "ios": "fy9jsgdjxd2y",
         "md": "biyxag35ivur",
@@ -1125,18 +1160,18 @@
     ],
     [
       "ION-TITLE",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       1
     ],
     [
       "ION-TOGGLE",
-      "h7a68hvv7szb",
+      "fakhtlarizk0",
       {
         "ios": "2zwhozitlefo",
         "md": "w7qh2uu1bt5x",
@@ -1172,17 +1207,17 @@
     ],
     [
       "ION-TOOLBAR",
-      "5tfxguzttkki",
+      "b5hea4o6nlul",
       {
         "$": "7urdugdxqbnq",
-        "ios": "0xjsxpauoar4",
-        "md": "nsokrymjsgdh",
-        "wp": "6t1ubqec7oiz"
+        "ios": "ntgbjc7bl3mb",
+        "md": "x52edstuhtuk",
+        "wp": "ibrfqu50td8t"
       },
       2
     ]
   ],
   "loader": "ionic.js",
-  "core": "ionic/ionic.tn4rh4k7dog8.js",
-  "coreEs5": "ionic/ionic.wuqyfng1azzr.ce.js"
+  "core": "ionic/ionic.whck2bj1xwdb.js",
+  "coreEs5": "ionic/ionic.q0svy5c8fl6t.ce.js"
 }

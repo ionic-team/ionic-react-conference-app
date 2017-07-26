@@ -60,9 +60,9 @@ function openContact(speaker) {
 
 
 withRouter(({children, path, history}) => (
-  <ion-button ion-item menuClose onClick={() => { history.push(path); }}>
+  <ion-item menuClose href="#" onClick={() => { history.push(path); }}>
     {children}
-  </ion-button>
+  </ion-item>
 ));
 
 
@@ -80,65 +80,64 @@ const SpeakerItem = withRouter(({speaker, history}) => {
   return (
     <ion-card class="speaker-card">
       <ion-card-header>
-        <ion-button
-          ion-item
+        <ion-item
           detail-none
+          href="#"
           onClick={() => history.push(`/speakers/${speaker.id}`)}
         >
-          <ion-avatar item-start>
+          <ion-avatar slot="start">
             <img src={speaker.profilePic} alt="Speaker profile pic"/>
           </ion-avatar>
           {speaker.name}
-        </ion-button>
+        </ion-item>
       </ion-card-header>
 
       <ion-card-content class="outer-content">
         <ion-list>
           { speaker.sessions.map(session => (
-          <ion-button
+          <ion-item
             key={session.name}
-            ion-item
             onClick={() => history.push(`/speakers/${session.id}`)}
           >
             <h3>{session.name}</h3>
-          </ion-button>
+          </ion-item>
           ))}
 
-          <ion-button
-            ion-item
+          <ion-item
             onClick={() => history.push(`/speakers/${speaker.id}`)}
           >
             <h3>About {speaker.name}</h3>
-          </ion-button>
+          </ion-item>
         </ion-list>
       </ion-card-content>
 
+      <ion-grid>
       <ion-row no-padding>
         <ion-col col-12 col-lg-auto text-center text-lg-left>
           <ion-button
             clear
             small
             color="primary"
-            icon-start
             onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
           >
-            <ion-icon name="logo-twitter"></ion-icon>
+            <ion-icon slot="start" name="logo-twitter"></ion-icon>
             Tweet
           </ion-button>
         </ion-col>
         <ion-col col-12 col-lg-auto text-center>
-          <ion-button clear small color="primary" icon-start onClick={() => openSpeakerShare(speaker)}>
-            <ion-icon name='share-alt'></ion-icon>
+          <ion-button clear small color="primary" onClick={() => openSpeakerShare(speaker)}>
+            <ion-icon slot="start" name='share-alt'></ion-icon>
             Share
           </ion-button>
         </ion-col>
         <ion-col col-12 col-lg-auto text-center text-lg-right>
-          <ion-button clear small color="primary" icon-start onClick={() => openContact(speaker)}>
-            <ion-icon name='chatboxes'></ion-icon>
+          <ion-button clear small color="primary" onClick={() => openContact(speaker)}>
+            <ion-icon slot="start" name='chatboxes'></ion-icon>
             Contact
           </ion-button>
         </ion-col>
       </ion-row>
+      </ion-grid>
     </ion-card>
   );
 });
