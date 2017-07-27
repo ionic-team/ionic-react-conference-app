@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import './Form.scss'
 
 export default class Signup extends Component {
   render() {
     return (
-      <ion-page>
+      <ion-page class="page-user">
         <ion-header>
           <ion-navbar>
             <ion-buttons slot="start">
@@ -15,8 +16,8 @@ export default class Signup extends Component {
           </ion-navbar>
         </ion-header>
 
-        <ion-content class="login-page">
-          <div class="logo">
+        <ion-content>
+          <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>
           <form ref={(signUpForm => this.signupForm = signUpForm)} novalidate>

@@ -13,7 +13,7 @@ export default class Schedule extends Component {
               </ion-button>
             </ion-buttons>
 
-            <ion-segment value={this.props.filterFavorites} ionChange={(e) => this.props.updateSchedule(e.value)}>
+            <ion-segment value={this.props.filterFavorites} ionClick={(e) => console.log(e)}>
               <ion-segment-button value={false}>
                 All
               </ion-segment-button>

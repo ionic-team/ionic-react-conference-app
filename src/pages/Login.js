@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserAccount from '../containers/UserAccount';
-import './Login.scss'
+import './Form.scss'
 
 export default class Login extends Component {
   render() {

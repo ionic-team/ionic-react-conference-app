@@ -9,7 +9,7 @@ export default class Account extends Component {
   support(){}
   render() {
     return (
-      <ion-page>
+      <ion-page class="page-account">
         <ion-header>
           <ion-navbar>
             <ion-buttons slot="start">

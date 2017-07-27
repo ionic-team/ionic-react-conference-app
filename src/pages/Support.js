@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import './Form.scss'
 
 export default class Support extends Component {
   submit() {}
   render() {
     return (
-      <ion-page>
+      <ion-page class="page-user">
         <ion-header>
           <ion-navbar>
             <ion-buttons slot="start">
@@ -17,7 +18,7 @@ export default class Support extends Component {
         </ion-header>
 
         <ion-content>
-          <div class="logo">
+          <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>
           <form onSubmit={() => this.submit()}>
@@ -27,9 +28,6 @@ export default class Support extends Component {
                 <ion-textarea name="supportQuestion" rows="6" required></ion-textarea>
               </ion-item>
             </ion-list>
-            <ion-text color="danger" padding-left>
-              Support message is required
-            </ion-text>
             <div>
               <ion-button block type="submit">Submit</ion-button>
             </div>

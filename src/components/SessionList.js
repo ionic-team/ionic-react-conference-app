@@ -1,5 +1,6 @@
 import React from 'react';
 import { dateFormat } from '../utils/dateformat';
+import { withRouter } from 'react-router-dom';
 
 function formatTime(dateString, formatString) {
   return dateFormat(new Date(dateString), formatString);
@@ -29,7 +30,7 @@ function groupByStartTime(sessions) {
   }, []);
 }
 
-export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites}) => {
+export default withRouter(({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, history}) => {
   const groups = groupByStartTime(sessions);
 
   return (
@@ -43,7 +44,7 @@ export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavo
           </ion-item-divider>
           { group.sessions.map((session, sessionIndex) => (
             <ion-item-sliding key={`group-${index}-${sessionIndex}`} track={session.tracks[0].toLowerCase()}>
-              <ion-item href={`/sessions/${session.id}`}>
+              <ion-item href={`/sessions/${session.id}`} onClick={() => history.push(`/sessions/${session.id}`)}>
                 <ion-label>
                   <h3>{session.name}</h3>
                   <p>
@@ -70,4 +71,4 @@ export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavo
       )) }
     </ion-list>
   );
-};
+});

@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
   );
 
   return {
+    sessions: state.sessions,
     filteredSessions: visibleSessions,
     filterFavorites: state.sessions.filterFavorites,
     favoriteSessions: state.sessions.favoriteSessions
