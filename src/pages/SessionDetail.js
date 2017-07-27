@@ -6,7 +6,7 @@ function formatTime(dateString, formatString) {
   return dateFormat(new Date(dateString), formatString);
 }
 
-export default ({ match }) => {
+export default ({ match, location, history }) => {
   return (
     <SessionDetail>
       {({ sessions, speakers }) => {
@@ -16,6 +16,11 @@ export default ({ match }) => {
           <ion-page>
             <ion-header>
               <ion-navbar>
+                <ion-buttons slot="start">
+                  <ion-button href="#" onClick={() => history.goBack()} color="primary">
+                    <ion-icon name="arrow-back"></ion-icon> Back
+                  </ion-button>
+                </ion-buttons>
                 <ion-title>{session.name}</ion-title>
               </ion-navbar>
             </ion-header>
