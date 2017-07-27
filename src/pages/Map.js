@@ -9,7 +9,7 @@ const MapPage = () => (
       <ion-navbar>
         <ion-buttons slot="start">
           <ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-title>Map</ion-title>

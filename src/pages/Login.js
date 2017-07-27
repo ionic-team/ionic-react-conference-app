@@ -10,7 +10,7 @@ export default class Login extends Component {
           <ion-navbar>
             <ion-buttons slot="start">
               <ion-button ion-button menuToggle>
-                <ion-icon name="menu"></ion-icon>
+                <ion-icon slot="icon-only" name="menu"></ion-icon>
               </ion-button>
             </ion-buttons>
             <ion-title>Login</ion-title>

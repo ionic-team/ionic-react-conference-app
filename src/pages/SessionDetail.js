@@ -18,7 +18,7 @@ export default ({ match, location, history }) => {
               <ion-navbar>
                 <ion-buttons slot="start">
                   <ion-button href="#" onClick={() => history.goBack()} color="primary">
-                    <ion-icon name="arrow-back"></ion-icon> Back
+                    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>Back
                   </ion-button>
                 </ion-buttons>
                 <ion-title>{session.name}</ion-title>

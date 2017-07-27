@@ -9,7 +9,7 @@ export default class Schedule extends Component {
           <ion-navbar no-border-bottom>
             <ion-buttons slot="start">
               <ion-button menuToggle>
-                <ion-icon name="menu"></ion-icon>
+                <ion-icon slot="icon-only" name="menu"></ion-icon>
               </ion-button>
             </ion-buttons>
 
@@ -24,7 +24,7 @@ export default class Schedule extends Component {
 
             <ion-buttons slot="end">
               <ion-button icon-only onClick={() => this.presentFilter()}>
-                <ion-icon name="options"></ion-icon>
+                <ion-icon slot="icon-only" name="options"></ion-icon>
               </ion-button>
             </ion-buttons>
           </ion-navbar>
