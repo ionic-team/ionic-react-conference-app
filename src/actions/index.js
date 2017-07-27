@@ -12,6 +12,8 @@ export const LOG_IN_USER = 'LOG_IN_USER';
 export const LOG_OUT_USER = 'LOG_OUT_USER';
 export const UPDATE_USER_PICTURE = 'UPDATE_USER_PICTURE';
 
+export const UPDATE_SEEN_TUTORIAL = 'HAS_SEEN_TUTORIAL';
+
 export const searchSessionsByName = (text) => (
   {
     type: SEARCH_TEXT,
@@ -94,3 +96,10 @@ export const updatePicture = (userName, pictureLocation) => (
     pictureLocation
   }
 );
+
+export const updateSeenTutorial = (hasSeenTutorial) => (
+  {
+    type: UPDATE_SEEN_TUTORIAL,
+    hasSeenTutorial
+  }
+)

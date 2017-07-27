@@ -130,9 +130,11 @@ export default () => (
   <ion-page>
     <ion-header>
       <ion-navbar>
-        <ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </ion-button>
+        <ion-buttons slot="start">
+          <ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </ion-button>
+        </ion-buttons>
         <ion-title>Speakers</ion-title>
       </ion-navbar>
     </ion-header>

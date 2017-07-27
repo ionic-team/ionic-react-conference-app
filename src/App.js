@@ -12,6 +12,7 @@ import SpeakerList from './pages/SpeakerList';
 import SpeakerDetail from './pages/SpeakerDetail';
 import Support from './pages/Support';
 import Signup from './pages/Signup';
+import Tutorial from './pages/Tutorial';
 
 
 const routes = {
@@ -58,6 +59,7 @@ const App = () => (
       ))}
       <Route path="/speakers/:speakerId" component={SpeakerDetail} />
       <Route path="/sessions/:sessionId" component={SessionDetail} />
+      <Route path="/tutorial" component={Tutorial} />
     </ion-app>
   </Router>
 );
