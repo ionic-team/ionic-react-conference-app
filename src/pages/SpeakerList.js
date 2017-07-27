@@ -56,14 +56,6 @@ function openContact(speaker) {
   actionSheet.present();
 }
 
-
-withRouter(({children, path, history}) => (
-  <ion-item menuClose href="#" onClick={() => { history.push(path); }}>
-    {children}
-  </ion-item>
-));
-
-
 const SpeakerItem = withRouter(({speaker, speakerSessions, history}) => (
   <ion-card class="speaker-card">
     <ion-card-header>

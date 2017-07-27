@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePicture: (hasSeenTutorial) => dispatch(updateSeenTutorial(hasSeenTutorial)),
+    updateSeenTutorial: (hasSeenTutorial) => dispatch(updateSeenTutorial(hasSeenTutorial)),
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { PrivateRoute } from './utils/routing';
+import { PrivateRoute, RequiresTutorialRoute } from './utils/routing';
 import SiteMenu from './components/SiteMenu';
 import About from './pages/About';
 import Account from './pages/Account';
@@ -50,15 +50,15 @@ const App = () => (
           component={route.component}
         />
         :
-        <Route
+        <RequiresTutorialRoute
           exact={route.exact}
           key={index}
           path={route.path}
           component={route.component}
         />
       ))}
-      <Route path="/speakers/:speakerId" component={SpeakerDetail} />
-      <Route path="/sessions/:sessionId" component={SessionDetail} />
+      <RequiresTutorialRoute path="/speakers/:speakerId" component={SpeakerDetail} />
+      <RequiresTutorialRoute path="/sessions/:sessionId" component={SessionDetail} />
       <Route path="/tutorial" component={Tutorial} />
     </ion-app>
   </Router>

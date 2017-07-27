@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import './Tutorial.scss'
 
-export default class Tutorial extends Component {
+class Tutorial extends Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
       showSkip: false
@@ -10,6 +12,7 @@ export default class Tutorial extends Component {
   }
 
   onSlideChangeStart(slider) {
+    debugger;
     this.setState((state, props) => (
       {
         ...state,
@@ -18,15 +21,20 @@ export default class Tutorial extends Component {
     ));
   }
 
+  endTutorial() {
+    this.props.updateSeenTutorial(true);
+    this.props.history.push('/');
+  }
+
   render() {
     return (
       <ion-page class="page-tutorial">
         <ion-header no-border>
           <ion-navbar>
             { this.state.showSkip ?
-            <ion-buttons slot="end">
-              <ion-button onClick={() => console.log('clicked')} color="primary">Skip</ion-button>
-            </ion-buttons>
+              <ion-buttons slot="end">
+                <ion-button onClick={() => this.endTutorial()} color="primary">Skip</ion-button>
+              </ion-buttons>
             : null}
           </ion-navbar>
         </ion-header>
@@ -70,7 +78,7 @@ export default class Tutorial extends Component {
               <h2 className="slide-title">
                 Ready to Play?
               </h2>
-              <ion-button icon-end large clear onClick={() => console.log('clicked')}>
+              <ion-button icon-end large clear onClick={() => this.endTutorial()}>
                 Continue
                 <ion-icon name="arrow-forward"></ion-icon>
               </ion-button>
@@ -82,3 +90,5 @@ export default class Tutorial extends Component {
     );
   }
 };
+
+export default withRouter(Tutorial);

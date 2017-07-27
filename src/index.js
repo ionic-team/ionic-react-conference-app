@@ -10,15 +10,17 @@ import * as sessions from './data/sessions.json';
 import * as speakers from './data/speakers.json';
 
 let store = createStore(conferenceApp, {
-  locations: locations,
-  sessions: {
-    searchText: '',
-    trackFilters: [],
-    sessions,
-    filterFavorites: false
+    locations: locations,
+    sessions: {
+      searchText: '',
+      trackFilters: [],
+      sessions,
+      filterFavorites: false
+    },
+    speakers: speakers
   },
-  speakers: speakers
-});
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render((
   <Provider store={store}>
