@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import conferenceApp from './reducers';
 import App from './App';
+import { loadState, saveState } from './utils/loadState';
 
 import * as locations from './data/locations.json';
 import * as sessions from './data/sessions.json';
 import * as speakers from './data/speakers.json';
 
 let store = createStore(conferenceApp, {
+    ...loadState(),
     locations: locations,
     sessions: {
       searchText: '',
@@ -21,6 +23,13 @@ let store = createStore(conferenceApp, {
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+store.subscribe(() => {
+  saveState({
+    user: store.getState().user,
+    tutorial: store.getState().tutorial
+  });
+})
 
 ReactDOM.render((
   <Provider store={store}>

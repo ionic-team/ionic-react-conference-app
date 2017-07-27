@@ -5,18 +5,20 @@ import TutorialDetail from '../containers/TutorialDetail';
 import Tutorial from '../pages/Tutorial';
 
 export const PrivateRoute = ({ component, ...rest }) => (
-  <UserAccount>
-    {({ user }) => {
-      if (user.isAuthenticated) {
-        return <Route {...rest}/>
-      }
-      return (
-        <Redirect to={{
-          pathname: '/login'
-        }}/>
-      );
-    }}
-  </UserAccount>
+  <Route {...rest} render={props=> (
+    <UserAccount>
+      {({ user }) => (
+        user.isAuthenticated ? (
+          <component {...props}/>
+        ) : (
+          <Redirect to={{
+            pathname: '/login',
+            state: { from: props.location }
+          }}/>
+        )
+      )}
+    </UserAccount>
+  )}/>
 );
 
 export const RequiresTutorialRoute = ({ ...rest }) => (

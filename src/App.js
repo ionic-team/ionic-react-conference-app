@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { PrivateRoute, RequiresTutorialRoute } from './utils/routing';
-import SiteMenu from './components/SiteMenu';
 import About from './pages/About';
 import Account from './pages/Account';
 import Login from './pages/Login';
@@ -37,7 +36,6 @@ const routes = {
 const App = () => (
   <Router>
     <ion-app>
-      <SiteMenu {...routes}></SiteMenu>
       { Object.keys(routes)
           .reduce((finalList, key) => finalList.concat(routes[key]), [])
           .filter(route => !! route.path)

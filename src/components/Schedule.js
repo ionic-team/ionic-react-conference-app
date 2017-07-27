@@ -5,7 +5,7 @@ export default class Schedule extends Component {
   render() {
     return (
       <ion-page class="page-schedule">
-        <ion-header>
+        <ion-header md-height="96px" ios-height="96px">
           <ion-navbar no-border-bottom>
             <ion-buttons slot="start">
               <ion-button menuToggle>
