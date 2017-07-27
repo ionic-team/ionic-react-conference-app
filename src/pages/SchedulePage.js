@@ -5,7 +5,7 @@ import Schedule from '../components/Schedule';
 const SchedulePage = () => (
   <SessionContainer>
     {(props) => (
-    <Schedule {...props}/>
+      <Schedule {...props}/>
     )}
   </SessionContainer>
 );

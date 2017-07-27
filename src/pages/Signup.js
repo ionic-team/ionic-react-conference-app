@@ -6,9 +6,11 @@ export default class Signup extends Component {
       <ion-page>
         <ion-header>
           <ion-navbar>
-            <ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="start">
+              <ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </ion-button>
+            </ion-buttons>
             <ion-title>Signup</ion-title>
           </ion-navbar>
         </ion-header>

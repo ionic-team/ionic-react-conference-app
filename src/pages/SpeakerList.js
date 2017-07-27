@@ -2,8 +2,6 @@ import React from 'react';
 import * as data from '../data.json';
 import { withRouter } from 'react-router-dom';
 
-
-
 function openSpeakerShare(speaker) {
   let actionSheet = this.actionSheetCtrl.create({
     title: 'Share ' + speaker.name,

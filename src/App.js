@@ -58,10 +58,6 @@ const App = () => (
       ))}
       <Route path="/speakers/:speakerId" component={SpeakerDetail} />
       <Route path="/sessions/:sessionId" component={SessionDetail} />
-        <ion-button tabTitle="Schedule" tabIcon="calendar"></ion-button>
-        <ion-button tabTitle="Speakers" tabIcon="contacts"></ion-button>
-        <ion-button tabTitle="Map" tabIcon="map"></ion-button>
-        <ion-button tabTitle="About" tabIcon="information-circle"></ion-button>
     </ion-app>
   </Router>
 );

@@ -8,9 +8,11 @@ export default class Login extends Component {
       <ion-page class="page-user">
         <ion-header>
           <ion-navbar>
-            <ion-button ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="start">
+              <ion-button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </ion-button>
+            </ion-buttons>
             <ion-title>Login</ion-title>
           </ion-navbar>
         </ion-header>

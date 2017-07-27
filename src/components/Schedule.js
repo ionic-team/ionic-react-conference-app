@@ -4,7 +4,7 @@ import SessionList from './SessionList';
 export default class Schedule extends Component {
   render() {
     return (
-      <ion-page>
+      <ion-page class="page-schedule">
         <ion-header>
           <ion-navbar no-border-bottom>
             <ion-buttons slot="start">
@@ -13,18 +13,18 @@ export default class Schedule extends Component {
               </ion-button>
             </ion-buttons>
 
-            <ion-segment ionChange={(e) => this.props.updateSchedule(e.value === 'true')}>
-              <ion-segment-button value="false">
+            <ion-segment value={this.props.filterFavorites} ionChange={(e) => this.props.updateSchedule(e.value)}>
+              <ion-segment-button value={false}>
                 All
               </ion-segment-button>
-              <ion-segment-button value="true">
+              <ion-segment-button value={true}>
                 Favorites
               </ion-segment-button>
             </ion-segment>
 
             <ion-buttons slot="end">
               <ion-button icon-only onClick={() => this.presentFilter()}>
-                <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+                <ion-icon name="options"></ion-icon>
               </ion-button>
             </ion-buttons>
           </ion-navbar>

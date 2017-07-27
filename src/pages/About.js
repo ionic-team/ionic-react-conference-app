@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './About.scss';
 
 export default class About extends Component {
   presentPopover() {
@@ -10,11 +11,13 @@ export default class About extends Component {
       <ion-page>
         <ion-header>
           <ion-navbar>
-            <ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="start">
+              <ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </ion-button>
+            </ion-buttons>
             <ion-title>About</ion-title>
-            <ion-buttons end>
+            <ion-buttons slot="end">
               <ion-button icon-only onClick={() => this.presentPopover()}>
                 <ion-icon name="more"></ion-icon>
               </ion-button>

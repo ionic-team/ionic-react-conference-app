@@ -1,11 +1,13 @@
 import React from 'react';
 import * as data from '../data.json';
+import './SpeakerList.scss';
+
 
 export default ({ match }) => {
   const speaker = data.speakers.find(speaker => speaker.id === match.params.speakerId);
 
   return (
-    <ion-page>
+    <ion-page class="speaker-page-list">
       <ion-header>
         <ion-navbar>
           <ion-title>{speaker.name}</ion-title>

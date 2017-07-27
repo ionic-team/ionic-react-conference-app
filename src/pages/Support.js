@@ -7,9 +7,11 @@ export default class Support extends Component {
       <ion-page>
         <ion-header>
           <ion-navbar>
-            <ion-button menuToggle>
-              <ion-icon name="menu"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="start">
+              <ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </ion-button>
+            </ion-buttons>
             <ion-title>Support</ion-title>
           </ion-navbar>
         </ion-header>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { dateFormat } from '../utils/dateformat';
-import IonButton from './IonButton';
 
 function formatTime(dateString, formatString) {
   return dateFormat(new Date(dateString), formatString);
@@ -43,13 +42,13 @@ export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavo
             </ion-label>
           </ion-item-divider>
           { group.sessions.map((session, sessionIndex) => (
-            <ion-item-sliding key={`group-${index}-${sessionIndex}`}>
+            <ion-item-sliding key={`group-${index}-${sessionIndex}`} track={session.tracks[0].toLowerCase()}>
               <ion-item href={`/sessions/${session.id}`}>
                 <ion-label>
                   <h3>{session.name}</h3>
                   <p>
-                    {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;
-                    {formatTime(session.dateTimeEnd, "h:MM tt")}: &nbsp;
+                    {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;&nbsp;
+                    {formatTime(session.dateTimeEnd, "h:MM tt")}:&nbsp;
                     {session.location}
                   </p>
                 </ion-label>

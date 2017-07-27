@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import UserAccount from '../containers/UserAccount';
+import './Account.scss';
 
 export default class Account extends Component {
   updatePicture(){}
@@ -28,11 +29,11 @@ export default class Account extends Component {
               <h2>{user.userName}</h2>
 
               <ion-list inset>
-                <ion-item onClick={() => this.updatePicture()}>Update Picture</ion-item>
-                <ion-item onClick={() => this.changeUsername()}>Change Username</ion-item>
-                <ion-item onClick={() => this.changePassword()}>Change Password</ion-item>
-                <ion-item onClick={() => this.support()}>Support</ion-item>
-                <ion-item onClick={() => logOutUser(logOutUser)}>Logout</ion-item>
+                <ion-item href="#" onClick={() => this.updatePicture()}>Update Picture</ion-item>
+                <ion-item href="#" onClick={() => this.changeUsername()}>Change Username</ion-item>
+                <ion-item href="#" onClick={() => this.changePassword()}>Change Password</ion-item>
+                <ion-item href="#" onClick={() => this.support()}>Support</ion-item>
+                <ion-item href="#" onClick={() => logOutUser(logOutUser)}>Logout</ion-item>
               </ion-list>
             </div>
             )}
