@@ -1,0 +1,302 @@
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ * Built with http://stenciljs.com
+ */
+.tabbar {
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+}
+
+.tabbar-hidden .tabbar {
+  display: none;
+}
+
+.tabbar.show-tabbar {
+  opacity: 1;
+}
+
+[tabsPlacement=top] > .tabbar {
+  top: 0;
+  bottom: auto;
+}
+
+.tab-button {
+  margin: 0;
+  text-align: center;
+  border-radius: 0;
+  position: relative;
+  z-index: 0;
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  border: 0;
+  text-decoration: none;
+  background: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tab-disabled {
+  pointer-events: none;
+}
+
+.tab-disabled ion-badge,
+.tab-disabled ion-icon,
+.tab-disabled span {
+  opacity: .4;
+}
+
+.tab-button-text {
+  margin-top: 3px;
+  margin-bottom: 2px;
+}
+
+.tab-button-text,
+.tab-button-icon {
+  overflow: hidden;
+  align-self: center;
+  min-width: 26px;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.has-icon .tab-button-icon,
+.has-title .tab-button-text {
+  display: block;
+}
+
+.has-title-only .tab-button-text {
+  white-space: normal;
+}
+
+[tabsLayout=icon-bottom] .tab-button .tab-button-icon {
+  order: 10;
+}
+
+[tabsLayout=icon-left] .tab-button,
+[tabsLayout=icon-right] .tab-button,
+[tabsLayout=icon-start] .tab-button,
+[tabsLayout=icon-end] .tab-button {
+  flex-direction: row;
+}
+
+[tabsLayout=icon-left] .tab-button .tab-button-icon,
+[tabsLayout=icon-start] .tab-button .tab-button-icon {
+  padding-right: 8px;
+  text-align: right;
+  text-align: end;
+}
+
+[tabsLayout=icon-right] .tab-button .tab-button-icon,
+[tabsLayout=icon-end] .tab-button .tab-button-icon {
+  padding-left: 8px;
+  text-align: left;
+  text-align: start;
+  order: 10;
+}
+
+.tab-hidden,
+.tab-highlight,
+[tabsLayout=icon-hide] .tab-button-icon,
+[tabsLayout=title-hide] .tab-button-text {
+  display: none;
+}
+
+.tab-badge {
+  right: 4%;
+  top: 6%;
+  right: calc(50% - 50px);
+  padding: 1px 6px;
+  position: absolute;
+  height: auto;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.has-icon .tab-badge {
+  right: calc(50% - 30px);
+}
+
+[tabsLayout=icon-bottom] .tab-badge,
+[tabsLayout=icon-left] .tab-badge,
+[tabsLayout=icon-right] .tab-badge,
+[tabsLayout=icon-start] .tab-badge,
+[tabsLayout=icon-end] .tab-badge {
+  right: calc(50% - 50px);
+}
+
+.tabs-wp .tabbar {
+  background: #f8f8f8;
+}
+
+.tabs-wp .tab-button {
+  border-radius: 0;
+  min-height: 4.8rem;
+  border-bottom: 2px solid transparent;
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: rgba(140, 140, 140, 0.7);
+  box-shadow: none;
+  padding: 12px 10px 5px;
+}
+
+.tabs-wp .tab-button[aria-selected=true] {
+  border-bottom-color: #327eff;
+  color: #327eff;
+}
+
+.tabs-wp .tab-button.activated {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.tabs-wp[tabsPlacement=bottom] .tab-button {
+  border-top: 2px solid transparent;
+  border-bottom-width: 0;
+}
+
+.tabs-wp[tabsPlacement=bottom] .tab-button[aria-selected=true] {
+  border-top-color: #327eff;
+}
+
+.tabs-wp .tab-button-text {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.tabs-wp .tab-button-icon {
+  min-width: 2.4rem;
+  font-size: 2.4rem;
+  color: rgba(140, 140, 140, 0.7);
+}
+
+.tabs-wp .tab-button[aria-selected=true] .tab-button-icon {
+  color: #327eff;
+}
+
+.tabs-wp[tabsLayout=icon-bottom] .tab-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.tabs-wp[tabsLayout=icon-right] .tab-button,
+.tabs-wp[tabsLayout=icon-left] .tab-button,
+.tabs-wp[tabsLayout=icon-end] .tab-button,
+.tabs-wp[tabsLayout=icon-start] .tab-button {
+  padding-bottom: 10px;
+}
+
+.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-end] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-start] .tab-button ion-icon {
+  min-width: 24px;
+}
+
+.tabs-wp[tabsLayout=icon-hide] .tab-button,
+.tabs-wp[tabsLayout=title-hide] .tab-button,
+.tabs-wp .tab-button.icon-only,
+.tabs-wp .tab-button.has-title-only {
+  padding: 6px 10px;
+}
+
+.tabs-wp-primary .tabbar {
+  background-color: #327eff;
+}
+
+.tabs-wp-primary .tab-button,
+.tabs-wp-primary .tab-button-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabs-wp-primary .tab-button:hover:not(.disable-hover),
+.tabs-wp-primary .tab-button:hover:not(.disable-hover) .tab-button-icon,
+.tabs-wp-primary .tab-button[aria-selected=true],
+.tabs-wp-primary .tab-button[aria-selected=true] .tab-button-icon {
+  border-color: #fff;
+  color: #fff;
+}
+
+.tabs-wp-secondary .tabbar {
+  background-color: #32db64;
+}
+
+.tabs-wp-secondary .tab-button,
+.tabs-wp-secondary .tab-button-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabs-wp-secondary .tab-button:hover:not(.disable-hover),
+.tabs-wp-secondary .tab-button:hover:not(.disable-hover) .tab-button-icon,
+.tabs-wp-secondary .tab-button[aria-selected=true],
+.tabs-wp-secondary .tab-button[aria-selected=true] .tab-button-icon {
+  border-color: #fff;
+  color: #fff;
+}
+
+.tabs-wp-danger .tabbar {
+  background-color: #f53d3d;
+}
+
+.tabs-wp-danger .tab-button,
+.tabs-wp-danger .tab-button-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabs-wp-danger .tab-button:hover:not(.disable-hover),
+.tabs-wp-danger .tab-button:hover:not(.disable-hover) .tab-button-icon,
+.tabs-wp-danger .tab-button[aria-selected=true],
+.tabs-wp-danger .tab-button[aria-selected=true] .tab-button-icon {
+  border-color: #fff;
+  color: #fff;
+}
+
+.tabs-wp-light .tabbar {
+  background-color: #f4f4f4;
+}
+
+.tabs-wp-light .tab-button,
+.tabs-wp-light .tab-button-icon {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tabs-wp-light .tab-button:hover:not(.disable-hover),
+.tabs-wp-light .tab-button:hover:not(.disable-hover) .tab-button-icon,
+.tabs-wp-light .tab-button[aria-selected=true],
+.tabs-wp-light .tab-button[aria-selected=true] .tab-button-icon {
+  border-color: #000;
+  color: #000;
+}
+
+.tabs-wp-dark .tabbar {
+  background-color: #222;
+}
+
+.tabs-wp-dark .tab-button,
+.tabs-wp-dark .tab-button-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabs-wp-dark .tab-button:hover:not(.disable-hover),
+.tabs-wp-dark .tab-button:hover:not(.disable-hover) .tab-button-icon,
+.tabs-wp-dark .tab-button[aria-selected=true],
+.tabs-wp-dark .tab-button[aria-selected=true] .tab-button-icon {
+  border-color: #fff;
+  color: #fff;
+}
+
+ion-tab.💎,
+ion-tab-bar.💎,
+ion-tab-button.💎,
+ion-tab-highlight.💎,
+ion-tabs.💎 {
+  visibility: inherit;
+}

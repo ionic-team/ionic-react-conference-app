@@ -483,9 +483,21 @@
             "components/fixed/fixed.scss"
           ]
         },
-        "ios": {},
-        "md": {},
-        "wp": {}
+        "ios": {
+          "stylePaths": [
+            "components/fixed/fixed.scss"
+          ]
+        },
+        "md": {
+          "stylePaths": [
+            "components/fixed/fixed.scss"
+          ]
+        },
+        "wp": {
+          "stylePaths": [
+            "components/fixed/fixed.scss"
+          ]
+        }
       },
       "hostElement": "el",
       "slot": "hasSlots"
@@ -704,6 +716,109 @@
       }
     },
     {
+      "tag": "ion-input",
+      "componentClass": "Input",
+      "componentPath": "components/input/input.js",
+      "styles": {
+        "ios": {
+          "stylePaths": [
+            "components/input/input.ios.scss"
+          ]
+        },
+        "md": {
+          "stylePaths": [
+            "components/input/input.md.scss"
+          ]
+        },
+        "wp": {
+          "stylePaths": [
+            "components/input/input.wp.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "autocomplete"
+        },
+        {
+          "name": "autocorrect"
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean"
+        },
+        {
+          "name": "checked",
+          "type": "boolean"
+        },
+        {
+          "name": "clearInput",
+          "type": "boolean"
+        },
+        {
+          "name": "clearOnEdit",
+          "type": "boolean",
+          "stateful": true
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "max"
+        },
+        {
+          "name": "min"
+        },
+        {
+          "name": "placeholder"
+        },
+        {
+          "name": "readonly",
+          "type": "boolean"
+        },
+        {
+          "name": "spellcheck",
+          "type": "boolean"
+        },
+        {
+          "name": "step"
+        },
+        {
+          "name": "type"
+        },
+        {
+          "name": "value",
+          "stateful": true
+        }
+      ],
+      "propsDidChange": [
+        {
+          "name": "checked",
+          "method": "setChecked"
+        },
+        {
+          "name": "disabled",
+          "method": "setDisabled"
+        }
+      ],
+      "events": [
+        {
+          "event": "ionBlur"
+        },
+        {
+          "event": "ionFocus"
+        },
+        {
+          "event": "ionStyle"
+        }
+      ],
+      "hostElement": "el",
+      "host": {
+        "theme": "input"
+      }
+    },
+    {
       "tag": "ion-item",
       "componentClass": "Item",
       "componentPath": "components/item/item.js",
@@ -871,6 +986,25 @@
           ]
         }
       },
+      "props": [
+        {
+          "name": "fixed",
+          "type": "boolean"
+        },
+        {
+          "name": "floating",
+          "type": "boolean"
+        },
+        {
+          "name": "stacked",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "event": "ionStyle"
+        }
+      ],
       "host": {
         "theme": "label"
       },
@@ -1541,6 +1675,11 @@
           "capture": false
         }
       ],
+      "events": [
+        {
+          "event": "ionChange"
+        }
+      ],
       "hostElement": "el",
       "host": {
         "theme": "segment"
@@ -1680,6 +1819,47 @@
         {
           "name": "zoom",
           "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "event": "ionSlideDidChange"
+        },
+        {
+          "event": "ionSlideDrag"
+        },
+        {
+          "event": "ionSlideNextEnd"
+        },
+        {
+          "event": "ionSlideNextStarto"
+        },
+        {
+          "event": "ionSlidePrevEnd"
+        },
+        {
+          "event": "ionSlidePrevStart"
+        },
+        {
+          "event": "ionSlideReachEnd"
+        },
+        {
+          "event": "ionSlideReachStart"
+        },
+        {
+          "event": "ionSlideTouchEnd"
+        },
+        {
+          "event": "ionSlideTouchStart"
+        },
+        {
+          "event": "ionSlideTransitionEnd"
+        },
+        {
+          "event": "ionSlideTransitionStart"
+        },
+        {
+          "event": "ionSlideWillChange"
         }
       ],
       "hostElement": "el",
@@ -2136,6 +2316,11 @@
       "components": [
         "ion-gesture",
         "ion-scroll"
+      ]
+    },
+    {
+      "components": [
+        "ion-input"
       ]
     },
     {

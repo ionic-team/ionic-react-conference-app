@@ -94,7 +94,8 @@ var Searchbar = (function () {
     Searchbar.prototype.inputChanged = function (ev) {
         this.value = ev.target.value;
         // this._inputDebouncer.debounce(() => {
-        //   this.ionInput.emit(ev);
+        // TODO fix to be inside debounce
+        this.ionInput.emit(ev);
         // });
     };
     /**

@@ -18,9 +18,13 @@ var Segment = (function () {
         }
     };
     Segment.prototype.segmentClick = function (ev) {
-        var selectedButton = ev.segmentButton;
+        var selectedButton = ev.detail.segmentButton;
         this.value = selectedButton.value;
         this.selectButton(this.value);
+        var event = {
+            'segment': this
+        };
+        this.ionChange.emit(event);
     };
     Segment.prototype.selectButton = function (val) {
         for (var i = 0; i < this.buttons.length; i++) {

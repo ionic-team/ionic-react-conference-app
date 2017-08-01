@@ -74,12 +74,6 @@ var Slides = (function () {
                 h(0, 0)),
             h("div", { "c": { "swiper-pagination": true, "hide": !this.pager } })));
     };
-    Slides.prototype.emitEvent = function (eventName) {
-        var _this = this;
-        return function (data) {
-            Core.emit(_this.el, eventName, data);
-        };
-    };
     Slides.prototype._initSlides = function () {
         if (!this._init) {
             console.debug("ion-slides, init");
@@ -176,25 +170,19 @@ var Slides = (function () {
                 nextSlideMessage: 'Next slide',
                 firstSlideMessage: 'This is the first slide',
                 lastSlideMessage: 'This is the last slide',
-                onSlideChangeStart: this.emitEvent('ionSlideWillChange'),
-                onSlideChangeEnd: this.emitEvent('ionSlideDidChange'),
-                onAutoplay: this.emitEvent('ionSlideAutoplay'),
-                onAutoplayStart: this.emitEvent('ionSlideAutoplayStart'),
-                onAutoplayStop: this.emitEvent('ionSlideAutoplayStop'),
-                onSlideNextStart: this.emitEvent('ionSlideNextStarto'),
-                onSlidePrevStart: this.emitEvent('ionSlidePrevStart'),
-                onSlideNextEnd: this.emitEvent('ionSlideNextEnd'),
-                onSlidePrevEnd: this.emitEvent('ionSlidePrevEnd'),
-                onTransitionStart: this.emitEvent('ionSlideTransitionStart'),
-                onTransitionEnd: this.emitEvent('ionSlideTransitionEnd'),
-                onTap: this.emitEvent('ionSlideTap'),
-                onDoubleTap: this.emitEvent('ionSlideDoubleTap'),
-                onProgress: this.emitEvent('ionSlideProgress'),
-                onSliderMove: this.emitEvent('ionSlideDrag'),
-                onReachBeginning: this.emitEvent('ionSlideReachStart'),
-                onReachEnd: this.emitEvent('ionSlideReachEnd'),
-                onTouchStart: this.emitEvent('ionSlideTouchStart'),
-                onTouchEnd: this.emitEvent('ionSlideTouchEnd')
+                onSlideChangeStart: this.ionSlideWillChange.emit,
+                onSlideChangeEnd: this.ionSlideDidChange.emit,
+                onSlideNextStart: this.ionSlideNextStarto.emit,
+                onSlidePrevStart: this.ionSlidePrevStart.emit,
+                onSlideNextEnd: this.ionSlideNextEnd.emit,
+                onSlidePrevEnd: this.ionSlidePrevEnd.emit,
+                onTransitionStart: this.ionSlideTransitionStart.emit,
+                onTransitionEnd: this.ionSlideTransitionEnd.emit,
+                onSliderMove: this.ionSlideDrag.emit,
+                onReachBeginning: this.ionSlideReachStart.emit,
+                onReachEnd: this.ionSlideReachEnd.emit,
+                onTouchStart: this.ionSlideTouchStart.emit,
+                onTouchEnd: this.ionSlideTouchEnd.emit,
             };
             // init swiper core
             this.swiper = new Swiper(this.container, swiperOptions);
