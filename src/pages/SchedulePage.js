@@ -3,9 +3,23 @@ import SessionContainer from '../containers/Session';
 import SessionList from '../components/SessionList';
 import './Schedule.scss';
 
+function augmentWc(obj = {}) {
+  return (el) => {
+    if (!el || el.$instance) return;
+    Object.entries(obj).forEach(([name, value]) => {
+      el.addEventListener('ionChange', value)
+    });
+  };
+}
+
+const Ionic = ({ children }) => {
+  debugger;
+};
+
 const SchedulePage = () => (
   <SessionContainer>
     {(props) => (
+      <Ionic>
       <ion-page class="page-schedule">
         <ion-header md-height="96px" ios-height="96px">
           <ion-navbar no-border-bottom>
@@ -14,14 +28,14 @@ const SchedulePage = () => (
                 <ion-icon slot="icon-only" name="menu"></ion-icon>
               </ion-button>
             </ion-buttons>
-
-            <ion-segment value={props.filterFavorites} ref={(el) => {
-              el.ionChange = (e) => console.log(e);
-            }}>
-              <ion-segment-button value={false}>
+            <ion-segment
+              value={props.filterFavorites}
+              ionChange={(e) => props.updateFavoriteFilter(e.target.value)}
+            >
+              <ion-segment-button value="all">
                 All
               </ion-segment-button>
-              <ion-segment-button value={true}>
+              <ion-segment-button value="favorites">
                 Favorites
               </ion-segment-button>
             </ion-segment>
@@ -77,6 +91,7 @@ const SchedulePage = () => (
           </ion-fab>
         </ion-fixed>
       </ion-page>
+      </Ionic>
     )}
   </SessionContainer>
 );

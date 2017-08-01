@@ -4,8 +4,7 @@ export const REMOVE_TRACK_FILTER = 'REMOVE_TRACK_FILTER';
 export const REFRESH_TRACK_FILTERS = 'REFRESH_TRACK_FILTERS';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
-export const ADD_FAVORITE_FILTER = 'ADD_FAVORITE_FILTER';
-export const REMOVE_FAVORITE_FILTER = 'REMOVE_FAVORITE_FILTER';
+export const UPDATE_FAVORITE_FILTER = 'UPDATE_FAVORITE_FILTER';
 
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const LOG_IN_USER = 'LOG_IN_USER';
@@ -56,15 +55,10 @@ export const removeFavoriteSession = (sessionId) => (
   }
 );
 
-export const addFavoriteFilter = () => (
+export const updateFavoriteFilter = (filterFavorites) => (
   {
-    type: ADD_FAVORITE_FILTER
-  }
-);
-
-export const removeFavoriteFilter = () => (
-  {
-    type: REMOVE_FAVORITE_FILTER
+    type: UPDATE_FAVORITE_FILTER,
+    filterFavorites
   }
 );
 
@@ -102,4 +96,4 @@ export const updateSeenTutorial = (hasSeenTutorial) => (
     type: UPDATE_SEEN_TUTORIAL,
     hasSeenTutorial
   }
-)
+);

@@ -17,7 +17,8 @@ let store = createStore(conferenceApp, {
       searchText: '',
       trackFilters: [],
       sessions,
-      filterFavorites: false
+      favoriteSessions: [],
+      filterFavorites: 'all'
     },
     speakers: speakers
   },
