@@ -4,7 +4,6 @@ import SessionList from '../components/SessionList';
 import { wc } from '../utils/stencil';
 import './Schedule.scss';
 
-
 const SchedulePage = () => (
   <SessionContainer>
     {(props) => (
@@ -56,6 +55,14 @@ const SchedulePage = () => (
             sessions={props.filteredSessions}
             addFavoriteSession={props.addFavoriteSession}
             removeFavoriteSession={props.removeFavoriteSession}
+            hidden={props.filterFavorites !== "all"}
+            filterFavorites={props.filterFavorites}
+          />
+          <SessionList
+            sessions={props.filteredSessions.filter(session => props.favoriteSessions.includes(session.id))}
+            addFavoriteSession={props.addFavoriteSession}
+            removeFavoriteSession={props.removeFavoriteSession}
+            hidden={props.filterFavorites !== "favorites"}
             filterFavorites={props.filterFavorites}
           />
         </ion-content>

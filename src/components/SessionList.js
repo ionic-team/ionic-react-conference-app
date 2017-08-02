@@ -30,11 +30,11 @@ function groupByStartTime(sessions) {
   }, []);
 }
 
-export default withRouter(({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, history}) => {
+export default withRouter(({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, hidden, history}) => {
 
   if (sessions.length === 0) {
     return (
-      <ion-list>
+      <ion-list style={hidden ? {display: 'none'} : {}}>
         <ion-list-header>
           No Sessions Found
         </ion-list-header>
@@ -45,7 +45,7 @@ export default withRouter(({sessions, addFavoriteSession, removeFavoriteSession,
   const groups = groupByStartTime(sessions);
 
   return (
-    <ion-list>
+    <ion-list style={hidden ? {display: 'none'} : {}}>
       { groups.map((group, index) => (
         <ion-item-group key={`group-${index}`}>
           <ion-item-divider sticky>

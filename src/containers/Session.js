@@ -21,10 +21,6 @@ const getVisibleSessions = (sessions, trackFilters, searchText, favoriteSessions
     ));
   }
 
-  if (filterFavorites === 'favorites') {
-    filteredSessions = filteredSessions.filter(session => favoriteSessions.includes(session.id));
-  }
-
   return filteredSessions;
 };
 
