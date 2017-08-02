@@ -11,7 +11,7 @@ export default ({ match, location, history }) => {
     <SessionDetail>
       {({ sessions, speakers }) => {
         const session = sessions.find(s => s.id === parseInt(match.params.sessionId, 10));
-        const sessionSpeakers = speakers.filter(s => session.speakerIds.contains(s.id));
+        const sessionSpeakers = speakers.filter(s => session.speakerIds.includes(s.id));
         return (
           <ion-page>
             <ion-header>

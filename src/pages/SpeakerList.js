@@ -138,7 +138,7 @@ export default () => (
               <SessionDetail>
                 {({ sessions, speakers }) => {
                   return speakers.map((speaker) => {
-                    const speakerSessions = sessions.filter(session => session.speakerIds.contains(speaker.id));
+                    const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
                     return <SpeakerItem key={speaker.id} speaker={speaker} speakerSessions={speakerSessions} />;
                   });
                 }}

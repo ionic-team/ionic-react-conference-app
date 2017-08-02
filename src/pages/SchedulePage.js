@@ -1,25 +1,13 @@
 import React from 'react';
 import SessionContainer from '../containers/Session';
 import SessionList from '../components/SessionList';
+import { wc } from '../utils/stencil';
 import './Schedule.scss';
 
-function augmentWc(obj = {}) {
-  return (el) => {
-    if (!el || el.$instance) return;
-    Object.entries(obj).forEach(([name, value]) => {
-      el.addEventListener('ionChange', value)
-    });
-  };
-}
-
-const Ionic = ({ children }) => {
-  debugger;
-};
 
 const SchedulePage = () => (
   <SessionContainer>
     {(props) => (
-      <Ionic>
       <ion-page class="page-schedule">
         <ion-header md-height="96px" ios-height="96px">
           <ion-navbar no-border-bottom>
@@ -30,7 +18,9 @@ const SchedulePage = () => (
             </ion-buttons>
             <ion-segment
               value={props.filterFavorites}
-              ionChange={(e) => props.updateFavoriteFilter(e.target.value)}
+              ref={wc({
+                ionChange: (e) => props.updateFavoriteFilter(e.target.value)
+              })}
             >
               <ion-segment-button value="all">
                 All
@@ -91,7 +81,6 @@ const SchedulePage = () => (
           </ion-fab>
         </ion-fixed>
       </ion-page>
-      </Ionic>
     )}
   </SessionContainer>
 );

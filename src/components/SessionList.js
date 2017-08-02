@@ -34,54 +34,52 @@ export default withRouter(({sessions, addFavoriteSession, removeFavoriteSession,
 
   if (sessions.length === 0) {
     return (
-      <div>
+      <ion-list>
         <ion-list-header>
           No Sessions Found
         </ion-list-header>
-      </div>
+      </ion-list>
     );
   }
 
   const groups = groupByStartTime(sessions);
 
   return (
-    <div>
-      <ion-list>
-        { groups.map((group, index) => (
-          <ion-item-group key={`group-${index}`}>
-            <ion-item-divider sticky>
-              <ion-label>
-                {formatTime(group.startTime, "h:MM tt")}
-              </ion-label>
-            </ion-item-divider>
-            { group.sessions.map((session, sessionIndex) => (
-              <ion-item-sliding key={`group-${index}-${sessionIndex}`} track={session.tracks[0].toLowerCase()}>
-                <ion-item href={`/sessions/${session.id}`} onClick={() => history.push(`/sessions/${session.id}`)}>
-                  <ion-label>
-                    <h3>{session.name}</h3>
-                    <p>
-                      {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;&nbsp;
-                      {formatTime(session.dateTimeEnd, "h:MM tt")}:&nbsp;
-                      {session.location}
-                    </p>
-                  </ion-label>
-                </ion-item>
-                <ion-item-options>
-                  { filterFavorites ?
-                    <ion-item-option color="danger" onClick={() => removeFavoriteSession(session.id)}>
-                      Remove
-                    </ion-item-option>
-                    :
-                    <ion-item-option color="favorite" onClick={() => addFavoriteSession(session.id)}>
-                      Favorite
-                    </ion-item-option>
-                  }
-                </ion-item-options>
-              </ion-item-sliding>
-            )) }
-          </ion-item-group>
-        )) }
-      </ion-list>
-    </div>
+    <ion-list>
+      { groups.map((group, index) => (
+        <ion-item-group key={`group-${index}`}>
+          <ion-item-divider sticky>
+            <ion-label>
+              {formatTime(group.startTime, "h:MM tt")}
+            </ion-label>
+          </ion-item-divider>
+          { group.sessions.map((session, sessionIndex) => (
+            <ion-item-sliding key={`group-${index}-${sessionIndex}`} track={session.tracks[0].toLowerCase()}>
+              <ion-item href={`/sessions/${session.id}`} onClick={() => history.push(`/sessions/${session.id}`)}>
+                <ion-label>
+                  <h3>{session.name}</h3>
+                  <p>
+                    {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;&nbsp;
+                    {formatTime(session.dateTimeEnd, "h:MM tt")}:&nbsp;
+                    {session.location}
+                  </p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options>
+                { filterFavorites !== 'all' ?
+                  <ion-item-option color="danger" onClick={() => removeFavoriteSession(session.id)}>
+                    Remove
+                  </ion-item-option>
+                  :
+                  <ion-item-option color="favorite" onClick={() => addFavoriteSession(session.id)}>
+                    Favorite
+                  </ion-item-option>
+                }
+              </ion-item-options>
+            </ion-item-sliding>
+          )) }
+        </ion-item-group>
+      )) }
+    </ion-list>
   );
 });
