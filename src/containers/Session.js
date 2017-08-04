@@ -10,7 +10,10 @@ const getVisibleSessions = (sessions, trackFilters, searchText, favoriteSessions
   let filteredSessions = sessions;
 
   if (searchText) {
-    filteredSessions = filteredSessions.filter(session => `${session.name} ${session.description}`.indexOf(searchText !== -1));
+    const lowerSearchText = searchText.toLowerCase();
+    filteredSessions = filteredSessions.filter(session => (
+      session.name.toLowerCase().indexOf(lowerSearchText) !== -1)
+    );
   }
 
   if (trackFilters.length > 0) {

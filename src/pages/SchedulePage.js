@@ -39,8 +39,10 @@ const SchedulePage = () => (
           <ion-toolbar no-border-top>
             <ion-searchbar
               color="primary"
-              ionInput={(e) => props.searchSessionsByName(e.value)}
               placeholder="Search"
+              ref={wc({
+                ionInput:(e) => props.searchSessionsByName(e.target.value)
+              })}
             >
             </ion-searchbar>
           </ion-toolbar>

@@ -4,43 +4,58 @@ import { wc } from '../../utils/stencil'
 
 export default class Test extends Component {
   render() {
+    const navViews = [{
+      name: 'test-page-one',
+      title: 'Test Page One',
+      getView: () => (TestPageOne)
+    }, {
+      name: 'test-page-two',
+      title: 'Test Page Two',
+      getView: () => (TestPageTwo)
+    }, {
+      name: 'test-page-three',
+      title: 'Test Page Three',
+      getView: () => (TestPageThree)
+    }]
     return (
       <ion-nav
         location={this.props.location.pathname}
-        ref={wc({},{
-          rootPage: TestPageOne,
-          renderChildren: renderChildren
+        root-page='test-page-one'
+        ref={wc({
+        },{
+          rootPage: 'test-page-one',
+          renderChildren: renderChildren(navViews)
         })}>
       </ion-nav>
     );
   }
 }
 
-function renderChildren(el, push, pop, pages) {
-  const nav = {
-    pop: pop,
-    push: push
-  }
-  ReactDOM.render(
-    pages.map(([Page, params], index, array) => {
-      const style = {};
-      if (index !== array.length - 1) {
-        style.display = 'none'
-      }
-      return (
-        <ion-page style={style}>
-          <Page key={index} nav={nav} params={params}></Page>
-        </ion-page>
-      )
-    }),
-    el
-  );
+function renderChildren(navViews) {
+  return (el, push, pop, viewNames) => {
+    const nav = {
+      pop: pop,
+      push: push
+    };
+    ReactDOM.render(
+      viewNames.map(([pageName, params], index, array) => {
+        const Page = navViews.find(view => view.name === pageName).getView();
+        const style = {};
+        if (index !== array.length - 1) {
+          style.display = 'none'
+        }
+        return (
+          <ion-page style={style}>
+            <Page key={index} nav={nav} params={params}></Page>
+          </ion-page>
+        )
+      }),
+      el
+    );
+  };
 }
 
 class TestPageOne extends Component {
-  stuffer() {
-    console.log('stuffed me');
-  }
   render() {
     return [
       <ion-header>
@@ -51,7 +66,9 @@ class TestPageOne extends Component {
       <ion-content>
         Page One Content
         <div>
-          <ion-button onClick={() => this.props.nav.push(TestPageTwo, { id: 1, name: 'Michael Scott'})}>Go to Page Two</ion-button>
+          <ion-button
+            onClick={() => this.props.nav.push('test-page-two', { id: 1, name: 'Michael Scott'})}
+          >Go to Page Two</ion-button>
         </div>
       </ion-content>
     ];
@@ -69,7 +86,7 @@ const TestPageTwo = ({ nav, style, params }) => {
       <span>{params.id} {params.name}</span>
       <div>
         <ion-button onClick={() => nav.pop()}>Go to Page One</ion-button>
-        <ion-button onClick={() => nav.push(TestPageThree)}>Go to Page Three</ion-button>
+        <ion-button onClick={() => nav.push('test-page-three')}>Go to Page Three</ion-button>
       </div>
     </ion-content>
   ];
