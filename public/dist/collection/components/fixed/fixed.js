@@ -1,4 +1,5 @@
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
+import { Ionic } from '../../index';
 var Fixed = (function () {
     function Fixed() {
     }

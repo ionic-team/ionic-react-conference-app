@@ -1,4 +1,5 @@
 import { createThemedClasses } from '../../utils/theme';
+import { Ionic } from '../../index';
 import { SPINNERS } from './spinner-configs';
 var Spinner = (function () {
     function Spinner() {

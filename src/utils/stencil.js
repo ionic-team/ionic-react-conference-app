@@ -1,14 +1,16 @@
 
-export function wc(obj = {}) {
+export function wc(events = {}, obj = {}) {
   let storedEl;
 
   return function (el) {
-    Object.entries(obj).forEach(([name, value]) => {
+    Object.entries(events).forEach(([name, value]) => {
       const action = (el) ? el.addEventListener : storedEl.removeEventListener;
       if (typeof value === 'function') {
         action(name, value);
         return;
       }
+    });
+    Object.entries(obj).forEach(([name, value]) => {
       el[name] = value;
     });
     storedEl = el;

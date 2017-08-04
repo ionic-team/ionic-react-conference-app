@@ -9,6 +9,206 @@ Ionic.defineComponents(
 
 /**** component modules ****/
 function importComponent(exports, h, t, Core, publicPath) {
+var CSS_PROP = function (docEle) {
+    var css = {};
+    // transform
+    var i;
+    var keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
+    for (i = 0; i < keys.length; i++) {
+        if (docEle.style[keys[i]] !== undefined) {
+            css.transformProp = keys[i];
+            break;
+        }
+    }
+    // transition
+    keys = ['webkitTransition', 'transition'];
+    for (i = 0; i < keys.length; i++) {
+        if (docEle.style[keys[i]] !== undefined) {
+            css.transitionProp = keys[i];
+            break;
+        }
+    }
+    // The only prefix we care about is webkit for transitions.
+    var prefix = css.transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
+    // transition duration
+    css.transitionDurationProp = prefix + 'transition-duration';
+    // transition timing function
+    css.transitionTimingFnProp = prefix + 'transition-timing-function';
+    return css;
+}(document.documentElement);
+
+/**
+ * iOS Loading Enter Animation
+ */
+
+/**
+ * iOS Loading Leave Animation
+ */
+
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+/**
+ * @hidden
+ * Menu Type
+ * Base class which is extended by the various types. Each
+ * type will provide their own animations for open and close
+ * and registers itself with Menu.
+ */
+var MenuType = (function () {
+    function MenuType() {
+        // Ionic.createAnimation().then(Animation => {
+        //   this.ani = new Animation();
+        // });;
+        // this.ani
+        //   .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
+        //   .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
+        //   .duration(280);
+    }
+    MenuType.prototype.setOpen = function (shouldOpen, animated, done) {
+        var ani = this.ani
+            .onFinish(done, { oneTimeCallback: true, clearExistingCallacks: true })
+            .reverse(!shouldOpen);
+        if (animated) {
+            ani.play();
+        }
+        else {
+            ani.syncPlay();
+        }
+    };
+    MenuType.prototype.setProgressStart = function (isOpen) {
+        this.isOpening = !isOpen;
+        // the cloned animation should not use an easing curve during seek
+        this.ani
+            .reverse(isOpen)
+            .progressStart();
+    };
+    MenuType.prototype.setProgessStep = function (stepValue) {
+        // adjust progress value depending if it opening or closing
+        this.ani.progressStep(stepValue);
+    };
+    MenuType.prototype.setProgressEnd = function (shouldComplete, currentStepValue, velocity, done) {
+        var _this = this;
+        var isOpen = (this.isOpening && shouldComplete);
+        if (!this.isOpening && !shouldComplete) {
+            isOpen = true;
+        }
+        var ani = this.ani;
+        ani.onFinish(function () {
+            _this.isOpening = false;
+            done(isOpen);
+        }, { clearExistingCallacks: true });
+        var factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
+        var dur = ani.getDuration() * factor;
+        ani.progressEnd(shouldComplete, currentStepValue, dur);
+    };
+    MenuType.prototype.destroy = function () {
+        this.ani.destroy();
+        this.ani = null;
+    };
+    return MenuType;
+}());
+/**
+ * @hidden
+ * Menu Reveal Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself, which is under the content, does not move.
+ */
+var MenuRevealType = (function (_super) {
+    __extends(MenuRevealType, _super);
+    function MenuRevealType() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MenuRevealType;
+}(MenuType));
+/**
+ * @hidden
+ * Menu Push Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself also slides over to reveal its bad self.
+ */
+var MenuPushType = (function (_super) {
+    __extends(MenuPushType, _super);
+    function MenuPushType() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MenuPushType;
+}(MenuType));
+/**
+ * @hidden
+ * Menu Overlay Type
+ * The menu slides over the content. The content
+ * itself, which is under the menu, does not move.
+ */
+var MenuOverlayType = (function (_super) {
+    __extends(MenuOverlayType, _super);
+    function MenuOverlayType() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MenuOverlayType;
+}(MenuType));
+
+var ModalController$$1 = (function () {
+    function ModalController$$1() {
+        this.ids = 0;
+        this.modalResolves = {};
+        this.modals = [];
+    }
+    ModalController$$1.prototype["componentDidLoad"] = function () {
+        this.appRoot = document.querySelector('ion-app') || document.body;
+        Ionic.registerController('modal', this);
+    };
+    ModalController$$1.prototype.load = function (opts) {
+        var _this = this;
+        // create ionic's wrapping ion-modal component
+        var modal = document.createElement('ion-modal');
+        var id = this.ids++;
+        // give this modal a unique id
+        modal.id = "modal-" + id;
+        modal.style.zIndex = (10000 + id).toString();
+        // convert the passed in modal options into props
+        // that get passed down into the new modal
+        Object.assign(modal, opts);
+        // append the modal element to the document body
+        this.appRoot.appendChild(modal);
+        // store the resolve function to be called later up when the modal loads
+        return new Promise(function (resolve) {
+            _this.modalResolves[modal.id] = resolve;
+        });
+    };
+    ModalController$$1.prototype.modalDidLoad = function (ev) {
+        var modal = ev.detail.modal;
+        var modalResolve = this.modalResolves[modal.id];
+        if (modalResolve) {
+            modalResolve(modal);
+            delete this.modalResolves[modal.id];
+        }
+    };
+    ModalController$$1.prototype.modalWillPresent = function (ev) {
+        this.modals.push(ev.detail.modal);
+    };
+    ModalController$$1.prototype.modalWillDismiss = function (ev) {
+        var index = this.modals.indexOf(ev.detail.modal);
+        if (index > -1) {
+            this.modals.splice(index, 1);
+        }
+    };
+    ModalController$$1.prototype.escapeKeyUp = function () {
+        var lastModal = this.modals[this.modals.length - 1];
+        if (lastModal) {
+            lastModal.dismiss();
+        }
+    };
+    return ModalController$$1;
+}());
+
 function createThemedClasses(mode, color, classList) {
     var allClassObj = {};
     return classList.split(' ')
@@ -25,14 +225,16 @@ function createThemedClasses(mode, color, classList) {
     }, allClassObj);
 }
 
+var Ionic = window.Ionic;
+
 /**
  * iOS Modal Enter Animation
  */
-var iOSEnterAnimation = function (baseElm) {
-    var baseAnimation = new Ionic.Animation();
-    var backdropAnimation = new Ionic.Animation();
+var iOSEnterAnimation$1 = function (Animation, baseElm) {
+    var baseAnimation = new Animation();
+    var backdropAnimation = new Animation();
     backdropAnimation.addElement(baseElm.querySelector('.modal-backdrop'));
-    var wrapperAnimation = new Ionic.Animation();
+    var wrapperAnimation = new Animation();
     wrapperAnimation.addElement(baseElm.querySelector('.modal-wrapper'));
     wrapperAnimation.beforeStyles({ 'opacity': 1 })
         .fromTo('translateY', '100%', '0%');
@@ -101,11 +303,11 @@ var iOSEnterAnimation = function (baseElm) {
 /**
  * iOS Modal Leave Animation
  */
-var iOSLeaveAnimation = function (baseElm) {
-    var baseAnimation = new Ionic.Animation();
-    var backdropAnimation = new Ionic.Animation();
+var iOSLeaveAnimation$1 = function (Animation, baseElm) {
+    var baseAnimation = new Animation();
+    var backdropAnimation = new Animation();
     backdropAnimation.addElement(baseElm.querySelector('.modal-backdrop'));
-    var wrapperAnimation = new Ionic.Animation();
+    var wrapperAnimation = new Animation();
     var wrapperElm = baseElm.querySelector('.modal-wrapper');
     wrapperAnimation.addElement(wrapperElm);
     var wrapperElmRect = wrapperElm.getBoundingClientRect();
@@ -120,27 +322,27 @@ var iOSLeaveAnimation = function (baseElm) {
         .add(wrapperAnimation);
 };
 
-var Modal = (function () {
-    function Modal() {
+var Modal$$1 = (function () {
+    function Modal$$1() {
         this.componentProps = {};
         this.enableBackdropDismiss = true;
         this.showBackdrop = true;
     }
-    Modal.prototype.onDismiss = function (ev) {
+    Modal$$1.prototype.onDismiss = function (ev) {
         ev.stopPropagation();
         ev.preventDefault();
         this.dismiss();
     };
-    Modal.prototype["componentDidLoad"] = function () {
+    Modal$$1.prototype["componentDidLoad"] = function () {
         this.ionModalDidLoad.emit({ modal: this });
     };
-    Modal.prototype.present = function () {
+    Modal$$1.prototype.present = function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this._present(resolve);
         });
     };
-    Modal.prototype._present = function (resolve) {
+    Modal$$1.prototype._present = function (resolve) {
         var _this = this;
         if (this.animation) {
             this.animation.destroy();
@@ -153,17 +355,19 @@ var Modal = (function () {
             // user did not provide a custom animation fn
             // decide from the config which animation to use
             // TODO!!
-            animationBuilder = iOSEnterAnimation;
+            animationBuilder = iOSEnterAnimation$1;
         }
-        // build the animation and kick it off
-        this.animation = animationBuilder(this.el);
-        this.animation.onFinish(function (a) {
-            a.destroy();
-            _this.ionModalDidPresent.emit({ modal: _this });
-            resolve();
-        }).play();
+        Ionic.controller('animation').then(function (Animation) {
+            // build the animation and kick it off
+            _this.animation = animationBuilder(Animation, _this.el);
+            _this.animation.onFinish(function (a) {
+                a.destroy();
+                _this.ionModalDidPresent.emit({ modal: _this });
+                resolve();
+            }).play();
+        });
     };
-    Modal.prototype.dismiss = function () {
+    Modal$$1.prototype.dismiss = function () {
         var _this = this;
         if (this.animation) {
             this.animation.destroy();
@@ -177,24 +381,26 @@ var Modal = (function () {
                 // user did not provide a custom animation fn
                 // decide from the config which animation to use
                 // TODO!!
-                animationBuilder = iOSLeaveAnimation;
+                animationBuilder = iOSLeaveAnimation$1;
             }
             // build the animation and kick it off
-            _this.animation = animationBuilder(_this.el);
-            _this.animation.onFinish(function (a) {
-                a.destroy();
-                _this.ionModalDidDismiss.emit({ modal: _this });
-                Core.dom.write(function () {
-                    _this.el.parentNode.removeChild(_this.el);
-                });
-                resolve();
-            }).play();
+            Ionic.controller('animation').then(function (Animation) {
+                _this.animation = animationBuilder(Animation, _this.el);
+                _this.animation.onFinish(function (a) {
+                    a.destroy();
+                    _this.ionModalDidDismiss.emit({ modal: _this });
+                    Core.dom.write(function () {
+                        _this.el.parentNode.removeChild(_this.el);
+                    });
+                    resolve();
+                }).play();
+            });
         });
     };
-    Modal.prototype["componentDidunload"] = function () {
+    Modal$$1.prototype["componentDidunload"] = function () {
         this.ionModalDidUnload.emit({ modal: this });
     };
-    Modal.prototype.backdropClick = function () {
+    Modal$$1.prototype.backdropClick = function () {
         if (this.enableBackdropDismiss) {
             // const opts: NavOptions = {
             //   minClickBlockDuration: 400
@@ -202,7 +408,7 @@ var Modal = (function () {
             this.dismiss();
         }
     };
-    Modal.prototype.render = function () {
+    Modal$$1.prototype.render = function () {
         var ThisComponent = this.component;
         var userCssClasses = 'modal-content';
         if (this.cssClass) {
@@ -216,65 +422,11 @@ var Modal = (function () {
                 h(ThisComponent, { "p": this.componentProps, "c": thisComponentClasses }))
         ];
     };
-    return Modal;
+    return Modal$$1;
 }());
 
-var ModalController = (function () {
-    function ModalController() {
-        this.ids = 0;
-        this.modalResolves = {};
-        this.modals = [];
-    }
-    ModalController.prototype["componentDidLoad"] = function () {
-        this.appRoot = document.querySelector('ion-app') || document.body;
-        Ionic.loadController('modal', this);
-    };
-    ModalController.prototype.load = function (opts) {
-        var _this = this;
-        // create ionic's wrapping ion-modal component
-        var modal = document.createElement('ion-modal');
-        var id = this.ids++;
-        // give this modal a unique id
-        modal.id = "modal-" + id;
-        modal.style.zIndex = (10000 + id).toString();
-        // convert the passed in modal options into props
-        // that get passed down into the new modal
-        Object.assign(modal, opts);
-        // append the modal element to the document body
-        this.appRoot.appendChild(modal);
-        // store the resolve function to be called later up when the modal loads
-        return new Promise(function (resolve) {
-            _this.modalResolves[modal.id] = resolve;
-        });
-    };
-    ModalController.prototype.viewDidLoad = function (ev) {
-        var modal = ev.modal;
-        var modalResolve = this.modalResolves[modal.id];
-        if (modalResolve) {
-            modalResolve(modal);
-            delete this.modalResolves[modal.id];
-        }
-    };
-    ModalController.prototype.willPresent = function (ev) {
-        this.modals.push(ev.modal);
-    };
-    ModalController.prototype.willDismiss = function (ev) {
-        var index = this.modals.indexOf(ev.modal);
-        if (index > -1) {
-            this.modals.splice(index, 1);
-        }
-    };
-    ModalController.prototype.escapeKeyUp = function () {
-        var lastModal = this.modals[this.modals.length - 1];
-        if (lastModal) {
-            lastModal.dismiss();
-        }
-    };
-    return ModalController;
-}());
-
-exports['ION-MODAL'] = Modal;
-exports['ION-MODAL-CONTROLLER'] = ModalController;
+exports['ION-MODAL'] = Modal$$1;
+exports['ION-MODAL-CONTROLLER'] = ModalController$$1;
 },
 
 

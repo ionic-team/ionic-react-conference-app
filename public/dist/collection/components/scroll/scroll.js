@@ -1,4 +1,5 @@
 import { GestureController } from '../gesture/gesture-controller';
+import { Ionic } from '../../index';
 var Scroll = (function () {
     function Scroll() {
         this.positions = [];

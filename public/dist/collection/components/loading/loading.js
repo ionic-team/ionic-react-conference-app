@@ -1,3 +1,4 @@
+import { Ionic } from '../../index';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 var Loading = (function () {
@@ -53,12 +54,14 @@ var Loading = (function () {
             animationBuilder = iOSEnterAnimation;
         }
         // build the animation and kick it off
-        this.animation = animationBuilder(this.el);
-        this.animation.onFinish(function (a) {
-            a.destroy();
-            _this.ionViewDidEnter();
-            resolve();
-        }).play();
+        Ionic.controller('animation').then(function (Animation) {
+            _this.animation = new Animation();
+            _this.animation.onFinish(function (a) {
+                a.destroy();
+                _this.ionViewDidEnter();
+                resolve();
+            }).play();
+        });
     };
     Loading.prototype.dismiss = function () {
         var _this = this;
@@ -67,26 +70,28 @@ var Loading = (function () {
             this.animation.destroy();
             this.animation = null;
         }
-        return new Promise(function (resolve) {
-            _this.ionLoadingWillDismiss.emit({ loading: _this });
-            // get the user's animation fn if one was provided
-            var animationBuilder = _this.exitAnimation;
-            if (!animationBuilder) {
-                // user did not provide a custom animation fn
-                // decide from the config which animation to use
-                // TODO!!
-                animationBuilder = iOSLeaveAnimation;
-            }
-            // build the animation and kick it off
-            _this.animation = animationBuilder(_this.el);
-            _this.animation.onFinish(function (a) {
-                a.destroy();
-                _this.ionLoadingDidDismiss.emit({ loading: _this });
-                Core.dom.write(function () {
-                    _this.el.parentNode.removeChild(_this.el);
-                });
-                resolve();
-            }).play();
+        return Ionic.controller('animation').then(function (Animation) {
+            return new Promise(function (resolve) {
+                _this.ionLoadingWillDismiss.emit({ loading: _this });
+                // get the user's animation fn if one was provided
+                var animationBuilder = _this.exitAnimation;
+                if (!animationBuilder) {
+                    // user did not provide a custom animation fn
+                    // decide from the config which animation to use
+                    // TODO!!
+                    animationBuilder = iOSLeaveAnimation;
+                }
+                // build the animation and kick it off
+                _this.animation = animationBuilder(Animation, _this.el);
+                _this.animation.onFinish(function (a) {
+                    a.destroy();
+                    _this.ionLoadingDidDismiss.emit({ loading: _this });
+                    Core.dom.write(function () {
+                        _this.el.parentNode.removeChild(_this.el);
+                    });
+                    resolve();
+                }).play();
+            });
         });
     };
     Loading.prototype["componentDidunload"] = function () {

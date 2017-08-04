@@ -1,3 +1,4 @@
+import { Ionic } from '../../index';
 var ModalController = (function () {
     function ModalController() {
         this.ids = 0;
@@ -6,7 +7,7 @@ var ModalController = (function () {
     }
     ModalController.prototype["componentDidLoad"] = function () {
         this.appRoot = document.querySelector('ion-app') || document.body;
-        Ionic.loadController('modal', this);
+        Ionic.registerController('modal', this);
     };
     ModalController.prototype.load = function (opts) {
         var _this = this;
@@ -26,19 +27,19 @@ var ModalController = (function () {
             _this.modalResolves[modal.id] = resolve;
         });
     };
-    ModalController.prototype.viewDidLoad = function (ev) {
-        var modal = ev.modal;
+    ModalController.prototype.modalDidLoad = function (ev) {
+        var modal = ev.detail.modal;
         var modalResolve = this.modalResolves[modal.id];
         if (modalResolve) {
             modalResolve(modal);
             delete this.modalResolves[modal.id];
         }
     };
-    ModalController.prototype.willPresent = function (ev) {
-        this.modals.push(ev.modal);
+    ModalController.prototype.modalWillPresent = function (ev) {
+        this.modals.push(ev.detail.modal);
     };
-    ModalController.prototype.willDismiss = function (ev) {
-        var index = this.modals.indexOf(ev.modal);
+    ModalController.prototype.modalWillDismiss = function (ev) {
+        var index = this.modals.indexOf(ev.detail.modal);
         if (index > -1) {
             this.modals.splice(index, 1);
         }

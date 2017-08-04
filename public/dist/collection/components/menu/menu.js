@@ -1,4 +1,4 @@
-import { MenuController } from './menu-controller';
+import { Ionic } from '../../index';
 var Menu = (function () {
     function Menu() {
         this._init = false;
@@ -23,8 +23,6 @@ var Menu = (function () {
          * @input {boolean} If true, the menu will persist on child pages.
          */
         this.persistent = false;
-        // get or create the MenuController singleton
-        this._ctrl = Ionic.controllers.menu = (Ionic.controllers.menu || new MenuController());
     }
     Menu.prototype.swipeEnabledChange = function (isEnabled) {
         this.swipeEnable(isEnabled);

@@ -1,3 +1,4 @@
+import { Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
 var Content = (function () {

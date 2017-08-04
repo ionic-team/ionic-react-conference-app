@@ -1,4 +1,5 @@
 import { createThemedClasses } from '../../utils/theme';
+import { Ionic } from '../../index';
 var Toolbar = (function () {
     function Toolbar() {
     }

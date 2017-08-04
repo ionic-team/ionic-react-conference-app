@@ -121,18 +121,13 @@
     }
 
     // create the Ionic global (if one doesn't exist)
-    var Ionic = window['Ionic'] = window['Ionic'] || {};
-    // create the Ionic.config from raw config object (if it exists)
-    // and convert Ionic.config into a ConfigApi that has a get() fn
-    Ionic.config = createConfigController(Ionic.config, detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core'));
-    // get the mode via config settings and set it to
-    // both Ionic and the Core global
-    Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');
+    var Ionic = window.Ionic = window.Ionic || {};
     // used to store the queued controller promises to
     // be resolved when the controller finishes loading
     var queuedCtrlResolves = {};
     // create a container for all of the controllers that get loaded
     Ionic.controllers = {};
+    // create the public method to load controllers
     Ionic.controller = function (ctrlName, opts) {
         // loading a controller is always async so return a promise
         return new Promise(function (resolve) {
@@ -164,7 +159,8 @@
             }
         });
     };
-    Ionic.loadController = function (ctrlName, ctrl) {
+    // create the method controllers will call once their instance has loaded
+    Ionic.registerController = function (ctrlName, ctrl) {
         // this method is called when the singleton
         // instance of our controller initially loads
         // add this controller instance to our map of controller singletons
@@ -196,6 +192,12 @@
             resolve(ctrl);
         }
     }
+    // create the Ionic.config from raw config object (if it exists)
+    // and convert Ionic.config into a ConfigApi that has a get() fn
+    Ionic.config = createConfigController(Ionic.config, detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core'));
+    // get the mode via config settings and set it to
+    // both Ionic and the Core global
+    Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');
 })(publicPath);
 
 (function (window, document, Core, appNamespace, publicPath) {
@@ -321,6 +323,17 @@
     /**
      * File names and value
      */
+
+    /**
+     * Errors
+     */
+
+    var QUEUE_EVENTS_ERROR = 2;
+    var WILL_LOAD_ERROR = 3;
+    var DID_LOAD_ERROR = 4;
+    var INIT_INSTANCE_ERROR = 5;
+    var RENDER_ERROR = 6;
+    var INITIAL_LOAD_ERROR = 7;
 
     function initElementListeners(plt, elm) {
         // so the element was just connected, which means it's in the DOM
@@ -1532,6 +1545,9 @@
             // we do this now so that we can listening to events that may
             // have fired even before the instance is ready
             initElementListeners(plt, elm);
+            // register this component as an actively
+            // loading child to its parent component
+            registerWithParentComponent(plt, elm);
             // add to the queue to load the bundle
             // it's important to have an async tick in here so we can
             // ensure the "mode" attribute has been added to the element
@@ -1540,9 +1556,6 @@
             plt.queue.add(function () {
                 // get the component meta data about this component
                 var cmpMeta = plt.getComponentMeta(elm);
-                // async tick has happened, so all of the child
-                // nodes and host attributes should now be in the DOM
-                collectHostContent(plt, elm);
                 // only collects slot references if this component even has slots
                 plt.connectHostElement(elm, cmpMeta.slotMeta);
                 // start loading this component mode's bundle
@@ -1555,7 +1568,7 @@
             }, PRIORITY_HIGH);
         }
     }
-    function collectHostContent(plt, elm) {
+    function registerWithParentComponent(plt, elm) {
         // find the first ancestor host element (if there is one) and register
         // this element as one of the actively loading child elements for its ancestor
         var ancestorHostElement = elm;
@@ -1651,13 +1664,25 @@
             var isInitialLoad = !elm.$instance;
             if (isInitialLoad) {
                 // haven't created a component instance for this host element yet
-                initComponentInstance(plt, elm);
+                try {
+                    initComponentInstance(plt, elm);
+                } catch (e) {
+                    plt.onError(INIT_INSTANCE_ERROR, e, elm);
+                }
             }
             // if this component has a render function, let's fire
             // it off and generate a vnode for this
-            elm._render(!isInitialLoad);
+            try {
+                elm._render(!isInitialLoad);
+            } catch (e) {
+                plt.onError(RENDER_ERROR, e, elm);
+            }
             if (isInitialLoad) {
-                elm._initLoad();
+                try {
+                    elm._initLoad();
+                } catch (e) {
+                    plt.onError(INITIAL_LOAD_ERROR, e, elm);
+                }
             }
         }
     }
@@ -1894,7 +1919,7 @@
             queueUpdate(plt, this);
         };
         HostElementConstructor._initLoad = function () {
-            initLoad(this);
+            initLoad(plt, this);
         };
         HostElementConstructor._render = function (isInitialRender) {
             render(plt, this, isInitialRender);
@@ -1924,13 +1949,21 @@
         initEventEmitters(plt, cmpMeta.eventsMeta, instance);
         // reply any event listeners on the instance that were queued up between the time
         // the element was connected and before the instance was ready
-        replayQueuedEventsOnInstance(elm);
+        try {
+            replayQueuedEventsOnInstance(elm);
+        } catch (e) {
+            plt.onError(QUEUE_EVENTS_ERROR, e, elm);
+        }
         // fire off the user's componentWillLoad method (if one was provided)
         // componentWillLoad only runs ONCE, after instance's element has been
         // assigned as the host element, but BEFORE render() has been called
-        instance.componentWillLoad && instance.componentWillLoad();
+        try {
+            instance.componentWillLoad && instance.componentWillLoad();
+        } catch (e) {
+            plt.onError(WILL_LOAD_ERROR, e, elm);
+        }
     }
-    function initLoad(elm) {
+    function initLoad(plt, elm) {
         var instance = elm.$instance;
         // it's possible that we've already decided to destroy this element
         // check if this element has any actively loading child elements
@@ -1945,7 +1978,11 @@
             // fire off the user's componentDidLoad method (if one was provided)
             // componentDidLoad only runs ONCE, after the instance's element has been
             // assigned as the host element, and AFTER render() has been called
-            instance.componentDidLoad && instance.componentDidLoad();
+            try {
+                instance.componentDidLoad && instance.componentDidLoad();
+            } catch (e) {
+                plt.onError(DID_LOAD_ERROR, e, elm);
+            }
             // add the css class that this element has officially hydrated
             elm.classList.add(HYDRATED_CSS);
             // ( •_•)
@@ -2006,7 +2043,8 @@
             queue: createQueueClient(Core.dom, now),
             connectHostElement: connectHostElement,
             emitEvent: Core.emit,
-            getEventOptions: getEventOptions
+            getEventOptions: getEventOptions,
+            onError: onError
         };
         // create the renderer that will be used
         plt.render = createRenderer(plt, domApi);
@@ -2162,6 +2200,9 @@
                 capture: !!useCapture,
                 passive: !!usePassive
             } : !!useCapture;
+        }
+        function onError(type, err, elm) {
+            console.error(type, err, elm.tagName);
         }
         return plt;
     }

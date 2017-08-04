@@ -1,3 +1,4 @@
+import { Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -36,13 +37,15 @@ var Modal = (function () {
             // TODO!!
             animationBuilder = iOSEnterAnimation;
         }
-        // build the animation and kick it off
-        this.animation = animationBuilder(this.el);
-        this.animation.onFinish(function (a) {
-            a.destroy();
-            _this.ionModalDidPresent.emit({ modal: _this });
-            resolve();
-        }).play();
+        Ionic.controller('animation').then(function (Animation) {
+            // build the animation and kick it off
+            _this.animation = animationBuilder(Animation, _this.el);
+            _this.animation.onFinish(function (a) {
+                a.destroy();
+                _this.ionModalDidPresent.emit({ modal: _this });
+                resolve();
+            }).play();
+        });
     };
     Modal.prototype.dismiss = function () {
         var _this = this;
@@ -61,15 +64,17 @@ var Modal = (function () {
                 animationBuilder = iOSLeaveAnimation;
             }
             // build the animation and kick it off
-            _this.animation = animationBuilder(_this.el);
-            _this.animation.onFinish(function (a) {
-                a.destroy();
-                _this.ionModalDidDismiss.emit({ modal: _this });
-                Core.dom.write(function () {
-                    _this.el.parentNode.removeChild(_this.el);
-                });
-                resolve();
-            }).play();
+            Ionic.controller('animation').then(function (Animation) {
+                _this.animation = animationBuilder(Animation, _this.el);
+                _this.animation.onFinish(function (a) {
+                    a.destroy();
+                    _this.ionModalDidDismiss.emit({ modal: _this });
+                    Core.dom.write(function () {
+                        _this.el.parentNode.removeChild(_this.el);
+                    });
+                    resolve();
+                }).play();
+            });
         });
     };
     Modal.prototype["componentDidunload"] = function () {

@@ -2,6 +2,10 @@
   "namespace": "Ionic",
   "components": [
     [
+      "ION-ANIMATION-CONTROLLER",
+      "ion-animation-controller"
+    ],
+    [
       "ION-APP",
       "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
       {
@@ -850,23 +854,37 @@
       [
         [
           "body:ionModalDidLoad",
-          "viewDidLoad"
+          "modalDidLoad"
         ],
         [
           "body:ionModalDidUnload",
-          "willDismiss"
+          "modalWillDismiss"
         ],
         [
           "body:ionModalWillDismiss",
-          "willDismiss"
+          "modalWillDismiss"
         ],
         [
           "body:ionModalWillPresent",
-          "willPresent"
+          "modalWillPresent"
         ],
         [
           "body:keyup.escape",
           "escapeKeyUp"
+        ]
+      ]
+    ],
+    [
+      "ION-NAV",
+      "ion-nav",
+      0,
+      0,
+      [
+        [
+          "renderChildren"
+        ],
+        [
+          "rootPage"
         ]
       ]
     ],
@@ -1448,9 +1466,22 @@
         "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
       },
       2
+    ],
+    [
+      "PAGE-ONE",
+      "page-one"
+    ],
+    [
+      "PAGE-THREE",
+      "page-three"
+    ],
+    [
+      "PAGE-TWO",
+      "page-two"
     ]
   ],
   "loader": "ionic.js",
+  "global": "ionic.global.js",
   "core": "ionic/ionic.core.js",
   "coreEs5": "ionic/ionic.core.ce.js"
 }

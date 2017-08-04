@@ -1,11 +1,11 @@
 /**
  * iOS Loading Enter Animation
  */
-export default function (baseElm) {
-    var baseAnimation = new Ionic.Animation();
-    var backdropAnimation = new Ionic.Animation();
+export default function (Animation, baseElm) {
+    var baseAnimation = new Animation();
+    var backdropAnimation = new Animation();
     backdropAnimation.addElement(baseElm.querySelector('.loading-backdrop'));
-    var wrapperAnimation = new Ionic.Animation();
+    var wrapperAnimation = new Animation();
     wrapperAnimation.addElement(baseElm.querySelector('.loading-wrapper'));
     backdropAnimation.fromTo('opacity', 0.01, 0.3);
     wrapperAnimation.fromTo('opacity', 0.01, 1)

@@ -283,6 +283,479 @@ var BLOCK_ALL = {
     disableScroll: true
 };
 
+var CSS_PROP = function (docEle) {
+    var css = {};
+    // transform
+    var i;
+    var keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
+    for (i = 0; i < keys.length; i++) {
+        if (docEle.style[keys[i]] !== undefined) {
+            css.transformProp = keys[i];
+            break;
+        }
+    }
+    // transition
+    keys = ['webkitTransition', 'transition'];
+    for (i = 0; i < keys.length; i++) {
+        if (docEle.style[keys[i]] !== undefined) {
+            css.transitionProp = keys[i];
+            break;
+        }
+    }
+    // The only prefix we care about is webkit for transitions.
+    var prefix = css.transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
+    // transition duration
+    css.transitionDurationProp = prefix + 'transition-duration';
+    // transition timing function
+    css.transitionTimingFnProp = prefix + 'transition-timing-function';
+    return css;
+}(document.documentElement);
+
+/**
+ * iOS Loading Enter Animation
+ */
+
+/**
+ * iOS Loading Leave Animation
+ */
+
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+/**
+ * @hidden
+ * Menu Type
+ * Base class which is extended by the various types. Each
+ * type will provide their own animations for open and close
+ * and registers itself with Menu.
+ */
+var MenuType = (function () {
+    function MenuType() {
+        // Ionic.createAnimation().then(Animation => {
+        //   this.ani = new Animation();
+        // });;
+        // this.ani
+        //   .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
+        //   .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
+        //   .duration(280);
+    }
+    MenuType.prototype.setOpen = function (shouldOpen, animated, done) {
+        var ani = this.ani
+            .onFinish(done, { oneTimeCallback: true, clearExistingCallacks: true })
+            .reverse(!shouldOpen);
+        if (animated) {
+            ani.play();
+        }
+        else {
+            ani.syncPlay();
+        }
+    };
+    MenuType.prototype.setProgressStart = function (isOpen) {
+        this.isOpening = !isOpen;
+        // the cloned animation should not use an easing curve during seek
+        this.ani
+            .reverse(isOpen)
+            .progressStart();
+    };
+    MenuType.prototype.setProgessStep = function (stepValue) {
+        // adjust progress value depending if it opening or closing
+        this.ani.progressStep(stepValue);
+    };
+    MenuType.prototype.setProgressEnd = function (shouldComplete, currentStepValue, velocity, done) {
+        var _this = this;
+        var isOpen = (this.isOpening && shouldComplete);
+        if (!this.isOpening && !shouldComplete) {
+            isOpen = true;
+        }
+        var ani = this.ani;
+        ani.onFinish(function () {
+            _this.isOpening = false;
+            done(isOpen);
+        }, { clearExistingCallacks: true });
+        var factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
+        var dur = ani.getDuration() * factor;
+        ani.progressEnd(shouldComplete, currentStepValue, dur);
+    };
+    MenuType.prototype.destroy = function () {
+        this.ani.destroy();
+        this.ani = null;
+    };
+    return MenuType;
+}());
+/**
+ * @hidden
+ * Menu Reveal Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself, which is under the content, does not move.
+ */
+var MenuRevealType = (function (_super) {
+    __extends(MenuRevealType, _super);
+    function MenuRevealType() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MenuRevealType;
+}(MenuType));
+/**
+ * @hidden
+ * Menu Push Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself also slides over to reveal its bad self.
+ */
+var MenuPushType = (function (_super) {
+    __extends(MenuPushType, _super);
+    function MenuPushType() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MenuPushType;
+}(MenuType));
+/**
+ * @hidden
+ * Menu Overlay Type
+ * The menu slides over the content. The content
+ * itself, which is under the menu, does not move.
+ */
+var MenuOverlayType = (function (_super) {
+    __extends(MenuOverlayType, _super);
+    function MenuOverlayType() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MenuOverlayType;
+}(MenuType));
+
+/**
+ * iOS Modal Enter Animation
+ */
+
+/**
+ * Animations for modals
+ */
+// export function modalSlideIn(rootElm: HTMLElement) {
+// }
+// export class ModalSlideOut {
+//   constructor(ele: HTMLElement) {
+//     let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+//     let wrapperEle = <HTMLElement>ele.querySelector('.modal-wrapper');
+//     let wrapperEleRect = wrapperEle.getBoundingClientRect();
+//     let wrapper = new Animation(this.plt, wrapperEle);
+//     // height of the screen - top of the container tells us how much to scoot it down
+//     // so it's off-screen
+//     wrapper.fromTo('translateY', '0px', `${this.plt.height() - wrapperEleRect.top}px`);
+//     backdrop.fromTo('opacity', 0.4, 0.0);
+//     this
+//       .element(this.leavingView.pageRef())
+//       .easing('ease-out')
+//       .duration(250)
+//       .add(backdrop)
+//       .add(wrapper);
+//   }
+// }
+// export class ModalMDSlideIn {
+//   constructor(ele: HTMLElement) {
+//     const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+//     const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
+//     backdrop.fromTo('opacity', 0.01, 0.4);
+//     wrapper.fromTo('translateY', '40px', '0px');
+//     wrapper.fromTo('opacity', 0.01, 1);
+//     const DURATION = 280;
+//     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+//     this.element(this.enteringView.pageRef()).easing(EASING).duration(DURATION)
+//       .add(backdrop)
+//       .add(wrapper);
+//   }
+// }
+// export class ModalMDSlideOut {
+//   constructor(ele: HTMLElement) {
+//     const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+//     const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
+//     backdrop.fromTo('opacity', 0.4, 0.0);
+//     wrapper.fromTo('translateY', '0px', '40px');
+//     wrapper.fromTo('opacity', 0.99, 0);
+//     this
+//       .element(this.leavingView.pageRef())
+//       .duration(200)
+//       .easing('cubic-bezier(0.47,0,0.745,0.715)')
+//       .add(wrapper)
+//       .add(backdrop);
+//   }
+// }
+
+/**
+ * iOS Modal Leave Animation
+ */
+
+var Scroll$$1 = (function () {
+    function Scroll$$1() {
+        this.positions = [];
+        this.queued = false;
+        this.isScrolling = false;
+        this.detail = {};
+        this.enabled = true;
+        this.jsScroll = false;
+    }
+    Scroll$$1.prototype["componentDidLoad"] = function () {
+        if (Core.isServer)
+            return;
+        var ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
+        this.gesture = ctrl.createGesture('scroll', 100, false);
+    };
+    // Native Scroll *************************
+    Scroll$$1.prototype.onNativeScroll = function () {
+        var self = this;
+        if (!self.queued && self.enabled) {
+            self.queued = true;
+            Core.dom.read(function (timeStamp) {
+                self.queued = false;
+                self.onScroll(timeStamp || Date.now());
+            });
+        }
+    };
+    Scroll$$1.prototype.onScroll = function (timeStamp) {
+        var self = this;
+        var detail = self.detail;
+        var positions = self.positions;
+        detail.timeStamp = timeStamp;
+        // get the current scrollTop
+        // ******** DOM READ ****************
+        detail.scrollTop = self.getTop();
+        // get the current scrollLeft
+        // ******** DOM READ ****************
+        detail.scrollLeft = self.getLeft();
+        if (!self.isScrolling) {
+            // currently not scrolling, so this is a scroll start
+            self.isScrolling = true;
+            // remember the start positions
+            detail.startY = detail.scrollTop;
+            detail.startX = detail.scrollLeft;
+            // new scroll, so do some resets
+            detail.velocityY = detail.velocityX = detail.deltaY = detail.deltaX = positions.length = 0;
+            // emit only on the first scroll event
+            if (self.ionScrollStart) {
+                self.ionScrollStart(detail);
+            }
+        }
+        detail.directionX = detail.velocityDirectionX = (detail.deltaX > 0 ? 'left' : (detail.deltaX < 0 ? 'right' : null));
+        detail.directionY = detail.velocityDirectionY = (detail.deltaY > 0 ? 'up' : (detail.deltaY < 0 ? 'down' : null));
+        // actively scrolling
+        positions.push(detail.scrollTop, detail.scrollLeft, detail.timeStamp);
+        if (positions.length > 3) {
+            // we've gotten at least 2 scroll events so far
+            detail.deltaY = (detail.scrollTop - detail.startY);
+            detail.deltaX = (detail.scrollLeft - detail.startX);
+            var endPos = (positions.length - 1);
+            var startPos = endPos;
+            var timeRange = (detail.timeStamp - 100);
+            // move pointer to position measured 100ms ago
+            for (var i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
+                startPos = i;
+            }
+            if (startPos !== endPos) {
+                // compute relative movement between these two points
+                var movedTop = (positions[startPos - 2] - positions[endPos - 2]);
+                var movedLeft = (positions[startPos - 1] - positions[endPos - 1]);
+                var factor = 16.67 / (positions[endPos] - positions[startPos]);
+                // based on XXms compute the movement to apply for each render step
+                detail.velocityY = movedTop * factor;
+                detail.velocityX = movedLeft * factor;
+                // figure out which direction we're scrolling
+                detail.velocityDirectionX = (movedLeft > 0 ? 'left' : (movedLeft < 0 ? 'right' : null));
+                detail.velocityDirectionY = (movedTop > 0 ? 'up' : (movedTop < 0 ? 'down' : null));
+            }
+        }
+        clearTimeout(self.tmr);
+        self.tmr = setTimeout(function () {
+            // haven't scrolled in a while, so it's a scrollend
+            self.isScrolling = false;
+            Core.dom.read(function (timeStamp) {
+                if (!self.isScrolling) {
+                    self.onEnd(timeStamp);
+                }
+            });
+        }, 80);
+        // emit on each scroll event
+        if (self.ionScrollStart) {
+            self.ionScroll(detail);
+        }
+    };
+    Scroll$$1.prototype.onEnd = function (timeStamp) {
+        var self = this;
+        var detail = self.detail;
+        detail.timeStamp = timeStamp || Date.now();
+        // emit that the scroll has ended
+        if (self.ionScrollEnd) {
+            self.ionScrollEnd(detail);
+        }
+    };
+    Scroll$$1.prototype.enableJsScroll = function (contentTop, contentBottom) {
+        this.jsScroll = true;
+        Core.enableListener(this, 'scroll', false);
+        Core.enableListener(this, 'touchstart', true);
+        contentTop;
+        contentBottom;
+    };
+    // Touch Scroll *************************
+    Scroll$$1.prototype.onTouchStart = function () {
+        if (!this.enabled) {
+            return;
+        }
+        Core.enableListener(this, 'touchmove', true);
+        Core.enableListener(this, 'touchend', true);
+        throw 'jsScroll: TODO!';
+    };
+    Scroll$$1.prototype.onTouchMove = function () {
+        if (!this.enabled) {
+            return;
+        }
+    };
+    Scroll$$1.prototype.onTouchEnd = function () {
+        Core.enableListener(this, 'touchmove', false);
+        Core.enableListener(this, 'touchend', false);
+        if (!this.enabled) {
+            return;
+        }
+    };
+    /**
+     * DOM READ
+     */
+    Scroll$$1.prototype.getTop = function () {
+        if (this.jsScroll) {
+            return this._t;
+        }
+        return this._t = this.el.scrollTop;
+    };
+    /**
+     * DOM READ
+     */
+    Scroll$$1.prototype.getLeft = function () {
+        if (this.jsScroll) {
+            return 0;
+        }
+        return this._l = this.el.scrollLeft;
+    };
+    /**
+     * DOM WRITE
+     */
+    Scroll$$1.prototype.setTop = function (top) {
+        this._t = top;
+        if (this.jsScroll) {
+            this.el.style.transform = this.el.style.webkitTransform = "translate3d(" + this._l * -1 + "px," + top * -1 + "px,0px)";
+        }
+        else {
+            this.el.scrollTop = top;
+        }
+    };
+    /**
+     * DOM WRITE
+     */
+    Scroll$$1.prototype.setLeft = function (left) {
+        this._l = left;
+        if (this.jsScroll) {
+            this.el.style.transform = this.el.style.webkitTransform = "translate3d(" + left * -1 + "px," + this._t * -1 + "px,0px)";
+        }
+        else {
+            this.el.scrollLeft = left;
+        }
+    };
+    Scroll$$1.prototype.scrollTo = function (x, y, duration, done) {
+        // scroll animation loop w/ easing
+        // credit https://gist.github.com/dezinezync/5487119
+        var promise;
+        if (done === undefined) {
+            // only create a promise if a done callback wasn't provided
+            // done can be a null, which avoids any functions
+            promise = new Promise(function (resolve) {
+                done = resolve;
+            });
+        }
+        var self = this;
+        var el = self.el;
+        if (!el) {
+            // invalid element
+            done();
+            return promise;
+        }
+        if (duration < 32) {
+            self.setTop(y);
+            self.setLeft(x);
+            done();
+            return promise;
+        }
+        var fromY = el.scrollTop;
+        var fromX = el.scrollLeft;
+        var maxAttempts = (duration / 16) + 100;
+        var startTime;
+        var attempts = 0;
+        var stopScroll = false;
+        // scroll loop
+        function step(timeStamp) {
+            attempts++;
+            if (!self.el || stopScroll || attempts > maxAttempts) {
+                self.isScrolling = false;
+                el.style.transform = el.style.webkitTransform = '';
+                done();
+                return;
+            }
+            var time = Math.min(1, ((timeStamp - startTime) / duration));
+            // where .5 would be 50% of time on a linear scale easedT gives a
+            // fraction based on the easing method
+            var easedT = (--time) * time * time + 1;
+            if (fromY !== y) {
+                self.setTop((easedT * (y - fromY)) + fromY);
+            }
+            if (fromX !== x) {
+                self.setLeft(Math.floor((easedT * (x - fromX)) + fromX));
+            }
+            if (easedT < 1) {
+                // do not use DomController here
+                // must use nativeRaf in order to fire in the next frame
+                Core.dom.raf(step);
+            }
+            else {
+                stopScroll = true;
+                self.isScrolling = false;
+                el.style.transform = el.style.webkitTransform = '';
+                done();
+            }
+        }
+        // start scroll loop
+        self.isScrolling = true;
+        // chill out for a frame first
+        Core.dom.write(function () {
+            Core.dom.write(function (timeStamp) {
+                startTime = timeStamp;
+                step(timeStamp);
+            });
+        });
+        return promise;
+    };
+    Scroll$$1.prototype.scrollToTop = function (duration) {
+        return this.scrollTo(0, 0, duration);
+    };
+    Scroll$$1.prototype.scrollToBottom = function (duration) {
+        var y = 0;
+        if (this.el) {
+            y = this.el.scrollHeight - this.el.clientHeight;
+        }
+        return this.scrollTo(0, y, duration);
+    };
+    Scroll$$1.prototype["componentDidunload"] = function () {
+        this.gesture && this.gesture.destroy();
+        this.gesture = this.detail = this.detail.event = null;
+    };
+    Scroll$$1.prototype.render = function () {
+        return h(0, 0);
+    };
+    return Scroll$$1;
+}());
+
+var Ionic = window.Ionic;
+
 var PanRecognizer = (function () {
     function PanRecognizer(direction, threshold, maxAngle) {
         this.direction = direction;
@@ -356,6 +829,9 @@ var Gesture = (function () {
     }
     Gesture.prototype["componentDidLoad"] = function () {
         var _this = this;
+        // in this case, we already know the GestureController and Gesture are already
+        // apart of the same bundle, so it's safe to load it this way
+        // only create one instance of GestureController, and reuse the same one later
         this.ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
         this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
         var types = this.type.replace(/\s/g, '').toLowerCase().split(',');
@@ -618,272 +1094,8 @@ function now(ev) {
     return ev.timeStamp || Date.now();
 }
 
-var Scroll = (function () {
-    function Scroll() {
-        this.positions = [];
-        this.queued = false;
-        this.isScrolling = false;
-        this.detail = {};
-        this.enabled = true;
-        this.jsScroll = false;
-    }
-    Scroll.prototype["componentDidLoad"] = function () {
-        if (Core.isServer)
-            return;
-        var ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
-        this.gesture = ctrl.createGesture('scroll', 100, false);
-    };
-    // Native Scroll *************************
-    Scroll.prototype.onNativeScroll = function () {
-        var self = this;
-        if (!self.queued && self.enabled) {
-            self.queued = true;
-            Core.dom.read(function (timeStamp) {
-                self.queued = false;
-                self.onScroll(timeStamp || Date.now());
-            });
-        }
-    };
-    Scroll.prototype.onScroll = function (timeStamp) {
-        var self = this;
-        var detail = self.detail;
-        var positions = self.positions;
-        detail.timeStamp = timeStamp;
-        // get the current scrollTop
-        // ******** DOM READ ****************
-        detail.scrollTop = self.getTop();
-        // get the current scrollLeft
-        // ******** DOM READ ****************
-        detail.scrollLeft = self.getLeft();
-        if (!self.isScrolling) {
-            // currently not scrolling, so this is a scroll start
-            self.isScrolling = true;
-            // remember the start positions
-            detail.startY = detail.scrollTop;
-            detail.startX = detail.scrollLeft;
-            // new scroll, so do some resets
-            detail.velocityY = detail.velocityX = detail.deltaY = detail.deltaX = positions.length = 0;
-            // emit only on the first scroll event
-            if (self.ionScrollStart) {
-                self.ionScrollStart(detail);
-            }
-        }
-        detail.directionX = detail.velocityDirectionX = (detail.deltaX > 0 ? 'left' : (detail.deltaX < 0 ? 'right' : null));
-        detail.directionY = detail.velocityDirectionY = (detail.deltaY > 0 ? 'up' : (detail.deltaY < 0 ? 'down' : null));
-        // actively scrolling
-        positions.push(detail.scrollTop, detail.scrollLeft, detail.timeStamp);
-        if (positions.length > 3) {
-            // we've gotten at least 2 scroll events so far
-            detail.deltaY = (detail.scrollTop - detail.startY);
-            detail.deltaX = (detail.scrollLeft - detail.startX);
-            var endPos = (positions.length - 1);
-            var startPos = endPos;
-            var timeRange = (detail.timeStamp - 100);
-            // move pointer to position measured 100ms ago
-            for (var i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
-                startPos = i;
-            }
-            if (startPos !== endPos) {
-                // compute relative movement between these two points
-                var movedTop = (positions[startPos - 2] - positions[endPos - 2]);
-                var movedLeft = (positions[startPos - 1] - positions[endPos - 1]);
-                var factor = 16.67 / (positions[endPos] - positions[startPos]);
-                // based on XXms compute the movement to apply for each render step
-                detail.velocityY = movedTop * factor;
-                detail.velocityX = movedLeft * factor;
-                // figure out which direction we're scrolling
-                detail.velocityDirectionX = (movedLeft > 0 ? 'left' : (movedLeft < 0 ? 'right' : null));
-                detail.velocityDirectionY = (movedTop > 0 ? 'up' : (movedTop < 0 ? 'down' : null));
-            }
-        }
-        clearTimeout(self.tmr);
-        self.tmr = setTimeout(function () {
-            // haven't scrolled in a while, so it's a scrollend
-            self.isScrolling = false;
-            Core.dom.read(function (timeStamp) {
-                if (!self.isScrolling) {
-                    self.onEnd(timeStamp);
-                }
-            });
-        }, 80);
-        // emit on each scroll event
-        if (self.ionScrollStart) {
-            self.ionScroll(detail);
-        }
-    };
-    Scroll.prototype.onEnd = function (timeStamp) {
-        var self = this;
-        var detail = self.detail;
-        detail.timeStamp = timeStamp || Date.now();
-        // emit that the scroll has ended
-        if (self.ionScrollEnd) {
-            self.ionScrollEnd(detail);
-        }
-    };
-    Scroll.prototype.enableJsScroll = function (contentTop, contentBottom) {
-        this.jsScroll = true;
-        Core.enableListener(this, 'scroll', false);
-        Core.enableListener(this, 'touchstart', true);
-        contentTop;
-        contentBottom;
-    };
-    // Touch Scroll *************************
-    Scroll.prototype.onTouchStart = function () {
-        if (!this.enabled) {
-            return;
-        }
-        Core.enableListener(this, 'touchmove', true);
-        Core.enableListener(this, 'touchend', true);
-        throw 'jsScroll: TODO!';
-    };
-    Scroll.prototype.onTouchMove = function () {
-        if (!this.enabled) {
-            return;
-        }
-    };
-    Scroll.prototype.onTouchEnd = function () {
-        Core.enableListener(this, 'touchmove', false);
-        Core.enableListener(this, 'touchend', false);
-        if (!this.enabled) {
-            return;
-        }
-    };
-    /**
-     * DOM READ
-     */
-    Scroll.prototype.getTop = function () {
-        if (this.jsScroll) {
-            return this._t;
-        }
-        return this._t = this.el.scrollTop;
-    };
-    /**
-     * DOM READ
-     */
-    Scroll.prototype.getLeft = function () {
-        if (this.jsScroll) {
-            return 0;
-        }
-        return this._l = this.el.scrollLeft;
-    };
-    /**
-     * DOM WRITE
-     */
-    Scroll.prototype.setTop = function (top) {
-        this._t = top;
-        if (this.jsScroll) {
-            this.el.style.transform = this.el.style.webkitTransform = "translate3d(" + this._l * -1 + "px," + top * -1 + "px,0px)";
-        }
-        else {
-            this.el.scrollTop = top;
-        }
-    };
-    /**
-     * DOM WRITE
-     */
-    Scroll.prototype.setLeft = function (left) {
-        this._l = left;
-        if (this.jsScroll) {
-            this.el.style.transform = this.el.style.webkitTransform = "translate3d(" + left * -1 + "px," + this._t * -1 + "px,0px)";
-        }
-        else {
-            this.el.scrollLeft = left;
-        }
-    };
-    Scroll.prototype.scrollTo = function (x, y, duration, done) {
-        // scroll animation loop w/ easing
-        // credit https://gist.github.com/dezinezync/5487119
-        var promise;
-        if (done === undefined) {
-            // only create a promise if a done callback wasn't provided
-            // done can be a null, which avoids any functions
-            promise = new Promise(function (resolve) {
-                done = resolve;
-            });
-        }
-        var self = this;
-        var el = self.el;
-        if (!el) {
-            // invalid element
-            done();
-            return promise;
-        }
-        if (duration < 32) {
-            self.setTop(y);
-            self.setLeft(x);
-            done();
-            return promise;
-        }
-        var fromY = el.scrollTop;
-        var fromX = el.scrollLeft;
-        var maxAttempts = (duration / 16) + 100;
-        var startTime;
-        var attempts = 0;
-        var stopScroll = false;
-        // scroll loop
-        function step(timeStamp) {
-            attempts++;
-            if (!self.el || stopScroll || attempts > maxAttempts) {
-                self.isScrolling = false;
-                el.style.transform = el.style.webkitTransform = '';
-                done();
-                return;
-            }
-            var time = Math.min(1, ((timeStamp - startTime) / duration));
-            // where .5 would be 50% of time on a linear scale easedT gives a
-            // fraction based on the easing method
-            var easedT = (--time) * time * time + 1;
-            if (fromY !== y) {
-                self.setTop((easedT * (y - fromY)) + fromY);
-            }
-            if (fromX !== x) {
-                self.setLeft(Math.floor((easedT * (x - fromX)) + fromX));
-            }
-            if (easedT < 1) {
-                // do not use DomController here
-                // must use nativeRaf in order to fire in the next frame
-                Core.dom.raf(step);
-            }
-            else {
-                stopScroll = true;
-                self.isScrolling = false;
-                el.style.transform = el.style.webkitTransform = '';
-                done();
-            }
-        }
-        // start scroll loop
-        self.isScrolling = true;
-        // chill out for a frame first
-        Core.dom.write(function () {
-            Core.dom.write(function (timeStamp) {
-                startTime = timeStamp;
-                step(timeStamp);
-            });
-        });
-        return promise;
-    };
-    Scroll.prototype.scrollToTop = function (duration) {
-        return this.scrollTo(0, 0, duration);
-    };
-    Scroll.prototype.scrollToBottom = function (duration) {
-        var y = 0;
-        if (this.el) {
-            y = this.el.scrollHeight - this.el.clientHeight;
-        }
-        return this.scrollTo(0, y, duration);
-    };
-    Scroll.prototype["componentDidunload"] = function () {
-        this.gesture && this.gesture.destroy();
-        this.gesture = this.detail = this.detail.event = null;
-    };
-    Scroll.prototype.render = function () {
-        return h(0, 0);
-    };
-    return Scroll;
-}());
-
 exports['ION-GESTURE'] = Gesture;
-exports['ION-SCROLL'] = Scroll;
+exports['ION-SCROLL'] = Scroll$$1;
 },
 
 

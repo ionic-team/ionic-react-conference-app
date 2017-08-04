@@ -1,11 +1,11 @@
 /**
  * iOS Modal Enter Animation
  */
-export default function (baseElm) {
-    var baseAnimation = new Ionic.Animation();
-    var backdropAnimation = new Ionic.Animation();
+export default function (Animation, baseElm) {
+    var baseAnimation = new Animation();
+    var backdropAnimation = new Animation();
     backdropAnimation.addElement(baseElm.querySelector('.modal-backdrop'));
-    var wrapperAnimation = new Ionic.Animation();
+    var wrapperAnimation = new Animation();
     wrapperAnimation.addElement(baseElm.querySelector('.modal-wrapper'));
     wrapperAnimation.beforeStyles({ 'opacity': 1 })
         .fromTo('translateY', '100%', '0%');

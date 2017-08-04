@@ -1,4 +1,5 @@
 import { createThemedClasses } from '../../utils/theme';
+import { Ionic } from '../../index';
 var Navbar = (function () {
     function Navbar() {
         this.sbPadding = Ionic.config.getBoolean('statusbarPadding');

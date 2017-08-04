@@ -1,6 +1,11 @@
 {
   "components": [
     {
+      "tag": "ion-animation-controller",
+      "componentClass": "AnimationController",
+      "componentPath": "components/animation-controller/animation-controller.js"
+    },
+    {
       "tag": "ion-app",
       "componentClass": "App",
       "componentPath": "components/app/app.js",
@@ -1378,25 +1383,25 @@
       "listeners": [
         {
           "event": "body:ionModalDidLoad",
-          "method": "viewDidLoad",
+          "method": "modalDidLoad",
           "passive": false,
           "capture": false
         },
         {
           "event": "body:ionModalDidUnload",
-          "method": "willDismiss",
+          "method": "modalWillDismiss",
           "passive": false,
           "capture": false
         },
         {
           "event": "body:ionModalWillDismiss",
-          "method": "willDismiss",
+          "method": "modalWillDismiss",
           "passive": false,
           "capture": false
         },
         {
           "event": "body:ionModalWillPresent",
-          "method": "willPresent",
+          "method": "modalWillPresent",
           "passive": false,
           "capture": false
         },
@@ -1407,6 +1412,27 @@
           "capture": false
         }
       ]
+    },
+    {
+      "tag": "ion-nav",
+      "componentClass": "Nav",
+      "componentPath": "components/nav/nav.js",
+      "props": [
+        {
+          "name": "renderChildren"
+        },
+        {
+          "name": "rootPage"
+        }
+      ],
+      "states": [
+        "pages"
+      ],
+      "methods": [
+        "pop",
+        "push"
+      ],
+      "hostElement": "element"
     },
     {
       "tag": "ion-navbar",
@@ -2254,9 +2280,32 @@
         "theme": "toolbar"
       },
       "slot": "hasNamedSlots"
+    },
+    {
+      "tag": "page-one",
+      "componentClass": "PageOne",
+      "componentPath": "components/nav/page-one.js",
+      "hostElement": "element"
+    },
+    {
+      "tag": "page-three",
+      "componentClass": "PageThree",
+      "componentPath": "components/nav/page-three.js",
+      "hostElement": "element"
+    },
+    {
+      "tag": "page-two",
+      "componentClass": "PageTwo",
+      "componentPath": "components/nav/page-two.js",
+      "hostElement": "element"
     }
   ],
   "bundles": [
+    {
+      "components": [
+        "ion-animation-controller"
+      ]
+    },
     {
       "components": [
         "ion-app",
@@ -2355,6 +2404,11 @@
     },
     {
       "components": [
+        "ion-nav"
+      ]
+    },
+    {
+      "components": [
         "ion-searchbar"
       ]
     },
@@ -2387,6 +2441,21 @@
     {
       "components": [
         "ion-toggle"
+      ]
+    },
+    {
+      "components": [
+        "page-one"
+      ]
+    },
+    {
+      "components": [
+        "page-three"
+      ]
+    },
+    {
+      "components": [
+        "page-two"
       ]
     }
   ],

@@ -1,3 +1,4 @@
+import { Ionic } from '../../index';
 var LoadingController = (function () {
     function LoadingController() {
         this.ids = 0;
@@ -6,7 +7,7 @@ var LoadingController = (function () {
     }
     LoadingController.prototype["componentDidLoad"] = function () {
         this.appRoot = document.querySelector('ion-app') || document.body;
-        Ionic.loadController('loading', this);
+        Ionic.registerController('loading', this);
     };
     LoadingController.prototype.load = function (opts) {
         var _this = this;

@@ -1,5 +1,6 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../utils/helpers';
 import { GestureController, BLOCK_ALL } from './gesture-controller';
+import { Ionic } from '../../index';
 import { PanRecognizer } from './recognizers';
 var Gesture = (function () {
     function Gesture() {
@@ -24,6 +25,9 @@ var Gesture = (function () {
     }
     Gesture.prototype["componentDidLoad"] = function () {
         var _this = this;
+        // in this case, we already know the GestureController and Gesture are already
+        // apart of the same bundle, so it's safe to load it this way
+        // only create one instance of GestureController, and reuse the same one later
         this.ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
         this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
         var types = this.type.replace(/\s/g, '').toLowerCase().split(',');
