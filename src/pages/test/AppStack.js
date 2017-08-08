@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, matchPath } from 'react-router-dom';
 import SchedulePage from '../SchedulePage';
 import SessionDetail from '../SessionDetail';
 import SpeakerList from '../SpeakerList';
@@ -79,10 +79,14 @@ const AboutStack = (props) => (
 
 const AppStack = (props) => (
   <TabNav
-    onChange={(viewPath, params)=> console.log(viewPath, params) }
-    location={props.location.pathname}
-    history={props.history}
-    match='/:name'
+    onClickHandler={(navView) => () => props.history.push(`/${navView.name}`)}
+    urlMatchHandler={(navView) => {
+      const results = matchPath(props.location.pathname, { path: '/:name' });
+      return results.params.name === navView.name;
+    }}
+    navViewProps={{
+      location: props.location.pathname
+    }}
     navViews={[
       {
         name: 'schedule',
