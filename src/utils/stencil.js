@@ -10,9 +10,11 @@ export function wc(events = {}, obj = {}) {
         return;
       }
     });
-    Object.entries(obj).forEach(([name, value]) => {
-      el[name] = value;
-    });
+    if (el) {
+      Object.entries(obj).forEach(([name, value]) => {
+        el[name] = value;
+      });
+    }
     storedEl = el;
   };
 }

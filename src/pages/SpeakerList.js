@@ -118,35 +118,34 @@ const SpeakerItem = withRouter(({speaker, speakerSessions, history}) => (
   </ion-card>
 ));
 
-export default () => (
-  <ion-page>
-    <ion-header>
-      <ion-navbar>
-        <ion-buttons slot="start">
-          <ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Speakers</ion-title>
-      </ion-navbar>
-    </ion-header>
-    <ion-content class="outer-content speaker-list">
-      <ion-list>
-        <ion-grid fixed>
-          <ion-row align-items-stretch>
-            <ion-col col-12 col-md-6 align-self-stretch align-self-center approxItemHeight="457px">
-              <SessionDetail>
-                {({ sessions, speakers }) => {
-                  return speakers.map((speaker) => {
-                    const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
-                    return <SpeakerItem key={speaker.id} speaker={speaker} speakerSessions={speakerSessions} />;
-                  });
-                }}
-              </SessionDetail>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-list>
-    </ion-content>
-  </ion-page>
-);
+export default () => [
+  <ion-header>
+    <ion-navbar>
+      <ion-buttons slot="start">
+        <ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Speakers</ion-title>
+    </ion-navbar>
+  </ion-header>,
+
+  <ion-content class="outer-content speaker-list">
+    <ion-list>
+      <ion-grid fixed>
+        <ion-row align-items-stretch>
+          <ion-col col-12 col-md-6 align-self-stretch align-self-center approxItemHeight="457px">
+            <SessionDetail>
+              {({ sessions, speakers }) => {
+                return speakers.map((speaker) => {
+                  const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
+                  return <SpeakerItem key={speaker.id} speaker={speaker} speakerSessions={speakerSessions} />;
+                });
+              }}
+            </SessionDetail>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </ion-content>
+];
