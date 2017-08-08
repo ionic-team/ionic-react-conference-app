@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { wc } from '../../utils/stencil'
+import SchedulePage from '../SchedulePage';
+import SessionDetail from '../SessionDetail';
 
 export default class Test extends Component {
   render() {
     const navViews = [{
-      name: 'test-page-one',
-      title: 'Test Page One',
-      getView: () => (TestPageOne)
+      name: 'root',
+      title: 'Schedule',
+      getView: () => (SchedulePage)
     }, {
-      name: 'test-page-two',
-      title: 'Test Page Two',
-      getView: () => (TestPageTwo)
-    }, {
-      name: 'test-page-three',
-      title: 'Test Page Three',
-      getView: () => (TestPageThree)
+      name: 'session',
+      title: 'Session Detail',
+      getView: () => (SessionDetail)
     }]
     return (
       <ion-nav
         location={this.props.location.pathname}
-        root-page='test-page-one'
-        ref={wc({
-        },{
-          rootPage: 'test-page-one',
+        root-page='root'
+        ref={wc({},{
           renderChildren: renderChildren(navViews)
         })}>
       </ion-nav>
@@ -67,7 +63,7 @@ class TestPageOne extends Component {
         Page One Content
         <div>
           <ion-button
-            onClick={() => this.props.nav.push('test-page-two', { id: 1, name: 'Michael Scott'})}
+            onClick={() => this.props.nav.push('session', { id: 1, name: 'Michael Scott'})}
           >Go to Page Two</ion-button>
         </div>
       </ion-content>
