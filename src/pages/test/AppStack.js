@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, matchPath } from 'react-router-dom';
+import { matchPath } from 'react-router-dom';
 import SchedulePage from '../SchedulePage';
 import SessionDetail from '../SessionDetail';
 import SpeakerList from '../SpeakerList';
@@ -78,41 +78,46 @@ const AboutStack = (props) => (
 );
 
 const AppStack = (props) => (
-  <TabNav
-    onClickHandler={(navView) => () => props.history.push(`/${navView.name}`)}
-    urlMatchHandler={(navView) => {
-      const results = matchPath(props.location.pathname, { path: '/:name' });
-      return results.params.name === navView.name;
-    }}
-    navViewProps={{
-      location: props.location.pathname
-    }}
-    navViews={[
-      {
-        name: 'schedule',
-        title: 'Schedule',
-        icon: 'calendar-outline',
-        getView: () => (ScheduleStack)
-      },
-      {
-        name: 'speakers',
-        title: 'Speakers',
-        icon: 'contacts',
-        getView: () => (SpeakerStack)
-      },
-      {
-        name: 'map',
-        title: 'Map',
-        icon: 'map-outline',
-        getView: () => (MapStack)
-      },
-      {
-        name: 'about',
-        title: 'About',
-        icon: 'informaion-circle-outline',
-        getView: () => (AboutStack)
-      }
-    ]}
-  />
+  <ion-page>
+    <TabNav
+      onClickHandler={(navView) => (e) => {
+        e.preventDefault();
+        props.history.push(`/${navView.name}`);
+      }}
+      urlMatchHandler={(navView) => {
+        const results = matchPath(props.location.pathname, { path: '/:name' });
+        return results.params.name === navView.name;
+      }}
+      navViewProps={{
+        location: props.location.pathname
+      }}
+      navViews={[
+        {
+          name: 'schedule',
+          title: 'Schedule',
+          icon: 'calendar-outline',
+          getView: () => (ScheduleStack)
+        },
+        {
+          name: 'speakers',
+          title: 'Speakers',
+          icon: 'contacts',
+          getView: () => (SpeakerStack)
+        },
+        {
+          name: 'map',
+          title: 'Map',
+          icon: 'map-outline',
+          getView: () => (MapStack)
+        },
+        {
+          name: 'about',
+          title: 'About',
+          icon: 'informaion-circle-outline',
+          getView: () => (AboutStack)
+        }
+      ]}
+    />
+  </ion-page>
 );
 export default AppStack;

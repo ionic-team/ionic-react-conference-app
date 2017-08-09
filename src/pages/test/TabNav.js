@@ -12,14 +12,16 @@ const TabNav = ({ navViews, navViewProps, urlMatchHandler, onClickHandler }) => 
         );
       })}
     </div>,
-    <div className="tabbar show-tabbar" style={{ position: 'fixed', bottom: '0', backgroundColor: '#FFF', width: '100%'}}>
-      { navViews.map(navView => (
-        <a key={navView.name} className="tab-button has-title has-icon disable-hover" onClick={onClickHandler(navView)}>
-          <span className="tab-button-text">{navView.title}</span>
-          <div className="button-effect"></div>
+    <div className="tabs-ios">
+      <ion-tab-bar>
+        { navViews.map((navView, index) => (
+        <a className="tab-button has-title has-icon" href="#" aria-selected={index === 0 ? 'true' : 'false'} onClick={onClickHandler(navView)}>
+          <ion-icon class="tab-button-icon" name={navView.icon}></ion-icon>
+          <span class="tab-button-text">{navView.title}</span>
+          <div class="button-effect"></div>
         </a>
-      )) }
-      <div className="tab-highlight"></div>
+        )) }
+      </ion-tab-bar>
     </div>
   ]
 
