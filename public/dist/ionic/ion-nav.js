@@ -21,6 +21,8 @@ var Nav = (function () {
         this.pages = this.pages.slice(0, -1);
     };
     Nav.prototype.render = function () {
+        console.log(this.pages.length);
+        debugger;
         if (this.pages.length === 0 && this.rootPage !== undefined) {
             this.push(this.rootPage, {});
         }

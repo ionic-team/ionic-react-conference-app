@@ -1,26 +1,27 @@
 import React from 'react';
 import { matchPath } from 'react-router-dom';
-import SchedulePage from '../SchedulePage';
-import SessionDetail from '../SessionDetail';
-import SpeakerList from '../SpeakerList';
-import SpeakerDetail from '../SpeakerDetail';
-import MapPage from '../Map';
-import About from '../About';
-import StackNav from './StackNav';
-import TabNav from './TabNav';
+import SchedulePage from './SchedulePage';
+import SessionDetail from './SessionDetail';
+import SpeakerList from './SpeakerList';
+import SpeakerDetail from './SpeakerDetail';
+import MapPage from './Map';
+import About from './About';
+import StackNav from '../components/StackNav';
+import TabNav from '../components/TabNav';
 
 const ScheduleStack = (props) => (
   <StackNav
-    onChange={(viewPath, params)=> console.log(viewPath, params) }
-    location={props.location.pathname}
+    {...props}
     navViews={[
       {
-        name: 'root',
+        name: 'schedule',
         title: 'Schedule',
+        path: '',
         getView: () => (SchedulePage),
       }, {
         name: 'sessions',
         title: 'Session Detail',
+        path: 'sessions/:id',
         getView: () => (SessionDetail),
       }
     ]}
@@ -29,20 +30,22 @@ const ScheduleStack = (props) => (
 
 const SpeakerStack = (props) => (
   <StackNav
-    onChange={(viewPath, params)=> console.log(viewPath, params) }
-    location={props.location.pathname}
+    {...props}
     navViews={[
       {
-        name: 'root',
+        name: 'speaker-list',
         title: 'Speakers',
+        path: '',
         getView: () => (SpeakerList),
       }, {
-        name: 'sessions-detail',
+        name: 'sessions',
         title: 'Session Detail',
+        path: 'sessions/:id',
         getView: () => (SessionDetail),
       }, {
-        name: 'speakers-detail',
+        name: 'speakers',
         title: 'Speaker Detail',
+        path: 'speakers/:id',
         getView: () => (SpeakerDetail),
       }
     ]}
@@ -51,12 +54,12 @@ const SpeakerStack = (props) => (
 
 const MapStack = (props) => (
   <StackNav
-    onChange={(viewPath, params)=> console.log(viewPath, params) }
-    location={props.location.pathname}
+    {...props}
     navViews={[
       {
-        name: 'root',
+        name: 'map',
         title: 'Map',
+        path: '',
         getView: () => (MapPage)
       }
     ]}
@@ -65,12 +68,12 @@ const MapStack = (props) => (
 
 const AboutStack = (props) => (
   <StackNav
-    onChange={(viewPath, params)=> console.log(viewPath, params) }
-    location={props.location.pathname}
+    {...props}
     navViews={[
       {
-        name: 'root',
+        name: 'about',
         title: 'About',
+        path: '',
         getView: () => (About)
       }
     ]}
@@ -82,38 +85,46 @@ const AppStack = (props) => (
     <TabNav
       onClickHandler={(navView) => (e) => {
         e.preventDefault();
-        props.history.push(`/${navView.name}`);
+        props.history.push(`${navView.path}`);
       }}
       urlMatchHandler={(navView) => {
-        const results = matchPath(props.location.pathname, { path: '/:name' });
-        return results.params.name === navView.name;
+        return matchPath(props.location.pathname, { path: navView.path });
       }}
       navViewProps={{
-        location: props.location.pathname
+        onPageChange: (basePath, navView, params) =>  {
+          var newPath = navView.path;
+          Object.entries(params).forEach(([name, value]) => {
+            newPath = newPath.replace(`:${name}`, value);
+          });
+         props.history.replace(`${basePath}/${newPath}`);
+        },
+        urlMatchHandler: (basePath, navView) => {
+          return matchPath(props.location.pathname, { path: `${basePath}/${navView.path}` });
+        }
       }}
       navViews={[
         {
-          name: 'schedule',
           title: 'Schedule',
           icon: 'calendar-outline',
+          path: '/schedule',
           getView: () => (ScheduleStack)
         },
         {
-          name: 'speakers',
           title: 'Speakers',
           icon: 'contacts',
+          path: '/speakers',
           getView: () => (SpeakerStack)
         },
         {
-          name: 'map',
           title: 'Map',
           icon: 'map-outline',
+          path: '/map',
           getView: () => (MapStack)
         },
         {
-          name: 'about',
           title: 'About',
-          icon: 'informaion-circle-outline',
+          icon: 'information-circle-outline',
+          path: '/about',
           getView: () => (AboutStack)
         }
       ]}

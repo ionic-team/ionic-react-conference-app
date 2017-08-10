@@ -7,7 +7,7 @@ export default class About extends Component {
   }
 
   render() {
-    return (
+    return [
       <ion-header>
         <ion-navbar>
           <ion-buttons slot="start">
@@ -61,6 +61,6 @@ export default class About extends Component {
           </p>
         </div>
       </ion-content>
-    );
+    ];
   }
 }

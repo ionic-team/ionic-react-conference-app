@@ -3,15 +3,15 @@ import SessionDetail from '../containers/SessionDetail';
 import './SpeakerList.scss';
 
 
-export default ({ match, history }) => (
+export default ({ nav, params }) => (
   <SessionDetail>
     {({ speakers }) => {
-      const speaker = speakers.find(s => s.id === parseInt(match.params.speakerId, 10));
+      const speaker = speakers.find(s => s.id === parseInt(params.id, 10));
       return [
         <ion-header>
           <ion-navbar>
             <ion-buttons slot="start">
-              <ion-button href="#" onClick={() => history.goBack()} color="primary">
+              <ion-button href="#" onClick={() => nav.pop()} color="primary">
                 <ion-icon slot="icon-only" name="arrow-back"></ion-icon>Back
               </ion-button>
             </ion-buttons>

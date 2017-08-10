@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import SessionDetail from '../containers/SessionDetail';
 
 function openSpeakerShare(speaker) {
@@ -56,13 +55,13 @@ function openContact(speaker) {
   actionSheet.present();
 }
 
-const SpeakerItem = withRouter(({speaker, speakerSessions, history}) => (
+const SpeakerItem = ({speaker, speakerSessions, nav}) => (
   <ion-card class="speaker-card">
     <ion-card-header>
       <ion-item
         detail-none
         href="#"
-        onClick={() => history.push(`/speakers/${speaker.id}`)}
+        onClick={() => nav.push('speakers', { id: speaker.id })}
       >
         <ion-avatar slot="start">
           <img src={speaker.profilePic} alt="Speaker profile pic"/>
@@ -77,12 +76,12 @@ const SpeakerItem = withRouter(({speaker, speakerSessions, history}) => (
           <ion-item
             href="#"
             key={session.name}
-            onClick={() => history.push(`/sessions/${session.id}`)}
+            onClick={() => nav.push('sessions', { id: session.id })}
           >
             <h3>{session.name}</h3>
           </ion-item>
         ))}
-        <ion-item href="#" onClick={() => history.push(`/speakers/${speaker.id}`)}>
+        <ion-item href="#" onClick={() => nav.push('speakers', { id: speaker.id })}>
           <h3>About {speaker.name}</h3>
         </ion-item>
       </ion-list>
@@ -116,14 +115,14 @@ const SpeakerItem = withRouter(({speaker, speakerSessions, history}) => (
     </ion-row>
     </ion-grid>
   </ion-card>
-));
+);
 
-export default () => [
+export default ({ nav, params }) => [
   <ion-header>
     <ion-navbar>
       <ion-buttons slot="start">
         <ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-title>Speakers</ion-title>
@@ -139,7 +138,7 @@ export default () => [
               {({ sessions, speakers }) => {
                 return speakers.map((speaker) => {
                   const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
-                  return <SpeakerItem key={speaker.id} speaker={speaker} speakerSessions={speakerSessions} />;
+                  return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
                 });
               }}
             </SessionDetail>

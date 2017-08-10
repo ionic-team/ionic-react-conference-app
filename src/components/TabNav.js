@@ -7,7 +7,7 @@ const TabNav = ({ navViews, navViewProps, urlMatchHandler, onClickHandler }) => 
         const View = navView.getView();
         return (
           <div key={navView.name} style={urlMatchHandler(navView) ? {} : { display: 'none' }}>
-            <View {...navViewProps} key={navView.name} />
+            <View {...navViewProps} key={navView.path} basePath={navView.path} />
           </div>
         );
       })}
@@ -15,10 +15,10 @@ const TabNav = ({ navViews, navViewProps, urlMatchHandler, onClickHandler }) => 
     <div className="tabs-ios">
       <ion-tab-bar>
         { navViews.map((navView, index) => (
-        <a className="tab-button has-title has-icon" href="#" aria-selected={index === 0 ? 'true' : 'false'} onClick={onClickHandler(navView)}>
+        <a key={navView.path} className="tab-button has-title has-icon" href="#" aria-selected={urlMatchHandler(navView) ? 'true' : 'false'} onClick={onClickHandler(navView)}>
           <ion-icon class="tab-button-icon" name={navView.icon}></ion-icon>
-          <span class="tab-button-text">{navView.title}</span>
-          <div class="button-effect"></div>
+          <span className="tab-button-text">{navView.title}</span>
+          <div className="button-effect"></div>
         </a>
         )) }
       </ion-tab-bar>

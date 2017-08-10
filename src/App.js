@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Support from './pages/Support';
 import Signup from './pages/Signup';
 import Tutorial from './pages/Tutorial';
-import AppStack from './pages/test/AppStack';
+import AppStack from './pages/AppStack';
 
 /*
 const routes = {
