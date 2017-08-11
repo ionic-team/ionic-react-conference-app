@@ -1,30 +1,38 @@
 import React from 'react';
 
-const TabNav = ({ navViews, navViewProps, urlMatchHandler, onClickHandler }) => {
-  return [
-    <div>
-      { navViews.map(navView => {
-        const View = navView.getView();
+const TabNav = ({ childViews, urlMatchHandler, childViewProps, onClickHandler }) => [
+  <div key={1}>
+    { childViews.map(childView => {
+      const ChildComponent = childView.getView();
+      const path = childView.basePath;
+      const match = urlMatchHandler(childView.basePath);
+      return (
+        <div key={path} style={(match) ? {} : { display: 'none' }}>
+          <ChildComponent {...childViewProps} basePath={childView.basePath} visible={!!(match)}/>
+        </div>
+      );
+    })}
+  </div>,
+  <div key={2} className="tabs-ios">
+    <ion-tab-bar>
+      { childViews.map((childView, index) => {
+        const path = childView.basePath;
         return (
-          <div key={navView.name} style={urlMatchHandler(navView) ? {} : { display: 'none' }}>
-            <View {...navViewProps} key={navView.path} basePath={navView.path} />
-          </div>
+          <a
+            key={childView.basePath}
+            className="tab-button has-title has-icon"
+            href={childView.basePath}
+            aria-selected={urlMatchHandler(childView.basePath) ? 'true' : 'false'}
+            onClick={onClickHandler(path)}
+          >
+            <ion-icon class="tab-button-icon" name={childView.icon}></ion-icon>
+            <span className="tab-button-text">{childView.title}</span>
+            <div className="button-effect"></div>
+          </a>
         );
-      })}
-    </div>,
-    <div className="tabs-ios">
-      <ion-tab-bar>
-        { navViews.map((navView, index) => (
-        <a key={navView.path} className="tab-button has-title has-icon" href="#" aria-selected={urlMatchHandler(navView) ? 'true' : 'false'} onClick={onClickHandler(navView)}>
-          <ion-icon class="tab-button-icon" name={navView.icon}></ion-icon>
-          <span className="tab-button-text">{navView.title}</span>
-          <div className="button-effect"></div>
-        </a>
-        )) }
-      </ion-tab-bar>
-    </div>
-  ]
-
-};
+      }) }
+    </ion-tab-bar>
+  </div>
+];
 
 export default TabNav;

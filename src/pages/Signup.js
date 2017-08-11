@@ -4,7 +4,7 @@ import './Form.scss'
 export default class Signup extends Component {
   render() {
     return [
-      <ion-header>
+      <ion-header key={1}>
         <ion-navbar>
           <ion-buttons slot="start">
             <ion-button menuToggle>
@@ -15,7 +15,7 @@ export default class Signup extends Component {
         </ion-navbar>
       </ion-header>,
 
-      <ion-content class="page-user">
+      <ion-content class="page-user" key={2}>
         <div className="logo">
           <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
         </div>

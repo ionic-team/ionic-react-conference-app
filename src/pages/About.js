@@ -8,7 +8,7 @@ export default class About extends Component {
 
   render() {
     return [
-      <ion-header>
+      <ion-header key={1}>
         <ion-navbar>
           <ion-buttons slot="start">
             <ion-button menuToggle>
@@ -24,7 +24,7 @@ export default class About extends Component {
         </ion-navbar>
       </ion-header>,
 
-      <ion-content>
+      <ion-content key={2}>
         <div className="about-header">
           <img src="assets/img/ionic-logo-white.svg" alt="ionic logo" />
         </div>

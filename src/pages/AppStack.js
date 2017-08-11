@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { matchPath } from 'react-router-dom';
 import SchedulePage from './SchedulePage';
 import SessionDetail from './SessionDetail';
@@ -80,55 +80,74 @@ const AboutStack = (props) => (
   />
 );
 
-const AppStack = (props) => (
-  <ion-page>
-    <TabNav
-      onClickHandler={(navView) => (e) => {
-        e.preventDefault();
-        props.history.push(`${navView.path}`);
-      }}
-      urlMatchHandler={(navView) => {
-        return matchPath(props.location.pathname, { path: navView.path });
-      }}
-      navViewProps={{
-        onPageChange: (basePath, navView, params) =>  {
-          var newPath = navView.path;
-          Object.entries(params).forEach(([name, value]) => {
-            newPath = newPath.replace(`:${name}`, value);
-          });
-         props.history.replace(`${basePath}/${newPath}`);
-        },
-        urlMatchHandler: (basePath, navView) => {
-          return matchPath(props.location.pathname, { path: `${basePath}/${navView.path}` });
-        }
-      }}
-      navViews={[
+export default class AppStack extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      childViews: [
         {
           title: 'Schedule',
           icon: 'calendar-outline',
-          path: '/schedule',
+          basePath: '/schedule',
           getView: () => (ScheduleStack)
         },
         {
           title: 'Speakers',
           icon: 'contacts',
-          path: '/speakers',
+          basePath: '/speakers',
           getView: () => (SpeakerStack)
         },
         {
           title: 'Map',
           icon: 'map-outline',
-          path: '/map',
+          basePath: '/map',
           getView: () => (MapStack)
         },
         {
           title: 'About',
           icon: 'information-circle-outline',
-          path: '/about',
+          basePath: '/about',
           getView: () => (AboutStack)
         }
-      ]}
-    />
-  </ion-page>
-);
-export default AppStack;
+      ]
+    }
+  }
+
+  tabClickHandler(path) {
+    return (e) => {
+      e.preventDefault();
+      this.props.history.push(path);
+    }
+  }
+
+  urlMatchHandler(path) {
+    return matchPath(this.props.location.pathname, { path: path });
+  }
+
+  onPageChange(basePath, subPath, params) {
+    var resolvedSubPath = subPath;
+    Object.entries(params).forEach(([name, value]) => {
+      resolvedSubPath = resolvedSubPath.replace(`:${name}`, value);
+    });
+    const activePath = `${basePath}/${resolvedSubPath}`;
+    this.props.history.replace(activePath);
+  }
+
+  render() {
+    return (
+      <ion-page>
+        <TabNav
+          childViews={this.state.childViews}
+          onClickHandler={this.tabClickHandler.bind(this)}
+          urlMatchHandler={this.urlMatchHandler.bind(this)}
+          childViewProps={
+            {
+              urlMatchHandler: this.urlMatchHandler.bind(this),
+              onPageChange: this.onPageChange.bind(this)
+            }
+          }
+        />
+      </ion-page>
+    );
+  }
+}

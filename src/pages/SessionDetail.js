@@ -13,7 +13,7 @@ export default ({ nav, params }) => {
         const session = sessions.find(s => s.id === parseInt(params.id, 10));
         const sessionSpeakers = speakers.filter(s => session.speakerIds.includes(s.id));
         return [
-          <ion-header>
+          <ion-header key={1}>
             <ion-navbar>
               <ion-buttons slot="start">
                 <ion-button href="#" onClick={() => nav.pop()} color="primary">
@@ -24,7 +24,7 @@ export default ({ nav, params }) => {
             </ion-navbar>
           </ion-header>,
 
-          <ion-content padding>
+          <ion-content padding key={2}>
             <div>
               <h1>{session.name}</h1>
               {sessionSpeakers.map(speaker => (

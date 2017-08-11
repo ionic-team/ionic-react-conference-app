@@ -118,7 +118,7 @@ const SpeakerItem = ({speaker, speakerSessions, nav}) => (
 );
 
 export default ({ nav, params }) => [
-  <ion-header>
+  <ion-header key={1}>
     <ion-navbar>
       <ion-buttons slot="start">
         <ion-button menuToggle>
@@ -129,7 +129,7 @@ export default ({ nav, params }) => [
     </ion-navbar>
   </ion-header>,
 
-  <ion-content class="outer-content speaker-list">
+  <ion-content class="outer-content speaker-list" key={2}>
     <ion-list>
       <ion-grid fixed>
         <ion-row align-items-stretch>

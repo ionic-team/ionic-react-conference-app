@@ -9,7 +9,7 @@ export default class Account extends Component {
   support(){}
   render() {
     return [
-      <ion-header>
+      <ion-header key={1}>
         <ion-navbar>
           <ion-buttons slot="start">
             <ion-button menuToggle>
@@ -20,7 +20,7 @@ export default class Account extends Component {
         </ion-navbar>
       </ion-header>,
 
-      <ion-content class="outer-content page-account">
+      <ion-content key={2} class="outer-content page-account">
         <UserAccount>
           {({user, logOutUser}) => (
           <div>

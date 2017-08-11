@@ -7,7 +7,7 @@ import './Schedule.scss';
 const SchedulePage = ({ nav }) => (
   <SessionContainer>
     {(props) => [
-      <ion-header md-height="96px" ios-height="96px">
+      <ion-header md-height="96px" ios-height="96px" key={1}>
         <ion-navbar no-border-bottom>
           <ion-buttons slot="start">
             <ion-button menuToggle>
@@ -47,7 +47,7 @@ const SchedulePage = ({ nav }) => (
         </ion-toolbar>
       </ion-header>,
 
-      <ion-content class='page-schedule'>
+      <ion-content class="page-schedule" key={2}>
         <ion-refresher ionRefresh={(e) => this.doRefresh(e)}>
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
@@ -70,7 +70,7 @@ const SchedulePage = ({ nav }) => (
         />
       </ion-content>,
 
-      <ion-fixed>
+      <ion-fixed key={3}>
         <ion-fab bottom right>
           <ion-fab-button>
             <ion-icon name="share"></ion-icon>

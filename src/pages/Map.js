@@ -4,7 +4,7 @@ import Map from '../components/Map';
 import './Map.scss';
 
 const MapPage = () => [
-  <ion-header>
+  <ion-header key={1}>
     <ion-navbar>
       <ion-buttons slot="start">
         <ion-button menuToggle>
@@ -15,7 +15,7 @@ const MapPage = () => [
     </ion-navbar>
   </ion-header>,
 
-  <ion-content class="map-page">
+  <ion-content key={2} class="map-page">
     <LocationContainer>
       {({locations}) => (
         <Map locations={locations} />

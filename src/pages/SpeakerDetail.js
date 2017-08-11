@@ -8,7 +8,7 @@ export default ({ nav, params }) => (
     {({ speakers }) => {
       const speaker = speakers.find(s => s.id === parseInt(params.id, 10));
       return [
-        <ion-header>
+        <ion-header key={1}>
           <ion-navbar>
             <ion-buttons slot="start">
               <ion-button href="#" onClick={() => nav.pop()} color="primary">
@@ -19,7 +19,7 @@ export default ({ nav, params }) => (
           </ion-navbar>
         </ion-header>,
 
-        <ion-content padding class="speaker-detail speaker-page-list">
+        <ion-content padding class="speaker-detail speaker-page-list" key={2}>
           <div>
             <img src={speaker.profilePic} alt={speaker.name}/>
             <br/>
