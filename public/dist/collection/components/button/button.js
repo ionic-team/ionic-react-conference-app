@@ -1,3 +1,12 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+import { getElementClassObject } from '../../utils/theme';
 var Button = (function () {
     function Button() {
         this.itemButton = false;
@@ -62,85 +71,9 @@ var Button = (function () {
          */
         this.strong = false;
     }
-    /**
-     * @hidden
-     * Get the classes based on the button type
-     * e.g. alert-button, action-sheet-button
-     */
-    Button.prototype.getButtonClassList = function (buttonType, mode) {
-        if (!buttonType) {
-            return [];
-        }
-        return [
-            buttonType,
-            buttonType + "-" + mode
-        ];
-    };
-    /**
-     * @hidden
-     * Get the classes based on the type
-     * e.g. block, full, round, large
-     */
-    Button.prototype.getClassList = function (buttonType, type, mode) {
-        if (!type) {
-            return [];
-        }
-        type = type.toLocaleLowerCase();
-        return [
-            buttonType + "-" + type,
-            buttonType + "-" + type + "-" + mode
-        ];
-    };
-    /**
-     * @hidden
-     * Get the classes for the color
-     */
-    Button.prototype.getColorClassList = function (color, buttonType, style, mode) {
-        style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
-        var className = buttonType +
-            ((style && style !== 'default') ?
-                '-' + style.toLowerCase() :
-                '');
-        // special case for a default bar button
-        // if the bar button is default it should get the style
-        // but if a color is passed the style shouldn't be added
-        if (buttonType === 'bar-button' && style === 'default') {
-            className = buttonType;
-            if (!color) {
-                className += '-' + style.toLowerCase();
-            }
-        }
-        return [className + "-" + mode].concat(style !== 'default' ? "" + className : [], color ? className + "-" + mode + "-" + color : []);
-    };
-    /**
-     * @hidden
-     * Get the classes for the style
-     * e.g. outline, clear, solid
-     */
-    Button.prototype.getStyleClassList = function (buttonType) {
-        var classList = [].concat(this.outline ? this.getColorClassList(this.color, buttonType, 'outline', this.mode) : [], this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : [], this.solid ? this.getColorClassList(this.color, buttonType, 'solid', this.mode) : []);
-        if (classList.length === 0) {
-            classList = this.getColorClassList(this.color, buttonType, 'default', this.mode);
-        }
-        return classList;
-    };
-    /**
-     * @hidden
-     * Get the item classes for the button
-     */
-    Button.prototype.getItemClassList = function (size) {
-        var classList = [].concat(this.itemButton && !size ? 'item-button' : []);
-        return classList;
-    };
-    /**
-     * @hidden
-     * Get the element classes to add to the child element
-     */
-    Button.prototype.getElementClassList = function () {
-        var classList = [].concat(this.el.className.length ? this.el.className.split(' ') : []);
-        return classList;
-    };
     Button.prototype.render = function () {
+        var buttonType = this.buttonType;
+        var mode = this.mode;
         var size = (this.large ? 'large' : null) ||
             (this.small ? 'small' : null) ||
             (this.default ? 'default' : null);
@@ -148,13 +81,15 @@ var Button = (function () {
         var display = (this.block ? 'block' : null) ||
             (this.full ? 'full' : null);
         var decorator = (this.strong ? 'strong' : null);
-        var buttonClasses = []
-            .concat(this.getButtonClassList(this.buttonType, this.mode), this.getClassList(this.buttonType, shape, this.mode), this.getClassList(this.buttonType, display, this.mode), this.getClassList(this.buttonType, size, this.mode), this.getClassList(this.buttonType, decorator, this.mode), this.getStyleClassList(this.buttonType), this.getItemClassList(size), this.getElementClassList())
+        var hostClasses = getElementClassObject(this.el.classList);
+        var elementClasses = []
+            .concat(getButtonClassList(buttonType, mode), getClassList(buttonType, shape, mode), getClassList(buttonType, display, mode), getClassList(buttonType, size, mode), getClassList(buttonType, decorator, mode), getStyleClassList(mode, this.color, buttonType, this.outline, this.clear, this.solid), getItemClassList(this.itemButton, size))
             .reduce(function (prevValue, cssClass) {
             prevValue[cssClass] = true;
             return prevValue;
         }, {});
         var TagType = this.href ? 'a' : 'button';
+        var buttonClasses = __assign({}, hostClasses, elementClasses);
         return (h(TagType, { "c": buttonClasses, "a": { "disabled": this.disabled } },
             h("span", { "c": { "button-inner": true } },
                 h(0, { "a": { "name": 'icon-only' } }),
@@ -166,3 +101,67 @@ var Button = (function () {
     return Button;
 }());
 export { Button };
+/**
+ * Get the classes based on the button type
+ * e.g. alert-button, action-sheet-button
+ */
+function getButtonClassList(buttonType, mode) {
+    if (!buttonType) {
+        return [];
+    }
+    return [
+        buttonType,
+        buttonType + "-" + mode
+    ];
+}
+/**
+ * Get the classes based on the type
+ * e.g. block, full, round, large
+ */
+function getClassList(buttonType, type, mode) {
+    if (!type) {
+        return [];
+    }
+    type = type.toLocaleLowerCase();
+    return [
+        buttonType + "-" + type,
+        buttonType + "-" + type + "-" + mode
+    ];
+}
+/**
+ * Get the classes for the color
+ */
+function getColorClassList(color, buttonType, style, mode) {
+    style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
+    var className = buttonType +
+        ((style && style !== 'default') ?
+            '-' + style.toLowerCase() :
+            '');
+    // special case for a default bar button
+    // if the bar button is default it should get the style
+    // but if a color is passed the style shouldn't be added
+    if (buttonType === 'bar-button' && style === 'default') {
+        className = buttonType;
+        if (!color) {
+            className += '-' + style.toLowerCase();
+        }
+    }
+    return [className + "-" + mode].concat(style !== 'default' ? "" + className : [], color ? className + "-" + mode + "-" + color : []);
+}
+/**
+ * Get the classes for the style
+ * e.g. outline, clear, solid
+ */
+function getStyleClassList(mode, color, buttonType, outline, clear, solid) {
+    var classList = [].concat(outline ? getColorClassList(color, buttonType, 'outline', mode) : [], clear ? getColorClassList(color, buttonType, 'clear', mode) : [], solid ? getColorClassList(color, buttonType, 'solid', mode) : []);
+    if (classList.length === 0) {
+        classList = getColorClassList(color, buttonType, 'default', mode);
+    }
+    return classList;
+}
+/**
+ * Get the item classes for the button
+ */
+function getItemClassList(itemButton, size) {
+    return itemButton && !size ? ['item-button'] : [];
+}

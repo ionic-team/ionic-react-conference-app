@@ -1,3 +1,12 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+import { getElementClassObject } from '../../utils/theme';
 var ChipButton = (function () {
     function ChipButton() {
         /**
@@ -43,23 +52,17 @@ var ChipButton = (function () {
         }
         return classList;
     };
-    /**
-     * @hidden
-     * Get the element classes to add to the child element
-     */
-    ChipButton.prototype.getElementClassList = function () {
-        var classList = [].concat(this.el.className.length ? this.el.className.split(' ') : []);
-        return classList;
-    };
     ChipButton.prototype.render = function () {
         var buttonType = 'chip-button';
-        var buttonClasses = []
-            .concat(this.getButtonClassList(buttonType, this.mode), this.getElementClassList(), this.getStyleClassList(buttonType))
+        var hostClasses = getElementClassObject(this.el.classList);
+        var elementClasses = []
+            .concat(this.getButtonClassList(buttonType, this.mode), this.getStyleClassList(buttonType))
             .reduce(function (prevValue, cssClass) {
             prevValue[cssClass] = true;
             return prevValue;
         }, {});
         var TagType = this.href ? 'a' : 'button';
+        var buttonClasses = __assign({}, hostClasses, elementClasses);
         return (h(TagType, { "c": buttonClasses, "a": { "disabled": this.disabled } },
             h("span", { "c": { "button-inner": true } },
                 h(0, 0)),

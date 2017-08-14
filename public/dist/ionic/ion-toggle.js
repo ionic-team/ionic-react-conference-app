@@ -2,13 +2,13 @@
  * (C) Ionic http://ionicframework.com - MIT License
  * Built with http://stenciljs.com
  */
-Ionic.defineComponents(
+Ionic.loadComponents(
 
 /**** module id (dev mode) ****/
-'ion-toggle',
+"ion-toggle",
 
 /**** component modules ****/
-function importComponent(exports, h, t, Core, publicPath) {
+function importComponent(exports, h, t, Context, publicPath) {
 var Toggle = (function () {
     function Toggle() {
         this.activated = false;
@@ -122,65 +122,53 @@ exports['ION-TOGGLE'] = Toggle;
 
 /***************** ion-toggle *****************/
 [
-/** ion-toggle: [0] tag **/
-'ION-TOGGLE',
+/** ion-toggle: tag **/
+"ION-TOGGLE",
 
-/** ion-toggle: [1] host **/
-{"theme":"toggle"},
-
-/** ion-toggle: [2] states **/
-0 /* no states */,
-
-/** ion-toggle: [3] propWillChanges **/
-0 /* no prop will change methods */,
-
-/** ion-toggle: [4] propDidChanges **/
+/** ion-toggle: members **/
 [
-  [
-    /*****  ion-toggle prop did change [0] ***** /
-    /* [0] prop name **/ 'checked',
-    /* [1] call fn *****/ 'changed'
-  ],
-  [
-    /*****  ion-toggle prop did change [1] ***** /
-    /* [0] prop name **/ 'disabled',
-    /* [1] call fn *****/ 'disableChanged'
-  ]
+  [ "checked", /** prop state **/ 2, /** type boolean **/ 1 ],
+  [ "disabled", /** prop state **/ 2, /** type boolean **/ 1 ],
+  [ "value", /** prop state **/ 2 ]
 ],
 
-/** ion-toggle: [5] events **/
+/** ion-toggle: host **/
+{"theme":"toggle"},
+
+/** ion-toggle: events **/
 [
   [
-    /*****  ion-toggle ionBlur ***** /
-    /* [0] event name ***/ 'ionBlur',
-    /* [1] method name **/ 'ionBlur',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
-  ],
-  [
     /*****  ion-toggle ionChange ***** /
-    /* [0] event name ***/ 'ionChange',
-    /* [1] method name **/ 'ionChange',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
-  ],
-  [
-    /*****  ion-toggle ionFocus ***** /
-    /* [0] event name ***/ 'ionFocus',
-    /* [1] method name **/ 'ionFocus',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionChange"
   ],
   [
     /*****  ion-toggle ionStyle ***** /
-    /* [0] event name ***/ 'ionStyle',
-    /* [1] method name **/ 'ionStyle',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionStyle"
+  ],
+  [
+    /*****  ion-toggle ionFocus ***** /
+    /* event name ***/ "ionFocus"
+  ],
+  [
+    /*****  ion-toggle ionBlur ***** /
+    /* event name ***/ "ionBlur"
+  ]
+],
+
+/** ion-toggle: propWillChanges **/
+0 /* no prop will change methods */,
+
+/** ion-toggle: propDidChanges **/
+[
+  [
+    /*****  ion-toggle prop did change [0] ***** /
+    /* prop name **/ "checked",
+    /* call fn *****/ "changed"
+  ],
+  [
+    /*****  ion-toggle prop did change [1] ***** /
+    /* prop name **/ "disabled",
+    /* call fn *****/ "disableChanged"
   ]
 ]
 

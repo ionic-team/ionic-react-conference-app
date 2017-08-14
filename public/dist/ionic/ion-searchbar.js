@@ -2,13 +2,13 @@
  * (C) Ionic http://ionicframework.com - MIT License
  * Built with http://stenciljs.com
  */
-Ionic.defineComponents(
+Ionic.loadComponents(
 
 /**** module id (dev mode) ****/
-'ion-searchbar',
+"ion-searchbar",
 
 /**** component modules ****/
-function importComponent(exports, h, t, Core, publicPath) {
+function importComponent(exports, h, t, Context, publicPath) {
 var Searchbar = (function () {
     function Searchbar() {
         this._isCancelVisible = false;
@@ -270,70 +270,52 @@ exports['ION-SEARCHBAR'] = Searchbar;
 
 /***************** ion-searchbar *****************/
 [
-/** ion-searchbar: [0] tag **/
-'ION-SEARCHBAR',
+/** ion-searchbar: tag **/
+"ION-SEARCHBAR",
 
-/** ion-searchbar: [1] host **/
+/** ion-searchbar: members **/
+[
+  [ "activated", /** state **/ 5 ],
+  [ "animated", /** prop state **/ 2, /** type boolean **/ 1 ],
+  [ "autocomplete", /** prop state **/ 2 ],
+  [ "autocorrect", /** prop state **/ 2 ],
+  [ "cancelButtonText", /** prop state **/ 2 ],
+  [ "debounce", /** prop state **/ 2, /** type number **/ 2 ],
+  [ "el", /** element ref **/ 7 ],
+  [ "focused", /** state **/ 5 ],
+  [ "placeholder", /** prop state **/ 2 ],
+  [ "showCancelButton", /** prop state **/ 2, /** type boolean **/ 1 ],
+  [ "spellcheck", /** prop state **/ 2, /** type boolean **/ 1 ],
+  [ "type", /** prop state **/ 2 ],
+  [ "value", /** prop state **/ 2 ]
+],
+
+/** ion-searchbar: host **/
 {"theme":"searchbar"},
 
-/** ion-searchbar: [2] states **/
-['activated', 'focused'],
-
-/** ion-searchbar: [3] propWillChanges **/
-0 /* no prop will change methods */,
-
-/** ion-searchbar: [4] propDidChanges **/
-0 /* no prop did change methods */,
-
-/** ion-searchbar: [5] events **/
+/** ion-searchbar: events **/
 [
   [
-    /*****  ion-searchbar ionBlur ***** /
-    /* [0] event name ***/ 'ionBlur',
-    /* [1] method name **/ 'ionBlur',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /*****  ion-searchbar ionInput ***** /
+    /* event name ***/ "ionInput"
   ],
   [
     /*****  ion-searchbar ionCancel ***** /
-    /* [0] event name ***/ 'ionCancel',
-    /* [1] method name **/ 'ionCancel',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionCancel"
   ],
   [
     /*****  ion-searchbar ionClear ***** /
-    /* [0] event name ***/ 'ionClear',
-    /* [1] method name **/ 'ionClear',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionClear"
+  ],
+  [
+    /*****  ion-searchbar ionBlur ***** /
+    /* event name ***/ "ionBlur"
   ],
   [
     /*****  ion-searchbar ionFocus ***** /
-    /* [0] event name ***/ 'ionFocus',
-    /* [1] method name **/ 'ionFocus',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
-  ],
-  [
-    /*****  ion-searchbar ionInput ***** /
-    /* [0] event name ***/ 'ionInput',
-    /* [1] method name **/ 'ionInput',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionFocus"
   ]
-],
-
-/** ion-searchbar: [6] methods **/
-0 /* no methods */,
-
-/** ion-searchbar: [7] hostElementMember **/
-'el'
+]
 
 ]
 )

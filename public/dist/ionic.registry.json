@@ -2,439 +2,458 @@
   "namespace": "Ionic",
   "components": [
     [
-      "ION-ANIMATION-CONTROLLER",
-      "ion-animation-controller"
+      "ION-ANIMATION",
+      "ion-animation"
     ],
     [
       "ION-APP",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-AVATAR",
-      "ion-avatar.ion-badge.ion-thumbnail",
+      "ion-avatar",
       {
-        "ios": "ios.ion-avatar.ion-badge.ion-thumbnail",
-        "md": "md.ion-avatar.ion-badge.ion-thumbnail",
-        "wp": "wp.ion-avatar.ion-badge.ion-thumbnail"
+        "ios": "ios.ion-avatar",
+        "md": "md.ion-avatar",
+        "wp": "wp.ion-avatar"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-BADGE",
-      "ion-avatar.ion-badge.ion-thumbnail",
+      "ion-avatar",
       {
-        "ios": "ios.ion-avatar.ion-badge.ion-thumbnail",
-        "md": "md.ion-avatar.ion-badge.ion-thumbnail",
-        "wp": "wp.ion-avatar.ion-badge.ion-thumbnail"
+        "ios": "ios.ion-avatar",
+        "md": "md.ion-avatar",
+        "wp": "wp.ion-avatar"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-BUTTON",
-      "ion-button.ion-buttons.ion-icon",
+      "ion-button",
       {
-        "ios": "ios.ion-button.ion-buttons.ion-icon",
-        "md": "md.ion-button.ion-buttons.ion-icon",
-        "wp": "wp.ion-button.ion-buttons.ion-icon"
+        "ios": "ios.ion-button",
+        "md": "md.ion-button",
+        "wp": "wp.ion-button"
       },
-      2,
       [
         [
           "block",
-          0,
+          1,
           1
         ],
         [
-          "buttonType"
+          "buttonType",
+          1
         ],
         [
           "clear",
-          0,
+          1,
           1
         ],
         [
-          "color"
-        ],
-        [
           "default",
-          0,
+          1,
           1
         ],
         [
           "disabled",
-          0,
+          1,
           1
         ],
         [
           "full",
-          0,
+          1,
           1
         ],
         [
-          "href"
+          "href",
+          1
         ],
         [
           "itemButton",
-          0,
+          1,
           1
         ],
         [
           "large",
-          0,
+          1,
           1
         ],
         [
-          "mode"
-        ],
-        [
           "outline",
-          0,
+          1,
           1
         ],
         [
           "round",
-          0,
+          1,
           1
         ],
         [
           "small",
-          0,
+          1,
           1
         ],
         [
           "solid",
-          0,
+          1,
           1
         ],
         [
           "strong",
-          0,
+          1,
           1
         ]
-      ]
+      ],
+      0,
+      2
     ],
     [
       "ION-BUTTONS",
-      "ion-button.ion-buttons.ion-icon",
+      "ion-button",
       {
-        "ios": "ios.ion-button.ion-buttons.ion-icon",
-        "md": "md.ion-button.ion-buttons.ion-icon",
-        "wp": "wp.ion-button.ion-buttons.ion-icon"
+        "ios": "ios.ion-button",
+        "md": "md.ion-button",
+        "wp": "wp.ion-button"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-CARD",
-      "ion-card.ion-card-content.ion-card-header.ion-card",
+      "ion-card",
       {
-        "ios": "ios.ion-card.ion-card-content.ion-card-header.ion-",
-        "md": "md.ion-card.ion-card-content.ion-card-header.ion-c",
-        "wp": "wp.ion-card.ion-card-content.ion-card-header.ion-c"
+        "ios": "ios.ion-card",
+        "md": "md.ion-card",
+        "wp": "wp.ion-card"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-CARD-CONTENT",
-      "ion-card.ion-card-content.ion-card-header.ion-card",
+      "ion-card",
       {
-        "ios": "ios.ion-card.ion-card-content.ion-card-header.ion-",
-        "md": "md.ion-card.ion-card-content.ion-card-header.ion-c",
-        "wp": "wp.ion-card.ion-card-content.ion-card-header.ion-c"
+        "ios": "ios.ion-card",
+        "md": "md.ion-card",
+        "wp": "wp.ion-card"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-CARD-HEADER",
-      "ion-card.ion-card-content.ion-card-header.ion-card",
+      "ion-card",
       {
-        "ios": "ios.ion-card.ion-card-content.ion-card-header.ion-",
-        "md": "md.ion-card.ion-card-content.ion-card-header.ion-c",
-        "wp": "wp.ion-card.ion-card-content.ion-card-header.ion-c"
+        "ios": "ios.ion-card",
+        "md": "md.ion-card",
+        "wp": "wp.ion-card"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-CARD-TITLE",
-      "ion-card.ion-card-content.ion-card-header.ion-card",
+      "ion-card",
       {
-        "ios": "ios.ion-card.ion-card-content.ion-card-header.ion-",
-        "md": "md.ion-card.ion-card-content.ion-card-header.ion-c",
-        "wp": "wp.ion-card.ion-card-content.ion-card-header.ion-c"
+        "ios": "ios.ion-card",
+        "md": "md.ion-card",
+        "wp": "wp.ion-card"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-CHIP",
-      "ion-chip.ion-chip-button",
+      "ion-chip",
       {
-        "ios": "ios.ion-chip.ion-chip-button",
-        "md": "md.ion-chip.ion-chip-button",
-        "wp": "wp.ion-chip.ion-chip-button"
+        "ios": "ios.ion-chip",
+        "md": "md.ion-chip",
+        "wp": "wp.ion-chip"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-CHIP-BUTTON",
-      "ion-chip.ion-chip-button",
+      "ion-chip",
       {
-        "ios": "ios.ion-chip.ion-chip-button",
-        "md": "md.ion-chip.ion-chip-button",
-        "wp": "wp.ion-chip.ion-chip-button"
+        "ios": "ios.ion-chip",
+        "md": "md.ion-chip",
+        "wp": "wp.ion-chip"
       },
-      1,
       [
         [
           "clear",
-          0,
+          1,
           1
         ],
         [
           "disabled",
-          0,
+          1,
           1
         ],
         [
-          "href"
+          "href",
+          1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-COL",
-      "ion-col.ion-grid.ion-row",
+      "ion-col",
       {
-        "$": "ion-col.ion-grid.ion-row"
+        "$": "ion-col"
       }
     ],
     [
       "ION-CONTENT",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
-      1,
       [
         [
           "fullscreen",
-          0,
+          1,
           1
-        ],
-        [
-          "ionScroll"
-        ],
-        [
-          "ionScrollEnd"
-        ],
-        [
-          "ionScrollStart"
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-FAB",
-      "ion-fab.ion-fab-button.ion-fab-list",
+      "ion-fab",
       {
-        "ios": "ios.ion-fab.ion-fab-button.ion-fab-list",
-        "md": "md.ion-fab.ion-fab-button.ion-fab-list",
-        "wp": "wp.ion-fab.ion-fab-button.ion-fab-list"
+        "ios": "ios.ion-fab",
+        "md": "md.ion-fab",
+        "wp": "wp.ion-fab"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-FAB-BUTTON",
-      "ion-fab.ion-fab-button.ion-fab-list",
+      "ion-fab",
       {
-        "ios": "ios.ion-fab.ion-fab-button.ion-fab-list",
-        "md": "md.ion-fab.ion-fab-button.ion-fab-list",
-        "wp": "wp.ion-fab.ion-fab-button.ion-fab-list"
+        "ios": "ios.ion-fab",
+        "md": "md.ion-fab",
+        "wp": "wp.ion-fab"
       },
-      1,
       [
         [
           "disabled",
-          0,
+          1,
           1
         ],
         [
-          "href"
+          "href",
+          1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-FAB-LIST",
-      "ion-fab.ion-fab-button.ion-fab-list",
+      "ion-fab",
       {
-        "ios": "ios.ion-fab.ion-fab-button.ion-fab-list",
-        "md": "md.ion-fab.ion-fab-button.ion-fab-list",
-        "wp": "wp.ion-fab.ion-fab-button.ion-fab-list"
+        "ios": "ios.ion-fab",
+        "md": "md.ion-fab",
+        "wp": "wp.ion-fab"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-FIXED",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-FOOTER",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-GESTURE",
-      "ion-gesture.ion-scroll",
-      0,
+      "ion-gesture",
       0,
       [
         [
-          "attachTo"
+          "attachTo",
+          1
         ],
         [
           "autoBlockAll",
-          0,
+          1,
           1
         ],
         [
-          "block"
+          "block",
+          1
         ],
         [
-          "canStart"
-        ],
-        [
-          "direction"
+          "direction",
+          1
         ],
         [
           "disableScroll",
-          0,
+          1,
           1
         ],
         [
-          "gestureName"
+          "gestureName",
+          1
         ],
         [
           "gesturePriority",
-          0,
+          1,
           2
         ],
         [
           "maxAngle",
-          0,
+          1,
           2
-        ],
-        [
-          "notCaptured"
-        ],
-        [
-          "onEnd"
-        ],
-        [
-          "onMove"
-        ],
-        [
-          "onPress"
-        ],
-        [
-          "onStart"
         ],
         [
           "threshold",
-          0,
+          1,
           2
         ],
         [
-          "type"
+          "type",
+          1
         ]
       ],
       [
         [
           "document:mousemove",
           "onMoveMove",
-          true
+          1
         ],
         [
           "document:mouseup",
           "onMouseUp",
-          true
+          1
         ],
         [
           "mousedown",
           "onMouseDown",
-          true
+          1
         ],
         [
           "touchend",
           "onTouchEnd",
-          true
+          1
         ],
         [
           "touchmove",
           "onTouchMove",
-          true
+          1
         ],
         [
           "touchstart",
           "onTouchStart",
-          true
+          1
         ]
       ]
     ],
     [
       "ION-GRID",
-      "ion-col.ion-grid.ion-row",
+      "ion-col",
       {
-        "$": "ion-col.ion-grid.ion-row"
+        "$": "ion-col"
       }
     ],
     [
       "ION-HEADER",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-ICON",
-      "ion-button.ion-buttons.ion-icon",
+      "ion-button",
       {
-        "ios": "ios.ion-button.ion-buttons.ion-icon",
-        "md": "md.ion-button.ion-buttons.ion-icon",
-        "wp": "wp.ion-button.ion-buttons.ion-icon"
+        "ios": "ios.ion-button",
+        "md": "md.ion-button",
+        "wp": "wp.ion-button"
       },
-      0,
       [
         [
-          "ios"
+          "ariaLabel",
+          1
         ],
         [
-          "md"
+          "ios",
+          1
         ],
         [
-          "name"
+          "isServer",
+          3,
+          1,
+          "isServer"
+        ],
+        [
+          "md",
+          1
+        ],
+        [
+          "name",
+          1
         ]
       ]
     ],
@@ -446,92 +465,139 @@
         "md": "md.ion-input",
         "wp": "wp.ion-input"
       },
-      0,
       [
         [
-          "autocomplete"
+          "accept",
+          1
         ],
         [
-          "autocorrect"
+          "autocapitalize",
+          1
+        ],
+        [
+          "autocomplete",
+          1
+        ],
+        [
+          "autocorrect",
+          1
         ],
         [
           "autofocus",
-          0,
-          1
-        ],
-        [
-          "checked",
-          0,
-          1
-        ],
-        [
-          "clearInput",
-          0,
-          1
-        ],
-        [
-          "clearOnEdit",
-          0,
           1,
           1
         ],
         [
-          "disabled",
-          0,
+          "checked",
+          1,
           1
         ],
         [
-          "max"
+          "clearInput",
+          1,
+          1
         ],
         [
-          "min"
+          "clearOnEdit",
+          2,
+          1
         ],
         [
-          "placeholder"
+          "disabled",
+          1,
+          1
+        ],
+        [
+          "inputmode",
+          1
+        ],
+        [
+          "max",
+          1
+        ],
+        [
+          "maxlength",
+          1,
+          2
+        ],
+        [
+          "min",
+          1
+        ],
+        [
+          "minlength",
+          1,
+          2
+        ],
+        [
+          "multiple",
+          1,
+          1
+        ],
+        [
+          "name",
+          1
+        ],
+        [
+          "pattern",
+          1
+        ],
+        [
+          "placeholder",
+          1
         ],
         [
           "readonly",
-          0,
+          1,
           1
+        ],
+        [
+          "required",
+          1,
+          1
+        ],
+        [
+          "results",
+          1,
+          2
+        ],
+        [
+          "size",
+          1,
+          2
         ],
         [
           "spellcheck",
-          0,
+          1,
           1
         ],
         [
-          "step"
+          "step",
+          1
         ],
         [
-          "type"
+          "type",
+          1
         ],
         [
           "value",
-          0,
-          0,
-          1
+          2
         ]
       ]
     ],
     [
       "ION-ITEM",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
-      2,
       [
         [
-          "color"
-        ],
-        [
-          "href"
-        ],
-        [
-          "mode"
+          "href",
+          1
         ]
       ],
       [
@@ -539,156 +605,160 @@
           "ionStyle",
           "itemStyle"
         ]
-      ]
+      ],
+      2
     ],
     [
       "ION-ITEM-DIVIDER",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
+      0,
+      0,
       2
     ],
     [
       "ION-ITEM-OPTION",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
-      1,
       [
         [
           "disabled",
-          0,
+          1,
           1
         ],
         [
-          "href"
+          "href",
+          1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-ITEM-OPTIONS",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
-      1,
-      [
-        [
-          "side"
-        ]
-      ]
+      0,
+      0,
+      1
     ],
     [
       "ION-ITEM-SLIDING",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-LABEL",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
-      1,
       [
         [
           "fixed",
-          0,
+          1,
           1
         ],
         [
           "floating",
-          0,
+          1,
           1
         ],
         [
           "stacked",
-          0,
+          1,
           1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-LIST",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-LIST-HEADER",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-LOADING",
-      "ion-loading.ion-loading-controller",
+      "ion-loading",
       {
-        "$": "ion-loading.ion-loading-controller",
-        "ios": "ios.ion-loading.ion-loading-controller",
-        "md": "md.ion-loading.ion-loading-controller",
-        "wp": "wp.ion-loading.ion-loading-controller"
+        "ios": "ios.ion-loading",
+        "md": "md.ion-loading",
+        "wp": "wp.ion-loading"
       },
-      0,
       [
         [
-          "content"
+          "content",
+          1
         ],
         [
-          "cssClass"
+          "cssClass",
+          1
         ],
         [
           "dismissOnPageChange",
-          0,
+          1,
           1
         ],
         [
           "duration",
-          0,
+          1,
           2
         ],
         [
-          "enterAnimation"
-        ],
-        [
-          "exitAnimation"
-        ],
-        [
-          "id"
+          "id",
+          1
         ],
         [
           "showBackdrop",
-          0,
+          1,
           1
         ]
       ],
@@ -700,15 +770,13 @@
       ]
     ],
     [
-      "ION-LOADING-CONTROLLER",
-      "ion-loading.ion-loading-controller",
+      "ION-LOADING-CTRL",
+      "ion-loading",
       {
-        "$": "ion-loading.ion-loading-controller",
-        "ios": "ios.ion-loading.ion-loading-controller",
-        "md": "md.ion-loading.ion-loading-controller",
-        "wp": "wp.ion-loading.ion-loading-controller"
+        "ios": "ios.ion-loading",
+        "md": "md.ion-loading",
+        "wp": "wp.ion-loading"
       },
-      0,
       0,
       [
         [
@@ -741,95 +809,90 @@
         "md": "md.ion-menu",
         "wp": "wp.ion-menu"
       },
-      1,
       [
         [
-          "content"
-        ],
-        [
-          "enabled",
-          0,
+          "content",
           1
         ],
         [
-          "id"
+          "enabled",
+          1,
+          1
+        ],
+        [
+          "id",
+          1
         ],
         [
           "isAnimating",
-          0,
+          1,
           1
         ],
         [
           "isOpen",
-          0,
+          1,
           1
         ],
         [
           "maxEdgeStart",
-          0,
+          1,
           2
         ],
         [
           "persistent",
-          0,
+          1,
           1
         ],
         [
-          "side"
+          "side",
+          1
         ],
         [
           "swipeEnabled",
-          0,
+          1,
           1
         ],
         [
-          "type"
+          "type",
+          1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-MODAL",
-      "ion-modal.ion-modal-controller",
+      "ion-modal",
       {
-        "$": "ion-modal.ion-modal-controller",
-        "ios": "ios.ion-modal.ion-modal-controller",
-        "md": "md.ion-modal.ion-modal-controller",
-        "wp": "wp.ion-modal.ion-modal-controller"
+        "ios": "ios.ion-modal",
+        "md": "md.ion-modal",
+        "wp": "wp.ion-modal"
       },
-      0,
       [
         [
-          "color"
-        ],
-        [
-          "component"
-        ],
-        [
-          "componentProps"
-        ],
-        [
-          "cssClass"
-        ],
-        [
-          "enableBackdropDismiss",
-          0,
+          "component",
           1
         ],
         [
-          "enterAnimation"
+          "componentProps",
+          1
         ],
         [
-          "exitAnimation"
+          "cssClass",
+          1
         ],
         [
-          "id"
+          "enableBackdropDismiss",
+          1,
+          1
         ],
         [
-          "mode"
+          "id",
+          1
         ],
         [
           "showBackdrop",
-          0,
+          1,
           1
         ]
       ],
@@ -841,15 +904,13 @@
       ]
     ],
     [
-      "ION-MODAL-CONTROLLER",
-      "ion-modal.ion-modal-controller",
+      "ION-MODAL-CTRL",
+      "ion-modal",
       {
-        "$": "ion-modal.ion-modal-controller",
-        "ios": "ios.ion-modal.ion-modal-controller",
-        "md": "md.ion-modal.ion-modal-controller",
-        "wp": "wp.ion-modal.ion-modal-controller"
+        "ios": "ios.ion-modal",
+        "md": "md.ion-modal",
+        "wp": "wp.ion-modal"
       },
-      0,
       0,
       [
         [
@@ -875,89 +936,70 @@
       ]
     ],
     [
-      "ION-NAV",
-      "ion-nav",
-      0,
-      0,
-      [
-        [
-          "renderChildren"
-        ],
-        [
-          "rootPage"
-        ]
-      ]
-    ],
-    [
       "ION-NAVBAR",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
-      2,
       [
         [
-          "backButtonIcon"
+          "backButtonIcon",
+          1
         ],
         [
-          "backButtonText"
+          "backButtonText",
+          1
         ],
         [
           "hidden",
-          0,
+          1,
           1
         ],
         [
           "hideBackButton",
-          0,
+          1,
           1
         ]
-      ]
+      ],
+      0,
+      2
     ],
     [
       "ION-PAGE",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-ROW",
-      "ion-col.ion-grid.ion-row",
+      "ion-col",
       {
-        "$": "ion-col.ion-grid.ion-row"
+        "$": "ion-col"
       }
     ],
     [
       "ION-SCROLL",
-      "ion-gesture.ion-scroll",
+      "ion-gesture",
       0,
-      1,
       [
         [
           "enabled",
-          0,
+          1,
           1
         ],
         [
-          "ionScroll"
-        ],
-        [
-          "ionScrollEnd"
-        ],
-        [
-          "ionScrollStart"
-        ],
-        [
           "jsScroll",
-          0,
+          1,
           1
         ]
       ],
@@ -969,19 +1011,20 @@
         [
           "touchend",
           "onTouchEnd",
-          true
+          1
         ],
         [
           "touchmove",
           "onTouchMove",
-          true
+          1
         ],
         [
           "touchstart",
           "onTouchStart",
-          true
+          1
         ]
-      ]
+      ],
+      1
     ],
     [
       "ION-SEARCHBAR",
@@ -991,97 +1034,70 @@
         "md": "md.ion-searchbar",
         "wp": "wp.ion-searchbar"
       },
-      0,
       [
         [
           "animated",
-          0,
-          1,
-          1
-        ],
-        [
-          "autocomplete",
-          0,
-          0,
-          1
-        ],
-        [
-          "autocorrect",
-          0,
-          0,
-          1
-        ],
-        [
-          "cancelButtonText",
-          0,
-          0,
-          1
-        ],
-        [
-          "color"
-        ],
-        [
-          "debounce",
-          0,
           2,
           1
         ],
         [
-          "mode"
+          "autocomplete",
+          2
+        ],
+        [
+          "autocorrect",
+          2
+        ],
+        [
+          "cancelButtonText",
+          2
+        ],
+        [
+          "debounce",
+          2,
+          2
         ],
         [
           "placeholder",
-          0,
-          0,
-          1
+          2
         ],
         [
           "showCancelButton",
-          0,
-          1,
+          2,
           1
         ],
         [
           "spellcheck",
-          0,
-          1,
+          2,
           1
         ],
         [
           "type",
-          0,
-          0,
-          1
+          2
         ],
         [
           "value",
-          0,
-          0,
-          1
+          2
         ]
       ]
     ],
     [
       "ION-SEGMENT",
-      "ion-segment.ion-segment-button",
+      "ion-segment",
       {
-        "ios": "ios.ion-segment.ion-segment-button",
-        "md": "md.ion-segment.ion-segment-button",
-        "wp": "wp.ion-segment.ion-segment-button"
+        "ios": "ios.ion-segment",
+        "md": "md.ion-segment",
+        "wp": "wp.ion-segment"
       },
-      1,
       [
         [
           "disabled",
-          0,
-          1,
+          2,
           1
         ],
         [
           "value",
-          0,
-          0,
-          1
+          2
         ]
       ],
       [
@@ -1089,131 +1105,125 @@
           "ionClick",
           "segmentClick"
         ]
-      ]
+      ],
+      1
     ],
     [
       "ION-SEGMENT-BUTTON",
-      "ion-segment.ion-segment-button",
+      "ion-segment",
       {
-        "ios": "ios.ion-segment.ion-segment-button",
-        "md": "md.ion-segment.ion-segment-button",
-        "wp": "wp.ion-segment.ion-segment-button"
+        "ios": "ios.ion-segment",
+        "md": "md.ion-segment",
+        "wp": "wp.ion-segment"
       },
-      1,
       [
         [
           "checked",
-          0,
-          1,
+          2,
           1
         ],
         [
           "disabled",
-          0,
-          1,
+          2,
           1
         ],
         [
           "value",
-          0,
-          0,
-          1
+          2
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-SKELETON-TEXT",
-      "ion-item.ion-item-divider.ion-item-option.ion-item",
+      "ion-item",
       {
-        "$": "ion-item.ion-item-divider.ion-item-option.ion-item",
-        "ios": "ios.ion-item.ion-item-divider.ion-item-option.ion-",
-        "md": "md.ion-item.ion-item-divider.ion-item-option.ion-i",
-        "wp": "wp.ion-item.ion-item-divider.ion-item-option.ion-i"
+        "$": "ion-item",
+        "ios": "ios.ion-item",
+        "md": "md.ion-item",
+        "wp": "wp.ion-item"
       },
-      0,
       [
         [
-          "width"
+          "width",
+          1
         ]
       ]
     ],
     [
       "ION-SLIDE",
-      "ion-slide.ion-slides",
+      "ion-slide",
       {
-        "$": "ion-slide.ion-slides"
+        "$": "ion-slide"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-SLIDES",
-      "ion-slide.ion-slides",
+      "ion-slide",
       {
-        "$": "ion-slide.ion-slides"
+        "$": "ion-slide"
       },
-      1,
       [
         [
           "autoplay",
-          0,
+          1,
           2
         ],
         [
-          "control"
-        ],
-        [
-          "direction"
-        ],
-        [
-          "effect"
+          "effect",
+          1
         ],
         [
           "initialSlide",
-          0,
+          1,
           2
         ],
         [
           "keyboardControl",
-          0,
+          1,
           1
         ],
         [
           "loop",
-          0,
+          1,
           1
         ],
         [
           "pager",
-          0,
+          1,
           1
         ],
         [
-          "paginationType"
+          "paginationType",
+          1
         ],
         [
           "parallax",
-          0,
+          1,
           1
         ],
         [
-          "slidesPerView"
-        ],
-        [
           "spaceBetween",
-          0,
+          1,
           2
         ],
         [
           "speed",
-          0,
+          1,
           2
         ],
         [
           "zoom",
-          0,
+          1,
           1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "ION-SPINNER",
@@ -1223,163 +1233,156 @@
         "md": "md.ion-spinner",
         "wp": "wp.ion-spinner"
       },
-      0,
       [
         [
-          "color"
-        ],
-        [
           "duration",
-          0,
+          1,
           2
         ],
         [
-          "mode"
-        ],
-        [
-          "name"
+          "name",
+          1
         ],
         [
           "paused",
-          0,
+          1,
           1
         ]
       ]
     ],
     [
       "ION-TAB",
-      "ion-tab.ion-tab-bar.ion-tab-button.ion-tab-highlig",
+      "ion-tab",
       {
-        "ios": "ios.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-hig",
-        "md": "md.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high",
-        "wp": "wp.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high"
+        "ios": "ios.ion-tab",
+        "md": "md.ion-tab",
+        "wp": "wp.ion-tab"
       },
-      0,
       [
         [
           "enabled",
-          0,
+          1,
           1
         ],
         [
-          "onSelected"
+          "root",
+          1
         ],
         [
-          "root"
-        ],
-        [
-          "rootParams"
+          "rootParams",
+          1
         ],
         [
           "shown",
-          0,
+          1,
           1
         ],
         [
-          "tabBadge"
+          "tabBadge",
+          1
         ],
         [
-          "tabBadgeStyle"
+          "tabBadgeStyle",
+          1
         ],
         [
-          "tabIcon"
+          "tabIcon",
+          1
+        ],
+        [
+          "tabTitle",
+          1
         ],
         [
           "tabsHideOnSubPages",
-          0,
+          1,
           1
-        ],
-        [
-          "tabTitle"
         ]
       ]
     ],
     [
       "ION-TAB-BAR",
-      "ion-tab.ion-tab-bar.ion-tab-button.ion-tab-highlig",
+      "ion-tab",
       {
-        "ios": "ios.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-hig",
-        "md": "md.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high",
-        "wp": "wp.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high"
+        "ios": "ios.ion-tab",
+        "md": "md.ion-tab",
+        "wp": "wp.ion-tab"
       },
-      0,
       [
         [
-          "onTabSelected"
-        ],
-        [
           "selectedIndex",
-          0,
+          1,
           2
         ],
         [
-          "tabs"
+          "tabs",
+          1
         ],
         [
-          "tabsLayout"
+          "tabsLayout",
+          1
         ]
       ]
     ],
     [
       "ION-TAB-BUTTON",
-      "ion-tab.ion-tab-bar.ion-tab-button.ion-tab-highlig",
+      "ion-tab",
       {
-        "ios": "ios.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-hig",
-        "md": "md.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high",
-        "wp": "wp.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high"
+        "ios": "ios.ion-tab",
+        "md": "md.ion-tab",
+        "wp": "wp.ion-tab"
       },
-      0,
       [
         [
           "index",
-          0,
+          1,
           2
         ],
         [
-          "layout"
+          "layout",
+          1
         ],
         [
           "selectedIndex",
-          0,
+          1,
           2
         ],
         [
-          "tab"
+          "tab",
+          1
         ]
       ]
     ],
     [
       "ION-TAB-HIGHLIGHT",
-      "ion-tab.ion-tab-bar.ion-tab-button.ion-tab-highlig",
+      "ion-tab",
       {
-        "ios": "ios.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-hig",
-        "md": "md.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high",
-        "wp": "wp.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high"
+        "ios": "ios.ion-tab",
+        "md": "md.ion-tab",
+        "wp": "wp.ion-tab"
       }
     ],
     [
       "ION-TABS",
-      "ion-tab.ion-tab-bar.ion-tab-button.ion-tab-highlig",
+      "ion-tab",
       {
-        "ios": "ios.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-hig",
-        "md": "md.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high",
-        "wp": "wp.ion-tab.ion-tab-bar.ion-tab-button.ion-tab-high"
+        "ios": "ios.ion-tab",
+        "md": "md.ion-tab",
+        "wp": "wp.ion-tab"
       },
-      1,
       [
         [
-          "ionChange"
-        ],
-        [
           "tabsHighlight",
-          0,
+          1,
           1
         ],
         [
-          "tabsLayout"
+          "tabsLayout",
+          1
         ],
         [
-          "tabsPlacement"
+          "tabsPlacement",
+          1
         ]
       ],
       [
@@ -1391,27 +1394,117 @@
           "ionTabDidUnload",
           "tabDidUnload"
         ]
+      ],
+      1
+    ],
+    [
+      "ION-TEXTAREA",
+      "ion-input",
+      {
+        "ios": "ios.ion-input",
+        "md": "md.ion-input",
+        "wp": "wp.ion-input"
+      },
+      [
+        [
+          "autocapitalize",
+          1
+        ],
+        [
+          "autocomplete",
+          1
+        ],
+        [
+          "autofocus",
+          1,
+          1
+        ],
+        [
+          "clearOnEdit",
+          2,
+          1
+        ],
+        [
+          "cols",
+          1,
+          2
+        ],
+        [
+          "disabled",
+          1,
+          1
+        ],
+        [
+          "maxlength",
+          1,
+          2
+        ],
+        [
+          "minlength",
+          1,
+          2
+        ],
+        [
+          "name",
+          1
+        ],
+        [
+          "placeholder",
+          1
+        ],
+        [
+          "readonly",
+          1,
+          1
+        ],
+        [
+          "required",
+          1,
+          1
+        ],
+        [
+          "rows",
+          1,
+          2
+        ],
+        [
+          "spellcheck",
+          1,
+          1
+        ],
+        [
+          "value",
+          2
+        ],
+        [
+          "wrap",
+          1
+        ]
       ]
     ],
     [
       "ION-THUMBNAIL",
-      "ion-avatar.ion-badge.ion-thumbnail",
+      "ion-avatar",
       {
-        "ios": "ios.ion-avatar.ion-badge.ion-thumbnail",
-        "md": "md.ion-avatar.ion-badge.ion-thumbnail",
-        "wp": "wp.ion-avatar.ion-badge.ion-thumbnail"
+        "ios": "ios.ion-avatar",
+        "md": "md.ion-avatar",
+        "wp": "wp.ion-avatar"
       },
+      0,
+      0,
       1
     ],
     [
       "ION-TITLE",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       1
     ],
     [
@@ -1422,31 +1515,20 @@
         "md": "md.ion-toggle",
         "wp": "wp.ion-toggle"
       },
-      0,
       [
         [
           "checked",
-          0,
-          1,
+          2,
           1
-        ],
-        [
-          "color"
         ],
         [
           "disabled",
-          0,
-          1,
+          2,
           1
-        ],
-        [
-          "mode"
         ],
         [
           "value",
-          0,
-          0,
-          1
+          2
         ]
       ],
       [
@@ -1458,30 +1540,20 @@
     ],
     [
       "ION-TOOLBAR",
-      "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
+      "ion-app",
       {
-        "$": "ion-app.ion-content.ion-fixed.ion-footer.ion-heade",
-        "ios": "ios.ion-app.ion-content.ion-fixed.ion-footer.ion-h",
-        "md": "md.ion-app.ion-content.ion-fixed.ion-footer.ion-he",
-        "wp": "wp.ion-app.ion-content.ion-fixed.ion-footer.ion-he"
+        "$": "ion-app",
+        "ios": "ios.ion-app",
+        "md": "md.ion-app",
+        "wp": "wp.ion-app"
       },
+      0,
+      0,
       2
-    ],
-    [
-      "PAGE-ONE",
-      "page-one"
-    ],
-    [
-      "PAGE-THREE",
-      "page-three"
-    ],
-    [
-      "PAGE-TWO",
-      "page-two"
     ]
   ],
   "loader": "ionic.js",
   "global": "ionic.global.js",
   "core": "ionic/ionic.core.js",
-  "coreEs5": "ionic/ionic.core.ce.js"
+  "corePolyfilled": "ionic/ionic.core.pf.js"
 }

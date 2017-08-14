@@ -2,224 +2,15 @@
  * (C) Ionic http://ionicframework.com - MIT License
  * Built with http://stenciljs.com
  */
-Ionic.defineComponents(
+Ionic.loadComponents(
 
 /**** module id (dev mode) ****/
-'ion-menu',
+"ion-menu",
 
 /**** component modules ****/
-function importComponent(exports, h, t, Core, publicPath) {
-var CSS_PROP = function (docEle) {
-    var css = {};
-    // transform
-    var i;
-    var keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
-    for (i = 0; i < keys.length; i++) {
-        if (docEle.style[keys[i]] !== undefined) {
-            css.transformProp = keys[i];
-            break;
-        }
-    }
-    // transition
-    keys = ['webkitTransition', 'transition'];
-    for (i = 0; i < keys.length; i++) {
-        if (docEle.style[keys[i]] !== undefined) {
-            css.transitionProp = keys[i];
-            break;
-        }
-    }
-    // The only prefix we care about is webkit for transitions.
-    var prefix = css.transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
-    // transition duration
-    css.transitionDurationProp = prefix + 'transition-duration';
-    // transition timing function
-    css.transitionTimingFnProp = prefix + 'transition-timing-function';
-    return css;
-}(document.documentElement);
-
-/**
- * iOS Loading Enter Animation
- */
-
-/**
- * iOS Loading Leave Animation
- */
-
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-/**
- * @hidden
- * Menu Type
- * Base class which is extended by the various types. Each
- * type will provide their own animations for open and close
- * and registers itself with Menu.
- */
-var MenuType = (function () {
-    function MenuType() {
-        // Ionic.createAnimation().then(Animation => {
-        //   this.ani = new Animation();
-        // });;
-        // this.ani
-        //   .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
-        //   .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
-        //   .duration(280);
-    }
-    MenuType.prototype.setOpen = function (shouldOpen, animated, done) {
-        var ani = this.ani
-            .onFinish(done, { oneTimeCallback: true, clearExistingCallacks: true })
-            .reverse(!shouldOpen);
-        if (animated) {
-            ani.play();
-        }
-        else {
-            ani.syncPlay();
-        }
-    };
-    MenuType.prototype.setProgressStart = function (isOpen) {
-        this.isOpening = !isOpen;
-        // the cloned animation should not use an easing curve during seek
-        this.ani
-            .reverse(isOpen)
-            .progressStart();
-    };
-    MenuType.prototype.setProgessStep = function (stepValue) {
-        // adjust progress value depending if it opening or closing
-        this.ani.progressStep(stepValue);
-    };
-    MenuType.prototype.setProgressEnd = function (shouldComplete, currentStepValue, velocity, done) {
-        var _this = this;
-        var isOpen = (this.isOpening && shouldComplete);
-        if (!this.isOpening && !shouldComplete) {
-            isOpen = true;
-        }
-        var ani = this.ani;
-        ani.onFinish(function () {
-            _this.isOpening = false;
-            done(isOpen);
-        }, { clearExistingCallacks: true });
-        var factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
-        var dur = ani.getDuration() * factor;
-        ani.progressEnd(shouldComplete, currentStepValue, dur);
-    };
-    MenuType.prototype.destroy = function () {
-        this.ani.destroy();
-        this.ani = null;
-    };
-    return MenuType;
-}());
-/**
- * @hidden
- * Menu Reveal Type
- * The content slides over to reveal the menu underneath.
- * The menu itself, which is under the content, does not move.
- */
-var MenuRevealType = (function (_super) {
-    __extends(MenuRevealType, _super);
-    function MenuRevealType() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return MenuRevealType;
-}(MenuType));
-/**
- * @hidden
- * Menu Push Type
- * The content slides over to reveal the menu underneath.
- * The menu itself also slides over to reveal its bad self.
- */
-var MenuPushType = (function (_super) {
-    __extends(MenuPushType, _super);
-    function MenuPushType() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return MenuPushType;
-}(MenuType));
-/**
- * @hidden
- * Menu Overlay Type
- * The menu slides over the content. The content
- * itself, which is under the menu, does not move.
- */
-var MenuOverlayType = (function (_super) {
-    __extends(MenuOverlayType, _super);
-    function MenuOverlayType() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return MenuOverlayType;
-}(MenuType));
-
-/**
- * iOS Modal Enter Animation
- */
-
-/**
- * Animations for modals
- */
-// export function modalSlideIn(rootElm: HTMLElement) {
-// }
-// export class ModalSlideOut {
-//   constructor(ele: HTMLElement) {
-//     let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-//     let wrapperEle = <HTMLElement>ele.querySelector('.modal-wrapper');
-//     let wrapperEleRect = wrapperEle.getBoundingClientRect();
-//     let wrapper = new Animation(this.plt, wrapperEle);
-//     // height of the screen - top of the container tells us how much to scoot it down
-//     // so it's off-screen
-//     wrapper.fromTo('translateY', '0px', `${this.plt.height() - wrapperEleRect.top}px`);
-//     backdrop.fromTo('opacity', 0.4, 0.0);
-//     this
-//       .element(this.leavingView.pageRef())
-//       .easing('ease-out')
-//       .duration(250)
-//       .add(backdrop)
-//       .add(wrapper);
-//   }
-// }
-// export class ModalMDSlideIn {
-//   constructor(ele: HTMLElement) {
-//     const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
-//     backdrop.fromTo('opacity', 0.01, 0.4);
-//     wrapper.fromTo('translateY', '40px', '0px');
-//     wrapper.fromTo('opacity', 0.01, 1);
-//     const DURATION = 280;
-//     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-//     this.element(this.enteringView.pageRef()).easing(EASING).duration(DURATION)
-//       .add(backdrop)
-//       .add(wrapper);
-//   }
-// }
-// export class ModalMDSlideOut {
-//   constructor(ele: HTMLElement) {
-//     const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
-//     backdrop.fromTo('opacity', 0.4, 0.0);
-//     wrapper.fromTo('translateY', '0px', '40px');
-//     wrapper.fromTo('opacity', 0.99, 0);
-//     this
-//       .element(this.leavingView.pageRef())
-//       .duration(200)
-//       .easing('cubic-bezier(0.47,0,0.745,0.715)')
-//       .add(wrapper)
-//       .add(backdrop);
-//   }
-// }
-
-/**
- * iOS Modal Leave Animation
- */
-
-var Ionic = window.Ionic;
-
-var Menu$$1 = (function () {
-    function Menu$$1() {
+function importComponent(exports, h, t, Context, publicPath) {
+var Menu = (function () {
+    function Menu() {
         this._init = false;
         this._isPane = false;
         /**
@@ -243,13 +34,13 @@ var Menu$$1 = (function () {
          */
         this.persistent = false;
     }
-    Menu$$1.prototype.swipeEnabledChange = function (isEnabled) {
+    Menu.prototype.swipeEnabledChange = function (isEnabled) {
         this.swipeEnable(isEnabled);
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype["componentDidLoad"] = function () {
+    Menu.prototype["componentDidLoad"] = function () {
         var _this = this;
         this._backdropElm = this.el.querySelector('.menu-backdrop');
         this._init = true;
@@ -280,7 +71,7 @@ var Menu$$1 = (function () {
         // mask it as enabled / disabled
         this.enable(isEnabled);
     };
-    Menu$$1.prototype.hostData = function () {
+    Menu.prototype.hostData = function () {
         return {
             attrs: {
                 'role': 'navigation',
@@ -292,10 +83,10 @@ var Menu$$1 = (function () {
             }
         };
     };
-    Menu$$1.prototype.render = function () {
+    Menu.prototype.render = function () {
         // normalize the "type"
         if (!this.type) {
-            this.type = Ionic.config.get('menuType', 'overlay');
+            this.type = this.config.get('menuType', 'overlay');
         }
         return [
             h("div", { "c": { "menu-inner": true } },
@@ -306,7 +97,7 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.onBackdropClick = function (ev) {
+    Menu.prototype.onBackdropClick = function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
         this._ctrl.close();
@@ -314,10 +105,10 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype._getType = function () {
+    Menu.prototype._getType = function () {
         if (!this._type) {
             this._type = this._ctrl.create(this.type, this);
-            if (Ionic.config.getBoolean('animate') === false) {
+            if (this.config.getBoolean('animate') === false) {
                 this._type.ani.duration(0);
             }
         }
@@ -326,7 +117,7 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.setOpen = function (shouldOpen, animated) {
+    Menu.prototype.setOpen = function (shouldOpen, animated) {
         var _this = this;
         if (animated === void 0) { animated = true; }
         // If the menu is disabled or it is currenly being animated, let's do nothing
@@ -341,7 +132,7 @@ var Menu$$1 = (function () {
             });
         });
     };
-    Menu$$1.prototype._forceClosing = function () {
+    Menu.prototype._forceClosing = function () {
         var _this = this;
         this.isAnimating = true;
         this._getType().setOpen(false, false, function () {
@@ -351,32 +142,32 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.canSwipe = function () {
+    Menu.prototype.canSwipe = function () {
         return this.swipeEnabled &&
             !this.isAnimating &&
             this._canOpen();
         // TODO: && this._app.isEnabled();
     };
-    Menu$$1.prototype._swipeBeforeStart = function () {
+    Menu.prototype._swipeBeforeStart = function () {
         if (!this.canSwipe()) {
             return;
         }
         this._before();
     };
-    Menu$$1.prototype._swipeStart = function () {
+    Menu.prototype._swipeStart = function () {
         if (!this.isAnimating) {
             return;
         }
         this._getType().setProgressStart(this.isOpen);
     };
-    Menu$$1.prototype._swipeProgress = function (stepValue) {
+    Menu.prototype._swipeProgress = function (stepValue) {
         if (!this.isAnimating) {
             return;
         }
         this._getType().setProgessStep(stepValue);
         this.ionDrag.emit({ menu: this });
     };
-    Menu$$1.prototype._swipeEnd = function (shouldCompleteLeft, shouldCompleteRight, stepValue, velocity) {
+    Menu.prototype._swipeEnd = function (shouldCompleteLeft, shouldCompleteRight, stepValue, velocity) {
         var _this = this;
         if (!this.isAnimating) {
             return;
@@ -392,7 +183,7 @@ var Menu$$1 = (function () {
             _this._after(isOpen);
         });
     };
-    Menu$$1.prototype._before = function () {
+    Menu.prototype._before = function () {
         // this places the menu into the correct location before it animates in
         // this css class doesn't actually kick off any animations
         this.el.classList.add('show-menu');
@@ -401,7 +192,7 @@ var Menu$$1 = (function () {
         // TODO: this._keyboard.close();
         this.isAnimating = true;
     };
-    Menu$$1.prototype._after = function (isOpen) {
+    Menu.prototype._after = function (isOpen) {
         // TODO: this._app.setEnabled(false, 100);
         var _this = this;
         // keep opening/closing the menu disabled for a touch more yet
@@ -416,7 +207,7 @@ var Menu$$1 = (function () {
             // disable swipe to go back gesture
             this._activeBlock = GESTURE_BLOCKER;
             // add css class
-            Core.dom.write(function () {
+            Context.dom.write(function () {
                 _this._cntElm.classList.add('menu-content-open');
             });
             // emit open event
@@ -426,7 +217,7 @@ var Menu$$1 = (function () {
             // enable swipe to go back gesture
             this._activeBlock = null;
             // remove css classes
-            Core.dom.write(function () {
+            Context.dom.write(function () {
                 _this._cntElm.classList.remove('menu-content-open');
                 _this._cntElm.classList.remove('show-menu');
                 _this._backdropElm.classList.remove('show-menu');
@@ -438,19 +229,19 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.open = function () {
+    Menu.prototype.open = function () {
         return this.setOpen(true);
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.close = function () {
+    Menu.prototype.close = function () {
         return this.setOpen(false);
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.resize = function () {
+    Menu.prototype.resize = function () {
         // TODO
         // const content: Content | Nav = this.menuContent
         //   ? this.menuContent
@@ -460,16 +251,16 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.toggle = function () {
+    Menu.prototype.toggle = function () {
         return this.setOpen(!this.isOpen);
     };
-    Menu$$1.prototype._canOpen = function () {
+    Menu.prototype._canOpen = function () {
         return this.enabled && !this._isPane;
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype._updateState = function () {
+    Menu.prototype._updateState = function () {
         var canOpen = this._canOpen();
         // Close menu inmediately
         if (!canOpen && this.isOpen) {
@@ -501,7 +292,7 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.enable = function (shouldEnable) {
+    Menu.prototype.enable = function (shouldEnable) {
         this.enabled = shouldEnable;
         this._updateState();
         return this;
@@ -509,20 +300,20 @@ var Menu$$1 = (function () {
     /**
      * @internal
      */
-    Menu$$1.prototype.initPane = function () {
+    Menu.prototype.initPane = function () {
         return false;
     };
     /**
      * @internal
      */
-    Menu$$1.prototype.paneChanged = function (isPane) {
+    Menu.prototype.paneChanged = function (isPane) {
         this._isPane = isPane;
         this._updateState();
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.swipeEnable = function (shouldEnable) {
+    Menu.prototype.swipeEnable = function (shouldEnable) {
         this.swipeEnabled = shouldEnable;
         this._updateState();
         return this;
@@ -530,38 +321,38 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype.getMenuElement = function () {
+    Menu.prototype.getMenuElement = function () {
         return this.el.querySelector('.menu-inner');
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.getContentElement = function () {
+    Menu.prototype.getContentElement = function () {
         return this._cntElm;
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.getBackdropElement = function () {
+    Menu.prototype.getBackdropElement = function () {
         return this._backdropElm;
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.width = function () {
+    Menu.prototype.width = function () {
         return this.getMenuElement().offsetWidth;
     };
     /**
      * @hidden
      */
-    Menu$$1.prototype.getMenuController = function () {
+    Menu.prototype.getMenuController = function () {
         return this._ctrl;
     };
-    Menu$$1.prototype._backdropClick = function (shouldAdd) {
+    Menu.prototype._backdropClick = function (shouldAdd) {
         var onBackdropClick = this.onBackdropClick.bind(this);
         if (shouldAdd && !this._unregBdClick) {
-            this._unregBdClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
-            this._unregCntClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+            this._unregBdClick = Context.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+            this._unregCntClick = Context.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
         }
         else if (!shouldAdd && this._unregBdClick) {
             this._unregBdClick();
@@ -572,76 +363,71 @@ var Menu$$1 = (function () {
     /**
      * @hidden
      */
-    Menu$$1.prototype["componentDidunload"] = function () {
+    Menu.prototype["componentDidunload"] = function () {
         this._backdropClick(false);
         this._ctrl._unregister(this);
         this._type && this._type.destroy();
         this._ctrl = this._type = this._cntElm = this._backdropElm = null;
     };
-    return Menu$$1;
+    return Menu;
 }());
 var GESTURE_BLOCKER = 'goback-swipe';
 
-exports['ION-MENU'] = Menu$$1;
+exports['ION-MENU'] = Menu;
 },
 
 
 /***************** ion-menu *****************/
 [
-/** ion-menu: [0] tag **/
-'ION-MENU',
+/** ion-menu: tag **/
+"ION-MENU",
 
-/** ion-menu: [1] host **/
-{"theme":"menu"},
-
-/** ion-menu: [2] states **/
-0 /* no states */,
-
-/** ion-menu: [3] propWillChanges **/
-0 /* no prop will change methods */,
-
-/** ion-menu: [4] propDidChanges **/
+/** ion-menu: members **/
 [
-  [
-    /*****  ion-menu prop did change [0] ***** /
-    /* [0] prop name **/ 'swipeEnabled',
-    /* [1] call fn *****/ 'swipeEnabledChange'
-  ]
+  [ "config", /** prop context **/ 3, /** type any **/ 0, /** context ***/ "config" ],
+  [ "content", /** prop **/ 1 ],
+  [ "el", /** element ref **/ 7 ],
+  [ "enabled", /** prop **/ 1, /** type boolean **/ 1 ],
+  [ "id", /** prop **/ 1 ],
+  [ "isAnimating", /** prop **/ 1, /** type boolean **/ 1 ],
+  [ "isOpen", /** prop **/ 1, /** type boolean **/ 1 ],
+  [ "maxEdgeStart", /** prop **/ 1, /** type number **/ 2 ],
+  [ "persistent", /** prop **/ 1, /** type boolean **/ 1 ],
+  [ "side", /** prop **/ 1 ],
+  [ "swipeEnabled", /** prop **/ 1, /** type boolean **/ 1 ],
+  [ "type", /** prop **/ 1 ]
 ],
 
-/** ion-menu: [5] events **/
+/** ion-menu: host **/
+{"theme":"menu"},
+
+/** ion-menu: events **/
 [
   [
-    /*****  ion-menu ionClose ***** /
-    /* [0] event name ***/ 'ionClose',
-    /* [1] method name **/ 'ionClose',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
-  ],
-  [
     /*****  ion-menu ionDrag ***** /
-    /* [0] event name ***/ 'ionDrag',
-    /* [1] method name **/ 'ionDrag',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionDrag"
   ],
   [
     /*****  ion-menu ionOpen ***** /
-    /* [0] event name ***/ 'ionOpen',
-    /* [1] method name **/ 'ionOpen',
-    /* [2] bubbles ******/ '1 /* true **/',
-    /* [3] cancelable ***/ '1 /* true **/',
-    /* [4] composed *****/ '1 /* true **/'
+    /* event name ***/ "ionOpen"
+  ],
+  [
+    /*****  ion-menu ionClose ***** /
+    /* event name ***/ "ionClose"
   ]
 ],
 
-/** ion-menu: [6] methods **/
-0 /* no methods */,
+/** ion-menu: propWillChanges **/
+0 /* no prop will change methods */,
 
-/** ion-menu: [7] hostElementMember **/
-'el'
+/** ion-menu: propDidChanges **/
+[
+  [
+    /*****  ion-menu prop did change [0] ***** /
+    /* prop name **/ "swipeEnabled",
+    /* call fn *****/ "swipeEnabledChange"
+  ]
+]
 
 ]
 )

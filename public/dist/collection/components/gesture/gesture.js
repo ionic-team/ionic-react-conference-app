@@ -1,6 +1,5 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../utils/helpers';
-import { GestureController, BLOCK_ALL } from './gesture-controller';
-import { Ionic } from '../../index';
+import { GestureController, BLOCK_ALL } from '../gesture-controller/gesture-controller';
 import { PanRecognizer } from './recognizers';
 var Gesture = (function () {
     function Gesture() {
@@ -28,7 +27,7 @@ var Gesture = (function () {
         // in this case, we already know the GestureController and Gesture are already
         // apart of the same bundle, so it's safe to load it this way
         // only create one instance of GestureController, and reuse the same one later
-        this.ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
+        this.ctrl = Context.gesture = Context.gesture || new GestureController;
         this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
         var types = this.type.replace(/\s/g, '').toLowerCase().split(',');
         if (types.indexOf('pan') > -1) {
@@ -37,9 +36,9 @@ var Gesture = (function () {
         }
         this.hasPress = (types.indexOf('press') > -1);
         if (this.pan || this.hasPress) {
-            Core.enableListener(this, 'touchstart', true, this.attachTo);
-            Core.enableListener(this, 'mousedown', true, this.attachTo);
-            Core.dom.write(function () {
+            Context.enableListener(this, 'touchstart', true, this.attachTo);
+            Context.enableListener(this, 'mousedown', true, this.attachTo);
+            Context.dom.write(function () {
                 applyStyles(getElementReference(_this.el, _this.attachTo), GESTURE_INLINE_STYLES);
             });
         }
@@ -120,7 +119,7 @@ var Gesture = (function () {
             if (this.hasCapturedPan) {
                 if (!this.isMoveQueued) {
                     this.isMoveQueued = true;
-                    Core.dom.write(function () {
+                    Context.dom.write(function () {
                         _this.isMoveQueued = false;
                         detail.type = 'pan';
                         if (_this.onMove) {
@@ -255,15 +254,15 @@ var Gesture = (function () {
     // ENABLE LISTENERS *************************
     Gesture.prototype.enableMouse = function (shouldEnable) {
         if (this.requiresMove) {
-            Core.enableListener(this, 'document:mousemove', shouldEnable);
+            Context.enableListener(this, 'document:mousemove', shouldEnable);
         }
-        Core.enableListener(this, 'document:mouseup', shouldEnable);
+        Context.enableListener(this, 'document:mouseup', shouldEnable);
     };
     Gesture.prototype.enableTouch = function (shouldEnable) {
         if (this.requiresMove) {
-            Core.enableListener(this, 'touchmove', shouldEnable);
+            Context.enableListener(this, 'touchmove', shouldEnable);
         }
-        Core.enableListener(this, 'touchend', shouldEnable);
+        Context.enableListener(this, 'touchend', shouldEnable);
     };
     Gesture.prototype.enable = function (shouldEnable) {
         this.enableMouse(shouldEnable);

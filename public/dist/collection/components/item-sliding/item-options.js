@@ -8,10 +8,6 @@ var ItemOptions = (function () {
         this.side = 'right';
     }
     /**
-     * @output {event} Emitted when the item has been fully swiped.
-     */
-    // @Event() ionSwipe: EventEmitter;
-    /**
      * @hidden
      */
     ItemOptions.prototype.isRightSide = function () {

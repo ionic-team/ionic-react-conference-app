@@ -173,10 +173,10 @@ var ItemSliding = (function () {
      */
     ItemSliding.prototype.fireSwipeEvent = function () {
         if (this.state & 32 /* SwipeRight */) {
-            this.rightOptions.ionSwipe(this);
+            this.rightOptions.ionSwipe.emit(this);
         }
         else if (this.state & 64 /* SwipeLeft */) {
-            this.leftOptions.ionSwipe(this);
+            this.leftOptions.ionSwipe.emit(this);
         }
     };
     /**

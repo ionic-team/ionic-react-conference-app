@@ -1,5 +1,4 @@
 import { createThemedClasses } from '../../utils/theme';
-import { Ionic } from '../../index';
 var Toolbar = (function () {
     function Toolbar() {
     }
@@ -12,7 +11,7 @@ var Toolbar = (function () {
     Toolbar.prototype.hostData = function () {
         return {
             class: {
-                'statusbar-padding': Ionic.config.getBoolean('statusbarPadding')
+                'statusbar-padding': this.config.getBoolean('statusbarPadding')
             }
         };
     };

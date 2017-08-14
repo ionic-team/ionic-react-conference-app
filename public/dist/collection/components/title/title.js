@@ -3,9 +3,9 @@ var ToolbarTitle = (function () {
     function ToolbarTitle() {
     }
     ToolbarTitle.prototype.render = function () {
-        var titleClasses = createThemedClasses(this.mode, this.color, 'toolbar-title');
+        var themedClasses = createThemedClasses(this.mode, this.color, 'toolbar-title');
         return [
-            h("div", { "c": titleClasses },
+            h("div", { "c": themedClasses },
                 h(0, 0))
         ];
     };

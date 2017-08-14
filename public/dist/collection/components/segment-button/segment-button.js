@@ -1,4 +1,12 @@
-import { createThemedClasses } from '../../utils/theme';
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 var SegmentButton = (function () {
     function SegmentButton() {
         this.activated = false;
@@ -32,23 +40,24 @@ var SegmentButton = (function () {
     };
     /**
      * @hidden
-     * Get the element classes to add to the child element
+     * Get the classes for the segment button state
      */
     SegmentButton.prototype.getElementClassList = function () {
         var classList = [].concat(this.disabled ? 'segment-button-disabled' : [], this.activated ? 'segment-activated' : []);
         return classList;
     };
     SegmentButton.prototype.render = function () {
-        var segmentButtonCss = createThemedClasses(this.mode, this.color, 'segment-button');
-        var segmentButtonClasses = []
+        var themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
+        var hostClasses = getElementClassObject(this.el.classList);
+        var elementClasses = []
             .concat(this.getElementClassList())
             .reduce(function (prevValue, cssClass) {
             prevValue[cssClass] = true;
             return prevValue;
         }, {});
-        segmentButtonClasses = Object.assign(segmentButtonClasses, segmentButtonCss);
+        var buttonClasses = __assign({}, themedClasses, hostClasses, elementClasses);
         return [
-            h("button", { "c": segmentButtonClasses, "o": { "click": this.segmentButtonClick.bind(this) }, "a": { "aria-pressed": this.activated } },
+            h("button", { "c": buttonClasses, "o": { "click": this.segmentButtonClick.bind(this) }, "a": { "aria-pressed": this.activated } },
                 h(0, 0))
         ];
     };

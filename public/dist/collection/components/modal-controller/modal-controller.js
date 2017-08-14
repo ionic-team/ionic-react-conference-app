@@ -1,15 +1,10 @@
-import { Ionic } from '../../index';
 var ModalController = (function () {
     function ModalController() {
         this.ids = 0;
         this.modalResolves = {};
         this.modals = [];
     }
-    ModalController.prototype["componentDidLoad"] = function () {
-        this.appRoot = document.querySelector('ion-app') || document.body;
-        Ionic.registerController('modal', this);
-    };
-    ModalController.prototype.load = function (opts) {
+    ModalController.prototype.create = function (opts) {
         var _this = this;
         // create ionic's wrapping ion-modal component
         var modal = document.createElement('ion-modal');
@@ -21,7 +16,8 @@ var ModalController = (function () {
         // that get passed down into the new modal
         Object.assign(modal, opts);
         // append the modal element to the document body
-        this.appRoot.appendChild(modal);
+        var appRoot = document.querySelector('ion-app') || document.body;
+        appRoot.appendChild(modal);
         // store the resolve function to be called later up when the modal loads
         return new Promise(function (resolve) {
             _this.modalResolves[modal.id] = resolve;

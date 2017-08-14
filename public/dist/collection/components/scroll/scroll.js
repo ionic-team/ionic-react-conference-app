@@ -1,5 +1,4 @@
-import { GestureController } from '../gesture/gesture-controller';
-import { Ionic } from '../../index';
+import { GestureController } from '../gesture-controller/gesture-controller';
 var Scroll = (function () {
     function Scroll() {
         this.positions = [];
@@ -10,17 +9,17 @@ var Scroll = (function () {
         this.jsScroll = false;
     }
     Scroll.prototype["componentDidLoad"] = function () {
-        if (Core.isServer)
+        if (Context.isServer)
             return;
-        var ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
-        this.gesture = ctrl.createGesture('scroll', 100, false);
+        var gestureCtrl = Context.gesture = Context.gesture || new GestureController;
+        this.gesture = gestureCtrl.createGesture('scroll', 100, false);
     };
     // Native Scroll *************************
     Scroll.prototype.onNativeScroll = function () {
         var self = this;
         if (!self.queued && self.enabled) {
             self.queued = true;
-            Core.dom.read(function (timeStamp) {
+            Context.dom.read(function (timeStamp) {
                 self.queued = false;
                 self.onScroll(timeStamp || Date.now());
             });
@@ -82,7 +81,7 @@ var Scroll = (function () {
         self.tmr = setTimeout(function () {
             // haven't scrolled in a while, so it's a scrollend
             self.isScrolling = false;
-            Core.dom.read(function (timeStamp) {
+            Context.dom.read(function (timeStamp) {
                 if (!self.isScrolling) {
                     self.onEnd(timeStamp);
                 }
@@ -104,8 +103,8 @@ var Scroll = (function () {
     };
     Scroll.prototype.enableJsScroll = function (contentTop, contentBottom) {
         this.jsScroll = true;
-        Core.enableListener(this, 'scroll', false);
-        Core.enableListener(this, 'touchstart', true);
+        Context.enableListener(this, 'scroll', false);
+        Context.enableListener(this, 'touchstart', true);
         contentTop;
         contentBottom;
     };
@@ -114,8 +113,8 @@ var Scroll = (function () {
         if (!this.enabled) {
             return;
         }
-        Core.enableListener(this, 'touchmove', true);
-        Core.enableListener(this, 'touchend', true);
+        Context.enableListener(this, 'touchmove', true);
+        Context.enableListener(this, 'touchend', true);
         throw 'jsScroll: TODO!';
     };
     Scroll.prototype.onTouchMove = function () {
@@ -124,8 +123,8 @@ var Scroll = (function () {
         }
     };
     Scroll.prototype.onTouchEnd = function () {
-        Core.enableListener(this, 'touchmove', false);
-        Core.enableListener(this, 'touchend', false);
+        Context.enableListener(this, 'touchmove', false);
+        Context.enableListener(this, 'touchend', false);
         if (!this.enabled) {
             return;
         }
@@ -224,7 +223,7 @@ var Scroll = (function () {
             if (easedT < 1) {
                 // do not use DomController here
                 // must use nativeRaf in order to fire in the next frame
-                Core.dom.raf(step);
+                Context.dom.raf(step);
             }
             else {
                 stopScroll = true;
@@ -236,8 +235,8 @@ var Scroll = (function () {
         // start scroll loop
         self.isScrolling = true;
         // chill out for a frame first
-        Core.dom.write(function () {
-            Core.dom.write(function (timeStamp) {
+        Context.dom.write(function () {
+            Context.dom.write(function (timeStamp) {
                 startTime = timeStamp;
                 step(timeStamp);
             });

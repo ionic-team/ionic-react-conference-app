@@ -1,4 +1,3 @@
-import { Ionic } from '../../index';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 var Loading = (function () {
@@ -7,31 +6,6 @@ var Loading = (function () {
         this.dismissOnPageChange = false;
         this.showBackdrop = true;
     }
-    Loading.prototype.onDismiss = function (ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        this.dismiss();
-    };
-    Loading.prototype["componentDidLoad"] = function () {
-        if (!this.spinner) {
-            this.spinner = Ionic.config.get('loadingSpinner', Ionic.config.get('spinner', 'lines'));
-        }
-        if (this.showSpinner === null || this.showSpinner === undefined) {
-            this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
-        }
-        this.ionLoadingDidLoad.emit({ loading: this });
-    };
-    Loading.prototype.ionViewDidEnter = function () {
-        var _this = this;
-        // blur the currently active element
-        var activeElement = document.activeElement;
-        activeElement && activeElement.blur && activeElement.blur();
-        // If there is a duration, dismiss after that amount of time
-        if (typeof this.duration === 'number' && this.duration > 10) {
-            this.durationTimeout = setTimeout(function () { return _this.dismiss(); }, this.duration);
-        }
-        this.ionLoadingDidPresent.emit({ loading: this });
-    };
     Loading.prototype.present = function () {
         var _this = this;
         return new Promise(function (resolve) {
@@ -50,13 +24,12 @@ var Loading = (function () {
         if (!animationBuilder) {
             // user did not provide a custom animation fn
             // decide from the config which animation to use
-            // TODO!!
             animationBuilder = iOSEnterAnimation;
         }
         // build the animation and kick it off
-        Ionic.controller('animation').then(function (Animation) {
-            _this.animation = new Animation();
-            _this.animation.onFinish(function (a) {
+        this.animationCtrl.create(animationBuilder, this.el).then(function (animation) {
+            _this.animation = animation;
+            animation.onFinish(function (a) {
                 a.destroy();
                 _this.ionViewDidEnter();
                 resolve();
@@ -70,23 +43,22 @@ var Loading = (function () {
             this.animation.destroy();
             this.animation = null;
         }
-        return Ionic.controller('animation').then(function (Animation) {
-            return new Promise(function (resolve) {
-                _this.ionLoadingWillDismiss.emit({ loading: _this });
-                // get the user's animation fn if one was provided
-                var animationBuilder = _this.exitAnimation;
-                if (!animationBuilder) {
-                    // user did not provide a custom animation fn
-                    // decide from the config which animation to use
-                    // TODO!!
-                    animationBuilder = iOSLeaveAnimation;
-                }
-                // build the animation and kick it off
-                _this.animation = animationBuilder(Animation, _this.el);
-                _this.animation.onFinish(function (a) {
+        return new Promise(function (resolve) {
+            _this.ionLoadingWillDismiss.emit({ loading: _this });
+            // get the user's animation fn if one was provided
+            var animationBuilder = _this.exitAnimation;
+            if (!animationBuilder) {
+                // user did not provide a custom animation fn
+                // decide from the config which animation to use
+                animationBuilder = iOSLeaveAnimation;
+            }
+            // build the animation and kick it off
+            _this.animationCtrl.create(animationBuilder, _this.el).then(function (animation) {
+                _this.animation = animation;
+                animation.onFinish(function (a) {
                     a.destroy();
                     _this.ionLoadingDidDismiss.emit({ loading: _this });
-                    Core.dom.write(function () {
+                    Context.dom.write(function () {
                         _this.el.parentNode.removeChild(_this.el);
                     });
                     resolve();
@@ -96,6 +68,31 @@ var Loading = (function () {
     };
     Loading.prototype["componentDidunload"] = function () {
         this.ionLoadingDidUnload.emit({ loading: this });
+    };
+    Loading.prototype.onDismiss = function (ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        this.dismiss();
+    };
+    Loading.prototype["componentDidLoad"] = function () {
+        if (!this.spinner) {
+            this.spinner = this.config.get('loadingSpinner', this.config.get('spinner', 'lines'));
+        }
+        if (this.showSpinner === null || this.showSpinner === undefined) {
+            this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
+        }
+        this.ionLoadingDidLoad.emit({ loading: this });
+    };
+    Loading.prototype.ionViewDidEnter = function () {
+        var _this = this;
+        // blur the currently active element
+        var activeElement = document.activeElement;
+        activeElement && activeElement.blur && activeElement.blur();
+        // If there is a duration, dismiss after that amount of time
+        if (typeof this.duration === 'number' && this.duration > 10) {
+            this.durationTimeout = setTimeout(function () { return _this.dismiss(); }, this.duration);
+        }
+        this.ionLoadingDidPresent.emit({ loading: this });
     };
     Loading.prototype.render = function () {
         var userCssClass = 'loading-content';

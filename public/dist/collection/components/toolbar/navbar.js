@@ -1,11 +1,7 @@
 import { createThemedClasses } from '../../utils/theme';
-import { Ionic } from '../../index';
 var Navbar = (function () {
     function Navbar() {
-        this.sbPadding = Ionic.config.getBoolean('statusbarPadding');
         this.hideBackButton = false;
-        this.backButtonText = Ionic.config.get('backButtonText', 'Back');
-        this.backButtonIcon = Ionic.config.get('backButtonIcon');
         this.hidden = false;
     }
     Navbar.prototype.backButtonClick = function (ev) {
@@ -22,11 +18,13 @@ var Navbar = (function () {
     Navbar.prototype.hostData = function () {
         return {
             class: {
-                'statusbar-padding': Ionic.config.getBoolean('statusbarPadding')
+                'statusbar-padding': this.config.getBoolean('statusbarPadding')
             }
         };
     };
     Navbar.prototype.render = function () {
+        var backButtonIcon = this.backButtonIcon || this.config.get('backButtonText', 'Back');
+        var backButtonText = this.backButtonText || this.config.get('backButtonIcon', 'Back');
         var backgroundCss = createThemedClasses(this.mode, this.color, 'toolbar-background');
         var contentCss = createThemedClasses(this.mode, this.color, 'toolbar-content');
         var backButtonCss = createThemedClasses(this.mode, this.color, 'back-button');
@@ -34,9 +32,9 @@ var Navbar = (function () {
         var backButtonTextCss = createThemedClasses(this.mode, this.color, 'back-button-text');
         return [
             h("div", { "c": backgroundCss }),
-            h("button", { "c": backButtonCss, "o": { "click": this.backButtonClick.bind(this) }, "a": { "hidden": this.hideBackButton } },
-                h("ion-icon", { "c": backButtonIconCss, "p": { "name": this.backButtonIcon } }),
-                h("span", { "c": backButtonTextCss }, this.backButtonText)),
+            h("button", { "c": backButtonCss, "o": { "click": this.backButtonClick.bind(this) }, "a": { "hidden": this.hideBackButton } }, t("if (backButtonIcon) "),
+                h("ion-icon", { "c": backButtonIconCss, "p": { "name": backButtonIcon } }),
+                h("span", { "c": backButtonTextCss }, backButtonText)),
             h(0, { "a": { "name": 'start' } }),
             h(0, { "a": { "name": 'mode-start' } }),
             h(0, { "a": { "name": 'mode-end' } }),

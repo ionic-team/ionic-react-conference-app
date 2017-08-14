@@ -1,5 +1,4 @@
 import { createThemedClasses } from '../../utils/theme';
-import { Ionic } from '../../index';
 import { SPINNERS } from './spinner-configs';
 var Spinner = (function () {
     function Spinner() {
@@ -17,14 +16,14 @@ var Spinner = (function () {
         }
     };
     Spinner.prototype.hostData = function () {
-        var spinnerThemedClasses = createThemedClasses(this.mode, this.color, "spinner spinner-" + this.name);
-        spinnerThemedClasses['spinner-paused'] = true;
+        var themedClasses = createThemedClasses(this.mode, this.color, "spinner spinner-" + this.name);
+        themedClasses['spinner-paused'] = true;
         return {
-            class: spinnerThemedClasses
+            class: themedClasses
         };
     };
     Spinner.prototype.render = function () {
-        var name = this.name || Ionic.config.get('spinner', 'lines');
+        var name = this.name || this.config.get('spinner', 'lines');
         if (name === 'ios') {
             name = this.name = 'lines';
         }

@@ -1,4 +1,3 @@
-import { Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -8,14 +7,6 @@ var Modal = (function () {
         this.enableBackdropDismiss = true;
         this.showBackdrop = true;
     }
-    Modal.prototype.onDismiss = function (ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        this.dismiss();
-    };
-    Modal.prototype["componentDidLoad"] = function () {
-        this.ionModalDidLoad.emit({ modal: this });
-    };
     Modal.prototype.present = function () {
         var _this = this;
         return new Promise(function (resolve) {
@@ -37,10 +28,10 @@ var Modal = (function () {
             // TODO!!
             animationBuilder = iOSEnterAnimation;
         }
-        Ionic.controller('animation').then(function (Animation) {
-            // build the animation and kick it off
-            _this.animation = animationBuilder(Animation, _this.el);
-            _this.animation.onFinish(function (a) {
+        // build the animation and kick it off
+        this.animationCtrl.create(animationBuilder, this.el).then(function (animation) {
+            _this.animation = animation;
+            animation.onFinish(function (a) {
                 a.destroy();
                 _this.ionModalDidPresent.emit({ modal: _this });
                 resolve();
@@ -64,18 +55,26 @@ var Modal = (function () {
                 animationBuilder = iOSLeaveAnimation;
             }
             // build the animation and kick it off
-            Ionic.controller('animation').then(function (Animation) {
-                _this.animation = animationBuilder(Animation, _this.el);
-                _this.animation.onFinish(function (a) {
+            _this.animationCtrl.create(animationBuilder, _this.el).then(function (animation) {
+                _this.animation = animation;
+                animation.onFinish(function (a) {
                     a.destroy();
                     _this.ionModalDidDismiss.emit({ modal: _this });
-                    Core.dom.write(function () {
+                    Context.dom.write(function () {
                         _this.el.parentNode.removeChild(_this.el);
                     });
                     resolve();
                 }).play();
             });
         });
+    };
+    Modal.prototype.onDismiss = function (ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        this.dismiss();
+    };
+    Modal.prototype["componentDidLoad"] = function () {
+        this.ionModalDidLoad.emit({ modal: this });
     };
     Modal.prototype["componentDidunload"] = function () {
         this.ionModalDidUnload.emit({ modal: this });
