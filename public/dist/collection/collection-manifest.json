@@ -2704,7 +2704,7 @@
   ],
   "compiler": {
     "name": "@stencil/core",
-    "version": "0.0.5-3"
+    "version": "0.0.5-4"
   },
   "global": "global/ionic-global.js"
 }
