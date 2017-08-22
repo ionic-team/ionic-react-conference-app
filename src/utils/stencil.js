@@ -1,26 +1,7 @@
-
-export function wc(events = {}, obj = {}) {
-  let storedEl;
-
-  return function (el) {
-    Object.entries(events).forEach(([name, value]) => {
-      const action = (el) ? el.addEventListener : storedEl.removeEventListener;
-      if (typeof value === 'function') {
-        action(name, value);
-        return;
-      }
-    });
-    if (el) {
-      Object.entries(obj).forEach(([name, value]) => {
-        el[name] = value;
-      });
-    }
-    storedEl = el;
-  };
-}
-
 /***
-The following transform is meant to make the follow change to web components.
+
+This function is meant to make it easier to use Props and Custom Events with Custom
+Elements in React.
 
 <ion-segment
   value={props.filterFavorites}
@@ -28,7 +9,7 @@ The following transform is meant to make the follow change to web components.
 >
 </ion-segment>
 
-  becomes
+     <<< SHOULD BE WRITTEN AS >>>
 
 <ion-segment
   value={props.filterFavorites}
@@ -38,9 +19,28 @@ The following transform is meant to make the follow change to web components.
 >
 </ion-segment>
 
- */
+***/
 
-/*
-https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
-https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-display-name
-*/
+export function wc(customEvents = {}, props = {}) {
+  let storedEl;
+
+  return function (el) {
+    Object.entries(customEvents).forEach(([name, value]) => {
+      // If we have an element then add event listeners
+      // otherwise remove the event listener
+      const action = (el) ? el.addEventListener : storedEl.removeEventListener;
+      if (typeof value === 'function') {
+        action(name, value);
+        return;
+      }
+    });
+    // If we have an element then set props
+    if (el) {
+      Object.entries(props).forEach(([name, value]) => {
+        el[name] = value;
+      });
+    }
+    storedEl = el;
+  };
+}
+
