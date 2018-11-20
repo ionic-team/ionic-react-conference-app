@@ -1,10 +1,6 @@
 import React from 'react';
-import { dateFormat } from '../utils/dateformat';
+import { IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '../ionic';
 import SessionDetail from '../containers/SessionDetail';
-
-function formatTime(dateString, formatString) {
-  return dateFormat(new Date(dateString), formatString);
-}
 
 export default ({ nav, params }) => {
   return (
@@ -13,18 +9,18 @@ export default ({ nav, params }) => {
         const session = sessions.find(s => s.id === parseInt(params.id, 10));
         const sessionSpeakers = speakers.filter(s => session.speakerIds.includes(s.id));
         return [
-          <ion-header key={1}>
-            <ion-navbar>
-              <ion-buttons slot="start">
-                <ion-button href="#" onClick={() => nav.pop()} color="primary">
-                  <ion-icon slot="icon-only" name="arrow-back"></ion-icon>Back
-                </ion-button>
-              </ion-buttons>
-              <ion-title>{session.name}</ion-title>
-            </ion-navbar>
-          </ion-header>,
+          <IonHeader key={1}>
+            <IonToolbar>
+              <IonButtons slot="start">
+                <IonButton href="#" onClick={() => nav.pop()} color="primary">
+                  <IonIcon slot="icon-only" name="arrow-back"></IonIcon>Back
+                </IonButton>
+              </IonButtons>
+              <IonTitle>{session.name}</IonTitle>
+            </IonToolbar>
+          </IonHeader>,
 
-          <ion-content padding key={2}>
+          <IonContent padding key={2}>
             <div>
               <h1>{session.name}</h1>
               {sessionSpeakers.map(speaker => (
@@ -39,7 +35,7 @@ export default ({ nav, params }) => {
               <p>{session.location}</p>
               <p>{session.description}</p>
             </div>
-          </ion-content>
+          </IonContent>
         ];
       }}
     </SessionDetail>

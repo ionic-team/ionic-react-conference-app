@@ -7,17 +7,18 @@ import Support from './pages/Support';
 import Signup from './pages/Signup';
 import Tutorial from './pages/Tutorial';
 import AppStack from './pages/AppStack';
+import { IonApp } from './ionic';
 
 const App = () => (
   <Router>
-    <ion-app>
+    <IonApp>
       <PrivateRoute path='/account' component={Account} />
       <Route path="/tutorial" component={Tutorial} />
       <RequiresTutorialRoute path="/login" component={Login} />
       <RequiresTutorialRoute path="/support" component={Support} />
       <RequiresTutorialRoute path="/signup" component={Signup} />
       <RequiresTutorialRoute path="/" component={AppStack}/>
-    </ion-app>
+    </IonApp>
   </Router>
 );
 

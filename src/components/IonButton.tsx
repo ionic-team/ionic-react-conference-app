@@ -1,8 +1,9 @@
 import React from 'react';
+import { IonButton } from '../ionic';
 import { withRouter } from 'react-router-dom';
 
-export default withRouter(({history, children, path, location, match, ...props}) => (
-  <ion-button {...props} onClick={() => history.push(props.path)}>
+export default withRouter(({history, children, location, match, ...props}) => (
+  <IonButton {...props} onClick={() => history.push(props.path)}>
     {children}
-  </ion-button>
+  </IonButton>
 ));

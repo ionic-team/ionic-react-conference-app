@@ -1,4 +1,5 @@
 import React from 'react';
+import { IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '../ionic';
 import SessionDetail from '../containers/SessionDetail';
 
 function openSpeakerShare(speaker) {
@@ -56,95 +57,95 @@ function openContact(speaker) {
 }
 
 const SpeakerItem = ({speaker, speakerSessions, nav}) => (
-  <ion-card class="speaker-card">
-    <ion-card-header>
-      <ion-item
+  <IonCard class="speaker-card">
+    <IonCardHeader>
+      <IonItem
         detail-none
         href="#"
         onClick={() => nav.push('speakers', { id: speaker.id })}
       >
-        <ion-avatar slot="start">
+        <IonAvatar slot="start">
           <img src={speaker.profilePic} alt="Speaker profile pic"/>
-        </ion-avatar>
+        </IonAvatar>
         {speaker.name}
-      </ion-item>
-    </ion-card-header>
+      </IonItem>
+    </IonCardHeader>
 
-    <ion-card-content class="outer-content">
-      <ion-list>
+    <IonCardContent class="outer-content">
+      <IonList>
         { speakerSessions.map(session => (
-          <ion-item
+          <IonItem
             href="#"
             key={session.name}
             onClick={() => nav.push('sessions', { id: session.id })}
           >
             <h3>{session.name}</h3>
-          </ion-item>
+          </IonItem>
         ))}
-        <ion-item href="#" onClick={() => nav.push('speakers', { id: speaker.id })}>
+        <IonItem href="#" onClick={() => nav.push('speakers', { id: speaker.id })}>
           <h3>About {speaker.name}</h3>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
+        </IonItem>
+      </IonList>
+    </IonCardContent>
 
-    <ion-grid>
-    <ion-row no-padding>
-      <ion-col col-12 col-lg-auto text-center text-lg-left>
-        <ion-button
-          clear
-          small
-          color="primary"
-          onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
-        >
-          <ion-icon slot="start" name="logo-twitter"></ion-icon>
-          Tweet
-        </ion-button>
-      </ion-col>
-      <ion-col col-12 col-lg-auto text-center>
-        <ion-button clear small color="primary" onClick={() => openSpeakerShare(speaker)}>
-          <ion-icon slot="start" name='share-alt'></ion-icon>
-          Share
-        </ion-button>
-      </ion-col>
-      <ion-col col-12 col-lg-auto text-center text-lg-right>
-        <ion-button clear small color="primary" onClick={() => openContact(speaker)}>
-          <ion-icon slot="start" name='chatboxes'></ion-icon>
-          Contact
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    </ion-grid>
-  </ion-card>
+    <IonGrid>
+      <IonRow no-padding>
+        <IonCol col-12 col-lg-auto text-center text-lg-left>
+          <IonButton
+            color="primary"
+            onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
+          >
+            <IonIcon slot="start" name="logo-twitter"></IonIcon>
+            Tweet
+          </IonButton>
+        </IonCol>
+        <IonCol col-12 col-lg-auto text-center>
+          <IonButton color="primary" onClick={() => openSpeakerShare(speaker)}>
+            <IonIcon slot="start" name='share-alt'></IonIcon>
+            Share
+          </IonButton>
+        </IonCol>
+        <IonCol col-12 col-lg-auto text-center text-lg-right>
+          <IonButton color="primary" onClick={() => openContact(speaker)}>
+            <IonIcon slot="start" name='chatboxes'></IonIcon>
+            Contact
+          </IonButton>
+        </IonCol>
+      </IonRow>
+    </IonGrid>
+  </IonCard>
 );
 
-export default ({ nav, params }) => [
-  <ion-header key={1}>
-    <ion-navbar>
-      <ion-buttons slot="start">
-        <ion-button menuToggle>
-          <ion-icon slot="icon-only" name="menu"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title>Speakers</ion-title>
-    </ion-navbar>
-  </ion-header>,
+export default ({ nav, params }) => (
+  <>
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonButton menuToggle>
+            <IonIcon slot="icon-only" name="menu"></IonIcon>
+          </IonButton>
+        </IonButtons>
+        <IonTitle>Speakers</IonTitle>
+      </IonToolbar>
+    </IonHeader>
 
-  <ion-content class="outer-content speaker-list" key={2}>
-    <ion-list>
-      <ion-grid fixed>
-        <ion-row align-items-stretch>
-          <ion-col col-12 col-md-6 align-self-stretch align-self-center approxItemHeight="457px">
-            <SessionDetail>
-              {({ sessions, speakers }) => {
-                return speakers.map((speaker) => {
-                  const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
-                  return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
-                });
-              }}
-            </SessionDetail>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-list>
-  </ion-content>
-];
+    <IonContent class="outer-content speaker-list">
+      <IonList>
+        <IonGrid fixed>
+          <IonRow align-items-stretch>
+            <IonCol col-12 col-md-6 align-self-stretch align-self-center>
+              <SessionDetail>
+                {({ sessions, speakers }) => {
+                  return speakers.map((speaker) => {
+                    const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
+                    return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
+                  });
+                }}
+              </SessionDetail>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonList>
+    </IonContent>
+  </>
+);

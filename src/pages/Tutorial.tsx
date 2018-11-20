@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
 import { withRouter } from 'react-router-dom';
 import './Tutorial.scss'
 
@@ -28,20 +29,20 @@ class Tutorial extends Component {
 
   render() {
     return (
-      <ion-page class="page-tutorial">
-        <ion-header no-border>
-          <ion-navbar>
+      <IonPage class="page-tutorial">
+        <IonHeader no-border>
+          <IonToolbar>
             { this.state.showSkip ?
-              <ion-buttons slot="end">
-                <ion-button onClick={() => this.endTutorial()} color="primary">Skip</ion-button>
-              </ion-buttons>
+              <IonButtons slot="end">
+                <IonButton onClick={() => this.endTutorial()} color="primary">Skip</IonButton>
+              </IonButtons>
             : null}
-          </ion-navbar>
-        </ion-header>
-        <ion-content no-bounce>
-          <ion-slides ionSlideWillChange={(e) => this.onSlideChangeStart(e)} pager>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent no-bounce>
+          <IonSlides ionSlideWillChange={(e) => this.onSlideChangeStart(e)} pager>
 
-            <ion-slide>
+            <IonSlide>
               <img alt="welcome" src="/assets/img/ica-slidebox-img-1.png" className="slide-image"/>
               <h2 className="slide-title">
                 Welcome to <b>ICA</b>
@@ -50,9 +51,9 @@ class Tutorial extends Component {
                 The <b>ionic conference app</b> is a practical preview of the ionic framework in
                 action, and a demonstration of proper code use.
               </p>
-            </ion-slide>
+            </IonSlide>
 
-            <ion-slide>
+            <IonSlide>
               <img alt="what" src="/assets/img/ica-slidebox-img-2.png" className="slide-image"/>
               <h2 className="slide-title">
                 What is Ionic?
@@ -61,9 +62,9 @@ class Tutorial extends Component {
                 <b>Ionic Framework</b> is an open source SDK that enables developers to build
                 high quality mobile apps with web technologies like HTML, CSS, and JavaScript.
               </p>
-            </ion-slide>
+            </IonSlide>
 
-            <ion-slide>
+            <IonSlide>
               <img alt="what" src="/assets/img/ica-slidebox-img-3.png" className="slide-image"/>
               <h2 className="slide-title">
                 What is Ionic Platform?
@@ -71,22 +72,22 @@ class Tutorial extends Component {
               <p>The <b>Ionic Platform</b> is a cloud platform for managing and scaling Ionic
               apps with integrated services like push notifications, native builds,
               user auth, and live updating.</p>
-            </ion-slide>
+            </IonSlide>
 
-            <ion-slide>
+            <IonSlide>
               <img alt="ready" src="/assets/img/ica-slidebox-img-4.png" className="slide-image"/>
               <h2 className="slide-title">
                 Ready to Play?
               </h2>
-              <ion-button icon-end large clear onClick={() => this.endTutorial()}>
+              <IonButton icon-end onClick={() => this.endTutorial()}>
                 Continue
-                <ion-icon name="arrow-forward"></ion-icon>
-              </ion-button>
-            </ion-slide>
+                <IonIcon name="arrow-forward"></IonIcon>
+              </IonButton>
+            </IonSlide>
 
-          </ion-slides>
-        </ion-content>
-      </ion-page>
+          </IonSlides>
+        </IonContent>
+      </IonPage>
     );
   }
 };

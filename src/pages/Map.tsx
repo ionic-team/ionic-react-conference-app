@@ -1,27 +1,26 @@
 import React from 'react';
 import LocationContainer from '../containers/Location';
 import Map from '../components/Map';
+import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent } from '../ionic';
 import './Map.scss';
 
 const MapPage = () => [
-  <ion-header key={1}>
-    <ion-navbar>
-      <ion-buttons slot="start">
-        <ion-button menuToggle>
-          <ion-icon slot="icon-only" name="menu"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title>Map</ion-title>
-    </ion-navbar>
-  </ion-header>,
+  <IonHeader key={1}>
+    <IonToolbar>
+      <IonButtons slot="start">
+        <IonMenuButton></IonMenuButton>
+      </IonButtons>
+      <IonTitle>Map</IonTitle>
+    </IonToolbar>
+  </IonHeader>,
 
-  <ion-content key={2} class="map-page">
+  <IonContent key={2} class="map-page">
     <LocationContainer>
-      {({locations}) => (
+      {({ locations }) => (
         <Map locations={locations} />
       )}
     </LocationContainer>
-  </ion-content>
+  </IonContent>
 ];
 
 export default MapPage;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IonTabBar } from '../ionic';
 
 const TabNav = ({ childViews, urlMatchHandler, childViewProps, onClickHandler }) => [
   <div key={1}>
@@ -14,7 +15,7 @@ const TabNav = ({ childViews, urlMatchHandler, childViewProps, onClickHandler })
     })}
   </div>,
   <div key={2} className="tabs-ios">
-    <ion-tab-bar>
+    <IonTabBar>
       { childViews.map((childView, index) => {
         const path = childView.basePath;
         return (
@@ -25,13 +26,13 @@ const TabNav = ({ childViews, urlMatchHandler, childViewProps, onClickHandler })
             aria-selected={urlMatchHandler(childView.basePath) ? 'true' : 'false'}
             onClick={onClickHandler(path)}
           >
-            <ion-icon class="tab-button-icon" name={childView.icon}></ion-icon>
+            <IonIcon class="tab-button-icon" name={childView.icon}></IonIcon>
             <span className="tab-button-text">{childView.title}</span>
             <div className="button-effect"></div>
           </a>
         );
       }) }
-    </ion-tab-bar>
+    </IonTabBar>
   </div>
 ];
 

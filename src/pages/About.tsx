@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { IonSelect, IonSelectOption, IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonTitle } from '../ionic';
 import './About.scss';
 
 export default class About extends Component {
@@ -8,47 +9,45 @@ export default class About extends Component {
 
   render() {
     return <>
-      <ion-header>
-        <ion-navbar>
-          <ion-buttons slot="start">
-            <ion-button menuToggle>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>About</ion-title>
-          <ion-buttons slot="end">
-            <ion-button icon-only onClick={() => this.presentPopover()}>
-              <ion-icon slot="icon-only" name="more"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-navbar>
-      </ion-header>,
+      <IonHeader>
+        <IonToolbar color="primary">
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
+          <IonTitle>About</IonTitle>
+          <IonButtons slot="end">
+            <IonButton icon-only onClick={() => this.presentPopover()}>
+              <IonIcon slot="icon-only" name="more"></IonIcon>
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>,
 
-      <ion-content>
+      <IonContent>
         <div className="about-header">
           <img src="assets/img/ionic-logo-white.svg" alt="ionic logo" />
         </div>
         <div className="about-info">
           <h4>Ionic Conference</h4>
 
-          <ion-list no-lines>
-            <ion-item>
-              <ion-icon name="calendar" slot="start"></ion-icon>
-              <ion-label>Date</ion-label>
-              <ion-datetime displayFormat="MMM DD, YYYY" max="2056" data={this.props.conferenceDate}></ion-datetime>
-            </ion-item>
+          <IonList no-lines>
+            <IonItem>
+              <IonIcon name="calendar" slot="start"></IonIcon>
+              <IonLabel>Date</IonLabel>
+              <IonDatetime displayFormat="MMM DD, YYYY" max="2056" data={this.props.conferenceDate}></IonDatetime>
+            </IonItem>
 
-            <ion-item>
-              <ion-icon name="pin" slot="start"></ion-icon>
-              <ion-label>Location</ion-label>
-              <ion-select>
-                <ion-option value="madison" selected>Madison, WI</ion-option>
-                <ion-option value="austin">Austin, TX</ion-option>
-                <ion-option value="chicago">Chicago, IL</ion-option>
-                <ion-option value="seattle">Seattle, WA</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-list>
+            <IonItem>
+              <IonIcon name="pin" slot="start"></IonIcon>
+              <IonLabel>Location</IonLabel>
+              <IonSelect>
+                <IonSelectOption value="madison" selected>Madison, WI</IonSelectOption>
+                <IonSelectOption value="austin">Austin, TX</IonSelectOption>
+                <IonSelectOption value="chicago">Chicago, IL</IonSelectOption>
+                <IonSelectOption value="seattle">Seattle, WA</IonSelectOption>
+              </IonSelect>
+            </IonItem>
+          </IonList>
 
           <p>
             The Ionic Conference is a one-day conference featuring talks from the
@@ -60,7 +59,7 @@ export default class About extends Component {
             conference ever!
           </p>
         </div>
-      </ion-content>
+      </IonContent>
     </>;
   }
 }

@@ -1,64 +1,63 @@
 import React, { Component } from 'react';
+import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonRow, IonCol, IonMenuButton } from '../ionic';
 import UserAccount from '../containers/UserAccount';
 import './Form.scss'
 
 export default class Login extends Component {
   render() {
-    return [
-      <ion-header key={1}>
-        <ion-navbar>
-          <ion-buttons slot="start">
-            <ion-button ion-button menuToggle>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>Login</ion-title>
-        </ion-navbar>
-      </ion-header>,
+    return (
+      <>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton></IonMenuButton>
+            </IonButtons>
+            <IonTitle>Login</IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
-      <ion-content key={2}>
-        <div className="logo">
-          <img src="assets/img/appicon.svg" alt="Ionic logo"/>
-        </div>
+        <IonContent>
+          <div className="logo">
+            <img src="assets/img/appicon.svg" alt="Ionic logo"/>
+          </div>
+          <UserAccount>
+            {({logInUser, signUpUser}) => (
+            <form noValidate>
+              <IonList no-lines>
+                <IonItem>
+                  <IonLabel color="primary">Username</IonLabel>
+                  <IonInput
+                    ref={(input) => (this.usernameInput = input)}
+                    name="username"
+                    type="text"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    required>
+                  </IonInput>
+                </IonItem>
+                <IonItem>
+                  <IonLabel color="primary">Password</IonLabel>
+                  <IonInput name="password" type="password" required></IonInput>
+                </IonItem>
+              </IonList>
 
-        <UserAccount>
-          {({logInUser, signUpUser}) => (
-          <form noValidate>
-            <ion-list no-lines>
-              <ion-item>
-                <ion-label stacked color="primary">Username</ion-label>
-                <ion-input
-                  ref={(input) => (this.usernameInput = input)}
-                  name="username"
-                  type="text"
-                  spellcheck="false"
-                  autocapitalize="off"
-                  required>
-                </ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label stacked color="primary">Password</ion-label>
-                <ion-input name="password" type="password" required></ion-input>
-              </ion-item>
-            </ion-list>
-
-            <ion-row responsive-sm>
-              <ion-col>
-                <ion-button onClick={() => logInUser(this.usernameInput.value)} type="submit" block>
-                  Login
-                </ion-button>
-              </ion-col>
-              <ion-col>
-                <ion-button onClick={() => signUpUser(this.usernameInput.value)} color="light" block>
-                  Signup
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </form>
-          )}
-        </UserAccount>
-
-      </ion-content>
+              <IonRow responsive-sm>
+                <IonCol>
+                  <IonButton onClick={() => logInUser(this.usernameInput.value)} type="submit">
+                    Login
+                  </IonButton>
+                </IonCol>
+                <IonCol>
+                  <IonButton onClick={() => signUpUser(this.usernameInput.value)} color="light">
+                    Signup
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+            </form>
+            )}
+          </UserAccount>
+        </IonContent>
+      </>
     ];
   }
 }

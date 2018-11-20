@@ -8,6 +8,7 @@ import MapPage from './Map';
 import About from './About';
 import StackNav from '../components/StackNav';
 import TabNav from '../components/TabNav';
+import { IonPage } from '../ionic';
 
 const ScheduleStack = (props) => (
   <StackNav
@@ -135,7 +136,7 @@ export default class AppStack extends Component {
 
   render() {
     return (
-      <ion-page>
+      <IonPage>
         <TabNav
           childViews={this.state.childViews}
           onClickHandler={this.tabClickHandler.bind(this)}
@@ -147,7 +148,7 @@ export default class AppStack extends Component {
             }
           }
         />
-      </ion-page>
+      </IonPage>
     );
   }
 }

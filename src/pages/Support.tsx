@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
 import './Form.scss'
+import { IonMenuButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonTextarea, IonButton } from '../ionic';
 
 export default class Support extends Component {
   submit() {}
   render() {
     return [
-      <ion-header key={1}>
-        <ion-navbar>
-          <ion-buttons slot="start">
-            <ion-button menuToggle>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>Support</ion-title>
-        </ion-navbar>
-      </ion-header>,
+      <IonHeader key={1}>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
+          <IonTitle>Support</IonTitle>
+        </IonToolbar>
+      </IonHeader>,
 
-      <ion-content class="page-user" key={2}>
+      <IonContent class="page-user" key={2}>
         <div className="logo">
           <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
         </div>
         <form onSubmit={() => this.submit()}>
-          <ion-list no-lines>
-            <ion-item>
-              <ion-label stacked color="primary">Enter your support message below</ion-label>
-              <ion-textarea name="supportQuestion" rows="6" required></ion-textarea>
-            </ion-item>
-          </ion-list>
+          <IonList no-lines>
+            <IonItem>
+              <IonLabel color="primary">Enter your support message below</IonLabel>
+              <IonTextarea name="supportQuestion" required></IonTextarea>
+            </IonItem>
+          </IonList>
           <div>
-            <ion-button block type="submit">Submit</ion-button>
+            <IonButton type="submit">Submit</IonButton>
           </div>
         </form>
-      </ion-content>
+      </IonContent>
     ];
   }
 }

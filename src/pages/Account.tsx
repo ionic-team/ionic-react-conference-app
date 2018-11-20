@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { IonHeader, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonToolbar } from '../ionic';
 import UserAccount from '../containers/UserAccount';
 import './Account.scss';
 
@@ -9,35 +10,33 @@ export default class Account extends Component {
   support(){}
   render() {
     return [
-      <ion-header key={1}>
-        <ion-navbar>
-          <ion-buttons slot="start">
-            <ion-button menuToggle>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>Account</ion-title>
-        </ion-navbar>
-      </ion-header>,
+      <IonHeader key={1}>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
+          <IonTitle>Account</IonTitle>
+        </IonToolbar>
+      </IonHeader>,
 
-      <ion-content key={2} class="outer-content page-account">
+      <IonContent key={2} class="outer-content page-account">
         <UserAccount>
           {({user, logOutUser}) => (
           <div>
             <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"/>
             <h2>{user.userName}</h2>
 
-            <ion-list inset>
-              <ion-item href="#" onClick={() => this.updatePicture()}>Update Picture</ion-item>
-              <ion-item href="#" onClick={() => this.changeUsername()}>Change Username</ion-item>
-              <ion-item href="#" onClick={() => this.changePassword()}>Change Password</ion-item>
-              <ion-item href="#" onClick={() => this.support()}>Support</ion-item>
-              <ion-item href="#" onClick={() => logOutUser(logOutUser)}>Logout</ion-item>
-            </ion-list>
+            <IonList inset>
+              <IonItem href="#" onClick={() => this.updatePicture()}>Update Picture</IonItem>
+              <IonItem href="#" onClick={() => this.changeUsername()}>Change Username</IonItem>
+              <IonItem href="#" onClick={() => this.changePassword()}>Change Password</IonItem>
+              <IonItem href="#" onClick={() => this.support()}>Support</IonItem>
+              <IonItem href="#" onClick={() => logOutUser(logOutUser)}>Logout</IonItem>
+            </IonList>
           </div>
           )}
         </UserAccount>
-      </ion-content>
+      </IonContent>
     ];
   }
 }

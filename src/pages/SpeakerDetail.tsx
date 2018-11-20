@@ -1,5 +1,6 @@
 import React from 'react';
 import SessionDetail from '../containers/SessionDetail';
+import { IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '../ionic'
 import './SpeakerList.scss';
 
 
@@ -8,34 +9,34 @@ export default ({ nav, params }) => (
     {({ speakers }) => {
       const speaker = speakers.find(s => s.id === parseInt(params.id, 10));
       return [
-        <ion-header key={1}>
-          <ion-navbar>
-            <ion-buttons slot="start">
-              <ion-button href="#" onClick={() => nav.pop()} color="primary">
-                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>Back
-              </ion-button>
-            </ion-buttons>
-            <ion-title>{speaker.name}</ion-title>
-          </ion-navbar>
-        </ion-header>,
+        <IonHeader key={1}>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonButton href="#" onClick={() => nav.pop()} color="primary">
+                <IonIcon slot="icon-only" name="arrow-back"></IonIcon>Back
+              </IonButton>
+            </IonButtons>
+            <IonTitle>{speaker.name}</IonTitle>
+          </IonToolbar>
+        </IonHeader>,
 
-        <ion-content padding class="speaker-detail speaker-page-list" key={2}>
+        <IonContent padding class="speaker-detail speaker-page-list" key={2}>
           <div>
             <img src={speaker.profilePic} alt={speaker.name}/>
             <br/>
-            <ion-button icon-only clear small color="twitter">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </ion-button>
-            <ion-button icon-only clear small color="github">
-              <ion-icon name="logo-github"></ion-icon>
-            </ion-button>
-            <ion-button icon-only clear small color="instagram">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </ion-button>
+            <IonButton icon-only clear small color="twitter">
+              <IonIcon name="logo-twitter"></IonIcon>
+            </IonButton>
+            <IonButton icon-only clear small color="github">
+              <IonIcon name="logo-github"></IonIcon>
+            </IonButton>
+            <IonButton icon-only clear small color="instagram">
+              <IonIcon name="logo-instagram"></IonIcon>
+            </IonButton>
           </div>
 
           <p>{speaker.about}</p>
-        </ion-content>
+        </IonContent>
       ];
     }}
   </SessionDetail>
