@@ -1,6 +1,6 @@
 import React from 'react';
 import IonButtonWithRouter from './IonButton';
-import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem } from '../ionic';
+import { IonIcon, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem } from '../ionic';
 
 export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, history}) => {
 
@@ -41,7 +41,7 @@ export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, histo
           <IonListHeader>
             Tutorial
           </IonListHeader>
-          <IonItem menuClose onClick={() => {}}>
+          <IonItem onClick={() => {}}>
             <IonIcon slot="start" name="hammer"></IonIcon>
             Show Tutorial
           </IonItem>

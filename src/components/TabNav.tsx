@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonTabBar } from '../ionic';
+import { IonTabBar, IonIcon } from '../ionic';
 
 const TabNav = ({ childViews, urlMatchHandler, childViewProps, onClickHandler }) => [
   <div key={1}>

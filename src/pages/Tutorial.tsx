@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
+import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
 import { withRouter } from 'react-router-dom';
 import './Tutorial.scss'
 
@@ -40,7 +40,7 @@ class Tutorial extends Component {
           </IonToolbar>
         </IonHeader>
         <IonContent no-bounce>
-          <IonSlides ionSlideWillChange={(e) => this.onSlideChangeStart(e)} pager>
+          <IonSlides onIonSlideWillChange={(e) => this.onSlideChangeStart(e)} pager>
 
             <IonSlide>
               <img alt="welcome" src="/assets/img/ica-slidebox-img-1.png" className="slide-image"/>

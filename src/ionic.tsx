@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Components } from '@ionic/core';
+import { Components as IoniconsComponents } from 'ionicons';
 
 const dashToPascalCase = (str: string) => {
   str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
@@ -42,6 +43,7 @@ function createReactComponent<T>(tagName: string) {
   }
 }
 
+export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes>('ion-icon');
 export const IonApp = createReactComponent<Components.IonAppAttributes>('ion-app');
 export const IonPage = createReactComponent('ion-page');
 export const IonMenu = createReactComponent<Components.IonMenuAttributes>('ion-menu');

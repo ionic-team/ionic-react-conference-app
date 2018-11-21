@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '../ionic';
+import { IonIcon, IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '../ionic';
 import SessionDetail from '../containers/SessionDetail';
 
 function openSpeakerShare(speaker) {
@@ -121,7 +121,7 @@ export default ({ nav, params }) => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonButton menuToggle>
+          <IonButton>
             <IonIcon slot="icon-only" name="menu"></IonIcon>
           </IonButton>
         </IonButtons>
@@ -134,14 +134,10 @@ export default ({ nav, params }) => (
         <IonGrid fixed>
           <IonRow align-items-stretch>
             <IonCol col-12 col-md-6 align-self-stretch align-self-center>
-              <SessionDetail>
-                {({ sessions, speakers }) => {
-                  return speakers.map((speaker) => {
-                    const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
-                    return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
-                  });
-                }}
-              </SessionDetail>
+              { speakers.map((speaker) => {
+                const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
+                return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
+              }) }
             </IonCol>
           </IonRow>
         </IonGrid>
