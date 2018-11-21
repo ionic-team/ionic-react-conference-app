@@ -1,6 +1,5 @@
 import React from 'react';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '../ionic';
-import SessionDetail from '../containers/SessionDetail';
 
 export default ({ nav, params }) => {
   const session = sessions.find(s => s.id === parseInt(params.id, 10));

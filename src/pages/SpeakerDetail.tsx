@@ -8,7 +8,7 @@ export default ({ nav, params }) => {
 
   return (
     <>
-      <IonHeader key={1}>
+      <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton href="#" onClick={() => nav.pop()} color="primary">
@@ -17,9 +17,9 @@ export default ({ nav, params }) => {
           </IonButtons>
           <IonTitle>{speaker.name}</IonTitle>
         </IonToolbar>
-      </IonHeader>,
+      </IonHeader>
 
-      <IonContent padding class="speaker-detail speaker-page-list" key={2}>
+      <IonContent padding class="speaker-detail speaker-page-list">
         <div>
           <img src={speaker.profilePic} alt={speaker.name}/>
           <br/>

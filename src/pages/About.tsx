@@ -21,7 +21,7 @@ export default class About extends Component {
             </IonButton>
           </IonButtons>
         </IonToolbar>
-      </IonHeader>,
+      </IonHeader>
 
       <IonContent>
         <div className="about-header">

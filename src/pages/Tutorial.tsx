@@ -5,7 +5,6 @@ import './Tutorial.scss'
 
 class Tutorial extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       showSkip: false
