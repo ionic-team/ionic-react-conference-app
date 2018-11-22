@@ -1,45 +1,54 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { actions } from '../store';
 import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
 import { withRouter } from 'react-router-dom';
 import './Tutorial.scss'
 
-class Tutorial extends Component {
-  constructor(props) {
+type Props = {
+  sawTutorial: () => any
+}
+
+type State = {
+  showSkip: boolean
+}
+
+class Tutorial extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       showSkip: false
     }
   }
 
-  onSlideChangeStart(slider) {
-    debugger;
+  onSlideChangeStart() {
     this.setState((state, props) => (
       {
         ...state,
-        showSkip: !slider.isEnd()
+        showSkip: !state.showSkip
       }
     ));
   }
 
   endTutorial() {
-    this.props.updateSeenTutorial(true);
+    this.props.sawTutorial();
     this.props.history.push('/');
   }
 
   render() {
     return (
-      <IonPage class="page-tutorial">
+      <IonPage className="page-tutorial">
         <IonHeader no-border>
           <IonToolbar>
             { this.state.showSkip ?
               <IonButtons slot="end">
-                <IonButton onClick={() => this.endTutorial()} color="primary">Skip</IonButton>
+                <IonButton onClick={this.endTutorial} color="primary">Skip</IonButton>
               </IonButtons>
             : null}
           </IonToolbar>
         </IonHeader>
         <IonContent no-bounce>
-          <IonSlides onIonSlideWillChange={(e) => this.onSlideChangeStart(e)} pager>
+          <IonSlides onIonSlideWillChange={this.onSlideChangeStart} pager>
 
             <IonSlide>
               <img alt="welcome" src="/assets/img/ica-slidebox-img-1.png" className="slide-image"/>
@@ -78,7 +87,7 @@ class Tutorial extends Component {
               <h2 className="slide-title">
                 Ready to Play?
               </h2>
-              <IonButton icon-end onClick={() => this.endTutorial()}>
+              <IonButton icon-end onClick={this.endTutorial}>
                 Continue
                 <IonIcon name="arrow-forward"></IonIcon>
               </IonButton>
@@ -91,4 +100,6 @@ class Tutorial extends Component {
   }
 };
 
-export default withRouter(Tutorial);
+export default connect(null, {
+  sawTutorial: () => actions.user.sawTutorial(),
+})(withRouter(Tutorial));

@@ -1,12 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { RootState } from '../store';
+import { Session } from '../store/sessions/types';
+import { Speaker } from '../store/speakers/types';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '../ionic';
 
-export default ({ nav, params }) => {
-  const session = sessions.find(s => s.id === parseInt(params.id, 10));
-  const sessionSpeakers = speakers.filter(s => session.speakerIds.includes(s.id));
+type Props = {
+  sessions: Session[]
+  speakers: Speaker[]
+}
+
+const SessionDetail = ({ sessions, speakers, nav, params }: Props) => {
+  const session = sessions.filter(s => s.id === parseInt(params.id, 10))[0];
+  const sessionSpeakers = speakers.filter(s => session.speakerIds.indexOf(s.id) !== -1);
+
   return (
     <>
-      <IonHeader key={1}>
+      <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton href="#" onClick={() => nav.pop()} color="primary">
@@ -15,9 +25,9 @@ export default ({ nav, params }) => {
           </IonButtons>
           <IonTitle>{session.name}</IonTitle>
         </IonToolbar>
-      </IonHeader>,
+      </IonHeader>
 
-      <IonContent padding key={2}>
+      <IonContent padding>
         <div>
           <h1>{session.name}</h1>
           {sessionSpeakers.map(speaker => (
@@ -36,3 +46,10 @@ export default ({ nav, params }) => {
     </>
   );
 }
+
+const mapStateToProps = (state: RootState) => ({
+  sessions: state.sessions.sessions,
+  speakers: state.speakers.speakers
+});
+
+export default connect(mapStateToProps)(SessionDetail)

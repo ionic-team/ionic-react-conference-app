@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { RootState } from '../store';
 import { IonIcon, IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '../ionic';
-import SessionDetail from '../containers/SessionDetail';
+import { Speaker } from '../store/speakers/types';
+import { Session } from '../store/sessions/types';
 
-function openSpeakerShare(speaker) {
+function openSpeakerShare(speaker: Speaker) {
   let actionSheet = this.actionSheetCtrl.create({
     title: 'Share ' + speaker.name,
     buttons: [
@@ -30,7 +33,7 @@ function openSpeakerShare(speaker) {
   actionSheet.present();
 }
 
-function openContact(speaker) {
+function openContact(speaker: Speaker) {
   let mode = this.config.get('mode');
 
   let actionSheet = this.actionSheetCtrl.create({
@@ -56,7 +59,7 @@ function openContact(speaker) {
   actionSheet.present();
 }
 
-const SpeakerItem = ({speaker, speakerSessions, nav}) => (
+const SpeakerItem = ({speaker, speakerSessions, nav}: { speaker: Speaker, speakerSessions: Session[] }) => (
   <IonCard class="speaker-card">
     <IonCardHeader>
       <IonItem
@@ -116,7 +119,12 @@ const SpeakerItem = ({speaker, speakerSessions, nav}) => (
   </IonCard>
 );
 
-export default ({ nav, params }) => (
+type Props = {
+  speakers: Speaker[],
+  sessions: Session[]
+}
+
+const SpeakerList = ({ speakers, sessions, nav, params }: Props) => (
   <>
     <IonHeader>
       <IonToolbar>
@@ -135,7 +143,7 @@ export default ({ nav, params }) => (
           <IonRow align-items-stretch>
             <IonCol col-12 col-md-6 align-self-stretch align-self-center>
               { speakers.map((speaker) => {
-                const speakerSessions = sessions.filter(session => session.speakerIds.includes(speaker.id));
+                const speakerSessions = sessions.filter(session => session.speakerIds.indexOf(speaker.id) !== -1);
                 return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
               }) }
             </IonCol>
@@ -145,3 +153,10 @@ export default ({ nav, params }) => (
     </IonContent>
   </>
 );
+
+const mapStateToProps = (state: RootState) => ({
+  speakers: state.speakers.speakers,
+  sessions: state.sessions.sessions
+});
+
+export default connect(mapStateToProps)(SpeakerList)

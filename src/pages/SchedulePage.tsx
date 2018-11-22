@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { RootState, selectors } from '../store';
+import { RootState, selectors, actions } from '../store';
 import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton } from '../ionic';
@@ -8,95 +8,105 @@ import './Schedule.scss';
 
 type Props = {
   allFiltered: Session[],
-  favoritesFiltered: Session[]
+  favoritesFiltered: Session[],
+  searchText: string,
+  setSearchText: (searchText: string) => any,
+  addFavorite: (sessionId: number) => any,
+  removeFavorite: (sessionId: number) => any
 }
 
-const SchedulePage = (props: Props) => {
+type State = {
+  segment: string
+}
 
-  function presentFilter() {}
-  function doRefresh() {}
-  function openSocial(socialName: string) {}
+class SchedulePage extends Component<Props, State> {
 
-  return (
-    <>
-      <IonHeader md-height="96px" ios-height="96px" key={1}>
-        <IonToolbar no-border-bottom>
-          <IonButtons slot="start">
-            <IonMenuButton></IonMenuButton>
-          </IonButtons>
-          <IonSegment
-            value={props.filterFavorites}
-            onIonChange={(e) => props.updateFavoriteFilter(e.detail.value)}
-          >
-            <IonSegmentButton value="all">
-              All
-            </IonSegmentButton>
-            <IonSegmentButton value="favorites">
-              Favorites
-            </IonSegmentButton>
-          </IonSegment>
+  presentFilter() {}
+  doRefresh() {}
+  openSocial(socialName: string) {}
+  updateSegment(segment?: string | null) {}
 
-          <IonButtons slot="end">
-            <IonButton icon-only onClick={() => presentFilter()}>
-              <IonIcon slot="icon-only" name="options"></IonIcon>
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
+  render() {
+    return (
+      <>
+        <IonHeader md-height="96px" ios-height="96px" key={1}>
+          <IonToolbar no-border-bottom>
+            <IonButtons slot="start">
+              <IonMenuButton></IonMenuButton>
+            </IonButtons>
+            <IonSegment
+              onIonChange={(e) => this.updateSegment(e.detail.value)}
+            >
+              <IonSegmentButton value="all" checked={this.state.segment === 'all'}>
+                All
+              </IonSegmentButton>
+              <IonSegmentButton value="favorites">
+                Favorites
+              </IonSegmentButton>
+            </IonSegment>
 
-        <IonToolbar no-border-top>
-          <IonSearchbar
-            color="primary"
-            placeholder="Search"
-            onIonInput={(e) => props.searchSessionsByName()}
-          >
-          </IonSearchbar>
-        </IonToolbar>
-      </IonHeader>
+            <IonButtons slot="end">
+              <IonButton icon-only onClick={() => this.presentFilter()}>
+                <IonIcon slot="icon-only" name="options"></IonIcon>
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
 
-      <IonContent class="page-schedule">
-        <IonRefresher onIonRefresh={() => doRefresh()}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
+          <IonToolbar no-border-top>
+            <IonSearchbar
+              color="primary"
+              placeholder="Search"
+              onIonInput={(e: CustomEvent) => this.props.setSearchText(e.detail.value)}
+            >
+            </IonSearchbar>
+          </IonToolbar>
+        </IonHeader>
 
-        <SessionList
-          nav={nav}
-          sessions={props.filteredSessions}
-          addFavoriteSession={props.addFavoriteSession}
-          removeFavoriteSession={props.removeFavoriteSession}
-          hidden={props.filterFavorites !== "all"}
-          filterFavorites={props.filterFavorites}
-        />
-        <SessionList
-          nav={nav}
-          sessions={props.filteredSessions.filter(session => props.favoriteSessions.includes(session.id))}
-          addFavoriteSession={props.addFavoriteSession}
-          removeFavoriteSession={props.removeFavoriteSession}
-          hidden={props.filterFavorites !== "favorites"}
-          filterFavorites={props.filterFavorites}
-        />
-      </IonContent>
+        <IonContent class="page-schedule">
+          <IonRefresher onIonRefresh={() => this.doRefresh()}>
+            <IonRefresherContent></IonRefresherContent>
+          </IonRefresher>
 
-      <IonFab>
-        <IonFabButton>
-          <IonIcon name="share"></IonIcon>
-        </IonFabButton>
-        <IonFabList side="top">
-          <IonFabButton color="vimeo" onClick={() => openSocial('Vimeo')}>
-            <IonIcon name="logo-vimeo"></IonIcon>
+          <SessionList
+            nav={nav}
+            sessions={this.props.allFiltered}
+            addFavoriteSession={this.props.addFavorite}
+            removeFavoriteSession={this.props.removeFavorite}
+            hidden={this.state.segment !== "all"}
+            filterFavorites={this.props.filterFavorites}
+          />
+          <SessionList
+            nav={nav}
+            sessions={this.props.favoritesFiltered}
+            addFavoriteSession={this.props.addFavorite}
+            removeFavoriteSession={this.props.removeFavorite}
+            hidden={this.state.segment !== "favorites"}
+            filterFavorites={this.props.filterFavorites}
+          />
+        </IonContent>
+
+        <IonFab>
+          <IonFabButton>
+            <IonIcon name="share"></IonIcon>
           </IonFabButton>
-          <IonFabButton color="google" onClick={() => openSocial('Google+')}>
-            <IonIcon name="logo-googleplus"></IonIcon>
-          </IonFabButton>
-          <IonFabButton color="twitter" onClick={() => openSocial('Twitter')}>
-            <IonIcon name="logo-twitter"></IonIcon>
-          </IonFabButton>
-          <IonFabButton color="facebook" onClick={() => openSocial('Facebook')}>
-            <IonIcon name="logo-facebook"></IonIcon>
-          </IonFabButton>
-        </IonFabList>
-      </IonFab>
-    </>
-  );
+          <IonFabList side="top">
+            <IonFabButton color="vimeo" onClick={() => this.openSocial('Vimeo')}>
+              <IonIcon name="logo-vimeo"></IonIcon>
+            </IonFabButton>
+            <IonFabButton color="google" onClick={() => this.openSocial('Google+')}>
+              <IonIcon name="logo-googleplus"></IonIcon>
+            </IonFabButton>
+            <IonFabButton color="twitter" onClick={() => this.openSocial('Twitter')}>
+              <IonIcon name="logo-twitter"></IonIcon>
+            </IonFabButton>
+            <IonFabButton color="facebook" onClick={() => this.openSocial('Facebook')}>
+              <IonIcon name="logo-facebook"></IonIcon>
+            </IonFabButton>
+          </IonFabList>
+        </IonFab>
+      </>
+    );
+  }
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -106,5 +116,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 export default connect(mapStateToProps, {
-  logOutUser: () => actions.user.logOut()
+  setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
+  addFavorite: (sessionId: number) => actions.sessions.addFavorite(sessionId),
+  removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId)
 })(SchedulePage);

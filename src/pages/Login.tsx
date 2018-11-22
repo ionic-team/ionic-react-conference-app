@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonRow, IonCol, IonMenuButton } from '../ionic';
-import './Form.scss'
+import './Form.scss';
 
-export default class Login extends Component {
+type State = {
+  username: string | null
+}
+
+class Login extends Component<{}, State> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      username: null
+    }
+  }
+
+  updateUserName(e: CustomEvent) {}
+  logInUser() {}
+  signUpUser() {}
+
   render() {
     return (
       <>
@@ -24,11 +39,11 @@ export default class Login extends Component {
               <IonItem>
                 <IonLabel color="primary">Username</IonLabel>
                 <IonInput
-                  ref={(input) => (this.usernameInput = input)}
+                  onIonChange={this.updateUserName}
                   name="username"
                   type="text"
-                  spellcheck="false"
                   autocapitalize="off"
+                  value={this.state.username}
                   required>
                 </IonInput>
               </IonItem>
@@ -40,12 +55,12 @@ export default class Login extends Component {
 
             <IonRow responsive-sm>
               <IonCol>
-                <IonButton onClick={() => logInUser(this.usernameInput.value)} type="submit">
+                <IonButton onClick={this.logInUser} type="submit">
                   Login
                 </IonButton>
               </IonCol>
               <IonCol>
-                <IonButton onClick={() => signUpUser(this.usernameInput.value)} color="light">
+                <IonButton onClick={this.signUpUser} color="light">
                   Signup
                 </IonButton>
               </IonCol>

@@ -2,7 +2,24 @@ import React, { Component } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonButton } from '../ionic';
 import './Form.scss'
 
-export default class Signup extends Component {
+type State = {
+  username: string | null,
+  password: string | null
+}
+
+export default class Signup extends Component<{},State> {
+  signupFormRef: React.Ref<HTMLFormElement>
+
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      username: null,
+      password: null
+    }
+    this.signupFormRef = React.createRef();
+  }
+
+  onSignup() {}
   render() {
     return (
       <>
@@ -19,16 +36,16 @@ export default class Signup extends Component {
           <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>
-          <form ref={(signUpForm => this.signupForm = signUpForm)}>
+          <form ref={this.signupFormRef}>
             <IonList no-lines>
               <IonItem>
                 <IonLabel color="primary">Username</IonLabel>
-                <IonInput value={this.username} name="username" type="text" required>
+                <IonInput value={this.state.username} name="username" type="text" required>
                 </IonInput>
               </IonItem>
               <IonItem>
                 <IonLabel color="primary">Password</IonLabel>
-                <IonInput value={this.password} name="password" type="password" required>
+                <IonInput value={this.state.password} name="password" type="password" required>
                 </IonInput>
               </IonItem>
             </IonList>
