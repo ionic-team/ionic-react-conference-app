@@ -1,9 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { RootState, selectors } from '../store';
+import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton } from '../ionic';
 import './Schedule.scss';
 
-const SchedulePage = (props) => {
+type Props = {
+  allFiltered: Session[],
+  favoritesFiltered: Session[]
+}
+
+const SchedulePage = (props: Props) => {
 
   function presentFilter() {}
   function doRefresh() {}
@@ -91,4 +99,12 @@ const SchedulePage = (props) => {
   );
 }
 
-export default SchedulePage;
+const mapStateToProps = (state: RootState) => ({
+  allFiltered: selectors.sessions.allFiltered,
+  favoritesFiltered: selectors.sessions.favoritesFiltered,
+  searchText: state.sessions.searchText
+});
+
+export default connect(mapStateToProps, {
+  logOutUser: () => actions.user.logOut()
+})(SchedulePage);

@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { RootState, actions } from '../store';
+import { User } from '../store/user/types';
 import { IonHeader, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonToolbar } from '../ionic';
 import './Account.scss';
 
-export default class Account extends Component {
+type Props = {
+  user: User,
+  logOutUser: () => void
+}
+
+class Account extends Component<Props> {
   updatePicture(){}
   changeUsername(){}
   changePassword(){}
@@ -22,14 +30,14 @@ export default class Account extends Component {
         <IonContent class="outer-content page-account">
           <div>
             <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"/>
-            <h2>{user.userName}</h2>
+            <h2>{this.props.user.userName}</h2>
 
             <IonList inset>
               <IonItem href="#" onClick={() => this.updatePicture()}>Update Picture</IonItem>
               <IonItem href="#" onClick={() => this.changeUsername()}>Change Username</IonItem>
               <IonItem href="#" onClick={() => this.changePassword()}>Change Password</IonItem>
               <IonItem href="#" onClick={() => this.support()}>Support</IonItem>
-              <IonItem href="#" onClick={() => logOutUser(logOutUser)}>Logout</IonItem>
+              <IonItem href="#" onClick={() => this.props.logOutUser()}>Logout</IonItem>
             </IonList>
           </div>
         </IonContent>
@@ -37,3 +45,11 @@ export default class Account extends Component {
     );
   }
 }
+
+const mapStateToProps = (state: RootState) => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps, {
+  logOutUser: () => actions.user.logOut()
+})(Account);

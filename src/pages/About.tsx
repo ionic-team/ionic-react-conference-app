@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { RootState, selectors } from '../store';
 import { IonIcon, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonTitle } from '../ionic';
 import './About.scss';
 
-export default class About extends Component {
-  presentPopover() {
+type Props = {
+  conferenceDate: string | null;
+};
 
-  }
-
+class About extends Component<Props, {}> {
+  presentPopover() {}
   render() {
     return <>
       <IonHeader>
@@ -34,7 +37,7 @@ export default class About extends Component {
             <IonItem>
               <IonIcon name="calendar" slot="start"></IonIcon>
               <IonLabel>Date</IonLabel>
-              <IonDatetime displayFormat="MMM DD, YYYY" max="2056" data={this.props.conferenceDate}></IonDatetime>
+              <IonDatetime displayFormat="MMM DD, YYYY" max="2056" value={this.props.conferenceDate}></IonDatetime>
             </IonItem>
 
             <IonItem>
@@ -63,3 +66,11 @@ export default class About extends Component {
     </>;
   }
 }
+
+const mapStateToProps = (state: RootState) => ({
+  conferenceDate: selectors.sessions.conferenceStart(state.sessions),
+});
+
+export default connect(
+  mapStateToProps
+)(About);

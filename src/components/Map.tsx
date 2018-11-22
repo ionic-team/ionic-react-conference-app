@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { Location } from '../store/locations/types';
 
-export default class Map extends Component {
+type Props = {
+  locations: Location[]
+  mapCenter: Location
+}
+
+export default class Map extends Component<Props> {
   componentDidMount() {
     let map = new window.google.maps.Map(this.mapEle, {
-      center: this.props.locations.mapCenter,
+      center: this.props.mapCenter,
       zoom: 16
     });
     this.props.locations.locations.forEach((markerData) => {
