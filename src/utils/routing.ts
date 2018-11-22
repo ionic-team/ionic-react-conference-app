@@ -1,35 +1,29 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import UserAccount from '../containers/UserAccount';
-import TutorialDetail from '../containers/TutorialDetail';
+import UserAccount from '../pages/Account';
+import TutorialDetail from '../pages/Tutorial';
 import Tutorial from '../pages/Tutorial';
 
-export const PrivateRoute = ({ component, ...rest }) => (
-  <Route {...rest} render={props=> (
-    <UserAccount>
-      {({ user }) => (
-        user.isAuthenticated ? (
-          <component {...props}/>
-        ) : (
-          <Redirect to={{
-            pathname: '/login',
-            state: { from: props.location }
-          }}/>
-        )
-      )}
-    </UserAccount>
-  )}/>
-);
+export const PrivateRoute = ({ component, ...rest }) =>
+  <Route {...rest} render={props => {
+    if (user.isAuthenticated) {
+      return <component {...props}/>
+    }
+    return (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    );
+  }}/>
 
-export const RequiresTutorialRoute = ({ ...rest }) => (
-  <TutorialDetail>
-    {({ hasSeenTutorial, updateSeenTutorial }) => {
-      if (hasSeenTutorial) {
-        return <Route {...rest}/>
-      }
-      return (
-        <Tutorial hasSeenTutorial={hasSeenTutorial} updateSeenTutorial={updateSeenTutorial} />
-      );
-    }}
-  </TutorialDetail>
-);
+
+
+export const RequiresTutorialRoute = (props) => {
+  if (hasSeenTutorial) {
+    return <Route {...props}/>
+  }
+  return (
+    <Tutorial hasSeenTutorial={hasSeenTutorial} updateSeenTutorial={updateSeenTutorial} />
+  );
+};

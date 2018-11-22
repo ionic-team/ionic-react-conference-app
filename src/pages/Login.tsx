@@ -6,7 +6,7 @@ type State = {
   username: string | null
 }
 
-class Login extends Component<{}, State> {
+export default class Login extends Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {

@@ -21,7 +21,7 @@ const App = () => (
         <RequiresTutorialRoute path="/login" component={Login} />
         <RequiresTutorialRoute path="/support" component={Support} />
         <RequiresTutorialRoute path="/signup" component={Signup} />
-        <RequiresTutorialRoute path="/" component={AppStack}/>
+        <RequiresTutorialRoute path="/" component={AppStack} />
       </IonApp>
     </Router>
   </Provider>
