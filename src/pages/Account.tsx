@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { RootState, actions } from '../store';
 import { User } from '../store/user/types';
 import { IonHeader, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonToolbar } from '../ionic';
-import './Account.scss';
 
 type Props = {
   user: User,

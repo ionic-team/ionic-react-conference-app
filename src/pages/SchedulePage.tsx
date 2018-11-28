@@ -4,7 +4,6 @@ import { RootState, selectors, actions } from '../store';
 import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton } from '../ionic';
-import './Schedule.scss';
 
 type Props = {
   allFiltered: Session[],

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { actions } from '../store';
 import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
 import { withRouter } from 'react-router-dom';
-import './Tutorial.scss'
 
 type Props = {
   sawTutorial: () => any

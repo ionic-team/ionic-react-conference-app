@@ -10,7 +10,7 @@ import StackNav from '../components/StackNav';
 import TabNav from '../components/TabNav';
 import { IonPage } from '../ionic';
 
-const ScheduleStack = (props) => (
+const ScheduleStack = (props: any) => (
   <StackNav
     {...props}
     navViews={[
@@ -29,7 +29,7 @@ const ScheduleStack = (props) => (
   />
 );
 
-const SpeakerStack = (props) => (
+const SpeakerStack = (props: any) => (
   <StackNav
     {...props}
     navViews={[
@@ -53,7 +53,7 @@ const SpeakerStack = (props) => (
   ></StackNav>
 );
 
-const MapStack = (props) => (
+const MapStack = (props: any) => (
   <StackNav
     {...props}
     navViews={[
@@ -67,7 +67,7 @@ const MapStack = (props) => (
   ></StackNav>
 );
 
-const AboutStack = (props) => (
+const AboutStack = (props: any) => (
   <StackNav
     {...props}
     navViews={[
@@ -82,7 +82,7 @@ const AboutStack = (props) => (
 );
 
 export default class AppStack extends Component {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       childViews: [
@@ -114,14 +114,14 @@ export default class AppStack extends Component {
     }
   }
 
-  tabClickHandler(path) {
-    return (e) => {
+  tabClickHandler(path: any) {
+    return (e: Event) => {
       e.preventDefault();
       this.props.history.push(path);
     }
   }
 
-  urlMatchHandler(path) {
+  urlMatchHandler(path: string) {
     return matchPath(this.props.location.pathname, { path: path });
   }
 

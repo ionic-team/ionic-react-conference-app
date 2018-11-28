@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Form.scss'
 import { IonMenuButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonTextarea, IonButton } from '../ionic';
 
 export default class Support extends Component {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonButton } from '../ionic';
-import './Form.scss'
 
 type State = {
   username: string | null,

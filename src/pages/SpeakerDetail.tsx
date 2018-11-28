@@ -1,6 +1,5 @@
 import React from 'react';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '../ionic'
-import './SpeakerList.scss';
 
 
 export default ({ nav, params }) => {

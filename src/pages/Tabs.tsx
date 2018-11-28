@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { IonIcon, IonTabs, IonTab, IonTabBar, IonTabButton, IonLabel } from '../ionic';
-import './Form.scss'
 
 export default class Tabs extends Component {
   render() {
