@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, CSSProperties } from 'react';
 import { IonPage } from '../ionic';
 
 interface Props {
@@ -63,12 +63,12 @@ export default class StackNav extends Component<Props, State> {
   render() {
     return this.state.stack.map(([pageName, params], index, array) => {
       const Page = this.props.navViews.find(view => view.name === pageName).getView();
-      const style = {};
+      const style: CSSProperties = {};
       if (index !== array.length - 1) {
         style.display = 'none';
       }
       return (
-        <IonPage key={index} style={style}>
+        <IonPage key={index}>
           <Page
             nav={{
               pop: this.pop.bind(this),

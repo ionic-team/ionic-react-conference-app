@@ -9,7 +9,7 @@ interface Props {
   sessions: Session[]
   addFavoriteSession: typeof addFavorite;
   removeFavoriteSession: typeof removeFavorite;
-  filterFavorites: 'all' | '';
+  filterFavorites: boolean;
   hidden: boolean;
   nav: any;
 }
@@ -72,7 +72,7 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
                 </IonLabel>
               </IonItem>
               <IonItemOptions>
-                { filterFavorites !== 'all' ?
+                { filterFavorites ?
                   <IonItemOption color="danger" onClick={() => removeFavoriteSession(session.id)}>
                     Remove
                   </IonItemOption>

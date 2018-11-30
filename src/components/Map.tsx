@@ -13,6 +13,7 @@ export default class Map extends Component<Props> {
     this.mapEle = React.createRef();
   }
   componentDidMount() {
+    /*
     let map = new window.google.maps.Map(this.mapEle, {
       center: this.props.mapCenter,
       zoom: 16
@@ -36,6 +37,7 @@ export default class Map extends Component<Props> {
     window.google.maps.event.addListenerOnce(map, 'idle', () => {
       this.mapEle!.classList.add('show-map');
     });
+    */
   }
 
   render() {

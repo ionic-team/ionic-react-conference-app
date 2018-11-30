@@ -36,7 +36,7 @@ class Tutorial extends Component<Props, State> {
 
   render() {
     return (
-      <IonPage className="page-tutorial">
+      <IonPage>
         <IonHeader no-border>
           <IonToolbar>
             { this.state.showSkip ?

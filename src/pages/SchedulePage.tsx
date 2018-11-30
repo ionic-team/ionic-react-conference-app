@@ -11,7 +11,8 @@ type Props = {
   searchText: string,
   setSearchText: (searchText: string) => any,
   addFavorite: (sessionId: number) => any,
-  removeFavorite: (sessionId: number) => any
+  removeFavorite: (sessionId: number) => any,
+  nav: any
 }
 
 type State = {
@@ -67,20 +68,20 @@ class SchedulePage extends Component<Props, State> {
           </IonRefresher>
 
           <SessionList
-            nav={nav}
+            nav={this.props.nav}
             sessions={this.props.allFiltered}
             addFavoriteSession={this.props.addFavorite}
             removeFavoriteSession={this.props.removeFavorite}
             hidden={this.state.segment !== "all"}
-            filterFavorites={this.props.filterFavorites}
+            filterFavorites={true}
           />
           <SessionList
-            nav={nav}
+            nav={this.props.nav}
             sessions={this.props.favoritesFiltered}
             addFavoriteSession={this.props.addFavorite}
             removeFavoriteSession={this.props.removeFavorite}
             hidden={this.state.segment !== "favorites"}
-            filterFavorites={this.props.filterFavorites}
+            filterFavorites={false}
           />
         </IonContent>
 
