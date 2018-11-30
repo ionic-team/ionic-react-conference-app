@@ -38,14 +38,15 @@ function createReactComponent<T>(tagName: string) {
       });
     }
     render() {
-      return React.createElement(tagName, { }, this.props.children);
+      const { children, ...cProps } = this.props as any;
+      return React.createElement(tagName, cProps, children);
     }
   }
 }
 
 export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes>('ion-icon');
 export const IonApp = createReactComponent<Components.IonAppAttributes>('ion-app');
-export const IonPage = createReactComponent('ion-page');
+export const IonPage = createReactComponent<{}>('ion-page');
 export const IonMenu = createReactComponent<Components.IonMenuAttributes>('ion-menu');
 export const IonHeader = createReactComponent<Components.IonHeaderAttributes>('IonHeader');
 export const IonTitle = createReactComponent<Components.IonTitleAttributes>('IonHeader');

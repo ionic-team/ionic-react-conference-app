@@ -1,17 +1,24 @@
 import React from 'react';
-import IonButtonWithRouter from './IonButton';
-import { IonIcon, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem } from '../ionic';
+import { IonIcon, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonButton } from '../ionic';
+import { RouteComponentProps } from 'react-router';
 
-export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, history}) => {
+interface Props extends RouteComponentProps<any> {
+  appPages: any[]
+  loggedOutPages: any[],
+  loggedInPages: any[],
+  isAuthenticated: boolean
+}
 
-  function renderlistItems(list) {
+const SiteMenu: React.SFC<Props> = ({ appPages, loggedOutPages, loggedInPages, isAuthenticated, history }) => {
+
+  function renderlistItems(list: any[]) {
     return list
       .filter(route => !!route.path)
       .map((p) => (
-        <IonButtonWithRouter key={p.title} path={p.path}>
+        <IonButton key={p.title} onClick={() => history.push(p.path)}>
           <IonIcon slot="start" name={p.icon}></IonIcon>
           {p.title}
-        </IonButtonWithRouter>
+        </IonButton>
       ));
   }
 
@@ -50,3 +57,5 @@ export default ({appPages, loggedOutPages, loggedInPages, isAuthenticated, histo
     </IonMenu>
   );
 }
+
+export default SiteMenu;

@@ -109,8 +109,8 @@ class SchedulePage extends Component<Props, State> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  allFiltered: selectors.sessions.allFiltered,
-  favoritesFiltered: selectors.sessions.favoritesFiltered,
+  allFiltered: selectors.sessions.allFiltered(state.sessions),
+  favoritesFiltered: selectors.sessions.favoritesFiltered(state.sessions),
   searchText: state.sessions.searchText
 });
 

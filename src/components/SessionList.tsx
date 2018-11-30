@@ -1,9 +1,43 @@
 import React from 'react';
+import { Session, SessionGroup } from '../store/sessions/types';
+import { addFavorite, removeFavorite} from '../store/sessions/actions';
+import formatTime from '../utils/formatTime';
+import { parse as parseDate } from 'date-fns';
 import { IonList, IonListHeader, IonItemGroup, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption } from '../ionic';
 
+interface Props {
+  sessions: Session[]
+  addFavoriteSession: typeof addFavorite;
+  removeFavoriteSession: typeof removeFavorite;
+  filterFavorites: 'all' | '';
+  hidden: boolean;
+  nav: any;
+}
 
-export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, hidden, nav }) => {
+function groupedByStartTime(sessions: Session[]) {
+  return sessions
+    .sort((a, b) => (
+      parseDate(a.dateTimeStart).valueOf() - parseDate(b.dateTimeStart).valueOf()
+    ))
+    .reduce((groups, session) => {
+      let starterHour = parseDate(session.dateTimeStart);
+      starterHour.setMinutes(0);
+      starterHour.setSeconds(0);
+      const starterHourStr = starterHour.toJSON();
+      const foundGroup = groups.find(group => group.startTime === starterHourStr);
+      if (foundGroup) {
+        foundGroup.sessions.push(session);
+      } else {
+        groups.push({
+          startTime: starterHourStr,
+          sessions: [session]
+        });
+      }
+      return groups;
+  }, [] as SessionGroup[]);
+}
 
+const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, hidden, nav }) => {
   if (sessions.length === 0) {
     return (
       <IonList style={hidden ? {display: 'none'} : {}}>
@@ -14,19 +48,19 @@ export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavo
     );
   }
 
-  const groups = groupByStartTime(sessions);
+  const groups = groupedByStartTime(sessions);
 
   return (
     <IonList style={hidden ? {display: 'none'} : {}}>
-      { groups.map((group, index) => (
+      { groups.map((group, index: number) => (
         <IonItemGroup key={`group-${index}`}>
-          <IonItemDivider sticky>
+          <IonItemDivider>
             <IonLabel>
               {formatTime(group.startTime, "h:MM tt")}
             </IonLabel>
           </IonItemDivider>
-          { group.sessions.map((session, sessionIndex) => (
-            <IonItemSliding key={`group-${index}-${sessionIndex}`} track={session.tracks[0].toLowerCase()}>
+          { group.sessions.map((session: Session, sessionIndex: number) => (
+            <IonItemSliding key={`group-${index}-${sessionIndex}`}>
               <IonItem href={`/sessions/${session.id}`} onClick={() => nav.push('sessions', { id: session.id })}>
                 <IonLabel>
                   <h3>{session.name}</h3>
@@ -55,3 +89,4 @@ export default ({sessions, addFavoriteSession, removeFavoriteSession, filterFavo
     </IonList>
   );
 };
+export default SessionList;

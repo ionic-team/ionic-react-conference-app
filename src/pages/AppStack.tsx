@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { matchPath } from 'react-router-dom';
+import { matchPath, RouteComponentProps } from 'react-router-dom';
 import SchedulePage from './SchedulePage';
 import SessionDetail from './SessionDetail';
 import SpeakerList from './SpeakerList';
@@ -10,7 +10,7 @@ import StackNav from '../components/StackNav';
 import TabNav from '../components/TabNav';
 import { IonPage } from '../ionic';
 
-const ScheduleStack = (props: any) => (
+const ScheduleStack: React.SFC<any> = (props) => (
   <StackNav
     {...props}
     navViews={[
@@ -29,7 +29,7 @@ const ScheduleStack = (props: any) => (
   />
 );
 
-const SpeakerStack = (props: any) => (
+const SpeakerStack: React.SFC<any> = (props) => (
   <StackNav
     {...props}
     navViews={[
@@ -53,7 +53,7 @@ const SpeakerStack = (props: any) => (
   ></StackNav>
 );
 
-const MapStack = (props: any) => (
+const MapStack: React.SFC<any> = (props) => (
   <StackNav
     {...props}
     navViews={[
@@ -67,7 +67,7 @@ const MapStack = (props: any) => (
   ></StackNav>
 );
 
-const AboutStack = (props: any) => (
+const AboutStack: React.SFC<any> = (props) => (
   <StackNav
     {...props}
     navViews={[
@@ -81,7 +81,19 @@ const AboutStack = (props: any) => (
   />
 );
 
-export default class AppStack extends Component {
+interface StackProps extends RouteComponentProps {
+}
+
+interface StackState {
+  childViews: {
+    title: string;
+    icon: string;
+    basePath: string;
+    getView: () => any
+  }[]
+}
+
+export default class AppStack extends Component<StackProps, StackState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -125,9 +137,10 @@ export default class AppStack extends Component {
     return matchPath(this.props.location.pathname, { path: path });
   }
 
-  onPageChange(basePath, subPath, params) {
+  onPageChange(basePath: string, subPath: string, params: any) {
     var resolvedSubPath = subPath;
-    Object.entries(params).forEach(([name, value]) => {
+    Object.keys(params).forEach((name) => {
+      const value = params[name];
       resolvedSubPath = resolvedSubPath.replace(`:${name}`, value);
     });
     const activePath = `${basePath}/${resolvedSubPath}`;

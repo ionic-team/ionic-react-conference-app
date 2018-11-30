@@ -7,12 +7,17 @@ type Props = {
 }
 
 export default class Map extends Component<Props> {
+  mapEle: React.Ref<HTMLDivElement>;
+  constructor(props: Props) {
+    super(props);
+    this.mapEle = React.createRef();
+  }
   componentDidMount() {
     let map = new window.google.maps.Map(this.mapEle, {
       center: this.props.mapCenter,
       zoom: 16
     });
-    this.props.locations.locations.forEach((markerData) => {
+    this.props.locations.forEach((markerData) => {
       let infoWindow = new window.google.maps.InfoWindow({
         content: `<h5>${markerData.name}</h5>`
       });
@@ -29,12 +34,13 @@ export default class Map extends Component<Props> {
     });
 
     window.google.maps.event.addListenerOnce(map, 'idle', () => {
-      this.mapEle.classList.add('show-map');
+      this.mapEle!.classList.add('show-map');
     });
   }
+
   render() {
     return (
-      <div ref={(div) => this.mapEle = div} style={{height: '100%', width: '100%'}} id="map_canvas"></div>
+      <div ref={this.mapEle} style={{height: '100%', width: '100%'}} id="map_canvas"></div>
     );
   }
 }

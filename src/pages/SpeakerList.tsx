@@ -59,72 +59,83 @@ function openContact(speaker: Speaker) {
   actionSheet.present();
 }
 
-const SpeakerItem = ({speaker, speakerSessions, nav}: { speaker: Speaker, speakerSessions: Session[] }) => (
-  <IonCard class="speaker-card">
-    <IonCardHeader>
-      <IonItem
-        detail-none
-        href="#"
-        onClick={() => nav.push('speakers', { id: speaker.id })}
-      >
-        <IonAvatar slot="start">
-          <img src={speaker.profilePic} alt="Speaker profile pic"/>
-        </IonAvatar>
-        {speaker.name}
-      </IonItem>
-    </IonCardHeader>
-
-    <IonCardContent class="outer-content">
-      <IonList>
-        { speakerSessions.map(session => (
-          <IonItem
-            href="#"
-            key={session.name}
-            onClick={() => nav.push('sessions', { id: session.id })}
-          >
-            <h3>{session.name}</h3>
-          </IonItem>
-        ))}
-        <IonItem href="#" onClick={() => nav.push('speakers', { id: speaker.id })}>
-          <h3>About {speaker.name}</h3>
-        </IonItem>
-      </IonList>
-    </IonCardContent>
-
-    <IonGrid>
-      <IonRow no-padding>
-        <IonCol col-12 col-lg-auto text-center text-lg-left>
-          <IonButton
-            color="primary"
-            onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
-          >
-            <IonIcon slot="start" name="logo-twitter"></IonIcon>
-            Tweet
-          </IonButton>
-        </IonCol>
-        <IonCol col-12 col-lg-auto text-center>
-          <IonButton color="primary" onClick={() => openSpeakerShare(speaker)}>
-            <IonIcon slot="start" name='share-alt'></IonIcon>
-            Share
-          </IonButton>
-        </IonCol>
-        <IonCol col-12 col-lg-auto text-center text-lg-right>
-          <IonButton color="primary" onClick={() => openContact(speaker)}>
-            <IonIcon slot="start" name='chatboxes'></IonIcon>
-            Contact
-          </IonButton>
-        </IonCol>
-      </IonRow>
-    </IonGrid>
-  </IonCard>
-);
-
-type Props = {
-  speakers: Speaker[],
-  sessions: Session[]
+interface ItemProps {
+  speaker: Speaker;
+  speakerSessions: Session[];
+  nav: any;
 }
 
-const SpeakerList = ({ speakers, sessions, nav, params }: Props) => (
+const SpeakerItem = ({speaker, speakerSessions, nav}: ItemProps) => {
+
+  return (
+    <IonCard class="speaker-card">
+      <IonCardHeader>
+        <IonItem
+          detail-none
+          href="#"
+          onClick={() => nav.push('speakers', { id: speaker.id })}
+        >
+          <IonAvatar slot="start">
+            <img src={speaker.profilePic} alt="Speaker profile pic"/>
+          </IonAvatar>
+          {speaker.name}
+        </IonItem>
+      </IonCardHeader>
+
+      <IonCardContent class="outer-content">
+        <IonList>
+          { speakerSessions.map(session => (
+            <IonItem
+              href="#"
+              key={session.name}
+              onClick={() => nav.push('sessions', { id: session.id })}
+            >
+              <h3>{session.name}</h3>
+            </IonItem>
+          ))}
+          <IonItem href="#" onClick={() => nav.push('speakers', { id: speaker.id })}>
+            <h3>About {speaker.name}</h3>
+          </IonItem>
+        </IonList>
+      </IonCardContent>
+
+      <IonGrid>
+        <IonRow no-padding>
+          <IonCol col-12 col-lg-auto text-center text-lg-left>
+            <IonButton
+              color="primary"
+              onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
+            >
+              <IonIcon slot="start" name="logo-twitter"></IonIcon>
+              Tweet
+            </IonButton>
+          </IonCol>
+          <IonCol col-12 col-lg-auto text-center>
+            <IonButton color="primary" onClick={() => openSpeakerShare(speaker)}>
+              <IonIcon slot="start" name='share-alt'></IonIcon>
+              Share
+            </IonButton>
+          </IonCol>
+          <IonCol col-12 col-lg-auto text-center text-lg-right>
+            <IonButton color="primary" onClick={() => openContact(speaker)}>
+              <IonIcon slot="start" name='chatboxes'></IonIcon>
+              Contact
+            </IonButton>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </IonCard>
+  );
+};
+
+type ListProps = {
+  speakers: Speaker[],
+  sessions: Session[],
+  nav: any;
+  params: any;
+}
+
+const SpeakerList = ({ speakers, sessions, nav, params }: ListProps) => (
   <>
     <IonHeader>
       <IonToolbar>

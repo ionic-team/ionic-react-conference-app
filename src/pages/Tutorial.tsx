@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-type Props = {
+interface Props extends RouteComponentProps<any> {
   sawTutorial: () => any
 }
 

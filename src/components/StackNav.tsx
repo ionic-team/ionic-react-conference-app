@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import { IonPage } from '../ionic';
 
-export default class StackNav extends Component {
-  constructor(props) {
-    let stack = [];
+interface Props {
+  navViews: any[];
+  basePath: any;
+  onPageChange: any;
+  urlMatchHandler: any;
+}
+
+interface State {
+  stack: any[];
+}
+
+export default class StackNav extends Component<Props, State> {
+  constructor(props: Props) {
+    let stack: any[] = [];
     super(props);
 
     props.navViews.forEach((navView) => {
@@ -34,14 +46,14 @@ export default class StackNav extends Component {
     this.props.onPageChange(this.props.basePath, curView.path, curParams);
   }
 
-  push(pageName, params = {}) {
+  push(pageName: string, params = {}) {
     this.setState((prevState, props) => ({
       ...prevState,
       stack: prevState.stack.concat([[pageName, params]])
     }), this.pageChanged);
   }
 
-  pop(e) {
+  pop() {
     this.setState((prevState, props) => ({
       ...prevState,
       stack: prevState.stack.slice(0, -1)
@@ -56,7 +68,7 @@ export default class StackNav extends Component {
         style.display = 'none';
       }
       return (
-        <ion-page key={index} style={style}>
+        <IonPage key={index} style={style}>
           <Page
             nav={{
               pop: this.pop.bind(this),
@@ -64,7 +76,7 @@ export default class StackNav extends Component {
             }}
             params={params}
           ></Page>
-        </ion-page>
+        </IonPage>
       )
     });
   }

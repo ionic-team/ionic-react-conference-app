@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Session } from '../store/sessions/types';
 import { Speaker } from '../store/speakers/types';
+import formatTime from '../utils/formatTime';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '../ionic';
 
 type Props = {
-  sessions: Session[]
-  speakers: Speaker[]
+  sessions: Session[];
+  speakers: Speaker[];
+  nav: any;
+  params: any;
 }
 
 const SessionDetail = ({ sessions, speakers, nav, params }: Props) => {

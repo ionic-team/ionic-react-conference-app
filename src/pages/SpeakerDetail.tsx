@@ -1,9 +1,18 @@
 import React from 'react';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '../ionic'
+import { Speaker } from '../store/speakers/types';
 
+interface Props {
+  nav: any;
+  params: any;
+  speakers: Speaker[];
+}
 
-export default ({ nav, params }) => {
+export default ({ nav, params, speakers }: Props) => {
   const speaker = speakers.find(s => s.id === parseInt(params.id, 10));
+  if (!speaker) {
+    return;
+  }
 
   return (
     <>
