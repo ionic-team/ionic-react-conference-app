@@ -1,9 +1,16 @@
 import React, { Component, CSSProperties } from 'react';
 import { IonPage } from '../ionic';
 
+interface NavView {
+  name: string;
+  title: string;
+  path: string;
+  getView: () => any;
+}
+
 interface Props {
-  navViews: any[];
-  basePath: any;
+  navViews: NavView[];
+  basePath: string;
   onPageChange: any;
   urlMatchHandler: any;
 }
@@ -14,8 +21,8 @@ interface State {
 
 export default class StackNav extends Component<Props, State> {
   constructor(props: Props) {
-    let stack: any[] = [];
     super(props);
+    let stack: any[] = [];
 
     props.navViews.forEach((navView) => {
       const match = props.urlMatchHandler(`${props.basePath}/${navView.path}`);
@@ -41,7 +48,7 @@ export default class StackNav extends Component<Props, State> {
   pageChanged() {
     // Find the last View on the stack which is the new active View
     let [curPageName, curParams] = this.state.stack[this.state.stack.length - 1];
-    let curView = this.props.navViews.find(view => view.name === curPageName);
+    let curView = this.props.navViews.find(view => view.name === curPageName) || this.props.navViews[0];
 
     this.props.onPageChange(this.props.basePath, curView.path, curParams);
   }
@@ -62,7 +69,7 @@ export default class StackNav extends Component<Props, State> {
 
   render() {
     return this.state.stack.map(([pageName, params], index, array) => {
-      const Page = this.props.navViews.find(view => view.name === pageName).getView();
+      const Page = (this.props.navViews.find(view => view.name === pageName) || this.props.navViews[0]).getView();
       const style: CSSProperties = {};
       if (index !== array.length - 1) {
         style.display = 'none';

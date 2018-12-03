@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { matchPath, RouteComponentProps } from 'react-router-dom';
 import SchedulePage from './SchedulePage';
 import SessionDetail from './SessionDetail';
 import SpeakerList from './SpeakerList';
@@ -7,8 +6,8 @@ import SpeakerDetail from './SpeakerDetail';
 import MapPage from './Map';
 import About from './About';
 import StackNav from '../components/StackNav';
-import TabNav from '../components/TabNav';
-import { IonPage } from '../ionic';
+import { IonPage, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonLabel } from '../ionic';
+import { withRouter, RouteComponentProps, matchPath } from 'react-router';
 
 const ScheduleStack: React.SFC<any> = (props) => (
   <StackNav
@@ -81,56 +80,13 @@ const AboutStack: React.SFC<any> = (props) => (
   />
 );
 
-interface StackProps extends RouteComponentProps {
-}
 
-interface StackState {
-  childViews: {
-    title: string;
-    icon: string;
-    basePath: string;
-    getView: () => any
-  }[]
-}
-
-export default class AppStack extends Component<StackProps, StackState> {
-  constructor(props: any) {
+class AppStack extends Component<RouteComponentProps> {
+  constructor(props: RouteComponentProps) {
     super(props);
-    this.state = {
-      childViews: [
-        {
-          title: 'Schedule',
-          icon: 'calendar-outline',
-          basePath: '/schedule',
-          getView: () => (ScheduleStack)
-        },
-        {
-          title: 'Speakers',
-          icon: 'contacts',
-          basePath: '/speakers',
-          getView: () => (SpeakerStack)
-        },
-        {
-          title: 'Map',
-          icon: 'map-outline',
-          basePath: '/map',
-          getView: () => (MapStack)
-        },
-        {
-          title: 'About',
-          icon: 'information-circle-outline',
-          basePath: '/about',
-          getView: () => (AboutStack)
-        }
-      ]
-    }
-  }
 
-  tabClickHandler(path: any) {
-    return (e: Event) => {
-      e.preventDefault();
-      this.props.history.push(path);
-    }
+    this.urlMatchHandler = this.urlMatchHandler.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
   }
 
   urlMatchHandler(path: string) {
@@ -139,29 +95,76 @@ export default class AppStack extends Component<StackProps, StackState> {
 
   onPageChange(basePath: string, subPath: string, params: any) {
     var resolvedSubPath = subPath;
+
     Object.keys(params).forEach((name) => {
       const value = params[name];
       resolvedSubPath = resolvedSubPath.replace(`:${name}`, value);
     });
+
     const activePath = `${basePath}/${resolvedSubPath}`;
     this.props.history.replace(activePath);
   }
 
   render() {
     return (
-      <IonPage>
-        <TabNav
-          childViews={this.state.childViews}
-          onClickHandler={this.tabClickHandler.bind(this)}
-          urlMatchHandler={this.urlMatchHandler.bind(this)}
-          childViewProps={
-            {
-              urlMatchHandler: this.urlMatchHandler.bind(this),
-              onPageChange: this.onPageChange.bind(this)
-            }
-          }
-        />
-      </IonPage>
+      <div className="ion-page">
+        <IonTabs>
+          <IonTab tab="schedule">
+            <SchedulePage nav=""/>
+           {/**
+            <ScheduleStack
+              onPageChange={this.onPageChange}
+              urlMatchHandler={this.urlMatchHandler}
+            />
+           */}
+          </IonTab>
+          <IonTab tab="speakers">
+           {/**
+            <SpeakerStack
+              onPageChange={this.onPageChange}
+              urlMatchHandler={this.urlMatchHandler}
+            />
+           */}
+          </IonTab>
+          <IonTab tab="map">
+           {/**
+            <MapStack
+              onPageChange={this.onPageChange}
+              urlMatchHandler={this.urlMatchHandler}
+            />
+           */}
+          </IonTab>
+          <IonTab tab="about">
+           {/**
+            <AboutStack
+              onPageChange={this.onPageChange}
+              urlMatchHandler={this.urlMatchHandler}
+            />
+           */}
+          </IonTab>
+
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="schedule">
+              <IonIcon name="calendar" />
+              <IonLabel>Schedule</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="speakers">
+              <IonIcon name="contacts" />
+              <IonLabel>Speakers</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="map">
+              <IonIcon name="map" />
+              <IonLabel>Map</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="about">
+              <IonIcon name="information-circle" />
+              <IonLabel>About</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </div>
     );
   }
 }
+
+export default withRouter(AppStack);

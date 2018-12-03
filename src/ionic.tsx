@@ -65,7 +65,8 @@ function createReactComponent<T>(tagName: string) {
       });
     }
     render() {
-      const { children, ...cProps } = this.props as any;
+      const { children, className, ...cProps } = this.props as any;
+      cProps.class = className || cProps.class;
       return React.createElement(tagName, cProps, children);
     }
   }

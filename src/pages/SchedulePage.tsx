@@ -39,7 +39,7 @@ class SchedulePage extends Component<Props, State> {
 
   render() {
     return (
-      <>
+      <div className="ion-page">
         <IonHeader>
           <IonToolbar no-border-bottom>
             <IonButtons slot="start">
@@ -115,7 +115,7 @@ class SchedulePage extends Component<Props, State> {
             </IonFabButton>
           </IonFabList>
         </IonFab>
-      </>
+      </div>
     );
   }
 }

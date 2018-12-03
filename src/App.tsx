@@ -21,16 +21,14 @@ const App = () => (
     <Router>
       <div id="app">
         <IonApp>
-          <div className="ion-page">
-            <Switch>
-              <PrivateRoute path='/account' component={Account} />
-              <Route path="/tutorial" component={Tutorial} />
-              <RequiresTutorialRoute path="/login" component={Login} />
-              <RequiresTutorialRoute path="/support" component={Support} />
-              <RequiresTutorialRoute path="/signup" component={Signup} />
-              <RequiresTutorialRoute path="/" component={AppStack} />
-            </Switch>
-          </div>
+          <Switch>
+            <PrivateRoute path='/account' component={Account} />
+            <Route path="/tutorial" component={Tutorial} />
+            <RequiresTutorialRoute path="/login" component={Login} />
+            <RequiresTutorialRoute path="/support" component={Support} />
+            <RequiresTutorialRoute path="/signup" component={Signup} />
+            <RequiresTutorialRoute path="/" component={AppStack} />
+          </Switch>
         </IonApp>
       </div>
     </Router>
