@@ -33,7 +33,7 @@ class PRoute extends Component<Props> {
 class RTRoute extends Component<Props> {
   render() {
     if (this.props.user.hasSeenTutorial) {
-      return <Route />;
+      return <Route {...this.props}/>;
     }
     return (
       <Tutorial />

@@ -15,7 +15,7 @@ export default class Support extends Component {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent class="page-user">
+        <IonContent className="page-user">
           <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>

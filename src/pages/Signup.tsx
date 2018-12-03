@@ -22,7 +22,7 @@ export default class Signup extends Component<{},State> {
   render() {
     return (
       <>
-        <IonHeader key={1}>
+        <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
@@ -31,7 +31,7 @@ export default class Signup extends Component<{},State> {
           </IonToolbar>
         </IonHeader>,
 
-        <IonContent class="page-user" key={2}>
+        <IonContent className="page-user">
           <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>

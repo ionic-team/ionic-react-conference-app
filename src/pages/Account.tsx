@@ -26,9 +26,12 @@ class Account extends Component<Props> {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent class="outer-content page-account">
+        <IonContent className="outer-content page-account">
           <div>
-            <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"/>
+            <img style={{
+              maxWidth: '140px',
+              borderRadius: '50%'
+            }} src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"/>
             <h2>{this.props.user.userName}</h2>
 
             <IonList inset>

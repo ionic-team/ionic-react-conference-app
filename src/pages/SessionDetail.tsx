@@ -5,6 +5,7 @@ import { Session } from '../store/sessions/types';
 import { Speaker } from '../store/speakers/types';
 import formatTime from '../utils/formatTime';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '../ionic';
+import './SessionDetail.css';
 
 type Props = {
   sessions: Session[];

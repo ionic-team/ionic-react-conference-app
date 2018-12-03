@@ -21,7 +21,7 @@ const MapPage = ({ locations, mapCenter }: Props) => (
       </IonToolbar>
     </IonHeader>
 
-    <IonContent class="map-page">
+    <IonContent className="map-page">
       <Map locations={locations} mapCenter={mapCenter} />
     </IonContent>
   </>

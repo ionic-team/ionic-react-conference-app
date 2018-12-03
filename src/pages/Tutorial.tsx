@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { actions } from '../store';
 import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import './Tutorial.css';
 
 interface Props extends RouteComponentProps<any> {
   sawTutorial: () => any
@@ -18,6 +19,8 @@ class Tutorial extends Component<Props, State> {
     this.state = {
       showSkip: false
     }
+    this.onSlideChangeStart = this.onSlideChangeStart.bind(this);
+    this.endTutorial = this.endTutorial.bind(this);
   }
 
   onSlideChangeStart() {
@@ -36,8 +39,8 @@ class Tutorial extends Component<Props, State> {
 
   render() {
     return (
-      <IonPage>
-        <IonHeader no-border>
+      <div className="ion-page tutorial-page">
+        <IonHeader>
           <IonToolbar>
             { this.state.showSkip ?
               <IonButtons slot="end">
@@ -86,15 +89,15 @@ class Tutorial extends Component<Props, State> {
               <h2 className="slide-title">
                 Ready to Play?
               </h2>
-              <IonButton icon-end onClick={this.endTutorial}>
+              <IonButton fill="clear" onClick={this.endTutorial}>
                 Continue
-                <IonIcon name="arrow-forward"></IonIcon>
+                <IonIcon slot="end" name="arrow-forward"></IonIcon>
               </IonButton>
             </IonSlide>
 
           </IonSlides>
         </IonContent>
-      </IonPage>
+      </div>
     );
   }
 };

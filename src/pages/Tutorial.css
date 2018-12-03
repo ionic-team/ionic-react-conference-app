@@ -1,0 +1,27 @@
+ion-toolbar {
+  --background: transparent;
+  --border-color: transparent;
+}
+.swiper-slide {
+  display: block;
+}
+.slide-title {
+  margin-top: 2.8rem;
+}
+.slide-image {
+  max-height: 50%;
+  max-width: 60%;
+  margin: 36px 0;
+}
+.tutorial-page b {
+  font-weight: 500;
+}
+.tutorial-page p {
+  padding: 0 40px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #60646B;
+}
+.tutorial-page p b {
+  color: #000000;
+}

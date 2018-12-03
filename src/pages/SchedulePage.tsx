@@ -4,6 +4,7 @@ import { RootState, selectors, actions } from '../store';
 import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton } from '../ionic';
+import './SchedulePage.css';
 
 type Props = {
   allFiltered: Session[],
@@ -20,6 +21,16 @@ type State = {
 }
 
 class SchedulePage extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      segment: 'all'
+    }
+    this.presentFilter = this.presentFilter.bind(this);
+    this.doRefresh = this.doRefresh.bind(this);
+    this.openSocial = this.openSocial.bind(this);
+    this.updateSegment = this.updateSegment.bind(this);
+  }
 
   presentFilter() {}
   doRefresh() {}
@@ -29,7 +40,7 @@ class SchedulePage extends Component<Props, State> {
   render() {
     return (
       <>
-        <IonHeader md-height="96px" ios-height="96px" key={1}>
+        <IonHeader>
           <IonToolbar no-border-bottom>
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
@@ -62,7 +73,7 @@ class SchedulePage extends Component<Props, State> {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent class="page-schedule">
+        <IonContent className="page-schedule">
           <IonRefresher onIonRefresh={() => this.doRefresh()}>
             <IonRefresherContent></IonRefresherContent>
           </IonRefresher>

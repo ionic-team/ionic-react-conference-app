@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '../ionic'
 import { Speaker } from '../store/speakers/types';
+import './SpeakerDetail.css';
 
 interface Props {
   nav: any;
@@ -27,7 +28,7 @@ export default ({ nav, params, speakers }: Props) => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent padding class="speaker-detail speaker-page-list">
+      <IonContent padding className="speaker-detail speaker-page-list">
         <div>
           <img src={speaker.profilePic} alt={speaker.name}/>
           <br/>

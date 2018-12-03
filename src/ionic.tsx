@@ -1,19 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Components } from '@ionic/core';
+import { IonicConfig, Components } from '@ionic/core';
 import { Components as IoniconsComponents } from 'ionicons';
+import { defineCustomElements } from '@ionic/core/loader';
 
-const dashToPascalCase = (str: string) => {
-  str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
+export interface IonicGlobal {
+  config?: any;
+  ael?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
+  raf?: (ts: number) => void;
+  rel?: (elm: any, eventName: string, cb: (ev: Event) => void, opts: any) => void;
+}
+
+export interface IonicWindow extends Window {
+  Ionic: IonicGlobal;
+}
+
+const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
+
+function registerIonic(config: IonicConfig = {}) {
+  const win: IonicWindow = window as any;
+  const Ionic = (win.Ionic = win.Ionic || {});
+
+  Ionic.config = config;
+  defineCustomElements(window);
 }
 
 function createReactComponent<T>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
 
-  return class ReactComponent extends React.Component<T> {
+  interface IonicReactBaseProps {
+    className?: string;
+  }
+
+  return class ReactComponent extends React.Component<T & IonicReactBaseProps> {
+    constructor(props: T & IonicReactBaseProps) {
+      super(props);
+    }
+
     static get displayName() {
       return displayName;
     }
+
     componentDidMount() {
       this.componentWillReceiveProps(this.props);
     }
@@ -44,12 +71,14 @@ function createReactComponent<T>(tagName: string) {
   }
 }
 
+registerIonic();
+
 export const IonIcon = createReactComponent<IoniconsComponents.IonIconAttributes>('ion-icon');
 export const IonApp = createReactComponent<Components.IonAppAttributes>('ion-app');
 export const IonPage = createReactComponent<{}>('ion-page');
 export const IonMenu = createReactComponent<Components.IonMenuAttributes>('ion-menu');
-export const IonHeader = createReactComponent<Components.IonHeaderAttributes>('IonHeader');
-export const IonTitle = createReactComponent<Components.IonTitleAttributes>('IonHeader');
+export const IonHeader = createReactComponent<Components.IonHeaderAttributes>('ion-header');
+export const IonTitle = createReactComponent<Components.IonTitleAttributes>('ion-title');
 export const IonNav = createReactComponent<Components.IonNavAttributes>('ion-nav');
 export const IonToolbar = createReactComponent<Components.IonToolbarAttributes>('ion-toolbar');
 export const IonButtons = createReactComponent<Components.IonButtonsAttributes>('ion-buttons');
@@ -91,3 +120,5 @@ export const IonTabBar = createReactComponent<Components.IonTabBarAttributes>('i
 export const IonTabButton = createReactComponent<Components.IonTabButtonAttributes>('ion-tab-button');
 export const IonSlides = createReactComponent<Components.IonSlidesAttributes>('ion-slides');
 export const IonSlide = createReactComponent<Components.IonSlideAttributes>('ion-slide');
+export const IonSplitPane = createReactComponent<Components.IonSplitPaneAttributes>('ion-split-pane');
+export const IonMenuToggle = createReactComponent<Components.IonMenuToggleAttributes>('ion-menu-toggle');

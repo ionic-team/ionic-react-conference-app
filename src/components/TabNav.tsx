@@ -34,7 +34,7 @@ const TabNav: React.SFC<Props> = ({ childViews, urlMatchHandler, childViewProps,
               aria-selected={urlMatchHandler(childView.basePath) ? 'true' : 'false'}
               onClick={onClickHandler(path)}
             >
-              <IonIcon class="tab-button-icon" name={childView.icon}></IonIcon>
+              <IonIcon className="tab-button-icon" name={childView.icon}></IonIcon>
               <span className="tab-button-text">{childView.title}</span>
               <div className="button-effect"></div>
             </a>
