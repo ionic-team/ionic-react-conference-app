@@ -9,10 +9,9 @@ import { Session } from '../store/sessions/types';
 interface ItemProps {
   speaker: Speaker;
   speakerSessions: Session[];
-  nav: any;
 }
 
-const SpeakerItem = ({speaker, speakerSessions, nav}: ItemProps) => {
+const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
   function openSpeakerShare(speaker: Speaker) {}
   function openContact(speaker: Speaker) {}
 
@@ -22,7 +21,7 @@ const SpeakerItem = ({speaker, speakerSessions, nav}: ItemProps) => {
         <IonItem
           detail-none
           href="#"
-          onClick={() => nav.push('speakers', { id: speaker.id })}
+          onClick={() => console.log('speakers', { id: speaker.id })}
         >
           <IonAvatar slot="start">
             <img src={speaker.profilePic} alt="Speaker profile pic"/>
@@ -37,12 +36,12 @@ const SpeakerItem = ({speaker, speakerSessions, nav}: ItemProps) => {
             <IonItem
               href="#"
               key={session.name}
-              onClick={() => nav.push('sessions', { id: session.id })}
+              onClick={() => console.log('sessions', { id: session.id })}
             >
               <h3>{session.name}</h3>
             </IonItem>
           ))}
-          <IonItem href="#" onClick={() => nav.push('speakers', { id: speaker.id })}>
+          <IonItem href="#" onClick={() => console.log('speakers', { id: speaker.id })}>
             <h3>About {speaker.name}</h3>
           </IonItem>
         </IonList>
@@ -80,11 +79,9 @@ const SpeakerItem = ({speaker, speakerSessions, nav}: ItemProps) => {
 type ListProps = {
   speakers: Speaker[],
   sessions: Session[],
-  nav: any;
-  params: any;
 }
 
-const SpeakerList = ({ speakers, sessions, nav, params }: ListProps) => (
+const SpeakerList = ({ speakers, sessions }: ListProps) => (
   <>
     <IonHeader>
       <IonToolbar>
@@ -102,10 +99,13 @@ const SpeakerList = ({ speakers, sessions, nav, params }: ListProps) => (
         <IonGrid fixed>
           <IonRow align-items-stretch>
             <IonCol col-12 col-md-6 align-self-stretch align-self-center>
-              { speakers.map((speaker) => {
-                const speakerSessions = sessions.filter(session => session.speakerIds.indexOf(speaker.id) !== -1);
-                return <SpeakerItem key={speaker.id} nav={nav} speaker={speaker} speakerSessions={speakerSessions} />;
-              }) }
+              { speakers.map((speaker) =>
+                <SpeakerItem
+                  key={speaker.id}
+                  speaker={speaker}
+                  speakerSessions={sessions.filter(session => session.speakerIds.indexOf(speaker.id) !== -1)}
+                />
+              ) }
             </IonCol>
           </IonRow>
         </IonGrid>

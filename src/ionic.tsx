@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IonicConfig, Components } from '@ionic/core';
 import { Components as IoniconsComponents } from 'ionicons';
+//import '@ionic/core/dist/ionic/svg';
+import '@ionic/core/dist/ionic/svg/ios-arrow-forward.svg';
 import { defineCustomElements } from '@ionic/core/loader';
 
 export interface IonicGlobal {

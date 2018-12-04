@@ -1,14 +1,14 @@
-ion-toolbar {
+.tutorial-page ion-toolbar {
   --background: transparent;
   --border-color: transparent;
 }
-.swiper-slide {
+.tutorial-page .swiper-slide {
   display: block;
 }
-.slide-title {
+.tutorial-page .slide-title {
   margin-top: 2.8rem;
 }
-.slide-image {
+.tutorial-page .slide-image {
   max-height: 50%;
   max-width: 60%;
   margin: 36px 0;

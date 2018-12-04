@@ -11,7 +11,6 @@ interface Props {
   removeFavoriteSession: typeof removeFavorite;
   filterFavorites: boolean;
   hidden: boolean;
-  nav: any;
 }
 
 function groupedByStartTime(sessions: Session[]) {
@@ -37,7 +36,7 @@ function groupedByStartTime(sessions: Session[]) {
   }, [] as SessionGroup[]);
 }
 
-const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, hidden, nav }) => {
+const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, hidden }) => {
   if (sessions.length === 0) {
     return (
       <IonList style={hidden ? {display: 'none'} : {}}>
@@ -61,7 +60,7 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
           </IonItemDivider>
           { group.sessions.map((session: Session, sessionIndex: number) => (
             <IonItemSliding key={`group-${index}-${sessionIndex}`}>
-              <IonItem href={`/sessions/${session.id}`} onClick={() => nav.push('sessions', { id: session.id })}>
+              <IonItem href={`/sessions/${session.id}`} onClick={() => console.log('sessions', { id: session.id })}>
                 <IonLabel>
                   <h3>{session.name}</h3>
                   <p>

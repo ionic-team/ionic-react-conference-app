@@ -3,7 +3,7 @@ import SchedulePage from './SchedulePage';
 import SessionDetail from './SessionDetail';
 import SpeakerList from './SpeakerList';
 import SpeakerDetail from './SpeakerDetail';
-import MapPage from './Map';
+import Map from './Map';
 import About from './About';
 import StackNav from '../components/StackNav';
 import { IonPage, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonLabel } from '../ionic';
@@ -60,7 +60,7 @@ const MapStack: React.SFC<any> = (props) => (
         name: 'map',
         title: 'Map',
         path: '',
-        getView: () => (MapPage)
+        getView: () => (Map)
       }
     ]}
   ></StackNav>
@@ -110,7 +110,7 @@ class AppStack extends Component<RouteComponentProps> {
       <div className="ion-page">
         <IonTabs>
           <IonTab tab="schedule">
-            <SchedulePage nav=""/>
+            <SchedulePage/>
            {/**
             <ScheduleStack
               onPageChange={this.onPageChange}
@@ -119,6 +119,7 @@ class AppStack extends Component<RouteComponentProps> {
            */}
           </IonTab>
           <IonTab tab="speakers">
+            <SpeakerList/>
            {/**
             <SpeakerStack
               onPageChange={this.onPageChange}
@@ -127,6 +128,7 @@ class AppStack extends Component<RouteComponentProps> {
            */}
           </IonTab>
           <IonTab tab="map">
+            <Map/>
            {/**
             <MapStack
               onPageChange={this.onPageChange}
@@ -135,6 +137,7 @@ class AppStack extends Component<RouteComponentProps> {
            */}
           </IonTab>
           <IonTab tab="about">
+            <About/>
            {/**
             <AboutStack
               onPageChange={this.onPageChange}

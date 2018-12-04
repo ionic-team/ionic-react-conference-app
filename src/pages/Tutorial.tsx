@@ -41,7 +41,7 @@ class Tutorial extends Component<Props, State> {
     return (
       <div className="ion-page tutorial-page">
         <IonHeader>
-          <IonToolbar>
+          <IonToolbar no-border>
             { this.state.showSkip ?
               <IonButtons slot="end">
                 <IonButton onClick={this.endTutorial} color="primary">Skip</IonButton>
@@ -50,7 +50,7 @@ class Tutorial extends Component<Props, State> {
           </IonToolbar>
         </IonHeader>
         <IonContent no-bounce>
-          <IonSlides onIonSlideWillChange={this.onSlideChangeStart} pager>
+          <IonSlides onIonSlideWillChange={this.onSlideChangeStart} pager={false}>
 
             <IonSlide>
               <img alt="welcome" src="/assets/img/ica-slidebox-img-1.png" className="slide-image"/>
@@ -79,9 +79,11 @@ class Tutorial extends Component<Props, State> {
               <h2 className="slide-title">
                 What is Ionic Platform?
               </h2>
-              <p>The <b>Ionic Platform</b> is a cloud platform for managing and scaling Ionic
-              apps with integrated services like push notifications, native builds,
-              user auth, and live updating.</p>
+              <p>
+                The <b>Ionic Platform</b> is a cloud platform for managing and scaling Ionic
+                apps with integrated services like push notifications, native builds,
+                user auth, and live updating.
+              </p>
             </IonSlide>
 
             <IonSlide>

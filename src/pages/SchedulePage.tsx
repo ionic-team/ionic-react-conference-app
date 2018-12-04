@@ -13,7 +13,6 @@ type Props = {
   setSearchText: (searchText: string) => any,
   addFavorite: (sessionId: number) => any,
   removeFavorite: (sessionId: number) => any,
-  nav: any
 }
 
 type State = {
@@ -35,29 +34,31 @@ class SchedulePage extends Component<Props, State> {
   presentFilter() {}
   doRefresh() {}
   openSocial(socialName: string) {}
-  updateSegment(segment?: string | null) {}
+  updateSegment(e: CustomEvent) {}
 
   render() {
+    console.log(this.props.allFiltered);
     return (
       <div className="ion-page">
         <IonHeader>
-          <IonToolbar no-border-bottom>
+          <IonToolbar color="primary" no-border-bottom>
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
             </IonButtons>
+
             <IonSegment
-              onIonChange={(e) => this.updateSegment(e.detail.value)}
+              onIonChange={this.updateSegment}
             >
               <IonSegmentButton value="all" checked={this.state.segment === 'all'}>
                 All
               </IonSegmentButton>
-              <IonSegmentButton value="favorites">
+              <IonSegmentButton value="favorites" checked={this.state.segment === 'favorites'}>
                 Favorites
               </IonSegmentButton>
             </IonSegment>
 
             <IonButtons slot="end">
-              <IonButton icon-only onClick={() => this.presentFilter()}>
+              <IonButton icon-only onClick={this.presentFilter}>
                 <IonIcon slot="icon-only" name="options"></IonIcon>
               </IonButton>
             </IonButtons>
@@ -67,19 +68,18 @@ class SchedulePage extends Component<Props, State> {
             <IonSearchbar
               color="primary"
               placeholder="Search"
-              onIonInput={(e: CustomEvent) => this.props.setSearchText(e.detail.value)}
+              onIonChange={(e: CustomEvent) => this.props.setSearchText(e.detail.value)}
             >
             </IonSearchbar>
           </IonToolbar>
         </IonHeader>
 
-        <IonContent className="page-schedule">
-          <IonRefresher onIonRefresh={() => this.doRefresh()}>
+        <IonContent>
+          <IonRefresher onIonRefresh={this.doRefresh}>
             <IonRefresherContent></IonRefresherContent>
           </IonRefresher>
 
           <SessionList
-            nav={this.props.nav}
             sessions={this.props.allFiltered}
             addFavoriteSession={this.props.addFavorite}
             removeFavoriteSession={this.props.removeFavorite}
@@ -87,7 +87,6 @@ class SchedulePage extends Component<Props, State> {
             filterFavorites={true}
           />
           <SessionList
-            nav={this.props.nav}
             sessions={this.props.favoritesFiltered}
             addFavoriteSession={this.props.addFavorite}
             removeFavoriteSession={this.props.removeFavorite}
@@ -96,7 +95,7 @@ class SchedulePage extends Component<Props, State> {
           />
         </IonContent>
 
-        <IonFab>
+        <IonFab slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>
             <IonIcon name="share"></IonIcon>
           </IonFabButton>
