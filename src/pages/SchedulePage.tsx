@@ -13,7 +13,9 @@ type Props = {
   setSearchText: (searchText: string) => void,
   addFavorite: (sessionId: number) => void,
   removeFavorite: (sessionId: number) => void,
+  updateLocations: () => void
   updateSessions: () => void
+  updateSpeakers: () => void
 }
 
 type State = {
@@ -31,7 +33,9 @@ class SchedulePage extends Component<Props, State> {
     this.openSocial = this.openSocial.bind(this);
     this.updateSegment = this.updateSegment.bind(this);
 
+    props.updateLocations();
     props.updateSessions();
+    props.updateSpeakers();
   }
 
   presentFilter() {}
@@ -40,7 +44,6 @@ class SchedulePage extends Component<Props, State> {
   updateSegment(e: CustomEvent) {}
 
   render() {
-    console.log(this.props.allFiltered);
     return (
       <div className="ion-page">
         <IonHeader>
@@ -132,5 +135,7 @@ export default connect(mapStateToProps, {
   setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
   addFavorite: (sessionId: number) => actions.sessions.addFavorite(sessionId),
   removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId),
-  updateSessions: () => actions.sessions.updateSessions()
+  updateLocations: () => actions.locations.updateLocations(),
+  updateSessions: () => actions.sessions.updateSessions(),
+  updateSpeakers: () => actions.speakers.updateSpeakers()
 })(SchedulePage);
