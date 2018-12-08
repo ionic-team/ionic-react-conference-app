@@ -6,15 +6,16 @@ import { Middleware } from 'redux';
 export const fetchLocationsMiddleware: Middleware<{}, LocationState> = ({ getState }) => next => async (action: ActionType<typeof locations>) => {
   next(action);
 
-  if (action.type == getType(locations.updateLocations)) {
-    next(locations.fetchLocations.request());
+  if (action.type != getType(locations.updateLocations)) {
+    return;
+  }
 
-    try {
-      const response = await fetch('/data/sessions.json');
-      const sessionList: Location[] = await response.json();
-      next(locations.fetchLocations.success(sessionList));
-    } catch (e) {
-      next(locations.fetchLocations.failure(e));
-    }
-  };
+  next(locations.fetchLocations.request());
+  try {
+    const response = await fetch('/data/sessions.json');
+    const sessionList: Location[] = await response.json();
+    next(locations.fetchLocations.success(sessionList));
+  } catch (e) {
+    next(locations.fetchLocations.failure(e));
+  }
 };
