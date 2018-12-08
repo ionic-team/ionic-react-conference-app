@@ -1,14 +1,13 @@
 import React from 'react';
 import { Session, SessionGroup } from '../store/sessions/types';
-import { addFavorite, removeFavorite} from '../store/sessions/actions';
 import formatTime from '../utils/formatTime';
 import { parse as parseDate } from 'date-fns';
 import { IonList, IonListHeader, IonItemGroup, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption } from '../ionic';
 
 interface Props {
   sessions: Session[]
-  addFavoriteSession: typeof addFavorite;
-  removeFavoriteSession: typeof removeFavorite;
+  addFavoriteSession: (sessionId: number) => void;
+  removeFavoriteSession: (sessionId: number) => void;
   filterFavorites: boolean;
   hidden: boolean;
 }

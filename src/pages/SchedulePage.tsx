@@ -10,9 +10,10 @@ type Props = {
   allFiltered: Session[],
   favoritesFiltered: Session[],
   searchText: string,
-  setSearchText: (searchText: string) => any,
-  addFavorite: (sessionId: number) => any,
-  removeFavorite: (sessionId: number) => any,
+  setSearchText: (searchText: string) => void,
+  addFavorite: (sessionId: number) => void,
+  removeFavorite: (sessionId: number) => void,
+  updateSessions: () => void
 }
 
 type State = {
@@ -29,6 +30,8 @@ class SchedulePage extends Component<Props, State> {
     this.doRefresh = this.doRefresh.bind(this);
     this.openSocial = this.openSocial.bind(this);
     this.updateSegment = this.updateSegment.bind(this);
+
+    props.updateSessions();
   }
 
   presentFilter() {}
@@ -128,5 +131,6 @@ const mapStateToProps = (state: RootState) => ({
 export default connect(mapStateToProps, {
   setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
   addFavorite: (sessionId: number) => actions.sessions.addFavorite(sessionId),
-  removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId)
+  removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId),
+  updateSessions: () => actions.sessions.updateSessions()
 })(SchedulePage);

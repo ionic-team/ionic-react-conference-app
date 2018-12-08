@@ -7,6 +7,10 @@ export const fetchSessions = createAsyncAction(
   'sessions/FETCH_FAILURE'
 )<void, Session[], Error>();
 
+export const updateSessions = createAction('sessions/UPDATE_SESSIONS', resolve =>
+  () => resolve()
+);
+
 export const setSearchText = createAction('sessions/SET_SEARCH_TEXT', resolve =>
   (searchText: string) => resolve(searchText)
 );

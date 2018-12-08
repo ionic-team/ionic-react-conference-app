@@ -9,9 +9,7 @@ const defaultState: SessionState = {
   favoriteSessions: []
 }
 
-export type SessionAction = ActionType<typeof sessions>;
-
-export default (state = defaultState, action: SessionAction): SessionState => {
+export default (state = defaultState, action: ActionType<typeof sessions>): SessionState => {
   switch (action.type) {
   case getType(sessions.setSearchText):
     return {
