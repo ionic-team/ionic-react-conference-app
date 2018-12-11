@@ -58,7 +58,7 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
           </IonItemDivider>
           { group.sessions.map((session: Session, sessionIndex: number) => (
             <IonItemSliding key={`group-${index}-${sessionIndex}`} className={'track-' + session.tracks[0].toLowerCase()}>
-              <IonItem button href={`/sessions/${session.id}`} onClick={() => console.log('sessions', { id: session.id })}>
+              <IonItem button onClick={() => console.log('sessions', { id: session.id })}>
                 <IonLabel>
                   <h3>{session.name}</h3>
                   <p>
