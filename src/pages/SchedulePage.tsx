@@ -41,7 +41,13 @@ class SchedulePage extends Component<Props, State> {
   presentFilter() {}
   doRefresh() {}
   openSocial(socialName: string) {}
-  updateSegment(e: CustomEvent) {}
+
+  updateSegment(e: CustomEvent) {
+    this.setState((prevState) => ({
+      ...prevState,
+      segment: e.detail.value
+    }));
+  }
 
   render() {
     return (

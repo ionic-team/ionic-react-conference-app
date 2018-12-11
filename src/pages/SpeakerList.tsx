@@ -19,7 +19,8 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
     <IonCard className="speaker-card">
       <IonCardHeader>
         <IonItem
-          detail-none
+          button
+          detail={false}
           href="#"
           onClick={() => console.log('speakers', { id: speaker.id })}
         >
@@ -41,37 +42,34 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
               <h3>{session.name}</h3>
             </IonItem>
           ))}
-          <IonItem href="#" onClick={() => console.log('speakers', { id: speaker.id })}>
+          <IonItem button href="#" onClick={() => console.log('speakers', { id: speaker.id })}>
             <h3>About {speaker.name}</h3>
           </IonItem>
         </IonList>
       </IonCardContent>
 
-      <IonGrid>
-        <IonRow no-padding>
-          <IonCol col-12 col-lg-auto text-center text-lg-left>
-            <IonButton
-              color="primary"
-              onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
-            >
-              <IonIcon slot="start" name="logo-twitter"></IonIcon>
-              Tweet
-            </IonButton>
-          </IonCol>
-          <IonCol col-12 col-lg-auto text-center>
-            <IonButton color="primary" onClick={() => openSpeakerShare(speaker)}>
-              <IonIcon slot="start" name='share-alt'></IonIcon>
-              Share
-            </IonButton>
-          </IonCol>
-          <IonCol col-12 col-lg-auto text-center text-lg-right>
-            <IonButton color="primary" onClick={() => openContact(speaker)}>
-              <IonIcon slot="start" name='chatboxes'></IonIcon>
-              Contact
-            </IonButton>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
+      <IonRow no-padding justify-content-center>
+        <IonCol text-left size="4">
+          <IonButton fill="clear" size="small" color="primary"
+            onClick={() => window.open(`https://www.twitter.com/${speaker.twitter}`, '_blank')}
+          >
+            <IonIcon slot="start" name="logo-twitter"></IonIcon>
+            Tweet
+          </IonButton>
+        </IonCol>
+        <IonCol text-left size="4">
+          <IonButton fill="clear" size="small" color="primary" onClick={() => openSpeakerShare(speaker)}>
+            <IonIcon slot="start" name='share-alt'></IonIcon>
+            Share
+          </IonButton>
+        </IonCol>
+        <IonCol text-left size="4">
+          <IonButton fill="clear" size="small" color="primary" onClick={() => openContact(speaker)}>
+            <IonIcon slot="start" name='chatboxes'></IonIcon>
+            Contact
+          </IonButton>
+        </IonCol>
+      </IonRow>
     </IonCard>
   );
 };
@@ -84,7 +82,7 @@ type ListProps = {
 const SpeakerList = ({ speakers, sessions }: ListProps) => (
   <>
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar color="primary">
         <IonButtons slot="start">
           <IonButton>
             <IonIcon slot="icon-only" name="menu"></IonIcon>
@@ -98,7 +96,7 @@ const SpeakerList = ({ speakers, sessions }: ListProps) => (
       <IonList>
         <IonGrid fixed>
           <IonRow align-items-stretch>
-            <IonCol col-12 col-md-6 align-self-stretch align-self-center>
+            <IonCol size="12" size-md="6">
               { speakers.map((speaker) =>
                 <SpeakerItem
                   key={speaker.id}

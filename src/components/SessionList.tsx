@@ -1,7 +1,6 @@
 import React from 'react';
 import { Session, SessionGroup } from '../store/sessions/types';
-import formatTime from '../utils/formatTime';
-import { parse as parseDate } from 'date-fns';
+import { format, parse as parseDate } from 'date-fns';
 import { IonList, IonListHeader, IonItemGroup, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption } from '../ionic';
 
 interface Props {
@@ -54,17 +53,17 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
         <IonItemGroup key={`group-${index}`}>
           <IonItemDivider>
             <IonLabel>
-              {formatTime(group.startTime, "h:MM tt")}
+              {format(parseDate(group.startTime), "h:MM a")}
             </IonLabel>
           </IonItemDivider>
           { group.sessions.map((session: Session, sessionIndex: number) => (
-            <IonItemSliding key={`group-${index}-${sessionIndex}`}>
-              <IonItem href={`/sessions/${session.id}`} onClick={() => console.log('sessions', { id: session.id })}>
+            <IonItemSliding key={`group-${index}-${sessionIndex}`} className={'track-' + session.tracks[0].toLowerCase()}>
+              <IonItem button href={`/sessions/${session.id}`} onClick={() => console.log('sessions', { id: session.id })}>
                 <IonLabel>
                   <h3>{session.name}</h3>
                   <p>
-                    {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;&nbsp;
-                    {formatTime(session.dateTimeEnd, "h:MM tt")}:&nbsp;
+                    {format(session.dateTimeStart, "h:MM a")} &mdash;&nbsp;
+                    {format(session.dateTimeEnd, "h:MM a")}:&nbsp;
                     {session.location}
                   </p>
                 </IonLabel>

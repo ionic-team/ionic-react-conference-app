@@ -30,10 +30,10 @@ class About extends Component<Props, {}> {
         <div className="about-header">
           <img src="assets/img/ionic-logo-white.svg" alt="ionic logo" />
         </div>
-        <div className="about-info">
+        <div className="ion-padding about-info">
           <h4>Ionic Conference</h4>
 
-          <IonList no-lines>
+          <IonList lines="none">
             <IonItem>
               <IonIcon name="calendar" slot="start"></IonIcon>
               <IonLabel>Date</IonLabel>
