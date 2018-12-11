@@ -10,7 +10,7 @@ type Props = {
   mapCenter: Location
 }
 
-const MapPage = ({ locations, mapCenter }: Props) => (
+const MapPage: React.SFC<Props> = ({ locations, mapCenter }) => (
   <>
     <IonHeader>
       <IonToolbar>
