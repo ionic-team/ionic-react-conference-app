@@ -53,14 +53,12 @@ class SchedulePage extends Component<Props, State> {
     return (
       <div className="ion-page">
         <IonHeader>
-          <IonToolbar color="primary" no-border-bottom>
+          <IonToolbar color="primary">
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
             </IonButtons>
 
-            <IonSegment
-              onIonChange={this.updateSegment}
-            >
+            <IonSegment onIonChange={this.updateSegment}>
               <IonSegmentButton value="all" checked={this.state.segment === 'all'}>
                 All
               </IonSegmentButton>
@@ -70,15 +68,14 @@ class SchedulePage extends Component<Props, State> {
             </IonSegment>
 
             <IonButtons slot="end">
-              <IonButton icon-only onClick={this.presentFilter}>
+              <IonButton onClick={this.presentFilter}>
                 <IonIcon slot="icon-only" name="options"></IonIcon>
               </IonButton>
             </IonButtons>
           </IonToolbar>
 
-          <IonToolbar no-border-top>
+          <IonToolbar color="primary">
             <IonSearchbar
-              color="primary"
               placeholder="Search"
               onIonChange={(e: CustomEvent) => this.props.setSearchText(e.detail.value)}
             >

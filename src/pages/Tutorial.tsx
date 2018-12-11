@@ -40,8 +40,8 @@ class Tutorial extends Component<Props, State> {
   render() {
     return (
       <div className="ion-page tutorial-page">
-        <IonHeader>
-          <IonToolbar no-border>
+        <IonHeader no-border>
+          <IonToolbar>
             { this.state.showSkip ?
               <IonButtons slot="end">
                 <IonButton onClick={this.endTutorial} color="primary">Skip</IonButton>

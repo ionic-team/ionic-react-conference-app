@@ -17,6 +17,24 @@ export interface IonicWindow extends Window {
   Ionic: IonicGlobal;
 }
 
+function syncEvent(node: Element, eventName: string, newEventHandler: () => any) {
+  const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
+  const eventStore = (node as any).__events || ((node as any).__events = {});
+  const oldEventHandler = eventStore[eventNameLc];
+
+  // Remove old listener so they don't double up.
+  if (oldEventHandler) {
+    node.removeEventListener(eventNameLc, oldEventHandler);
+  }
+
+  // Bind new listener.
+  if (newEventHandler) {
+    node.addEventListener(eventNameLc, eventStore[eventNameLc] = function handler(e: Event) {
+      newEventHandler.call(this, e);
+    });
+  }
+}
+
 const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
 
 function registerIonic(config: IonicConfig = {}) {
@@ -47,9 +65,9 @@ function createReactComponent<T>(tagName: string) {
       this.componentWillReceiveProps(this.props);
     }
     componentWillReceiveProps(props: any) {
-      const node = ReactDOM.findDOMNode(this);
+      const node = ReactDOM.findDOMNode(this) as Element | null
 
-      if (node === null) {
+      if (node == null) {
         return;
       }
 
@@ -59,8 +77,7 @@ function createReactComponent<T>(tagName: string) {
         }
 
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
-
-          // syncEvent(node, name.substring(2), props[name]);
+          syncEvent(node, name.substring(2), props[name]);
         } else {
           (node as any)[name] = props[name];
         }
