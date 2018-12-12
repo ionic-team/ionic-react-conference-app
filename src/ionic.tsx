@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IonicConfig, Components } from '@ionic/core';
 import { Components as IoniconsComponents } from 'ionicons';
-// import '@ionic/core/dist/ionic/svg';
+import { IonicConfig, Components } from '@ionic/core';
 import { defineCustomElements } from '@ionic/core/loader';
 
 export interface IonicGlobal {
@@ -44,6 +43,7 @@ function registerIonic(config: IonicConfig = {}) {
   Ionic.config = config;
   defineCustomElements(window);
 }
+
 
 function createReactComponent<T>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
