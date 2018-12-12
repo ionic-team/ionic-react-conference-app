@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IonicConfig, Components } from '@ionic/core';
 import { Components as IoniconsComponents } from 'ionicons';
-//import '@ionic/core/dist/ionic/svg';
-import '@ionic/core/dist/ionic/svg/ios-arrow-forward.svg';
+// import '@ionic/core/dist/ionic/svg';
 import { defineCustomElements } from '@ionic/core/loader';
 
 export interface IonicGlobal {
@@ -38,6 +37,7 @@ function syncEvent(node: Element, eventName: string, newEventHandler: () => any)
 const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
 
 function registerIonic(config: IonicConfig = {}) {
+  console.log(process.env.PUBLIC_URL);
   const win: IonicWindow = window as any;
   const Ionic = (win.Ionic = win.Ionic || {});
 

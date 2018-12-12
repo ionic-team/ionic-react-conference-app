@@ -51,7 +51,7 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
     <IonList style={hidden ? {display: 'none'} : {}}>
       { groups.map((group, index: number) => (
         <IonItemGroup key={`group-${index}`}>
-          <IonItemDivider class="ion-sticky">
+          <IonItemDivider sticky>
             <IonLabel>
               {format(parseDate(group.startTime), "h:MM a")}
             </IonLabel>

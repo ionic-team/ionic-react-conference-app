@@ -5,6 +5,7 @@ import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton } from '../ionic';
 import './SchedulePage.css';
+import optionsSvg from '@ionic/core/dist/ionic/svg/ios-options.svg';
 
 type Props = {
   allFiltered: Session[],
@@ -69,7 +70,7 @@ class SchedulePage extends Component<Props, State> {
 
             <IonButtons slot="end">
               <IonButton onClick={this.presentFilter}>
-                <IonIcon slot="icon-only" name="options"></IonIcon>
+                <IonIcon src={optionsSvg} slot="icon-only"></IonIcon>
               </IonButton>
             </IonButtons>
           </IonToolbar>
