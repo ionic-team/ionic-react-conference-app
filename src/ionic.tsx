@@ -15,7 +15,7 @@ export interface IonicWindow extends Window {
   Ionic: IonicGlobal;
 }
 
-function syncEvent(node: Element, eventName: string, newEventHandler: () => any) {
+function syncEvent(node: Element, eventName: string, newEventHandler: (e: Event) => any) {
   const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
   const eventStore = (node as any).__events || ((node as any).__events = {});
   const oldEventHandler = eventStore[eventNameLc];

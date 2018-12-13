@@ -45,7 +45,7 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
   }
 
   return (
-    <IonMenu>
+    <IonMenu contentId="main">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Menu</IonTitle>
