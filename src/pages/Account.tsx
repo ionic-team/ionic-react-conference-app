@@ -26,7 +26,7 @@ class Account extends Component<Props> {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent className="outer-content page-account">
+        <IonContent class="outer-content page-account">
           <div>
             <img style={{
               maxWidth: '140px',

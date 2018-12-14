@@ -28,7 +28,7 @@ export default ({ nav, params, speakers }: Props) => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent padding className="speaker-detail speaker-page-list">
+      <IonContent padding class="speaker-detail speaker-page-list">
         <div>
           <img src={speaker.profilePic} alt={speaker.name}/>
           <br/>

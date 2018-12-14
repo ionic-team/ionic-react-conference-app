@@ -16,7 +16,7 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
   function openContact(speaker: Speaker) {}
 
   return (
-    <IonCard className="speaker-card">
+    <IonCard class="speaker-card">
       <IonCardHeader>
         <IonItem
           button
@@ -31,7 +31,7 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
         </IonItem>
       </IonCardHeader>
 
-      <IonCardContent className="outer-content">
+      <IonCardContent class="outer-content">
         <IonList>
           { speakerSessions.map(session => (
             <IonItem
@@ -92,7 +92,7 @@ const SpeakerList = ({ speakers, sessions }: ListProps) => (
       </IonToolbar>
     </IonHeader>
 
-    <IonContent className="outer-content speaker-list">
+    <IonContent class="outer-content speaker-list">
       <IonList>
         <IonGrid fixed>
           <IonRow align-items-stretch>

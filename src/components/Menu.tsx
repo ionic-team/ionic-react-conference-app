@@ -51,7 +51,7 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
           <IonTitle>Menu</IonTitle>
         </IonToolbar>
       </IonHeader>,
-      <IonContent className="outer-content">
+      <IonContent class="outer-content">
         <IonList>
           <IonListHeader>
             Navigate

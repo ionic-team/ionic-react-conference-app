@@ -49,7 +49,6 @@ function createReactComponent<T>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
 
   interface IonicReactBaseProps {
-    className?: string;
   }
 
   return class ReactComponent extends React.Component<T & IonicReactBaseProps> {

@@ -21,7 +21,7 @@ const MapPage: React.SFC<Props> = ({ locations, mapCenter }) => (
       </IonToolbar>
     </IonHeader>
 
-    <IonContent className="map-page">
+    <IonContent class="map-page">
       <Map locations={locations} mapCenter={mapCenter} />
     </IonContent>
   </>
