@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IonIcon, IonTabs, IonTab, IonTabBar, IonTabButton, IonLabel } from '../ionic';
+import { IonIcon, IonTabs, IonTab, IonTabBar, IonTabButton, IonLabel } from '@ionic/react';
 
 export default class Tabs extends Component {
   render() {

@@ -8,7 +8,7 @@ import Signup from './pages/Signup';
 import Tutorial from './pages/Tutorial';
 import AppStack from './pages/AppStack';
 import Menu from './components/Menu';
-import { IonApp, IonSplitPane } from './ionic';
+import { IonApp, IonSplitPane } from '@ionic/react';
 import { Provider } from 'react-redux';
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';

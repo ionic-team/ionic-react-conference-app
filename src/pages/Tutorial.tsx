@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
-import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '../ionic';
+import { IonIcon, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '@ionic/react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './Tutorial.css';
 

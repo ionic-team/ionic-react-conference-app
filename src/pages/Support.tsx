@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IonMenuButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonTextarea, IonButton } from '../ionic';
+import { IonMenuButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonTextarea, IonButton } from '@ionic/react';
 
 export default class Support extends Component {
   submit() {}

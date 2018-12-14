@@ -6,7 +6,7 @@ import SpeakerDetail from './SpeakerDetail';
 import Map from './Map';
 import About from './About';
 import StackNav from '../components/StackNav';
-import { IonPage, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonLabel } from '../ionic';
+import { IonPage, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router';
 
 const ScheduleStack: React.SFC<any> = (props) => (

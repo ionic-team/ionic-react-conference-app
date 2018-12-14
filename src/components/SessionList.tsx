@@ -1,7 +1,7 @@
 import React from 'react';
 import { Session, SessionGroup } from '../store/sessions/types';
 import { format, parse as parseDate } from 'date-fns';
-import { IonList, IonListHeader, IonItemGroup, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption } from '../ionic';
+import { IonList, IonListHeader, IonItemGroup, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption } from '@ionic/react';
 
 interface Props {
   sessions: Session[]

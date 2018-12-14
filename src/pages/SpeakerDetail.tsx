@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '../ionic'
+import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '@ionic/react'
 import { Speaker } from '../store/speakers/types';
 import './SpeakerDetail.css';
 

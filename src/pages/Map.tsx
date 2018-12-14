@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RootState, selectors } from '../store';
 import { Location } from '../store/locations/types';
 import Map from '../components/Map';
-import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent } from '../ionic';
+import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent } from '@ionic/react';
 
 type Props = {
   locations: Location[],

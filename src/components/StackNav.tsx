@@ -1,5 +1,5 @@
 import React, { Component, CSSProperties } from 'react';
-import { IonPage } from '../ionic';
+import { IonPage } from '@ionic/react';
 
 interface NavView {
   name: string;
