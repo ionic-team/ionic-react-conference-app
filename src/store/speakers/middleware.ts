@@ -12,7 +12,7 @@ export const fetchSpeakersMiddleware: Middleware<{}, SpeakerState> = ({ getState
 
   next(locations.fetchSpeakers.request());
   try {
-    const response = await fetch('/data/sessions.json');
+    const response = await fetch('/data/speakers.json');
     const sessionList: Speaker[] = await response.json();
     next(locations.fetchSpeakers.success(sessionList));
   } catch (e) {

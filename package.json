@@ -12,7 +12,7 @@
     "@types/react-redux": "^6.0.9",
     "@types/react-router-dom": "^4.3.1",
     "date-fns": "^1.29.0",
-    "ionicons": "^4.5.0-3",
+    "ionicons": "^4.5.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",

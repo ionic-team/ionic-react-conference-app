@@ -25,7 +25,7 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
           onClick={() => console.log('speakers', { id: speaker.id })}
         >
           <IonAvatar slot="start">
-            <img src={speaker.profilePic} alt="Speaker profile pic"/>
+            <img src={process.env.PUBLIC_URL + speaker.profilePic} alt="Speaker profile pic"/>
           </IonAvatar>
           {speaker.name}
         </IonItem>

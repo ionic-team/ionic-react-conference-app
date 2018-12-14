@@ -7,8 +7,8 @@ interface Props {
   sessions: Session[]
   addFavoriteSession: (sessionId: number) => void;
   removeFavoriteSession: (sessionId: number) => void;
-  filterFavorites: boolean;
   hidden: boolean;
+  listType: "all" | "favorites"
 }
 
 function groupedByStartTime(sessions: Session[]) {
@@ -34,7 +34,7 @@ function groupedByStartTime(sessions: Session[]) {
   }, [] as SessionGroup[]);
 }
 
-const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavoriteSession, filterFavorites, hidden }) => {
+const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavoriteSession, hidden, listType }) => {
   if (sessions.length === 0) {
     return (
       <IonList style={hidden ? {display: 'none'} : {}}>
@@ -48,7 +48,7 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
   const groups = groupedByStartTime(sessions);
 
   return (
-    <IonList style={hidden ? {display: 'none'} : {}}>
+    <IonList>
       { groups.map((group, index: number) => (
         <IonItemGroup key={`group-${index}`}>
           <IonItemDivider sticky>
@@ -69,7 +69,7 @@ const SessionList: React.SFC<Props> = ({sessions, addFavoriteSession, removeFavo
                 </IonLabel>
               </IonItem>
               <IonItemOptions>
-                { filterFavorites ?
+                { listType === "favorites" ?
                   <IonItemOption color="danger" onClick={() => removeFavoriteSession(session.id)}>
                     Remove
                   </IonItemOption>

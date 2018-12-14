@@ -94,15 +94,15 @@ class SchedulePage extends Component<Props, State> {
             sessions={this.props.allFiltered}
             addFavoriteSession={this.props.addFavorite}
             removeFavoriteSession={this.props.removeFavorite}
-            hidden={this.state.segment !== "all"}
-            filterFavorites={true}
+            listType={"all"}
+            hidden={this.state.segment !== "favorites"}
           />
           <SessionList
             sessions={this.props.favoritesFiltered}
             addFavoriteSession={this.props.addFavorite}
             removeFavoriteSession={this.props.removeFavorite}
+            listType={"favorites"}
             hidden={this.state.segment !== "favorites"}
-            filterFavorites={false}
           />
         </IonContent>
 
