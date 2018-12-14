@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import ReactDOM from 'react-dom';
-import { Components as IoniconsComponents } from 'ionicons';
+import { Components as IoniconsComponents, addIcons } from 'ionicons';
 import { IonicConfig, Components } from '@ionic/core';
 import { defineCustomElements } from '@ionic/core/loader';
+import { ICON_PATHS } from 'ionicons/icons';
 
 export interface IonicGlobal {
   config?: any;
@@ -36,9 +37,9 @@ function syncEvent(node: Element, eventName: string, newEventHandler: (e: Event)
 const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
 
 function registerIonic(config: IonicConfig = {}) {
-  console.log(process.env.PUBLIC_URL);
   const win: IonicWindow = window as any;
   const Ionic = (win.Ionic = win.Ionic || {});
+  addIcons(ICON_PATHS);
 
   Ionic.config = config;
   defineCustomElements(window);
@@ -49,6 +50,7 @@ function createReactComponent<T>(tagName: string) {
   const displayName = dashToPascalCase(tagName);
 
   interface IonicReactBaseProps {
+    ref?: RefObject<any>
   }
 
   return class ReactComponent extends React.Component<T & IonicReactBaseProps> {
@@ -141,3 +143,18 @@ export const IonSlides = createReactComponent<Components.IonSlidesAttributes>('i
 export const IonSlide = createReactComponent<Components.IonSlideAttributes>('ion-slide');
 export const IonSplitPane = createReactComponent<Components.IonSplitPaneAttributes>('ion-split-pane');
 export const IonMenuToggle = createReactComponent<Components.IonMenuToggleAttributes>('ion-menu-toggle');
+
+/*
+export const IonAlertModal: React.SFC<Components.IonAlertAttributes> = () => {
+  return null;
+}
+
+import IonAlertModal, { Header, SubHeader, Message, Button} from 'IonAlertModal';
+
+<IonAlertModal isOpen={state.showModal}>
+  <Header>Favorite Added</Header>
+  <SubHeader></SubHeader>
+  <Message>Favorite info</Message>
+  <Button onClick={(e: MouseEvent) => { this.setState({ showModal: false})}}>OK</Button>
+</IonAlertModal>
+*/
