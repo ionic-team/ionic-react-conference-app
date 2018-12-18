@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { RootState, selectors, actions } from '../store';
 import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton, IonAlert } from '@ionic/react';
+import SessionListFilter from '../components/SessionListFilter';
+import { IonModal, IonLoading, IonToast, IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton, IonAlert } from '@ionic/react';
 import './SchedulePage.css';
 
 
@@ -16,35 +17,45 @@ type Props = {
   updateSessions: () => void
   updateSpeakers: () => void,
   updateTrackFilters: (trackList: string[]) => void,
-  favoriteSessions: number []
+  favoriteSessions: number [],
+  allTracks: string[],
+  filteredTracks: string[]
 }
 
 type State = {
   segment: string,
+  isRefreshing: boolean,
+  showLoading: boolean,
+  showFilterModal: boolean,
+  loadingMessage: string
 }
 
 class SchedulePage extends Component<Props, State> {
+  ionRefresherRef: React.RefObject<HTMLIonRefresherElement>
+  ionFabRef: React.RefObject<HTMLIonFabElement>
+
   constructor(props: Props) {
     super(props);
     this.state = {
       segment: 'all',
+      isRefreshing: false,
+      showLoading: false,
+      showFilterModal: false,
+      loadingMessage: ''
     };
 
     this.presentFilter = this.presentFilter.bind(this);
     this.doRefresh = this.doRefresh.bind(this);
     this.openSocial = this.openSocial.bind(this);
     this.updateSegment = this.updateSegment.bind(this);
-    this.addFavorite = this.addFavorite.bind(this);
 
     props.updateLocations();
     props.updateSessions();
     props.updateSpeakers();
+
+    this.ionRefresherRef = React.createRef<HTMLIonRefresherElement>();
+    this.ionFabRef = React.createRef<HTMLIonFabElement>();
   }
-
-  addFavorite(sessionId: number) {
-
-  }
-
 
   goToSessionDetail(session: Session) {
     // go to the session detail page
@@ -52,36 +63,28 @@ class SchedulePage extends Component<Props, State> {
     // this.$router.push({ name: 'session-detail', params: { sessionId: session.id.toString() } });
   }
   async presentFilter() {
-    /*
-    const modal = await this.$ionic.modalController.create({
-      component: SessionListFilter,
-      componentProps: {
-        excludedTracks: this.$store.state.sessions.trackFilters,
-        allTracks: this.$store.getters.allTracks
-      }
-    });
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-    if (data) {
-      this.props.updateTrackFilters(data);
-    }
-    */
+    this.setState(() => ({
+      showFilterModal: true
+    }));
   }
 
   updateSearchTerm(e: CustomEvent) {
     this.props.setSearchText(e.detail.value);
   }
-  async openSocial(network: string) {
-    /*
-    const loading = await this.$ionic.loadingController.create({
-      message: `Posting to ${network}`,
-      duration: (Math.random() * 1000) + 500
-    });
-    await loading.present();
-    await loading.onWillDismiss();
-    this.fabRef.current.close();
-    */
+
+  openSocial(network: string) {
+    this.setState(() => ({
+      loadingMessage: `Posting to ${network}`,
+      showLoading: true
+    }));
+
+    setTimeout(() => {
+      this.setState(() => ({ showLoading: false}))
+    }, (Math.random() * 1000) + 500);
+
+    if (this.ionFabRef.current) {
+      this.ionFabRef.current.close();
+    }
   }
 
   updateSegment(e: CustomEvent) {
@@ -91,13 +94,19 @@ class SchedulePage extends Component<Props, State> {
     }));
   }
 
-  doRefresh() {}
+  doRefresh() {
+    setTimeout(() => {
+      this.setState(() => ({ 'isRefreshing': true }));
+      if (this.ionRefresherRef.current) {
+        this.ionRefresherRef.current.complete();
+      }
+    }, 500);
+  }
 
   render() {
+    console.log(this.state.showLoading);
     return (
       <div className="ion-page">
-
-
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start">
@@ -130,9 +139,15 @@ class SchedulePage extends Component<Props, State> {
         </IonHeader>
 
         <IonContent>
-          <IonRefresher onIonRefresh={this.doRefresh}>
+          <IonRefresher ref={this.ionRefresherRef} onIonRefresh={this.doRefresh}>
             <IonRefresherContent></IonRefresherContent>
           </IonRefresher>
+          <IonToast
+            show={this.state.isRefreshing}
+            message="Updating content"
+            showCloseButton={true}
+            duration={2000}
+          ></IonToast>
 
           <SessionList
             sessions={this.props.allFiltered}
@@ -146,7 +161,21 @@ class SchedulePage extends Component<Props, State> {
           />
         </IonContent>
 
-        <IonFab slot="fixed" vertical="bottom" horizontal="end">
+        <IonModal show={this.state.showFilterModal}>
+          <SessionListFilter
+            filteredTracks={this.props.filteredTracks}
+            allTracks={this.props.allTracks}
+            updateTrackFilters={this.props.updateTrackFilters}
+            dismissModal={() => this.setState(() => ({ showFilterModal: false}))}
+          />
+        </IonModal>
+
+        <IonLoading
+          show={this.state.showLoading}
+          message={this.state.loadingMessage}
+          duration={2000}
+        />
+        <IonFab ref={this.ionFabRef} slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>
             <IonIcon name="share"></IonIcon>
           </IonFabButton>
@@ -174,7 +203,9 @@ const mapStateToProps = (state: RootState) => ({
   allFiltered: selectors.sessions.allFiltered(state.sessions),
   favoritesFiltered: selectors.sessions.favoritesFiltered(state.sessions),
   searchText: state.sessions.searchText,
-  favoriteSessions: state.sessions.favoriteSessions
+  favoriteSessions: state.sessions.favoriteSessions,
+  filteredTracks: state.sessions.trackFilters,
+  allTracks: selectors.sessions.allTracks(state.sessions)
 });
 
 export default connect(mapStateToProps, {
