@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties } from 'react';
-import { IonPage } from '@ionic/react';
 
 interface NavView {
   name: string;
@@ -75,7 +74,7 @@ export default class StackNav extends Component<Props, State> {
         style.display = 'none';
       }
       return (
-        <IonPage key={index}>
+        <div className="ion-page" key={index}>
           <Page
             nav={{
               pop: this.pop.bind(this),
@@ -83,7 +82,7 @@ export default class StackNav extends Component<Props, State> {
             }}
             params={params}
           ></Page>
-        </IonPage>
+        </div>
       )
     });
   }
