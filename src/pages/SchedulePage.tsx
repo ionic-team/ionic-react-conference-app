@@ -104,7 +104,6 @@ class SchedulePage extends Component<Props, State> {
   }
 
   render() {
-    console.log(this.state.showLoading);
     return (
       <div className="ion-page">
         <IonHeader>
