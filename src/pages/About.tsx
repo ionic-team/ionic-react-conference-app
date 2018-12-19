@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RootState, selectors } from '../store';
-import { IonIcon, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonTitle } from '@ionic/react';
+import { IonPopover, IonIcon, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonTitle } from '@ionic/react';
 import './About.css';
+import AboutPopover from '../components/AboutPopover';
 
 type Props = {
   conferenceDate: string | null;
 };
 
-class About extends Component<Props, {}> {
-  presentPopover() {}
+type State = {
+  showPopover: boolean
+}
+
+class About extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      showPopover: false
+    };
+
+    this.presentPopover = this.presentPopover.bind(this);
+  }
+  presentPopover() {
+    this.setState(() => ({
+      showPopover: true
+    }));
+  }
   render() {
     return <>
       <IonHeader>
@@ -19,12 +37,16 @@ class About extends Component<Props, {}> {
           </IonButtons>
           <IonTitle>About</IonTitle>
           <IonButtons slot="end">
-            <IonButton icon-only onClick={() => this.presentPopover()}>
+            <IonButton icon-only onClick={this.presentPopover}>
               <IonIcon slot="icon-only" name="more"></IonIcon>
             </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
+
+      <IonPopover show={this.state.showPopover}>
+        <AboutPopover />
+      </IonPopover>
 
       <IonContent>
         <div className="about-header">

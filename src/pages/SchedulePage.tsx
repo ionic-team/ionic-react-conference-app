@@ -152,12 +152,12 @@ class SchedulePage extends Component<Props, State> {
           <SessionList
             sessions={this.props.allFiltered}
             listType={"all"}
-            hidden={this.state.segment !== "favorites"}
+            hidden={this.state.segment === "favorites"}
           />
           <SessionList
             sessions={this.props.favoritesFiltered}
             listType={"favorites"}
-            hidden={this.state.segment !== "favorites"}
+            hidden={this.state.segment === "all"}
           />
         </IonContent>
 

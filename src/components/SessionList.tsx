@@ -47,7 +47,7 @@ const SessionList: React.SFC<Props> = ({sessions, hidden, listType }) => {
   const groups = groupedByStartTime(sessions);
 
   return (
-    <IonList>
+    <IonList style={hidden ? {display: 'none'} : {}}>
       { groups.map((group, index: number) => (
         <IonItemGroup key={`group-${index}`}>
           <IonItemDivider sticky>
