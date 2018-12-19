@@ -147,6 +147,7 @@ class SchedulePage extends Component<Props, State> {
             message="Updating content"
             showCloseButton={true}
             duration={2000}
+            onIonToastDidDismiss={() => this.setState(() => ({ 'isRefreshing': false }))}
           ></IonToast>
 
           <SessionList
@@ -174,6 +175,7 @@ class SchedulePage extends Component<Props, State> {
           show={this.state.showLoading}
           message={this.state.loadingMessage}
           duration={2000}
+          onIonLoadingDidDismiss={() => this.setState(() => ({ 'showLoading': false }))}
         />
         <IonFab ref={this.ionFabRef} slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>

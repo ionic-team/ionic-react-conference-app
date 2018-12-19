@@ -93,6 +93,7 @@ class SessionListItem extends React.Component<Props, State> {
               this.ionItemSlidingRef.current.close();
             }
           }]}
+          onIonAlertDidDismiss={() => this.setState(() => ({ 'showAlert': false }))}
         ></IonAlert>
         <IonItem button onClick={() => console.log('sessions', { id: this.props.session.id })}>
           <IonLabel>
