@@ -10,7 +10,8 @@ type Props = {
 };
 
 type State = {
-  showPopover: boolean
+  showPopover: boolean,
+  showPopoverEvent: null | MouseEvent
 }
 
 class About extends Component<Props, State> {
@@ -18,14 +19,16 @@ class About extends Component<Props, State> {
     super(props);
 
     this.state = {
-      showPopover: false
+      showPopover: false,
+      showPopoverEvent: null
     };
 
     this.presentPopover = this.presentPopover.bind(this);
   }
-  presentPopover() {
+  presentPopover(e: MouseEvent) {
     this.setState(() => ({
-      showPopover: true
+      showPopover: true,
+      showPopoverEvent: e
     }));
   }
   render() {
@@ -44,7 +47,14 @@ class About extends Component<Props, State> {
         </IonToolbar>
       </IonHeader>
 
-      <IonPopover show={this.state.showPopover}>
+      <IonPopover
+        show={this.state.showPopover}
+        event={this.state.showPopoverEvent}
+        onIonPopoverDidDismiss={() => this.setState(() => ({
+          'showPopover': false,
+          'showPopoverEvent': null
+        }))}
+      >
         <AboutPopover />
       </IonPopover>
 
