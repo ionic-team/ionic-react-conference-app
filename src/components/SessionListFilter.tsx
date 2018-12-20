@@ -20,13 +20,21 @@ export default class SessionListFilter extends Component<Props, State> {
       trackFilters: props.filteredTracks
     }
 
+    this.toggleTrackFilter = this.toggleTrackFilter.bind(this);
     this.resetFilters = this.resetFilters.bind(this);
+    this.applyFilters = this.applyFilters.bind(this);
   }
 
-  addTrackFilter(e: CustomEvent) {
-    this.setState((prevState) => ({
-      trackFilters: prevState.trackFilters.concat(e.detail.value)
-    }));
+  toggleTrackFilter(e: CustomEvent) {
+    this.setState((prevState) => {
+      const trackFilters = (e.detail.checked) ?
+        prevState.trackFilters.concat(e.detail.value) :
+        prevState.trackFilters.filter(track => track !== e.detail.value);
+      console.log(trackFilters, e.detail);
+      return {
+        trackFilters
+      }
+    });
   }
 
   resetFilters() {
@@ -40,6 +48,7 @@ export default class SessionListFilter extends Component<Props, State> {
   }
 
   render() {
+    console.log('1', this.state.trackFilters);
     return (
       <div className="ion-page">
         <IonHeader>
@@ -64,8 +73,8 @@ export default class SessionListFilter extends Component<Props, State> {
                 <span slot="start" className="dot"></span>
                 <IonLabel>{track}</IonLabel>
                 <IonToggle
-                  onIonChange={this.addTrackFilter}
-                  checked={this.props.filteredTracks.indexOf(track) !== -1}
+                  onIonChange={this.toggleTrackFilter}
+                  checked={this.state.trackFilters.indexOf(track) !== -1}
                   color="success"
                   value={track}
                 ></IonToggle>
