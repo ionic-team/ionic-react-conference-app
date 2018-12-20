@@ -30,7 +30,6 @@ export default class SessionListFilter extends Component<Props, State> {
       const trackFilters = (e.detail.checked) ?
         prevState.trackFilters.concat(e.detail.value) :
         prevState.trackFilters.filter(track => track !== e.detail.value);
-      console.log(trackFilters, e.detail);
       return {
         trackFilters
       }
@@ -48,7 +47,6 @@ export default class SessionListFilter extends Component<Props, State> {
   }
 
   render() {
-    console.log('1', this.state.trackFilters);
     return (
       <div className="ion-page">
         <IonHeader>
