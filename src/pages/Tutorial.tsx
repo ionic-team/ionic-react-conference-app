@@ -5,9 +5,7 @@ import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonS
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './Tutorial.css';
 
-interface Props extends RouteComponentProps<any> {
-  sawTutorial: () => any
-}
+type Props = RouteComponentProps<{}> & typeof mapDispatchToProps;
 
 type State = {
   showSkip: boolean
@@ -19,11 +17,9 @@ class Tutorial extends Component<Props, State> {
     this.state = {
       showSkip: false
     }
-    this.onSlideChangeStart = this.onSlideChangeStart.bind(this);
-    this.endTutorial = this.endTutorial.bind(this);
   }
 
-  onSlideChangeStart() {
+  onSlideChangeStart = () => {
     this.setState((state, props) => (
       {
         ...state,
@@ -32,7 +28,7 @@ class Tutorial extends Component<Props, State> {
     ));
   }
 
-  endTutorial() {
+  endTutorial = () => {
     this.props.sawTutorial();
     this.props.history.push('/');
   }
@@ -96,7 +92,6 @@ class Tutorial extends Component<Props, State> {
                 <IonIcon slot="end" name="arrow-forward"></IonIcon>
               </IonButton>
             </IonSlide>
-
           </IonSlides>
         </IonContent>
       </div>
@@ -104,6 +99,11 @@ class Tutorial extends Component<Props, State> {
   }
 };
 
-export default connect(null, {
+const mapDispatchToProps = {
   sawTutorial: () => actions.user.sawTutorial(),
-})(withRouter(Tutorial));
+}
+
+export default withRouter(connect(
+  null,
+  mapDispatchToProps
+)(Tutorial));

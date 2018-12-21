@@ -4,23 +4,12 @@ import { RootState, selectors, actions } from '../store';
 import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
+import { withRouter, RouteComponentProps } from "react-router";
 import { IonModal, IonLoading, IonToast, IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton, IonAlert } from '@ionic/react';
 import './SchedulePage.css';
 
 
-type Props = {
-  allFiltered: Session[],
-  favoritesFiltered: Session[],
-  searchText: string,
-  setSearchText: (searchText: string) => void,
-  updateLocations: () => void
-  updateSessions: () => void
-  updateSpeakers: () => void,
-  updateTrackFilters: (trackList: string[]) => void,
-  favoriteSessions: number [],
-  allTracks: string[],
-  filteredTracks: string[]
-}
+type Props =  RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
 type State = {
   segment: string,
@@ -44,11 +33,6 @@ class SchedulePage extends Component<Props, State> {
       loadingMessage: ''
     };
 
-    this.presentFilter = this.presentFilter.bind(this);
-    this.doRefresh = this.doRefresh.bind(this);
-    this.openSocial = this.openSocial.bind(this);
-    this.updateSegment = this.updateSegment.bind(this);
-
     props.updateLocations();
     props.updateSessions();
     props.updateSpeakers();
@@ -62,17 +46,18 @@ class SchedulePage extends Component<Props, State> {
     // and pass in the session data
     // this.$router.push({ name: 'session-detail', params: { sessionId: session.id.toString() } });
   }
-  async presentFilter() {
+
+  presentFilter = () => {
     this.setState(() => ({
       showFilterModal: true
     }));
   }
 
-  updateSearchTerm(e: CustomEvent) {
+  updateSearchTerm = (e: CustomEvent) => {
     this.props.setSearchText(e.detail.value);
   }
 
-  openSocial(network: string) {
+  openSocial = (network: string) => {
     this.setState(() => ({
       loadingMessage: `Posting to ${network}`,
       showLoading: true
@@ -87,14 +72,14 @@ class SchedulePage extends Component<Props, State> {
     }
   }
 
-  updateSegment(e: CustomEvent) {
+  updateSegment = (e: CustomEvent) => {
     this.setState((prevState) => ({
       ...prevState,
       segment: e.detail.value
     }));
   }
 
-  doRefresh() {
+  doRefresh = () => {
     setTimeout(() => {
       this.setState(() => ({ 'isRefreshing': true }));
       if (this.ionRefresherRef.current) {
@@ -209,12 +194,15 @@ const mapStateToProps = (state: RootState) => ({
   allTracks: selectors.sessions.allTracks(state.sessions)
 });
 
-export default connect(mapStateToProps, {
-  setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
-  addFavorite: (sessionId: number) => actions.sessions.addFavorite(sessionId),
-  removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId),
+const mapDispatchToProps = {
   updateLocations: () => actions.locations.updateLocations(),
   updateSessions: () => actions.sessions.updateSessions(),
   updateSpeakers: () => actions.speakers.updateSpeakers(),
+  setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
   updateTrackFilters: (trackList: string[]) => actions.sessions.updateTrackFilters(trackList)
-})(SchedulePage);
+}
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SchedulePage));

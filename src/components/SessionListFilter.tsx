@@ -19,13 +19,9 @@ export default class SessionListFilter extends Component<Props, State> {
     this.state = {
       trackFilters: props.filteredTracks
     }
-
-    this.toggleTrackFilter = this.toggleTrackFilter.bind(this);
-    this.resetFilters = this.resetFilters.bind(this);
-    this.applyFilters = this.applyFilters.bind(this);
   }
 
-  toggleTrackFilter(e: CustomEvent) {
+  toggleTrackFilter = (e: CustomEvent) => {
     this.setState((prevState) => {
       const trackFilters = (e.detail.checked) ?
         prevState.trackFilters.concat(e.detail.value) :
@@ -36,12 +32,12 @@ export default class SessionListFilter extends Component<Props, State> {
     });
   }
 
-  resetFilters() {
+  resetFilters = () => {
     this.props.updateTrackFilters([]);
     this.props.dismissModal;
   }
 
-  applyFilters() {
+  applyFilters = () => {
     this.props.updateTrackFilters(this.state.trackFilters);
     this.props.dismissModal();
   }

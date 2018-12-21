@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RootState, actions } from '../store';
-import { User } from '../store/user/types';
 import { IonHeader, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonToolbar } from '@ionic/react';
 
-type Props = {
-  user: User,
-  logOutUser: () => void
-}
+type Props = typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
 class Account extends Component<Props> {
   updatePicture(){}
@@ -52,6 +48,11 @@ const mapStateToProps = (state: RootState) => ({
   user: state.user
 });
 
-export default connect(mapStateToProps, {
+const mapDispatchToProps = {
   logOutUser: () => actions.user.logOut()
-})(Account);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Account);

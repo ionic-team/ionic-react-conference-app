@@ -4,10 +4,8 @@ import { RouteComponentProps } from 'react-router';
 import Tutorial from '../pages/Tutorial';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { User } from '../store/user/types';
 
-type Props = {
-  user: User,
+type Props = ReturnType<typeof mapStateToProps> & {
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
   path?: string | string[];
 }
@@ -44,7 +42,6 @@ class RTRoute extends Component<Props> {
 const mapStateToProps = (state: RootState) => ({
   user: state.user
 });
-const connectUser = connect(mapStateToProps);
 
-export const PrivateRoute = connectUser(PRoute);
-export const RequiresTutorialRoute = connectUser(RTRoute);
+export const PrivateRoute = connect(mapStateToProps)(PRoute);
+export const RequiresTutorialRoute = connect(mapStateToProps)(RTRoute);

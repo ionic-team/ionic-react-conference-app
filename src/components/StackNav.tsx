@@ -52,14 +52,14 @@ export default class StackNav extends Component<Props, State> {
     this.props.onPageChange(this.props.basePath, curView.path, curParams);
   }
 
-  push(pageName: string, params = {}) {
+  push = (pageName: string, params = {}) => {
     this.setState((prevState, props) => ({
       ...prevState,
       stack: prevState.stack.concat([[pageName, params]])
     }), this.pageChanged);
   }
 
-  pop() {
+  pop = () => {
     this.setState((prevState, props) => ({
       ...prevState,
       stack: prevState.stack.slice(0, -1)
@@ -77,8 +77,8 @@ export default class StackNav extends Component<Props, State> {
         <div className="ion-page" key={index}>
           <Page
             nav={{
-              pop: this.pop.bind(this),
-              push: this.push.bind(this)
+              pop: this.pop,
+              push: this.push
             }}
             params={params}
           ></Page>

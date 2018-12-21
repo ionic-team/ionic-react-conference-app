@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RootState, selectors } from '../store';
-import { Location } from '../store/locations/types';
 import Map from '../components/Map';
 import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent } from '@ionic/react';
 
-type Props = {
-  locations: Location[],
-  mapCenter: Location
-}
+type Props = ReturnType<typeof mapStateToProps>;
 
 const MapPage: React.SFC<Props> = ({ locations, mapCenter }) => (
   <>

@@ -23,9 +23,7 @@ const routes = {
   ]
 }
 
-interface Props extends RouteComponentProps<any> {
-  isAuthenticated: boolean
-}
+type Props = RouteComponentProps<{}> & ReturnType<typeof mapStateToProps>;
 
 const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
 
@@ -84,4 +82,6 @@ const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.user.isAuthenticated
 });
 
-export default connect(mapStateToProps)(withRouter(Menu));
+export default connect(
+  mapStateToProps
+)(withRouter(Menu));

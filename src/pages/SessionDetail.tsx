@@ -1,15 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { Session } from '../store/sessions/types';
-import { Speaker } from '../store/speakers/types';
 import formatTime from '../utils/formatTime';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '@ionic/react';
 import './SessionDetail.css';
 
-type Props = {
-  sessions: Session[];
-  speakers: Speaker[];
+type Props = ReturnType<typeof mapStateToProps> & {
   nav: any;
   params: any;
 }
@@ -56,4 +52,6 @@ const mapStateToProps = (state: RootState) => ({
   speakers: state.speakers.speakers
 });
 
-export default connect(mapStateToProps)(SessionDetail)
+export default connect(
+  mapStateToProps
+)(SessionDetail)

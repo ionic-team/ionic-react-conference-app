@@ -4,80 +4,87 @@ import { RootState, selectors, actions } from '../store';
 import { format } from 'date-fns';
 import { IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption, IonAlert } from '@ionic/react';
 import { Session } from '../store/sessions/types';
+import { AlertButton } from '@ionic/react';
 
-type Props = {
+type Props = typeof mapDispatchToProps & ReturnType<typeof mapStateToProps> & {
   session: Session;
   listType: "all" | "favorites";
-  favoriteSessions: number [];
-  addFavorite: (sessionId: number) => void;
-  removeFavorite: (sessionId: number) => void;
 }
 
 type State = {
-  showAlert: boolean
+  showAlert: boolean;
+  alertHeader?: string;
+  alertMessage?: string;
+  alertButtons: (AlertButton | string)[];
 }
 
 class SessionListItem extends React.Component<Props, State> {
   ionItemSlidingRef: React.RefObject<any>
+  defaultState: State = {
+    showAlert: false,
+    alertHeader: '',
+    alertMessage: undefined,
+    alertButtons: []
+  }
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      showAlert: false
-    }
+      ...this.defaultState
+    };
     this.ionItemSlidingRef = React.createRef();
-    this.addFavoriteSession = this.addFavoriteSession.bind(this);
-    this.removeFavoriteSession = this.removeFavoriteSession.bind(this);
   }
 
-  addFavoriteSession() {
+  dismissAlert = () => {
+    this.setState(() => ({
+      ...this.defaultState
+    }));
+    this.ionItemSlidingRef.current.close();
+  }
+
+  addFavoriteSession = () => {
     if (this.props.favoriteSessions.indexOf(this.props.session.id) !== - 1) {
       // woops, they already favorited it! What shall we do!?
       // prompt them to remove it
-      // this.removeFavoriteSession(event, session, 'Favorite already added');
+      this.removeFavoriteSession('Favorite already added')();
     } else {
       // remember this session as a user favorite
       this.props.addFavorite(this.props.session.id);
 
       // create an alert instance
       this.setState({
-        showAlert: true
+        showAlert: true,
+        alertHeader: 'Favorite Added',
+        alertButtons: [
+          {
+            text: 'OK',
+            handler: this.dismissAlert
+          }
+        ]
       });
     }
   }
 
-  async removeFavoriteSession() {
-    /*
-    const alert = await this.$ionic.alertController.create({
-      header: title,
-      message: 'Would you like to remove this session from your favorites?',
-      buttons: [
+  removeFavoriteSession = (title: string) => () => {
+    this.setState({
+      showAlert: true,
+      alertHeader: title,
+      alertMessage: 'Would you like to remove this session from your favorites?',
+      alertButtons: [
         {
           text: 'Cancel',
-          handler: () => {
-            // they clicked the cancel button, do not remove the session
-            // close the sliding item and hide the option buttons
-            const slidingItem = (event.target as HTMLElement).closest('ion-item-sliding');
-            (slidingItem as any).close();
-          }
+          handler: this.dismissAlert
         },
         {
           text: 'Remove',
           handler: () => {
-            // they want to remove this session from their favorites
-            this.props.removeFavorite(session.id);
-
-            // close the sliding item and hide the option buttons
-            const slidingItem = (event.target as HTMLElement).closest('ion-item-sliding');
-            (slidingItem as any).close();
+            this.props.removeFavorite(this.props.session.id);
+            this.dismissAlert();
           }
         }
       ]
     });
-    // now present the alert on top of all other content
-    await alert.present();
-    */
   }
 
   render() {
@@ -85,15 +92,9 @@ class SessionListItem extends React.Component<Props, State> {
       <IonItemSliding ref={this.ionItemSlidingRef} class={'track-' + this.props.session.tracks[0].toLowerCase()}>
         <IonAlert
           show={this.state.showAlert}
-          header={'Favorite Added'}
-          buttons={[{
-            text: 'OK',
-            handler: () => {
-              this.setState(() => ({ 'showAlert': false }));
-              this.ionItemSlidingRef.current.close();
-            }
-          }]}
-          onIonAlertDidDismiss={() => this.setState(() => ({ 'showAlert': false }))}
+          header={this.state.alertHeader}
+          buttons={this.state.alertButtons}
+          onIonAlertDidDismiss={this.dismissAlert}
         ></IonAlert>
         <IonItem button onClick={() => console.log('sessions', { id: this.props.session.id })}>
           <IonLabel>
@@ -107,7 +108,7 @@ class SessionListItem extends React.Component<Props, State> {
         </IonItem>
         <IonItemOptions>
           { this.props.listType === "favorites" ?
-            <IonItemOption color="danger" onClick={this.removeFavoriteSession}>
+            <IonItemOption color="danger" onClick={this.removeFavoriteSession('Remove Favorite')}>
               Remove
             </IonItemOption>
             :
@@ -125,7 +126,12 @@ const mapStateToProps = (state: RootState) => ({
   favoriteSessions: state.sessions.favoriteSessions
 });
 
-export default connect(mapStateToProps, {
+const mapDispatchToProps = {
   addFavorite: (sessionId: number) => actions.sessions.addFavorite(sessionId),
   removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId),
-})(SessionListItem);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SessionListItem);

@@ -84,16 +84,13 @@ const AboutStack: React.SFC<any> = (props) => (
 class AppStack extends Component<RouteComponentProps> {
   constructor(props: RouteComponentProps) {
     super(props);
-
-    this.urlMatchHandler = this.urlMatchHandler.bind(this);
-    this.onPageChange = this.onPageChange.bind(this);
   }
 
-  urlMatchHandler(path: string) {
+  urlMatchHandler = (path: string) => {
     return matchPath(this.props.location.pathname, { path: path });
   }
 
-  onPageChange(basePath: string, subPath: string, params: any) {
+  onPageChange = (basePath: string, subPath: string, params: any) => {
     var resolvedSubPath = subPath;
 
     Object.keys(params).forEach((name) => {

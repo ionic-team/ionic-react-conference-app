@@ -74,10 +74,7 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
   );
 };
 
-type ListProps = {
-  speakers: Speaker[],
-  sessions: Session[],
-}
+type ListProps = ReturnType<typeof mapStateToProps>;
 
 const SpeakerList = ({ speakers, sessions }: ListProps) => (
   <>
@@ -117,4 +114,6 @@ const mapStateToProps = (state: RootState) => ({
   sessions: state.sessions.sessions
 });
 
-export default connect(mapStateToProps)(SpeakerList)
+export default connect(
+  mapStateToProps
+)(SpeakerList)

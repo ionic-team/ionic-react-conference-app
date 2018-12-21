@@ -5,9 +5,7 @@ import { IonPopover, IonIcon, IonSelect, IonSelectOption, IonHeader, IonToolbar,
 import './About.css';
 import AboutPopover from '../components/AboutPopover';
 
-type Props = {
-  conferenceDate: string | null;
-};
+type Props = ReturnType<typeof mapStateToProps>
 
 type State = {
   showPopover: boolean,
@@ -22,15 +20,22 @@ class About extends Component<Props, State> {
       showPopover: false,
       showPopoverEvent: null
     };
-
-    this.presentPopover = this.presentPopover.bind(this);
   }
-  presentPopover(e: MouseEvent) {
+
+  presentPopover = (e: MouseEvent) => {
     this.setState(() => ({
       showPopover: true,
       showPopoverEvent: e
     }));
   }
+
+  dismissPopover = () => {
+    this.setState(() => ({
+      'showPopover': false,
+      'showPopoverEvent': null
+    }));
+  }
+
   render() {
     return <>
       <IonHeader>
@@ -50,12 +55,11 @@ class About extends Component<Props, State> {
       <IonPopover
         show={this.state.showPopover}
         event={this.state.showPopoverEvent}
-        onIonPopoverDidDismiss={() => this.setState(() => ({
-          'showPopover': false,
-          'showPopoverEvent': null
-        }))}
+        onIonPopoverDidDismiss={this.dismissPopover}
       >
-        <AboutPopover />
+        <AboutPopover
+          dismissPopover={this.dismissPopover}
+        />
       </IonPopover>
 
       <IonContent>
