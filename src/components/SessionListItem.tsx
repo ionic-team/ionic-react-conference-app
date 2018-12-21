@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RootState, selectors, actions } from '../store';
+import { RootState, actions } from '../store';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { format } from 'date-fns';
 import { IonLabel, IonItemSliding, IonItem, IonItemOptions, IonItemOption, IonAlert } from '@ionic/react';
 import { Session } from '../store/sessions/types';
 import { AlertButton } from '@ionic/react';
 
-type Props = typeof mapDispatchToProps & ReturnType<typeof mapStateToProps> & {
+type Props = RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps> & {
   session: Session;
   listType: "all" | "favorites";
 }
@@ -87,6 +88,10 @@ class SessionListItem extends React.Component<Props, State> {
     });
   }
 
+  navigateToSession = (sessionId: number) => () => {
+    this.props.history.push(`/session/${sessionId}`);
+  }
+
   render() {
     return (
       <IonItemSliding ref={this.ionItemSlidingRef} class={'track-' + this.props.session.tracks[0].toLowerCase()}>
@@ -96,7 +101,7 @@ class SessionListItem extends React.Component<Props, State> {
           buttons={this.state.alertButtons}
           onIonAlertDidDismiss={this.dismissAlert}
         ></IonAlert>
-        <IonItem button onClick={() => console.log('sessions', { id: this.props.session.id })}>
+        <IonItem button onClick={this.navigateToSession(this.props.session.id)}>
           <IonLabel>
             <h3>{this.props.session.name}</h3>
             <p>
@@ -131,7 +136,7 @@ const mapDispatchToProps = {
   removeFavorite: (sessionId: number) => actions.sessions.removeFavorite(sessionId),
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(SessionListItem);
+)(SessionListItem));

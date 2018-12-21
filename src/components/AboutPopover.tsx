@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import {IonList, IonItem, IonLabel} from '@ionic/react';
+import { withRouter, RouteComponentProps } from 'react-router';
 
-type Props = {
+type Props = RouteComponentProps<{}> & {
   dismissPopover: () => void;
 }
 
-export default class AboutPopover extends Component<Props> {
+class AboutPopover extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
 
   support = () => {
-    // this.app.getRootNavs()[0].push('/support');
+    this.props.history.push('/support');
     this.props.dismissPopover();
   }
 
@@ -42,3 +43,5 @@ export default class AboutPopover extends Component<Props> {
     );
   }
 }
+
+export default withRouter(AboutPopover);

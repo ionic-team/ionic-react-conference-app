@@ -82,6 +82,6 @@ const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.user.isAuthenticated
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps
-)(withRouter(Menu));
+)(Menu));
