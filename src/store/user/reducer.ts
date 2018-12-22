@@ -30,6 +30,11 @@ export default (state = defaultState, action: UserAction): User => {
         ...state,
         pictureLocation: action.payload
       };
+    case getType(users.setUsername):
+      return {
+        ...state,
+        userName: action.payload
+      }
     default:
       return state;
   }

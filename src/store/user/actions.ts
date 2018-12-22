@@ -15,3 +15,7 @@ export const logOut = createAction('user/LOG_OUT', resolve =>
 export const updateUserPicture = createAction('user/UPDATE_PICTURE', resolve =>
   (pictureLocation: string) => resolve(pictureLocation)
 );
+
+export const setUsername = createAction('user/SET_USERNAME', resolve =>
+  (username: string) => resolve(username)
+)
