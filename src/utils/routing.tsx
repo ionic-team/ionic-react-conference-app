@@ -34,7 +34,7 @@ class RTRoute extends Component<Props> {
       <>
         { !this.props.user.hasSeenTutorial ? <Tutorial /> : null }
         <div style={!this.props.user.hasSeenTutorial ? { "display": "none"} : {}}>
-          <Route {...this.props}/>;
+          <Route {...this.props}/>
         </div>
       </>
     );
