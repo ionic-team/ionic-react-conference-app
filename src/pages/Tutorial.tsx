@@ -30,7 +30,6 @@ class Tutorial extends Component<Props, State> {
 
   endTutorial = () => {
     this.props.sawTutorial();
-    this.props.history.push('/');
   }
 
   render() {
