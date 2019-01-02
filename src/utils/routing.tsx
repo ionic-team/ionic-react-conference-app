@@ -30,11 +30,13 @@ class PRoute extends Component<Props> {
 
 class RTRoute extends Component<Props> {
   render() {
-    if (this.props.user.hasSeenTutorial) {
-      return <Route {...this.props}/>;
-    }
     return (
-      <Tutorial />
+      <>
+        { !this.props.user.hasSeenTutorial ? <Tutorial /> : null }
+        <div style={!this.props.user.hasSeenTutorial ? { "display": "none"} : {}}>
+          <Route {...this.props}/>;
+        </div>
+      </>
     );
   }
 }
