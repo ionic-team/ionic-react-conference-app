@@ -89,7 +89,7 @@ class SessionListItem extends React.Component<Props, State> {
   }
 
   navigateToSession = (sessionId: number) => () => {
-    this.props.history.push(`/session/${sessionId}`);
+    this.props.history.push(`/schedule/sessions/${sessionId}`);
   }
 
   render() {

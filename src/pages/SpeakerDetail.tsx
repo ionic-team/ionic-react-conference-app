@@ -1,28 +1,26 @@
 import React from 'react';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton } from '@ionic/react'
-import { Speaker } from '../store/speakers/types';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { RootState } from '../store';
+import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton, IonBackButtonNav } from '@ionic/react'
 import './SpeakerDetail.css';
 
-interface Props {
-  nav: any;
-  params: any;
-  speakers: Speaker[];
-}
+type Props = RouteComponentProps<{ id: string, tab: string}> & ReturnType<typeof mapStateToProps> & {
+  goBack: () => void;
+};
 
-export default ({ nav, params, speakers }: Props) => {
-  const speaker = speakers.find(s => s.id === parseInt(params.id, 10));
+const SpeakerDetail: React.SFC<Props> = ({ speakers, match, goBack }) => {
+  const speaker = speakers.find(s => s.id === parseInt(match.params.id, 10));
   if (!speaker) {
-    return;
+    return null;
   }
 
   return (
-    <>
+    <div className="ion-page">
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton href="#" onClick={() => nav.pop()} color="primary">
-              <IonIcon slot="icon-only" name="arrow-back"></IonIcon>Back
-            </IonButton>
+            <IonBackButtonNav goBack={goBack} defaultHref={`/${match.params.tab}`} />
           </IonButtons>
           <IonTitle>{speaker.name}</IonTitle>
         </IonToolbar>
@@ -45,6 +43,14 @@ export default ({ nav, params, speakers }: Props) => {
 
         <p>{speaker.about}</p>
       </IonContent>
-    </>
+    </div>
   );
 };
+
+const mapStateToProps = (state: RootState) => ({
+  speakers: state.speakers.speakers
+});
+
+export default connect(
+  mapStateToProps
+)(SpeakerDetail)

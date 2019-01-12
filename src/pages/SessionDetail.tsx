@@ -1,27 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { RootState } from '../store';
 import formatTime from '../utils/formatTime';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonTitle } from '@ionic/react';
+import { IonIcon, IonHeader, IonToolbar, IonButtons, IonBackButtonNav, IonContent, IonTitle } from '@ionic/react';
 import './SessionDetail.css';
 
-type Props = ReturnType<typeof mapStateToProps> & {
-  nav: any;
-  params: any;
-}
+type Props = RouteComponentProps<{ id: string, tab: string }> & ReturnType<typeof mapStateToProps> & {
+  goBack: () => void
+};
 
-const SessionDetail = ({ sessions, speakers, nav, params }: Props) => {
-  const session = sessions.filter(s => s.id === parseInt(params.id, 10))[0];
+const SessionDetail: React.SFC<Props> = ({ sessions, speakers, match, goBack }) => {
+  const session = sessions.find(s => s.id === parseInt(match.params.id, 10));
+  if (session == null) {
+    return null;
+  }
   const sessionSpeakers = speakers.filter(s => session.speakerIds.indexOf(s.id) !== -1);
 
   return (
-    <>
+    <div className="ion-page">
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton href="#" onClick={() => nav.pop()} color="primary">
-              <IonIcon slot="icon-only" name="arrow-back"></IonIcon>Back
-            </IonButton>
+            <IonBackButtonNav goBack={goBack} defaultHref={`/${match.params.tab}`} />
           </IonButtons>
           <IonTitle>{session.name}</IonTitle>
         </IonToolbar>
@@ -36,14 +37,14 @@ const SessionDetail = ({ sessions, speakers, nav, params }: Props) => {
             </h4>
           ))}
           <p>
-            {formatTime(session.dateTimeStart, "h:MM tt")} &mdash;&nbsp;
-            {formatTime(session.dateTimeEnd, "h:MM tt")}
+            {formatTime(session.dateTimeStart, "h:MM a")} &mdash;&nbsp;
+            {formatTime(session.dateTimeEnd, "h:MM a")}
           </p>
           <p>{session.location}</p>
           <p>{session.description}</p>
         </div>
       </IonContent>
-    </>
+    </div>
   );
 }
 

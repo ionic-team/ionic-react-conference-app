@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RootState, selectors, actions } from '../store';
-import { Session } from '../store/sessions/types'
 import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
 import { withRouter, RouteComponentProps } from "react-router";
@@ -22,16 +21,16 @@ type State = {
 class SchedulePage extends Component<Props, State> {
   ionRefresherRef: React.RefObject<HTMLIonRefresherElement>
   ionFabRef: React.RefObject<HTMLIonFabElement>
+  state = {
+    segment: 'all',
+    isRefreshing: false,
+    showLoading: false,
+    showFilterModal: false,
+    loadingMessage: ''
+  }
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      segment: 'all',
-      isRefreshing: false,
-      showLoading: false,
-      showFilterModal: false,
-      loadingMessage: ''
-    };
 
     props.updateLocations();
     props.updateSessions();
@@ -39,12 +38,6 @@ class SchedulePage extends Component<Props, State> {
 
     this.ionRefresherRef = React.createRef<HTMLIonRefresherElement>();
     this.ionFabRef = React.createRef<HTMLIonFabElement>();
-  }
-
-  goToSessionDetail(session: Session) {
-    // go to the session detail page
-    // and pass in the session data
-    // this.$router.push({ name: 'session-detail', params: { sessionId: session.id.toString() } });
   }
 
   presentFilter = () => {
@@ -202,7 +195,7 @@ const mapDispatchToProps = {
   updateTrackFilters: (trackList: string[]) => actions.sessions.updateTrackFilters(trackList)
 }
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SchedulePage));
+)(SchedulePage);

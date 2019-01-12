@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { RootState } from '../store';
+import { History } from 'history';
 import { IonIcon, IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '@ionic/react';
 import { Speaker } from '../store/speakers/types';
 import { Session } from '../store/sessions/types';
@@ -9,11 +11,20 @@ import { Session } from '../store/sessions/types';
 interface ItemProps {
   speaker: Speaker;
   speakerSessions: Session[];
+  history: History;
 }
 
-const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
+const SpeakerItem = ({ speaker, speakerSessions, history }: ItemProps) => {
   function openSpeakerShare(speaker: Speaker) {}
   function openContact(speaker: Speaker) {}
+
+  function goToLink(e: MouseEvent) {
+    if (!e.currentTarget) {
+      return;
+    }
+    e.preventDefault();
+    history.push((e.currentTarget as HTMLAnchorElement).href);
+  }
 
   return (
     <IonCard class="speaker-card">
@@ -21,8 +32,8 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
         <IonItem
           button
           detail={false}
-          href="#"
-          onClick={() => console.log('speakers', { id: speaker.id })}
+          href={`/speakers/${speaker.id}`}
+          onClick={goToLink}
         >
           <IonAvatar slot="start">
             <img src={process.env.PUBLIC_URL + speaker.profilePic} alt="Speaker profile pic"/>
@@ -35,14 +46,14 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
         <IonList>
           { speakerSessions.map(session => (
             <IonItem
-              href="#"
+              href={`/speakers/sessions/${session.id}`}
               key={session.name}
-              onClick={() => console.log('sessions', { id: session.id })}
+              onClick={goToLink}
             >
               <h3>{session.name}</h3>
             </IonItem>
           ))}
-          <IonItem button href="#" onClick={() => console.log('speakers', { id: speaker.id })}>
+          <IonItem button href={`/speakers/${speaker.id}`} onClick={goToLink}>
             <h3>About {speaker.name}</h3>
           </IonItem>
         </IonList>
@@ -74,10 +85,10 @@ const SpeakerItem = ({ speaker, speakerSessions }: ItemProps) => {
   );
 };
 
-type ListProps = ReturnType<typeof mapStateToProps>;
+type ListProps = RouteComponentProps & ReturnType<typeof mapStateToProps>;
 
-const SpeakerList = ({ speakers, sessions }: ListProps) => (
-  <>
+const SpeakerList = ({ speakers, sessions, history }: ListProps) => (
+  <div className="ion-page">
     <IonHeader>
       <IonToolbar color="primary">
         <IonButtons slot="start">
@@ -98,6 +109,7 @@ const SpeakerList = ({ speakers, sessions }: ListProps) => (
                 <SpeakerItem
                   key={speaker.id}
                   speaker={speaker}
+                  history={history}
                   speakerSessions={sessions.filter(session => session.speakerIds.indexOf(speaker.id) !== -1)}
                 />
               ) }
@@ -106,7 +118,7 @@ const SpeakerList = ({ speakers, sessions }: ListProps) => (
         </IonGrid>
       </IonList>
     </IonContent>
-  </>
+  </div>
 );
 
 const mapStateToProps = (state: RootState) => ({
@@ -116,4 +128,4 @@ const mapStateToProps = (state: RootState) => ({
 
 export default connect(
   mapStateToProps
-)(SpeakerList)
+)(SpeakerList);
