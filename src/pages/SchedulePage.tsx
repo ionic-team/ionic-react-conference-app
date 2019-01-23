@@ -83,7 +83,7 @@ class SchedulePage extends Component<Props, State> {
 
   render() {
     return (
-      <div className="ion-page">
+      <>
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start">
@@ -173,7 +173,7 @@ class SchedulePage extends Component<Props, State> {
             </IonFabButton>
           </IonFabList>
         </IonFab>
-      </div>
+      </>
     );
   }
 }

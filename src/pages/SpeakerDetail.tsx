@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { RootState } from '../store';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton, IonBackButtonNav } from '@ionic/react'
+import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton, IonBackButton } from '@ionic/react'
 import './SpeakerDetail.css';
 
 type Props = RouteComponentProps<{ id: string, tab: string}> & ReturnType<typeof mapStateToProps> & {
@@ -16,11 +16,11 @@ const SpeakerDetail: React.SFC<Props> = ({ speakers, match, goBack }) => {
   }
 
   return (
-    <div className="ion-page">
+    <>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButtonNav goBack={goBack} defaultHref={`/${match.params.tab}`} />
+            <IonBackButton goBack={goBack} defaultHref={`/${match.params.tab}`} />
           </IonButtons>
           <IonTitle>{speaker.name}</IonTitle>
         </IonToolbar>
@@ -43,7 +43,7 @@ const SpeakerDetail: React.SFC<Props> = ({ speakers, match, goBack }) => {
 
         <p>{speaker.about}</p>
       </IonContent>
-    </div>
+    </>
   );
 };
 

@@ -7,7 +7,7 @@ import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent 
 type Props = ReturnType<typeof mapStateToProps>;
 
 const MapPage: React.SFC<Props> = ({ locations, mapCenter }) => (
-  <div className="ion-page">
+  <>
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
@@ -20,7 +20,7 @@ const MapPage: React.SFC<Props> = ({ locations, mapCenter }) => (
     <IonContent class="map-page">
       <Map locations={locations} mapCenter={mapCenter} />
     </IonContent>
-  </div>
+  </>
 );
 
 const mapStateToProps = (state: RootState) => ({

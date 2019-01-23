@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SchedulePage from './SchedulePage';
 import SessionDetail from './SessionDetail';
 import SpeakerList from './SpeakerList';
 import SpeakerDetail from './SpeakerDetail';
 import MapView from './Map';
 import About from './About';
-import { IonTabs, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonTabBarNav } from '@ionic/react';
+import { IonTabs, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonTabBar } from '@ionic/react';
 import { Route } from 'react-router';
 
 const AppStack: React.SFC = () => (
@@ -29,7 +29,7 @@ const AppStack: React.SFC = () => (
         <Route path="/:tab(map)" component={MapView} />
         <Route path="/:tab(about)" component={About} />
       </IonRouterOutlet>
-      <IonTabBarNav slot="bottom">
+      <IonTabBar slot="bottom">
         <IonTabButton tab="schedule" href="/schedule">
           <IonIcon name="calendar" />
           <IonLabel>Schedule</IonLabel>
@@ -46,7 +46,7 @@ const AppStack: React.SFC = () => (
           <IonIcon name="information-circle" />
           <IonLabel>About</IonLabel>
         </IonTabButton>
-      </IonTabBarNav>
+      </IonTabBar>
     </IonTabs>
   </div>
 );

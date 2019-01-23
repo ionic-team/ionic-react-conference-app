@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { RootState } from '../store';
 import formatTime from '../utils/formatTime';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonBackButtonNav, IonContent, IonTitle } from '@ionic/react';
+import { IonIcon, IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonTitle } from '@ionic/react';
 import './SessionDetail.css';
 
 type Props = RouteComponentProps<{ id: string, tab: string }> & ReturnType<typeof mapStateToProps> & {
@@ -18,11 +18,11 @@ const SessionDetail: React.SFC<Props> = ({ sessions, speakers, match, goBack }) 
   const sessionSpeakers = speakers.filter(s => session.speakerIds.indexOf(s.id) !== -1);
 
   return (
-    <div className="ion-page">
+    <>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButtonNav goBack={goBack} defaultHref={`/${match.params.tab}`} />
+            <IonBackButton goBack={goBack} defaultHref={`/${match.params.tab}`} />
           </IonButtons>
           <IonTitle>{session.name}</IonTitle>
         </IonToolbar>
@@ -44,7 +44,7 @@ const SessionDetail: React.SFC<Props> = ({ sessions, speakers, match, goBack }) 
           <p>{session.description}</p>
         </div>
       </IonContent>
-    </div>
+    </>
   );
 }
 

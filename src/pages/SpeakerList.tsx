@@ -88,7 +88,7 @@ const SpeakerItem = ({ speaker, speakerSessions, history }: ItemProps) => {
 type ListProps = RouteComponentProps & ReturnType<typeof mapStateToProps>;
 
 const SpeakerList = ({ speakers, sessions, history }: ListProps) => (
-  <div className="ion-page">
+  <>
     <IonHeader>
       <IonToolbar color="primary">
         <IonButtons slot="start">
@@ -118,7 +118,7 @@ const SpeakerList = ({ speakers, sessions, history }: ListProps) => (
         </IonGrid>
       </IonList>
     </IonContent>
-  </div>
+  </>
 );
 
 const mapStateToProps = (state: RootState) => ({
