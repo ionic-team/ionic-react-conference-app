@@ -6,10 +6,11 @@ import SpeakerDetail from './SpeakerDetail';
 import MapView from './Map';
 import About from './About';
 import { IonTabs, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonTabBar } from '@ionic/react';
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 
 const AppStack: React.SFC = () => (
   <div className="ion-page">
+    <Route exact path="/" render={() => <Redirect to="/schedule"/>}/>
     {
     /**
      * Only render exact matches.  Only destroy on back button click
