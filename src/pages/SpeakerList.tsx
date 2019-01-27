@@ -32,7 +32,7 @@ const SpeakerItem = ({ speaker, speakerSessions, history }: ItemProps) => {
         <IonItem
           button
           detail={false}
-          href={`/speakers/${speaker.id}`}
+          href={`/speakers/speaker/${speaker.id}`}
           onClick={goToLink}
         >
           <IonAvatar slot="start">
@@ -53,7 +53,7 @@ const SpeakerItem = ({ speaker, speakerSessions, history }: ItemProps) => {
               <h3>{session.name}</h3>
             </IonItem>
           ))}
-          <IonItem button href={`/speakers/${speaker.id}`} onClick={goToLink}>
+          <IonItem button href={`/speakers/speaker/${speaker.id}`} onClick={goToLink}>
             <h3>About {speaker.name}</h3>
           </IonItem>
         </IonList>
