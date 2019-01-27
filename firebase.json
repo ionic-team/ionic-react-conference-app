@@ -9,11 +9,11 @@
     ],
     "headers": [
       {
-        "source": "/build/static/**",
+        "source": "**/static/**",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=31536000"
+            "value": "max-age=31536000"
           }
         ]
       }
