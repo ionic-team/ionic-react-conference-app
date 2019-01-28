@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { RootState } from '../store';
 import { History } from 'history';
-import { IonIcon, IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '@ionic/react';
+import { IonIcon, IonMenuButton, IonCard, IonCardHeader, IonCardContent, IonItem, IonAvatar, IonList, IonGrid, IonCol, IonRow, IonButton, IonHeader, IonContent, IonToolbar, IonButtons, IonTitle } from '@ionic/react';
 import { Speaker } from '../store/speakers/types';
 import { Session } from '../store/sessions/types';
 
@@ -90,11 +90,9 @@ type ListProps = RouteComponentProps & ReturnType<typeof mapStateToProps>;
 const SpeakerList = ({ speakers, sessions, history }: ListProps) => (
   <>
     <IonHeader>
-      <IonToolbar color="primary">
+      <IonToolbar>
         <IonButtons slot="start">
-          <IonButton>
-            <IonIcon slot="icon-only" name="menu"></IonIcon>
-          </IonButton>
+          <IonMenuButton></IonMenuButton>
         </IonButtons>
         <IonTitle>Speakers</IonTitle>
       </IonToolbar>
@@ -104,16 +102,15 @@ const SpeakerList = ({ speakers, sessions, history }: ListProps) => (
       <IonList>
         <IonGrid fixed>
           <IonRow align-items-stretch>
-            <IonCol size="12" size-md="6">
-              { speakers.map((speaker) =>
+            { speakers.map((speaker) =>
+              <IonCol size="12" size-md="6" key={speaker.id}>
                 <SpeakerItem
-                  key={speaker.id}
                   speaker={speaker}
                   history={history}
                   speakerSessions={sessions.filter(session => session.speakerIds.indexOf(speaker.id) !== -1)}
                 />
-              ) }
-            </IonCol>
+              </IonCol>
+            ) }
           </IonRow>
         </IonGrid>
       </IonList>
