@@ -7,7 +7,7 @@ const defaultState: User = {
   pictureLocation: null,
   userName: null,
   isAuthenticated: false,
-  hasSeenTutorial: false
+  hasSeenTutorial: true
 };
 
 export type UserAction = ActionType<typeof users>;
