@@ -17,7 +17,7 @@ import {
 } from '@ionic/react';
 import React, { FunctionComponent, useState } from 'react';
 
-export const Login: FunctionComponent = () => {
+const Login: FunctionComponent = () => {
   const [username, setUsername] = useState('');
 
   const updateUserName = (e: any) => {
@@ -77,3 +77,4 @@ export const Login: FunctionComponent = () => {
     </>
   );
 };
+export default Login;
