@@ -1,101 +1,116 @@
-import React, { Component } from 'react';
+import {
+  IonAlert,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonList,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
+import React, { Component, Fragment, FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router'
-import { RootState, actions } from '../store';
-import { IonAlert, IonHeader, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonToolbar } from '@ionic/react';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-type Props = RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
+import { actions, RootState } from '../store';
 
-type State = {
-  showAlert: boolean,
-}
+type Props = RouteComponentProps<{}> &
+  typeof mapDispatchToProps &
+  ReturnType<typeof mapStateToProps>;
 
-class Account extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+const Account: FunctionComponent<Props> = props => {
+  const [showAlert, setShowAlert] = useState(false);
 
-    this.state = {
-      showAlert: false
-    };
-  }
-
-  updatePicture = () => {
+  const updatePicture = () => {
     console.log('Clicked to update picture');
-  }
+  };
 
-  changeUsername = () => {
-    this.setState(() => ({
-      showAlert: true
-    }));
-  }
+  const changeUsername = () => {
+    setShowAlert(true);
+  };
 
-  changePassword = () => {
+  const changePassword = () => {
     console.log('Clicked to change password');
-  }
+  };
 
-  support = () => {
-    this.props.history.push('/support');
-  }
+  const support = () => {
+    props.history.push('/support');
+  };
 
-  logout = () => {
-    this.props.logOutUser();
-    this.props.history.push('/login');
-  }
+  const logout = () => {
+    props.logOutUser();
+    props.history.push('/login');
+  };
 
-  render() {
-    return (
-      <>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
-            </IonButtons>
-            <IonTitle>Account</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+  return (
+    <Fragment>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Account</IonTitle>
+        </IonToolbar>
+      </IonHeader>
 
-        <IonAlert
-          show={this.state.showAlert}
-          header={'Change Username'}
-          buttons={[
-            'Cancel',
-            {
-              text: 'Ok',
-              handler: ({ username }: { username: string }) => {
-                this.props.setUsername(username);
-              }
+      <IonAlert
+        show={showAlert}
+        header={'Change Username'}
+        buttons={[
+          'Cancel',
+          {
+            text: 'Ok',
+            handler: ({ username }: { username: string }) => {
+              props.setUsername(username);
             }
-          ]}
-          inputs={[{
+          }
+        ]}
+        inputs={[
+          {
             type: 'text',
             name: 'username',
-            value: this.props.user.userName,
+            value: props.user.userName,
             placeholder: 'username'
-          }]}
-          onIonAlertDidDismiss={() => ( this.setState(() => ({ showAlert: false }))) }
-        />
+          }
+        ]}
+        onIonAlertDidDismiss={() => setShowAlert(false)}
+      />
 
-        <IonContent class="outer-content page-account">
-          <div>
-            <img style={{
+      <IonContent class="outer-content page-account">
+        <div>
+          <img
+            style={{
               maxWidth: '140px',
               borderRadius: '50%'
-            }} src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"/>
-            <h2>{this.props.user.userName}</h2>
+            }}
+            src="http://www.gravatar.com/avatar?d=mm&s=140"
+            alt="avatar"
+          />
+          <h2>{props.user.userName}</h2>
 
-            <IonList inset>
-              <IonItem href="#" onClick={this.updatePicture}>Update Picture</IonItem>
-              <IonItem href="#" onClick={this.changeUsername}>Change Username</IonItem>
-              <IonItem href="#" onClick={this.changePassword}>Change Password</IonItem>
-              <IonItem href="#" onClick={this.support}>Support</IonItem>
-              <IonItem href="#" onClick={this.logout}>Logout</IonItem>
-            </IonList>
-          </div>
-        </IonContent>
-      </>
-    );
-  }
-}
+          <IonList inset>
+            <IonItem href="#" onClick={updatePicture}>
+              Update Picture
+            </IonItem>
+            <IonItem href="#" onClick={changeUsername}>
+              Change Username
+            </IonItem>
+            <IonItem href="#" onClick={changePassword}>
+              Change Password
+            </IonItem>
+            <IonItem href="#" onClick={support}>
+              Support
+            </IonItem>
+            <IonItem href="#" onClick={logout}>
+              Logout
+            </IonItem>
+          </IonList>
+        </div>
+      </IonContent>
+    </Fragment>
+  );
+};
 
 const mapStateToProps = (state: RootState) => ({
   user: state.user
@@ -104,9 +119,11 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = {
   logOutUser: () => actions.user.logOut(),
   setUsername: (username: string) => actions.user.setUsername(username)
-}
+};
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Account));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Account)
+);
