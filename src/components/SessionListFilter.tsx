@@ -20,7 +20,7 @@ type Props = {
   updateTrackFilters: (trackList: string[]) => void;
 };
 
-export const SessionListFilter: FunctionComponent<Props> = props => {
+const SessionListFilter: FunctionComponent<Props> = props => {
   const [trackFilters, setTrackFilters] = useState(props.filteredTracks);
 
   const toggleTrackFilter = (e: CustomEvent) => {
@@ -81,3 +81,4 @@ export const SessionListFilter: FunctionComponent<Props> = props => {
     </div>
   );
 };
+export default SessionListFilter;
