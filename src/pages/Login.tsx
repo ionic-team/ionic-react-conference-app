@@ -1,73 +1,79 @@
-import React, { Component } from 'react';
-import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonRow, IonCol, IonMenuButton } from '@ionic/react';
 import './Login.css';
 
-type State = {
-  username: string | null
-}
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
+import React, { FunctionComponent, useState } from 'react';
 
-export default class Login extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      username: null
-    }
-  }
+export const Login: FunctionComponent = () => {
+  const [username, setUsername] = useState('');
 
-  updateUserName(e: CustomEvent) {}
-  logInUser() {}
-  signUpUser() {}
+  const updateUserName = (e: any) => {
+    setUsername(e.target.value);
+  };
+  const logInUser = () => {};
+  const signUpUser = () => {};
 
-  render() {
-    return (
-      <>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
-            </IonButtons>
-            <IonTitle>Login</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+  return (
+    <>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Login</IonTitle>
+        </IonToolbar>
+      </IonHeader>
 
-        <IonContent>
-          <div className="logo">
-            <img src="assets/img/appicon.svg" alt="Ionic logo"/>
-          </div>
-          <form noValidate>
-            <IonList no-lines>
-              <IonItem>
-                <IonLabel color="primary">Username</IonLabel>
-                <IonInput
-                  onIonChange={this.updateUserName}
-                  name="username"
-                  type="text"
-                  autocapitalize="off"
-                  value={this.state.username}
-                  required>
-                </IonInput>
-              </IonItem>
-              <IonItem>
-                <IonLabel color="primary">Password</IonLabel>
-                <IonInput name="password" type="password" required></IonInput>
-              </IonItem>
-            </IonList>
+      <IonContent>
+        <div className="logo">
+          <img src="assets/img/appicon.svg" alt="Ionic logo" />
+        </div>
+        <form noValidate>
+          <IonList no-lines>
+            <IonItem>
+              <IonLabel color="primary">Username</IonLabel>
+              <IonInput
+                onIonChange={updateUserName}
+                name="username"
+                type="text"
+                autocapitalize="off"
+                value={username}
+                required
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel color="primary">Password</IonLabel>
+              <IonInput name="password" type="password" required />
+            </IonItem>
+          </IonList>
 
-            <IonRow responsive-sm>
-              <IonCol>
-                <IonButton onClick={this.logInUser} type="submit">
-                  Login
-                </IonButton>
-              </IonCol>
-              <IonCol>
-                <IonButton onClick={this.signUpUser} color="light">
-                  Signup
-                </IonButton>
-              </IonCol>
-            </IonRow>
-          </form>
-        </IonContent>
-      </>
-    );
-  }
-}
+          <IonRow responsive-sm>
+            <IonCol>
+              <IonButton onClick={logInUser} type="submit">
+                Login
+              </IonButton>
+            </IonCol>
+            <IonCol>
+              <IonButton onClick={signUpUser} color="light">
+                Signup
+              </IonButton>
+            </IonCol>
+          </IonRow>
+        </form>
+      </IonContent>
+    </>
+  );
+};
