@@ -5,11 +5,11 @@ import SpeakerList from './SpeakerList';
 import SpeakerDetail from './SpeakerDetail';
 import MapView from './Map';
 import About from './About';
-import { IonTabs, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonTabBar } from '@ionic/react';
+import { IonTabs, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonPage } from '@ionic/react';
 import { Route, Redirect } from 'react-router';
 
 const AppStack: React.SFC = () => (
-  <div className="ion-page">
+  <IonPage>
     <Route exact path="/" render={() => <Redirect to="/schedule"/>}/>
     {
     /**
@@ -49,7 +49,7 @@ const AppStack: React.SFC = () => (
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
-  </div>
+  </IonPage>
 );
 
 export default AppStack;

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ionic/react": "0.0.3",
+    "@ionic/react": "0.0.5",
     "@types/googlemaps": "^3.30.16",
     "@types/jest": "23.3.9",
     "@types/node": "10.12.9",

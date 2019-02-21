@@ -8,7 +8,7 @@ import Signup from './pages/Signup';
 import Tutorial from './pages/Tutorial';
 import AppStack from './pages/AppStack';
 import Menu from './components/Menu';
-import { IonApp, IonSplitPane } from '@ionic/react';
+import { IonApp, IonSplitPane, IonPage } from '@ionic/react';
 import { Provider } from 'react-redux';
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';
@@ -23,7 +23,7 @@ const App = () => (
         <IonApp>
           <IonSplitPane contentId="main">
             <Menu />
-            <div id="main" className="ion-page">
+            <IonPage id="main">
               <Switch>
                 <PrivateRoute path='/account' component={Account} />
                 <Route path="/tutorial" component={Tutorial} />
@@ -33,7 +33,7 @@ const App = () => (
                 <RequiresTutorialRoute path="/signup" component={Signup} />
                 <RequiresTutorialRoute path="/" component={AppStack} />
               </Switch>
-            </div>
+            </IonPage>
           </IonSplitPane>
         </IonApp>
       </div>

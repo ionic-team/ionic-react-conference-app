@@ -96,10 +96,10 @@ class SessionListItem extends React.Component<Props, State> {
     return (
       <IonItemSliding ref={this.ionItemSlidingRef} class={'track-' + this.props.session.tracks[0].toLowerCase()}>
         <IonAlert
-          show={this.state.showAlert}
+          isOpen={this.state.showAlert}
           header={this.state.alertHeader}
           buttons={this.state.alertButtons}
-          onIonAlertDidDismiss={this.dismissAlert}
+          onDidDismiss={this.dismissAlert}
         ></IonAlert>
         <IonItem button onClick={this.navigateToSession(this.props.session.id)}>
           <IonLabel>

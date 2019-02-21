@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IonHeader, IonButton, IonButtons, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonLabel, IonToggle } from '@ionic/react';
+import { IonHeader, IonButton, IonButtons, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonPage } from '@ionic/react';
 
 type Props = {
   filteredTracks: string[];
@@ -34,7 +34,7 @@ export default class SessionListFilter extends Component<Props, State> {
 
   resetFilters = () => {
     this.props.updateTrackFilters([]);
-    this.props.dismissModal;
+    this.props.dismissModal();
   }
 
   applyFilters = () => {
@@ -44,7 +44,7 @@ export default class SessionListFilter extends Component<Props, State> {
 
   render() {
     return (
-      <div className="ion-page">
+      <IonPage>
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
@@ -81,7 +81,7 @@ export default class SessionListFilter extends Component<Props, State> {
             </IonItem>
           </IonList>
         </IonContent>
-      </div>
+      </IonPage>
     );
   }
 }

@@ -120,11 +120,11 @@ class SchedulePage extends Component<Props, State> {
             <IonRefresherContent></IonRefresherContent>
           </IonRefresher>
           <IonToast
-            show={this.state.isRefreshing}
+            isOpen={this.state.isRefreshing}
             message="Updating content"
             showCloseButton={true}
             duration={2000}
-            onIonToastDidDismiss={() => this.setState(() => ({ 'isRefreshing': false }))}
+            onDidDismiss={() => this.setState(() => ({ 'isRefreshing': false }))}
           ></IonToast>
 
           <SessionList
@@ -139,7 +139,10 @@ class SchedulePage extends Component<Props, State> {
           />
         </IonContent>
 
-        <IonModal show={this.state.showFilterModal}>
+        <IonModal
+          isOpen={this.state.showFilterModal}
+          onDidDismiss={() => this.setState(() => ({ showFilterModal: false}))}
+        >
           <SessionListFilter
             filteredTracks={this.props.filteredTracks}
             allTracks={this.props.allTracks}
@@ -149,10 +152,10 @@ class SchedulePage extends Component<Props, State> {
         </IonModal>
 
         <IonLoading
-          show={this.state.showLoading}
+          isOpen={this.state.showLoading}
           message={this.state.loadingMessage}
           duration={2000}
-          onIonLoadingDidDismiss={() => this.setState(() => ({ 'showLoading': false }))}
+          onDidDismiss={() => this.setState(() => ({ 'showLoading': false }))}
         />
         <IonFab ref={this.ionFabRef} slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>

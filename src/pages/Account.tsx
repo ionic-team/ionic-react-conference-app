@@ -55,7 +55,7 @@ class Account extends Component<Props, State> {
         </IonHeader>
 
         <IonAlert
-          show={this.state.showAlert}
+          isOpen={this.state.showAlert}
           header={'Change Username'}
           buttons={[
             'Cancel',
@@ -72,7 +72,7 @@ class Account extends Component<Props, State> {
             value: this.props.user.userName,
             placeholder: 'username'
           }]}
-          onIonAlertDidDismiss={() => ( this.setState(() => ({ showAlert: false }))) }
+          onDidDismiss={() => ( this.setState(() => ({ showAlert: false }))) }
         />
 
         <IonContent class="outer-content page-account">

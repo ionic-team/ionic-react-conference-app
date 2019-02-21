@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide } from '@ionic/react';
+import { IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonContent, IonSlides, IonSlide, IonPage } from '@ionic/react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './Tutorial.css';
 
@@ -34,7 +34,7 @@ class Tutorial extends Component<Props, State> {
 
   render() {
     return (
-      <div className="ion-page tutorial-page">
+      <IonPage className="tutorial-page">
         <IonHeader no-border>
           <IonToolbar>
             { this.state.showSkip ?
@@ -93,7 +93,7 @@ class Tutorial extends Component<Props, State> {
             </IonSlide>
           </IonSlides>
         </IonContent>
-      </div>
+      </IonPage>
     );
   }
 };

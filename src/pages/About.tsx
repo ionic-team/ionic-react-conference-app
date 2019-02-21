@@ -54,9 +54,9 @@ class About extends Component<Props, State> {
         </IonHeader>
 
         <IonPopover
-          show={this.state.showPopover}
+          isOpen={this.state.showPopover}
           event={this.state.showPopoverEvent}
-          onIonPopoverDidDismiss={this.dismissPopover}
+          onDidDismiss={this.dismissPopover}
         >
           <AboutPopover
             dismissPopover={this.dismissPopover}
