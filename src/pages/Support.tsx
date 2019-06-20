@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { IonMenuButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonTextarea, IonButton } from '@ionic/react';
+import './Login.css';
 
 export default class Support extends Component {
   submit() {}
@@ -15,7 +16,7 @@ export default class Support extends Component {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent class="page-user">
+        <IonContent class="content">
           <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>

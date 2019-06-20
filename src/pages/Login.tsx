@@ -30,7 +30,7 @@ export default class Login extends Component<{}, State> {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent>
+        <IonContent class="content">
           <div className="logo">
             <img src="assets/img/appicon.svg" alt="Ionic logo"/>
           </div>

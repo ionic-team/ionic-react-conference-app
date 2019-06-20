@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
+import './Login.css';
 
 type State = {
   username: string | null,
@@ -31,7 +32,7 @@ export default class Signup extends Component<{},State> {
           </IonToolbar>
         </IonHeader>,
 
-        <IonContent class="page-user">
+        <IonContent class="content">
           <div className="logo">
             <img src="/assets/img/appicon.svg" alt="Ionic Logo"/>
           </div>

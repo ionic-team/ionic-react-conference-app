@@ -1,11 +1,14 @@
-.login-logo {
+.content {
+  height: 100vh;
+}
+.content .logo {
   padding: 20px 0;
   min-height: 200px;
   text-align: center;
 }
-.login-logo img {
+.content .logo img {
   max-width: 150px;
 }
-.list {
+.content .list {
   margin-bottom: 0;
 }
