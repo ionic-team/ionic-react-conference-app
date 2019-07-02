@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import { RootState } from '../store';
 import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton, IonBackButton } from '@ionic/react'
 import './SpeakerDetail.css';
+import { logoTwitter, logoGithub, logoInstagram } from 'ionicons/icons';
 
 type Props = RouteComponentProps<{ id: string, tab: string}> & ReturnType<typeof mapStateToProps> & {
   goBack: () => void;
@@ -20,24 +21,24 @@ const SpeakerDetail: React.SFC<Props> = ({ speakers, match, goBack }) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton goBack={goBack} defaultHref={`/${match.params.tab}`} />
+            <IonBackButton defaultHref={`/${match.params.tab}`} />
           </IonButtons>
           <IonTitle>{speaker.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent padding class="speaker-detail speaker-page-list">
+      <IonContent className="ion-padding speaker-detail speaker-page-list">
         <div>
           <img src={speaker.profilePic} alt={speaker.name}/>
           <br/>
           <IonButton icon-only color="twitter">
-            <IonIcon name="logo-twitter"></IonIcon>
+            <IonIcon icon={logoTwitter}></IonIcon>
           </IonButton>
           <IonButton icon-only color="github">
-            <IonIcon name="logo-github"></IonIcon>
+            <IonIcon icon={logoGithub}></IonIcon>
           </IonButton>
           <IonButton icon-only color="instagram">
-            <IonIcon name="logo-instagram"></IonIcon>
+            <IonIcon icon={logoInstagram}></IonIcon>
           </IonButton>
         </div>
 

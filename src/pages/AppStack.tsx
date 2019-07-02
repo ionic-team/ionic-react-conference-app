@@ -9,6 +9,7 @@ import SchedulePage from './SchedulePage';
 import SessionDetail from './SessionDetail';
 import SpeakerDetail from './SpeakerDetail';
 import SpeakerList from './SpeakerList';
+import { calendar, contacts, map, informationCircle } from 'ionicons/icons';
 
 type AppStackProps = typeof mapDispatchToProps;
 class AppStack extends React.Component<AppStackProps> {
@@ -23,17 +24,9 @@ class AppStack extends React.Component<AppStackProps> {
   render() {
     return (
       <IonPage>
-        <Route exact path="/" render={() => <Redirect to="/schedule" />} />
-        {/**
-         * Only render exact matches.  Only destroy on back button click
-         * On history.push keep previous route stored for back button
-         *
-         * TabBar does a push on iontabbutton click.
-         * TabBar updates the tab links based on the current route path.
-         */}
-
         <IonTabs>
           <IonRouterOutlet>
+            <Route exact path="/" render={() => <Redirect to="/schedule" />} />
             <Route path="/:tab(schedule)" component={SchedulePage} exact={true} />
             <Route path="/:tab(speakers)" component={SpeakerList} exact={true} />
             <Route path="/:tab(speakers)/speaker/:id" component={SpeakerDetail} />
@@ -43,19 +36,19 @@ class AppStack extends React.Component<AppStackProps> {
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="schedule" href="/schedule">
-              <IonIcon name="calendar" />
+              <IonIcon icon={calendar} />
               <IonLabel>Schedule</IonLabel>
             </IonTabButton>
             <IonTabButton tab="speakers" href="/speakers">
-              <IonIcon name="contacts" />
+              <IonIcon icon={contacts} />
               <IonLabel>Speakers</IonLabel>
             </IonTabButton>
             <IonTabButton tab="map" href="/map">
-              <IonIcon name="map" />
+              <IonIcon icon={map} />
               <IonLabel>Map</IonLabel>
             </IonTabButton>
             <IonTabButton tab="about" href="/about">
-              <IonIcon name="information-circle" />
+              <IonIcon icon={informationCircle} />
               <IonLabel>About</IonLabel>
             </IonTabButton>
           </IonTabBar>

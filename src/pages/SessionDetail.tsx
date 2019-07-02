@@ -22,13 +22,13 @@ const SessionDetail: React.SFC<Props> = ({ sessions, speakers, match, goBack }) 
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton goBack={goBack} defaultHref={`/${match.params.tab}`} />
+            <IonBackButton defaultHref={`/${match.params.tab}`} />
           </IonButtons>
           <IonTitle>{session.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent padding>
+      <IonContent className="ion-padding">
         <div>
           <h1>{session.name}</h1>
           {sessionSpeakers.map(speaker => (
