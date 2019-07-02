@@ -25,6 +25,7 @@ import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
 import { actions, RootState, selectors } from '../store';
 import './SchedulePage.css';
+import { share, logoVimeo, logoGoogleplus, logoTwitter, logoFacebook, options } from 'ionicons/icons';
 
 type Props = RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
@@ -114,7 +115,7 @@ class SchedulePage extends Component<Props, State> {
 
             <IonButtons slot="end">
               <IonButton onClick={this.presentFilter}>
-                <IonIcon name="options" slot="icon-only" />
+                <IonIcon icon={options} slot="icon-only" />
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -171,20 +172,20 @@ class SchedulePage extends Component<Props, State> {
         />
         <IonFab ref={this.ionFabRef} slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>
-            <IonIcon name="share" />
+            <IonIcon icon={share} />
           </IonFabButton>
           <IonFabList side="top">
             <IonFabButton color="vimeo" onClick={() => this.openSocial('Vimeo')}>
-              <IonIcon name="logo-vimeo" />
+              <IonIcon icon={logoVimeo} />
             </IonFabButton>
             <IonFabButton color="google" onClick={() => this.openSocial('Google+')}>
-              <IonIcon name="logo-googleplus" />
+              <IonIcon icon={logoGoogleplus} />
             </IonFabButton>
             <IonFabButton color="twitter" onClick={() => this.openSocial('Twitter')}>
-              <IonIcon name="logo-twitter" />
+              <IonIcon icon={logoTwitter} />
             </IonFabButton>
             <IonFabButton color="facebook" onClick={() => this.openSocial('Facebook')}>
-              <IonIcon name="logo-facebook" />
+              <IonIcon icon={logoFacebook} />
             </IonFabButton>
           </IonFabList>
         </IonFab>

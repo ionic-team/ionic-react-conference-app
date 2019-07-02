@@ -4,6 +4,7 @@ import { RootState, selectors } from '../store';
 import { IonPopover, IonIcon, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonTitle } from '@ionic/react';
 import './About.css';
 import AboutPopover from '../components/AboutPopover';
+import { calendar, pin } from 'ionicons/icons';
 
 type Props = ReturnType<typeof mapStateToProps>
 
@@ -72,13 +73,13 @@ class About extends Component<Props, State> {
 
             <IonList lines="none">
               <IonItem>
-                <IonIcon name="calendar" slot="start"></IonIcon>
+                <IonIcon icon={calendar} slot="start"></IonIcon>
                 <IonLabel>Date</IonLabel>
                 <IonDatetime displayFormat="MMM DD, YYYY" max="2056" value={this.props.conferenceDate}></IonDatetime>
               </IonItem>
 
               <IonItem>
-                <IonIcon name="pin" slot="start"></IonIcon>
+                <IonIcon icon={pin} slot="start"></IonIcon>
                 <IonLabel>Location</IonLabel>
                 <IonSelect>
                   <IonSelectOption value="madison" selected>Madison, WI</IonSelectOption>
