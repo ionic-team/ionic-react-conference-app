@@ -1,3 +1,5 @@
+/*global google*/
+
 import React, { Component } from 'react';
 import { Location } from '../store/locations/types';
 
