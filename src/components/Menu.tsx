@@ -77,7 +77,7 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
         </IonList>
         <IonList>
           <IonListHeader>Account</IonListHeader>
-          {isAuthenticated ? renderlistItems(routes.loggedOutPages) : renderlistItems(routes.loggedInPages)}
+          {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.loggedOutPages)}
         </IonList>
         <IonList>
           <IonListHeader>Tutorial</IonListHeader>
