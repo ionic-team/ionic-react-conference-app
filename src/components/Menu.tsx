@@ -44,20 +44,22 @@ const routes = {
     { title: 'Login', path: '/login', icon: logIn },
     { title: 'Support', path: '/support', icon: help },
     { title: 'Signup', path: '/signup', icon: personAdd }
-  ]
+  ],
+  tutorial: [
+    { title: 'Show Tutorial', path: '/tutorial', icon: hammer },
+  ],
 };
 
 type Props = RouteComponentProps<{}> & ReturnType<typeof mapStateToProps>;
 
-const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
+const Menu: React.FunctionComponent<Props> = ({ isAuthenticated, history }) => {
   function renderlistItems(list: any[]) {
     return list
-      .filter(route => !!route.path)
-      .map(p => (
-        <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem button onClick={() => history.push(p.path)}>
-            <IonIcon slot="start" icon={p.icon} />
-            <IonLabel>{p.title}</IonLabel>
+      .map(item => (
+        <IonMenuToggle key={item.title} auto-hide="false">
+          <IonItem button onClick={() => history.push(item.path)}>
+            <IonIcon slot="start" icon={item.icon} />
+            <IonLabel>{item.title}</IonLabel>
           </IonItem>
         </IonMenuToggle>
       ));
@@ -77,14 +79,11 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
         </IonList>
         <IonList>
           <IonListHeader>Account</IonListHeader>
-          {isAuthenticated ? renderlistItems(routes.loggedOutPages) : renderlistItems(routes.loggedInPages)}
+          {renderlistItems(isAuthenticated ? routes.loggedInPages : routes.loggedOutPages)}
         </IonList>
         <IonList>
           <IonListHeader>Tutorial</IonListHeader>
-          <IonItem onClick={() => {}}>
-            <IonIcon slot="start" icon={hammer} />
-            Show Tutorial
-          </IonItem>
+          {renderlistItems(routes.tutorial)}
         </IonList>
       </IonContent>
     </IonMenu>
