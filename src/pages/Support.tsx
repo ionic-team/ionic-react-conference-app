@@ -23,6 +23,8 @@ export default class Support extends Component {
             <IonList no-lines>
               <IonItem>
                 <IonLabel color="primary">Enter your support message below</IonLabel>
+              </IonItem>
+              <IonItem>
                 <IonTextarea name="supportQuestion" required></IonTextarea>
               </IonItem>
             </IonList>

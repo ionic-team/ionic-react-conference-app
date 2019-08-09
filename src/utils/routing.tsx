@@ -30,10 +30,12 @@ class PRoute extends Component<Props> {
 
 class RTRoute extends Component<Props> {
   render() {
+    const needTutorial = !this.props.user.hasSeenTutorial;
+    
     return (
       <>
-        { !this.props.user.hasSeenTutorial ? <Tutorial /> : null }
-        <div style={!this.props.user.hasSeenTutorial ? { "display": "none"} : {}}>
+        { needTutorial ? <Tutorial /> : null }
+        <div style={needTutorial ? {display: "none"} : {height: "100%"}}>
           <Route {...this.props}/>
         </div>
       </>
