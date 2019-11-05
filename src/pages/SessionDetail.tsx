@@ -1,58 +1,108 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
-import { RootState } from '../store';
-import formatTime from '../utils/formatTime';
-import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonTitle } from '@ionic/react';
-import './SessionDetail.css';
+import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonButton, IonIcon, IonText, IonList, IonItem, IonLabel } from '@ionic/react';
+import { connect } from '../data/connect';
+import { withRouter, RouteComponentProps } from 'react-router';
+import { Session } from '../models/Session';
+import * as selectors from '../data/selectors';
+import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
+import './SessionDetail.scss';
+import { Time } from '../components/Time';
+import { addFavorite, removeFavorite } from '../data/actions';
 
-type Props = RouteComponentProps<{ id: string, tab: string }> & ReturnType<typeof mapStateToProps> & {
-  goBack: () => void
+interface OwnProps extends RouteComponentProps { };
+
+interface StateProps {
+  session?: Session;
+  favoriteSessions: number[],
 };
 
-const SessionDetail: React.SFC<Props> = ({ sessions, speakers, match, goBack }) => {
-  const session = sessions.find(s => s.id === parseInt(match.params.id, 10));
-  if (session == null) {
-    return null;
+interface DispatchProps {
+  addFavorite: typeof addFavorite;
+  removeFavorite: typeof removeFavorite;
+}
+
+type SessionDetailProps = OwnProps & StateProps & DispatchProps;
+
+const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, removeFavorite, favoriteSessions }) => {
+
+  if (!session) {
+    return <div>Session not found</div>
   }
-  const sessionSpeakers = speakers.filter(s => session.speakerIds.indexOf(s.id) !== -1);
+
+  const isFavorite = favoriteSessions.indexOf(session.id) > -1;
+  
+  const toggleFavorite = () => { 
+    isFavorite ? removeFavorite(session.id) : addFavorite(session.id);
+  };
+  const shareSession = () => { };
+  const sessionClick = (text: string) => { 
+    console.log(`Clicked ${text}`);
+  };
 
   return (
-    <>
+    <IonPage id="session-detail-page">
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={`/${match.params.tab}`} />
+            <IonBackButton defaultHref="/tabs/schedule"></IonBackButton>
           </IonButtons>
-          <IonTitle>{session.name}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={() => toggleFavorite()}>
+              {isFavorite ?
+                <IonIcon slot="icon-only" icon={star}></IonIcon> :
+                <IonIcon slot="icon-only" icon={starOutline}></IonIcon>
+              }
+            </IonButton>
+            <IonButton onClick={() => shareSession}>
+              <IonIcon slot="icon-only" icon={share}></IonIcon>
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
-
-      <IonContent className="ion-padding">
-        <div>
+      <IonContent>
+        <div className="ion-padding">
           <h1>{session.name}</h1>
-          {sessionSpeakers.map(speaker => (
-            <h4 key={speaker.name}>
-              {speaker.name}
-            </h4>
+          {session.tracks.map(track => (
+            <span key={track} className={`session-track-${track.toLowerCase()}`}>{track}</span>
           ))}
-          <p>
-            {formatTime(session.dateTimeStart, "h:MM a")} &mdash;&nbsp;
-            {formatTime(session.dateTimeEnd, "h:MM a")}
-          </p>
-          <p>{session.location}</p>
           <p>{session.description}</p>
+          <IonText color="medium">
+            <Time date={session.dateTimeStart} /> &ndash; <Time date={session.dateTimeEnd} />
+            <br />
+            {session.location}
+          </IonText>
         </div>
+        <IonList>
+          <IonItem onClick={() => sessionClick('watch')} button>
+            <IonLabel color="primary">Watch</IonLabel>
+          </IonItem>
+          <IonItem onClick={() => sessionClick('add to calendar')} button>
+            <IonLabel color="primary">Add to Calendar</IonLabel>
+          </IonItem>
+          <IonItem onClick={() => sessionClick('mark as unwatched')} button>
+            <IonLabel color="primary">Mark as Unwatched</IonLabel>
+          </IonItem>
+          <IonItem onClick={() => sessionClick('download video')} button>
+            <IonLabel color="primary">Download Video</IonLabel>
+            <IonIcon slot="end" color="primary" size="small" icon={cloudDownload}></IonIcon>
+          </IonItem>
+          <IonItem onClick={() => sessionClick('leave feedback')} button>
+            <IonLabel color="primary">Leave Feedback</IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
-    </>
+    </IonPage>
   );
-}
+};
 
-const mapStateToProps = (state: RootState) => ({
-  sessions: state.sessions.sessions,
-  speakers: state.speakers.speakers
-});
-
-export default connect(
-  mapStateToProps
-)(SessionDetail)
+export default connect<OwnProps, StateProps, DispatchProps>({
+  mapStateToProps: (state, OwnProps) => ({
+    session: selectors.getSession(state, OwnProps),
+    favoriteSessions: state.favorites
+  }),
+  mapDispatchToProps: {
+    addFavorite,
+    removeFavorite
+  },
+  component: withRouter(SessionDetail)
+})

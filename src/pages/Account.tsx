@@ -1,112 +1,87 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router'
-import { RootState, actions } from '../store';
-import { IonAlert, IonHeader, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonToolbar } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonList, IonItem, IonAlert } from '@ionic/react';
+import './Account.scss';
+import { setUsername } from '../data/actions';
+import { connect } from '../data/connect';
+import { RouteComponentProps } from 'react-router';
 
-type Props = RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
+interface OwnProps extends RouteComponentProps { }
 
-type State = {
-  showAlert: boolean,
+interface StateProps {
+  username?: string;
 }
 
-class Account extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+interface DispatchProps {
+  setUsername: typeof setUsername;
+}
 
-    this.state = {
-      showAlert: false
-    };
+interface AccountProps extends OwnProps, StateProps, DispatchProps { }
+
+const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  const clicked = (text: string) => {
+    console.log(`Clicked ${text}`);
   }
 
-  updatePicture = () => {
-    console.log('Clicked to update picture');
-  }
-
-  changeUsername = () => {
-    this.setState(() => ({
-      showAlert: true
-    }));
-  }
-
-  changePassword = () => {
-    console.log('Clicked to change password');
-  }
-
-  support = () => {
-    this.props.history.push('/support');
-  }
-
-  logout = () => {
-    this.props.logOutUser();
-    this.props.history.push('/login');
-  }
-
-  render() {
-    return (
-      <>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
-            </IonButtons>
-            <IonTitle>Account</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonAlert
-          isOpen={this.state.showAlert}
-          header={'Change Username'}
-          buttons={[
-            'Cancel',
-            {
-              text: 'Ok',
-              handler: ({ username }: { username: string }) => {
-                this.props.setUsername(username);
-              }
+  return (
+    <IonPage id="account-page">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
+          <IonTitle>Account</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        {username &&
+          (<div className="ion-padding-top ion-text-center">
+            <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
+            <h2>{ username }</h2>
+            <IonList inset>
+              <IonItem onClick={() => clicked('Update Picture')}>Update Picture</IonItem>
+              <IonItem onClick={() => setShowAlert(true)}>Change Username</IonItem>
+              <IonItem onClick={() => clicked('Change Password')}>Change Password</IonItem>
+              <IonItem routerLink="/support" routerDirection="none">Support</IonItem>
+              <IonItem routerLink="/logout" routerDirection="none">Logout</IonItem>
+            </IonList>
+          </div>)
+        }
+      </IonContent>
+      <IonAlert
+        isOpen={showAlert}
+        header="Change Username"
+        buttons={[
+          'Cancel',
+          {
+            text: 'Ok',
+            handler: (data) => {
+              setUsername(data.username);
             }
-          ]}
-          inputs={[{
+          }
+        ]}
+        inputs={[
+          {
             type: 'text',
             name: 'username',
-            value: this.props.user.userName,
+            value: username,
             placeholder: 'username'
-          }]}
-          onDidDismiss={() => ( this.setState(() => ({ showAlert: false }))) }
-        />
+          }
+        ]}
+        onDidDismiss={() => setShowAlert(false)}
+      />
+    </IonPage>
+  );
+};
 
-        <IonContent class="outer-content page-account">
-          <div>
-            <img style={{
-              maxWidth: '140px',
-              borderRadius: '50%'
-            }} src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar"/>
-            <h2>{this.props.user.userName}</h2>
-
-            <IonList inset>
-              <IonItem href="#" onClick={this.updatePicture}>Update Picture</IonItem>
-              <IonItem href="#" onClick={this.changeUsername}>Change Username</IonItem>
-              <IonItem href="#" onClick={this.changePassword}>Change Password</IonItem>
-              <IonItem href="#" onClick={this.support}>Support</IonItem>
-              <IonItem href="#" onClick={this.logout}>Logout</IonItem>
-            </IonList>
-          </div>
-        </IonContent>
-      </>
-    );
-  }
-}
-
-const mapStateToProps = (state: RootState) => ({
-  user: state.user
-});
-
-const mapDispatchToProps = {
-  logOutUser: () => actions.user.logOut(),
-  setUsername: (username: string) => actions.user.setUsername(username)
-}
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Account));
+export default connect<OwnProps, StateProps, DispatchProps>({
+  mapStateToProps: (state) => ({
+    username: state.username
+  }),
+  mapDispatchToProps: {
+    setUsername,
+  },
+  component: Account
+})

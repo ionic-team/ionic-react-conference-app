@@ -1,42 +1,21 @@
-import React from 'react';
-import { Session, SessionGroup } from '../store/sessions/types';
-import { format, parse as parseDate } from 'date-fns';
+import { IonItemDivider, IonItemGroup, IonLabel, IonList, IonListHeader } from '@ionic/react';
+import React, { useMemo } from 'react';
+import { Session } from '../models/Session';
 import SessionListItem from './SessionListItem';
-import { IonList, IonListHeader, IonItemGroup, IonItemDivider, IonLabel } from '@ionic/react';
+import { SessionGroup } from '../models/SessionGroup';
+import { Time } from '../components/Time';
 
-interface Props {
-  sessions: Session[]
-  hidden: boolean;
-  listType: "all" | "favorites"
+interface SessionListProps {
+  sessionGroups: SessionGroup[]
+  listType: 'all' | 'favorites'
+  hide: boolean;
 }
 
-function groupedByStartTime(sessions: Session[]) {
-  return sessions
-    .sort((a, b) => (
-      parseDate(a.dateTimeStart).valueOf() - parseDate(b.dateTimeStart).valueOf()
-    ))
-    .reduce((groups, session) => {
-      let starterHour = parseDate(session.dateTimeStart);
-      starterHour.setMinutes(0);
-      starterHour.setSeconds(0);
-      const starterHourStr = starterHour.toJSON();
-      const foundGroup = groups.find(group => group.startTime === starterHourStr);
-      if (foundGroup) {
-        foundGroup.sessions.push(session);
-      } else {
-        groups.push({
-          startTime: starterHourStr,
-          sessions: [session]
-        });
-      }
-      return groups;
-  }, [] as SessionGroup[]);
-}
+export const SessionList: React.FC<SessionListProps> = ({ hide, sessionGroups, listType }) => {
 
-const SessionList: React.SFC<Props> = ({sessions, hidden, listType }) => {
-  if (sessions.length === 0) {
+  if (sessionGroups.length === 0 && !hide) {
     return (
-      <IonList style={hidden ? {display: 'none'} : {}}>
+      <IonList>
         <IonListHeader>
           No Sessions Found
         </IonListHeader>
@@ -44,18 +23,16 @@ const SessionList: React.SFC<Props> = ({sessions, hidden, listType }) => {
     );
   }
 
-  const groups = groupedByStartTime(sessions);
-
   return (
-    <IonList style={hidden ? {display: 'none'} : {}}>
-      { groups.map((group, index: number) => (
+    <IonList style={hide ? { display: 'none' } : {}}>
+      {sessionGroups.map((group, index: number) => (
         <IonItemGroup key={`group-${index}`}>
           <IonItemDivider sticky>
             <IonLabel>
-              {format(parseDate(group.startTime), "h:MM a")}
+              <Time date={group.startTime} />
             </IonLabel>
           </IonItemDivider>
-          { group.sessions.map((session: Session, sessionIndex: number) => (
+          {group.sessions.map((session: Session, sessionIndex: number) => (
             <SessionListItem
               key={`group-${index}-${sessionIndex}`}
               session={session}
@@ -63,9 +40,7 @@ const SessionList: React.SFC<Props> = ({sessions, hidden, listType }) => {
             />
           ))}
         </IonItemGroup>
-      )) }
+      ))}
     </IonList>
   );
 };
-
-export default SessionList;

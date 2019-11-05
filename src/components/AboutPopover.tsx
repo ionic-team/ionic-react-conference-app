@@ -1,47 +1,36 @@
-import React, { Component } from 'react';
-import {IonList, IonItem, IonLabel} from '@ionic/react';
-import { withRouter, RouteComponentProps } from 'react-router';
+import React from 'react';
+import { IonList, IonItem, IonLabel } from '@ionic/react';
 
-type Props = RouteComponentProps<{}> & {
-  dismissPopover: () => void;
-}
+interface AboutPopoverProps {
+  dismiss: () => void;
+};
 
-class AboutPopover extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
+const AboutPopover: React.FC<AboutPopoverProps> = ({dismiss}) => {
 
-  support = () => {
-    this.props.history.push('/support');
-    this.props.dismissPopover();
-  }
-
-  close = (url: string) => () => {
+  const close = (url: string) => {
     window.open(url, '_blank');
-    this.props.dismissPopover();
-  }
+    dismiss();
+  };
 
-  render() {
-    return (
-      <IonList>
-        <IonItem button onClick={this.close('https://ionicframework.com/docs/v2/getting-started')}>
-          <IonLabel>Learn Ionic</IonLabel>
-        </IonItem>
-        <IonItem button onClick={this.close('https://ionicframework.com/docs/v2')}>
-          <IonLabel>Documentation</IonLabel>
-        </IonItem>
-        <IonItem button onClick={this.close('https://showcase.ionicframework.com')}>
-          <IonLabel>Showcase</IonLabel>
-        </IonItem>
-        <IonItem button onClick={this.close('https://github.com/ionic-team/ionic')}>
-          <IonLabel>GitHub Repo</IonLabel>
-        </IonItem>
-        <IonItem button onClick={this.support}>
-          <IonLabel>Support</IonLabel>
-        </IonItem>
-      </IonList>
-    );
-  }
+  return (
+    <IonList>
+      <IonItem button onClick={() => close('https://ionicframework.com/getting-started')}>
+        <IonLabel>Learn Ionic</IonLabel>
+      </IonItem>
+      <IonItem button onClick={() => close('https://ionicframework.com/docs/react')}>
+        <IonLabel>Documentation</IonLabel>
+      </IonItem>
+      <IonItem button onClick={() => close('https://showcase.ionicframework.com')}>
+        <IonLabel>Showcase</IonLabel>
+      </IonItem>
+      <IonItem button onClick={() => close('https://github.com/ionic-team/ionic')}>
+        <IonLabel>GitHub Repo</IonLabel>
+      </IonItem>
+      <IonItem button onClick={dismiss}>
+        <IonLabel>Support</IonLabel>
+      </IonItem>
+    </IonList >
+  )
 }
 
-export default withRouter(AboutPopover);
+export default AboutPopover;

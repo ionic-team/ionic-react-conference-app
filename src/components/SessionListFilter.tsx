@@ -1,87 +1,108 @@
-import React, { Component } from 'react';
-import { IonHeader, IonButton, IonButtons, IonToolbar, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonPage } from '@ionic/react';
+import React from 'react';
+import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonFooter, IonIcon } from '@ionic/react';
+import { logoAngular, call, document, logoIonic, hammer, restaurant, cog, colorPalette, construct, compass } from 'ionicons/icons';
+import './SessionListFilter.css'
+import { connect } from '../data/connect';
+import { updateFilteredTracks } from '../data/actions';
 
-type Props = {
-  filteredTracks: string[];
-  allTracks: string[];
-  dismissModal: () => void;
-  updateTrackFilters: (trackList: string[]) => void;
+interface OwnProps {
+  onDismissModal: () => void;
 }
 
-type State = {
-  trackFilters: string[];
+interface StateProps {
+  allTracks: string[],
+  filteredTracks: string[]
 }
 
-export default class SessionListFilter extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+interface DispatchProps {
+  updateFilteredTracks: typeof updateFilteredTracks;
+}
 
-    this.state = {
-      trackFilters: props.filteredTracks
+type SessionListFilterProps = OwnProps & StateProps & DispatchProps;
+
+const SessionListFilter: React.FC<SessionListFilterProps> = ({ allTracks, filteredTracks, onDismissModal, updateFilteredTracks }) => {
+
+  const toggleTrackFilter = (track: string) => {
+    if (filteredTracks.indexOf(track) > -1) {
+      updateFilteredTracks(filteredTracks.filter(x => x !== track));
+    } else {
+      updateFilteredTracks([...filteredTracks, track]);
     }
+  };
+
+  const handleDeselectAll = () => {
+    updateFilteredTracks([]);
+  };
+
+  const handleSelectAll = () => {
+    updateFilteredTracks([...allTracks]);
+  };
+
+  const iconMap: { [key: string]: any } = {
+    'Angular': logoAngular,
+    'Documentation': document,
+    'Food': restaurant,
+    'Ionic': logoIonic,
+    'Tooling': hammer,
+    'Design': colorPalette,
+    'Services': cog,
+    'Workshop': construct,
+    'Navigation': compass,
+    'Communication': call
   }
 
-  toggleTrackFilter = (e: CustomEvent) => {
-    this.setState((prevState) => {
-      const trackFilters = (e.detail.checked) ?
-        prevState.trackFilters.concat(e.detail.value) :
-        prevState.trackFilters.filter(track => track !== e.detail.value);
-      return {
-        trackFilters
-      }
-    });
-  }
-
-  resetFilters = () => {
-    this.props.updateTrackFilters([]);
-    this.props.dismissModal();
-  }
-
-  applyFilters = () => {
-    this.props.updateTrackFilters(this.state.trackFilters);
-    this.props.dismissModal();
-  }
-
-  render() {
-    return (
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonButton onClick={this.props.dismissModal}>Cancel</IonButton>
-            </IonButtons>
-            <IonTitle>
-              Filter Sessions
+  return (
+    <>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>
+            Filter Sessions
             </IonTitle>
-            <IonButtons slot="end">
-              <IonButton onClick={this.applyFilters} strong>Done</IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+          <IonButtons slot="end">
+            <IonButton onClick={onDismissModal} strong>Done</IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
 
-        <IonContent class="outer-content">
-          <IonList>
-            <IonListHeader>Tracks</IonListHeader>
-            { this.props.allTracks.map((track) => (
-              <IonItem key={track}>
-                <span slot="start" className="dot"></span>
-                <IonLabel>{track}</IonLabel>
-                <IonToggle
-                  onIonChange={this.toggleTrackFilter}
-                  checked={this.state.trackFilters.indexOf(track) !== -1}
-                  color="success"
-                  value={track}
-                ></IonToggle>
-              </IonItem>
-            ))}
-          </IonList>
-          <IonList>
-            <IonItem onClick={this.resetFilters} detail={false} class="reset-filters">
-              Reset All Filters
+      <IonContent class="outer-content">
+        <IonList>
+          <IonListHeader>Tracks</IonListHeader>
+          {allTracks.map((track, index) => (
+            <IonItem key={track}>
+              <IonIcon className="filter-icon" icon={iconMap[track]} color="medium" />
+              <IonLabel>{track}</IonLabel>
+              <IonToggle
+                onClick={() => toggleTrackFilter(track)}
+                checked={filteredTracks.indexOf(track) !== -1}
+                color="success"
+                value={track}
+              ></IonToggle>
             </IonItem>
-          </IonList>
-        </IonContent>
-      </IonPage>
-    );
-  }
-}
+          ))}
+        </IonList>
+      </IonContent>
+
+      <IonFooter>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={handleDeselectAll}>Deselect All</IonButton>
+          </IonButtons>
+          <IonButtons slot="end">
+            <IonButton onClick={handleSelectAll}>Select All</IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonFooter>
+    </>
+  );
+};
+
+export default connect<OwnProps, StateProps, DispatchProps>({
+  mapStateToProps: (state) => ({
+    allTracks: state.allTracks,
+    filteredTracks: state.filteredTracks
+  }),
+  mapDispatchToProps: {
+    updateFilteredTracks
+  },
+  component: SessionListFilter
+})

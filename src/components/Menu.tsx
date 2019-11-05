@@ -11,29 +11,17 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import {
-  calendar,
-  contacts,
-  hammer,
-  help,
-  logIn,
-  logOut,
-  map,
-  person,
-  personAdd,
-  informationCircle
-} from 'ionicons/icons';
-import React from 'react';
-import { connect } from 'react-redux';
+import { calendar, contacts, hammer, help, informationCircle, logIn, logOut, map, person, personAdd } from 'ionicons/icons';
+import React, { useState } from 'react';
+import { connect } from '../data/connect';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { RootState } from '../store';
 
 const routes = {
   appPages: [
-    { title: 'Schedule', path: '/', icon: calendar },
-    { title: 'Speakers', path: '/speakers', icon: contacts },
-    { title: 'Map', path: '/map', icon: map },
-    { title: 'About', path: '/about', icon: informationCircle }
+    { title: 'Schedule', path: '/tabs/schedule', icon: calendar, routerDirection: 'none' },
+    { title: 'Speakers', path: '/tabs/speakers', icon: contacts, routerDirection: 'none' },
+    { title: 'Map', path: '/tabs/map', icon: map, routerDirection: 'none' },
+    { title: 'About', path: '/tabs/about', icon: informationCircle, routerDirection: 'none' }
   ],
   loggedInPages: [
     { title: 'Account', path: '/account', icon: person },
@@ -47,15 +35,27 @@ const routes = {
   ]
 };
 
-type Props = RouteComponentProps<{}> & ReturnType<typeof mapStateToProps>;
+interface Pages {
+  title: string,
+  path: string,
+  icon: { ios: string, md: string},
+  routerDirection?: string
+}
+interface StateProps {
+  isAuthenticated: boolean;
+}
 
-const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
-  function renderlistItems(list: any[]) {
+interface MenuProps extends RouteComponentProps, StateProps {}
+
+const Menu: React.FC<MenuProps> = ({ history, isAuthenticated }) => {
+  const [disableMenu, setDisableMenu] = useState(false);
+  
+  function renderlistItems(list: Pages[]) {
     return list
       .filter(route => !!route.path)
       .map(p => (
         <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem button onClick={() => history.push(p.path)}>
+          <IonItem button routerLink={p.path} routerDirection={p.routerDirection as any}>
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
           </IonItem>
@@ -64,7 +64,7 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
   }
 
   return (
-    <IonMenu contentId="main">
+    <IonMenu disabled={disableMenu} contentId="main">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Menu</IonTitle>
@@ -77,11 +77,14 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
         </IonList>
         <IonList>
           <IonListHeader>Account</IonListHeader>
-          {isAuthenticated ? renderlistItems(routes.loggedOutPages) : renderlistItems(routes.loggedInPages)}
+          {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.loggedOutPages)}
         </IonList>
         <IonList>
           <IonListHeader>Tutorial</IonListHeader>
-          <IonItem onClick={() => {}}>
+          <IonItem onClick={() => {
+            setDisableMenu(true);
+            history.push('/tutorial');
+          }}>
             <IonIcon slot="start" icon={hammer} />
             Show Tutorial
           </IonItem>
@@ -91,8 +94,9 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  isAuthenticated: state.user.isAuthenticated
-});
-
-export default withRouter(connect(mapStateToProps)(Menu));
+export default connect<{}, StateProps, {}>({
+  mapStateToProps: (state) => ({
+    isAuthenticated: state.hasLoggedIn
+  }),
+  component: withRouter(Menu)
+})

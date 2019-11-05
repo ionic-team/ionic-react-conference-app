@@ -1,28 +1,26 @@
 {
-  "name": "my-ionic-app",
-  "version": "0.1.0",
+  "name": "ionic-react-conference-app",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@ionic/react": "0.0.6",
-    "@types/googlemaps": "^3.30.16",
-    "@types/jest": "23.3.9",
-    "@types/node": "10.12.9",
-    "@types/react": "^16.8.18",
-    "@types/react-dom": "^16.8.4",
-    "@types/react-redux": "^6.0.9",
-    "@types/react-router": "^5.0.2",
-    "@types/react-router-dom": "^4.3.4",
-    "date-fns": "^1.29.0",
-    "ionicons": "^4.6.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-redux": "^5.1.1",
+    "@capacitor/core": "1.3.0",
+    "@ionic/react": "^4.11.3",
+    "@ionic/react-router": "^4.11.3",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-router": "^5.0.3",
+    "@types/react-router-dom": "^4.3.1",
+    "date-fns": "^2.6.0",
+    "ionicons": "^4.6.3",
+    "node-sass": "^4.13.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "2.1.1",
-    "redux": "^4.0.1",
-    "typesafe-actions": "^2.0.4",
-    "typescript": "3.1.6"
+    "react-scripts": "3.1.2",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,5 +36,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "An Ionic project",
+  "devDependencies": {
+    "@capacitor/cli": "1.3.0",
+    "@testing-library/react": "^9.3.1",
+    "@types/googlemaps": "^3.38.0",
+    "typescript": "^3.7.2"
+  }
 }

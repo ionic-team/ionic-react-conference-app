@@ -1,65 +1,56 @@
-import React, { Component } from 'react';
-import { Location } from '../store/locations/types';
+import React, { useRef, useEffect } from 'react';
+import { Location } from '../models/Location';
 
-type Props = {
+interface MapProps {
   locations: Location[]
   mapCenter: Location
 }
 
-export default class Map extends Component<Props> {
-  mapEle: React.RefObject<HTMLDivElement>;
-  map?: google.maps.Map;
+const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
+  const mapEle = useRef<HTMLDivElement>(null);
+  const map = useRef<google.maps.Map>();
 
-  constructor(props: Props) {
-    super(props);
-    this.mapEle = React.createRef();
-  }
+  useEffect(() => {
 
-  componentDidMount() {
-    this.map = new google.maps.Map(this.mapEle.current, {
+    map.current = new google.maps.Map(mapEle.current, {
       center: {
-        lat: this.props.mapCenter.lat,
-        lng: this.props.mapCenter.lng
+        lat: mapCenter.lat,
+        lng: mapCenter.lng
       },
       zoom: 16
     });
 
-    this.addMarkers();
+    addMarkers();
 
-    google.maps.event.addListenerOnce(this.map, 'idle', () => {
-      if (this.mapEle.current) {
-        this.mapEle.current.classList.add('show-map');
+    google.maps.event.addListenerOnce(map.current, 'idle', () => {
+      if (mapEle.current) {
+        mapEle.current.classList.add('show-map');
       }
     });
-  }
 
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.locations.length === 0) {
-      this.addMarkers();
-    }
-  }
+  }, []);
 
-  addMarkers() {
-    this.props.locations.forEach((markerData) => {
+  const addMarkers = () => {
+    locations.forEach((markerData) => {
       let infoWindow = new google.maps.InfoWindow({
         content: `<h5>${markerData.name}</h5>`
       });
 
       let marker = new google.maps.Marker({
         position: new google.maps.LatLng(markerData.lat, markerData.lng),
-        map: this.map,
+        map: map.current!,
         title: markerData.name
       });
 
       marker.addListener('click', () => {
-        infoWindow.open(this.map, marker);
+        infoWindow.open(map.current!, marker);
       });
     });
-  }
+  };
 
-  render() {
-    return (
-      <div ref={this.mapEle} style={{height: '100%', width: '100%'}} id="map_canvas"></div>
-    );
-  }
+  return (
+    <div ref={mapEle} className="map-canvas"></div>
+  );
 }
+
+export default Map;
