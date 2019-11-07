@@ -28,25 +28,25 @@ const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
       }
     });
 
-  }, []);
-
-  const addMarkers = () => {
-    locations.forEach((markerData) => {
-      let infoWindow = new google.maps.InfoWindow({
-        content: `<h5>${markerData.name}</h5>`
+    function addMarkers() {
+      locations.forEach((markerData) => {
+        let infoWindow = new google.maps.InfoWindow({
+          content: `<h5>${markerData.name}</h5>`
+        });
+  
+        let marker = new google.maps.Marker({
+          position: new google.maps.LatLng(markerData.lat, markerData.lng),
+          map: map.current!,
+          title: markerData.name
+        });
+  
+        marker.addListener('click', () => {
+          infoWindow.open(map.current!, marker);
+        });
       });
+    }
 
-      let marker = new google.maps.Marker({
-        position: new google.maps.LatLng(markerData.lat, markerData.lng),
-        map: map.current!,
-        title: markerData.name
-      });
-
-      marker.addListener('click', () => {
-        infoWindow.open(map.current!, marker);
-      });
-    });
-  };
+  }, [mapCenter, locations]);
 
   return (
     <div ref={mapEle} className="map-canvas"></div>

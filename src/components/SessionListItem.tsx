@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { IonItemSliding, IonAlert, IonItem, IonLabel, IonItemOptions, IonItemOption, AlertButton } from '@ionic/react';
 import { Session } from '../models/Session';
-import { format, parseISO as parseDate } from 'date-fns';
 import { connect } from '../data/connect';
 import { addFavorite, removeFavorite } from '../data/actions';
 import { Time } from './Time';

@@ -1,5 +1,5 @@
 import { IonItemDivider, IonItemGroup, IonLabel, IonList, IonListHeader } from '@ionic/react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Session } from '../models/Session';
 import SessionListItem from './SessionListItem';
 import { SessionGroup } from '../models/SessionGroup';

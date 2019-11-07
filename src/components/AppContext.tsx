@@ -1,5 +1,4 @@
 import React, { createContext, useReducer } from 'react';
-import { getData } from '../data/dataApi';
 import { dataReducer, initialState } from '../data/dataReducer';
 
 export interface AppContextState {
