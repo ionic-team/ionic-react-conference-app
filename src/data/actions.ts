@@ -37,3 +37,7 @@ export const setUsername = (username?: string) => async (dispatch: React.Dispatc
   await setUsernameData(username);
   dispatch({ type: 'set-username', payload: username });
 }
+
+export const setDarkMode = (darkMode: boolean) => async (dispatch: React.Dispatch<any>) => {
+  dispatch({ type: 'set-dark-mode', payload: darkMode });
+}

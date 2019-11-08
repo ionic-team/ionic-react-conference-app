@@ -169,12 +169,6 @@
   --ion-color-navigation: #6600cc;
 }
 
-.md {
-  --ion-toolbar-background: var(--ion-color-primary);
-  --ion-toolbar-color: #fff;
-  --ion-toolbar-color-activated: #fff;
-}
-
 /*
  * Dark Theme
  * ----------------------------------------------------------------------------

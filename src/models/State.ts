@@ -17,4 +17,5 @@ export interface State {
   hasLoggedIn: boolean;
   hasSeenTutorial: boolean;
   username?: string;
+  darkMode: boolean;
 }

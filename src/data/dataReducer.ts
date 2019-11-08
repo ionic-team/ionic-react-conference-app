@@ -11,7 +11,8 @@ export const initialState: State = {
   isError: false,
   mapCenterId: 1,
   hasLoggedIn: false,
-  hasSeenTutorial: false
+  hasSeenTutorial: false,
+  darkMode: false
 };
 
 export const dataReducer = (state: State, action: any): State => {
@@ -48,6 +49,9 @@ export const dataReducer = (state: State, action: any): State => {
     }
     case 'set-username': {
       return { ...state, username: action.payload };
+    }
+    case 'set-dark-mode': {
+      return { ...state, darkMode: action.payload };
     }
   }
   return state;

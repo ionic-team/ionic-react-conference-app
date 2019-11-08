@@ -9,19 +9,21 @@ import {
   IonMenu,
   IonMenuToggle,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonToggle
 } from '@ionic/react';
 import { calendar, contacts, hammer, help, informationCircle, logIn, logOut, map, person, personAdd } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { connect } from '../data/connect';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { setDarkMode } from '../data/actions';
 
 const routes = {
   appPages: [
-    { title: 'Schedule', path: '/tabs/schedule', icon: calendar, routerDirection: 'none' },
-    { title: 'Speakers', path: '/tabs/speakers', icon: contacts, routerDirection: 'none' },
-    { title: 'Map', path: '/tabs/map', icon: map, routerDirection: 'none' },
-    { title: 'About', path: '/tabs/about', icon: informationCircle, routerDirection: 'none' }
+    { title: 'Schedule', path: '/tabs/schedule', icon: calendar },
+    { title: 'Speakers', path: '/tabs/speakers', icon: contacts },
+    { title: 'Map', path: '/tabs/map', icon: map },
+    { title: 'About', path: '/tabs/about', icon: informationCircle }
   ],
   loggedInPages: [
     { title: 'Account', path: '/account', icon: person },
@@ -38,24 +40,29 @@ const routes = {
 interface Pages {
   title: string,
   path: string,
-  icon: { ios: string, md: string},
+  icon: { ios: string, md: string },
   routerDirection?: string
 }
 interface StateProps {
+  darkMode: boolean;
   isAuthenticated: boolean;
 }
 
-interface MenuProps extends RouteComponentProps, StateProps {}
+interface DispatchProps {
+  setDarkMode: typeof setDarkMode
+}
 
-const Menu: React.FC<MenuProps> = ({ history, isAuthenticated }) => {
+interface MenuProps extends RouteComponentProps, StateProps, DispatchProps { }
+
+const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDarkMode }) => {
   const [disableMenu, setDisableMenu] = useState(false);
-  
+
   function renderlistItems(list: Pages[]) {
     return list
       .filter(route => !!route.path)
       .map(p => (
         <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem button routerLink={p.path} routerDirection={p.routerDirection as any}>
+          <IonItem button routerLink={p.path} routerDirection="none">
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
           </IonItem>
@@ -64,7 +71,7 @@ const Menu: React.FC<MenuProps> = ({ history, isAuthenticated }) => {
   }
 
   return (
-    <IonMenu disabled={disableMenu} contentId="main">
+    <IonMenu type="overlay" disabled={disableMenu} contentId="main">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Menu</IonTitle>
@@ -89,6 +96,12 @@ const Menu: React.FC<MenuProps> = ({ history, isAuthenticated }) => {
             Show Tutorial
           </IonItem>
         </IonList>
+        <IonList>
+          <IonItem>
+            <IonLabel>Dark Theme</IonLabel>
+            <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonMenu>
   );
@@ -96,7 +109,11 @@ const Menu: React.FC<MenuProps> = ({ history, isAuthenticated }) => {
 
 export default connect<{}, StateProps, {}>({
   mapStateToProps: (state) => ({
+    darkMode: state.darkMode,
     isAuthenticated: state.hasLoggedIn
+  }),
+  mapDispatchToProps: ({
+    setDarkMode
   }),
   component: withRouter(Menu)
 })
