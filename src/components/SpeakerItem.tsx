@@ -6,16 +6,10 @@ import { Session } from '../models/Session';
 import { connect } from '../data/connect';
 import { ActionSheetButton } from '@ionic/core';
 
-interface OwnProps {
+interface SpeakerItemProps {
   speaker: Speaker;
   sessions: Session[];
 }
-
-interface StateProps { };
-
-interface DispatchProps { };
-
-interface SpeakerItemProps extends OwnProps, StateProps, DispatchProps { };
 
 const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
   const [showActionSheet, setShowActionSheet] = useState(false);
@@ -129,6 +123,4 @@ const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
   );
 };
 
-export default connect<OwnProps, StateProps, DispatchProps>({
-  component: SpeakerItem
-});
+export default SpeakerItem;
