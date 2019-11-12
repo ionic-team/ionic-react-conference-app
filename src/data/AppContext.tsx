@@ -1,18 +1,19 @@
 import React, { createContext, useReducer } from 'react';
-import { dataReducer, initialState } from '../data/dataReducer';
+import { initialState, AppState, reducers } from './state'
 
 export interface AppContextState {
-  state?: any;
+  state: AppState;
   dispatch: React.Dispatch<any>;
 }
 
 export const AppContext = createContext<AppContextState>({
+  state: initialState,
   dispatch: () => undefined
 });
 
 export const AppContextProvider: React.FC = (props => {
 
-  const [store, dispatch] = useReducer(dataReducer, initialState);
+  const [store, dispatch] = useReducer(reducers, initialState);
 
   return (
     <AppContext.Provider value={{

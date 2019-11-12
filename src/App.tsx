@@ -25,15 +25,16 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import MainTabs from './pages/MainTabs';
 import { connect } from './data/connect';
-import { AppContextProvider } from './components/AppContext';
-import { loadData, setIsLoggedIn, setUsername } from './data/actions';
+import { AppContextProvider } from './data/AppContext';
+import { loadConfData } from './data/sessions/sessions.actions';
+import {setIsLoggedIn, setUsername, loadUserData } from './data/user/user.actions';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Support from './pages/Support';
-import { Session } from './models/Session';
 import Tutorial from './pages/Tutorial';
 import HomeOrTutorial from './components/HomeOrTutorial';
+import { Session } from "./models/Session";
 
 const App: React.FC = () => {
   return (
@@ -49,17 +50,20 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  loadData: typeof loadData;
+  loadConfData: typeof loadConfData;
+  loadUserData: typeof loadUserData;
   setIsLoggedIn: typeof setIsLoggedIn;
   setUsername: typeof setUsername;
 }
 
 interface IonicAppProps extends StateProps, DispatchProps {}
 
-const IonicApp: React.FC<IonicAppProps> = ({ darkMode, sessions, setIsLoggedIn, setUsername, loadData }) => {
-
+const IonicApp: React.FC<IonicAppProps> = ({ darkMode, sessions, setIsLoggedIn, setUsername, loadConfData, loadUserData }) => {
+  
   useEffect(() => {
-    loadData();
+    loadUserData();
+    loadConfData();
+  // eslint-disable-next-line
   }, []);
 
   return (
@@ -97,10 +101,9 @@ export default App;
 
 const IonicAppConnected = connect<{}, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    darkMode: state.darkMode,
-    sessions: state.sessions,
-    isLoaded: !state.isLoading
+    darkMode: state.user.darkMode,
+    sessions: state.data.sessions
   }),
-  mapDispatchToProps: { loadData, setIsLoggedIn, setUsername },
+  mapDispatchToProps: { loadConfData, loadUserData, setIsLoggedIn, setUsername },
   component: IonicApp
 });

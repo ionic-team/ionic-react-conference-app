@@ -3,7 +3,7 @@ import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, Ion
 import { logoAngular, call, document, logoIonic, hammer, restaurant, cog, colorPalette, construct, compass } from 'ionicons/icons';
 import './SessionListFilter.css'
 import { connect } from '../data/connect';
-import { updateFilteredTracks } from '../data/actions';
+import { updateFilteredTracks } from '../data/sessions/sessions.actions';
 
 interface OwnProps {
   onDismissModal: () => void;
@@ -98,8 +98,8 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({ allTracks, filter
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    allTracks: state.allTracks,
-    filteredTracks: state.filteredTracks
+    allTracks: state.data.allTracks,
+    filteredTracks: state.data.filteredTracks
   }),
   mapDispatchToProps: {
     updateFilteredTracks

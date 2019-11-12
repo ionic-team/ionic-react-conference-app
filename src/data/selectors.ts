@@ -1,15 +1,14 @@
-import { State } from './../models/State';
 import { createSelector } from 'reselect';
 import { parseISO as parseDate } from 'date-fns';
-import { SessionGroup } from '../models/SessionGroup';
 import { Session } from '../models/Session';
-import { Location } from '../models/Location';
+import { SessionGroup } from '../models/SessionGroup';
+import { AppState } from './state';
 
-const getSessions = (state: State) => state.sessions;
-export const getSpeakers = (state: State) => state.speakers;
-const getFilteredTracks = (state: State) => state.filteredTracks;
-const getFavoriteIds = (state: State) => state.favorites;
-const getSearchText = (state: State) => state.searchText;
+const getSessions = (state: AppState) => state.data.sessions;
+export const getSpeakers = (state: AppState) => state.data.speakers;
+const getFilteredTracks = (state: AppState) => state.data.filteredTracks;
+const getFavoriteIds = (state: AppState) => state.data.favorites;
+const getSearchText = (state: AppState) => state.data.searchText;
 
 export const getFilteredSessions = createSelector(
   getSessions, getFilteredTracks,
@@ -55,8 +54,8 @@ export const getGroupedFavorites = createSelector(
   }
 )
 
-const getIdParam = (_state: State, props: any) => {
-  const stringParam = props.match.params["id"];
+const getIdParam = (_state: AppState, props: any) => {
+  const stringParam = props.match.params['id'];
   return parseInt(stringParam, 10);
 }
 
@@ -110,17 +109,15 @@ export const getSpeakerSessions = createSelector(
   }
 );
 
-export const mapCenter = (state: State): Location => {
-  const item = state.locations.find(l => l.id === state.mapCenterId);
-
+export const mapCenter = (state: AppState) => {
+  const item = state.data.locations.find(l => l.id === state.data.mapCenterId);
   if (item == null) {
     return {
       id: 1,
-      name: "Map Center",
+      name: 'Map Center',
       lat: 43.071584,
       lng: -89.380120
     };
   }
-
   return item;
 }

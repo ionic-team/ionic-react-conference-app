@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../components/AppContext';
-import { State } from '../models/State';
+import { AppContext } from './AppContext';
+import { DispatchObject } from '../util/types';
+import { AppState } from './state';
 
 interface ConnectParams<TOwnProps, TStateProps, TDispatchProps> {
-  mapStateToProps?: (state: State, props: TOwnProps) => TStateProps,
+  mapStateToProps?: (state: AppState, props: TOwnProps) => TStateProps,
   mapDispatchToProps?: TDispatchProps,
   component: React.ComponentType<any>
 };
@@ -17,7 +18,18 @@ export function connect<TOwnProps = any, TStateProps = any, TDispatchProps = any
       const oldFunc = (mapDispatchToProps as any)[key];
       const newFunc = (...args: any) => {
         const dispatchFunc = oldFunc(...args);
-        dispatchFunc(context.dispatch);
+        if(typeof dispatchFunc === 'object') {
+          context.dispatch(dispatchFunc);
+        } else {
+          const result = dispatchFunc(context.dispatch)
+          if(typeof result === 'object' && result.then) {
+            result.then((dispatchObject?: DispatchObject) => {
+              if(dispatchObject && dispatchObject.type) {
+                context.dispatch(dispatchObject);
+              }             
+            })            
+          }
+        }
       }
       dispatchFuncs[key] = newFunc
     });
@@ -28,33 +40,3 @@ export function connect<TOwnProps = any, TStateProps = any, TDispatchProps = any
   }
   return React.memo(Component as any);
 }
-
-interface ConnectProps {
-  mapStateToProps?: (state: State) => {},
-  mapDispatchToProps?: {},
-  component: React.ComponentType<any>,
-  ownProps: any;
-}
-
-const Connect2: React.FC<ConnectProps> = (
-  { ownProps, mapStateToProps = () => {}, mapDispatchToProps = {}, component }
-) => {
-
-  const context = useContext(AppContext);
-
-  const dispatchFuncs: { [key: string]: any } = {};
-  Object.keys(mapDispatchToProps).forEach((key) => {
-    const oldFunc = (mapDispatchToProps as any)[key];
-    const newFunc = (...args: any) => {
-      const dispatchFunc = oldFunc(...args);
-      dispatchFunc(context.dispatch);
-    }
-    dispatchFuncs[key] = newFunc
-  });
-
-  const props = Object.assign({}, ownProps, mapStateToProps(context.state), dispatchFuncs);
-  return React.createElement(component, props);
-}
-
-export const Connect = React.memo(Connect2);
-// export const Connect = Connect2;

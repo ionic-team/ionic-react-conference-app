@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import { Session } from '../models/Session';
 import { Speaker } from '../models/Speaker';
 import { IonCard, IonCardHeader, IonItem, IonAvatar, IonCardContent, IonList, IonRow, IonCol, IonButton, IonIcon, IonActionSheet } from '@ionic/react';
 import { logoTwitter, shareAlt, chatboxes } from 'ionicons/icons';
-import { Session } from '../models/Session';
-import { connect } from '../data/connect';
 import { ActionSheetButton } from '@ionic/core';
 
 interface SpeakerItemProps {

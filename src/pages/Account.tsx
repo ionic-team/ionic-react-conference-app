@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonList, IonItem, IonAlert } from '@ionic/react';
 import './Account.scss';
-import { setUsername } from '../data/actions';
+import { setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
 import { RouteComponentProps } from 'react-router';
 
@@ -78,7 +78,7 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    username: state.username
+    username: state.user.username
   }),
   mapDispatchToProps: {
     setUsername,

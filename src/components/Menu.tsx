@@ -16,7 +16,7 @@ import { calendar, contacts, hammer, help, informationCircle, logIn, logOut, map
 import React, { useState } from 'react';
 import { connect } from '../data/connect';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { setDarkMode } from '../data/actions';
+import { setDarkMode } from '../data/user/user.actions';
 
 const routes = {
   appPages: [
@@ -109,8 +109,8 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
 
 export default connect<{}, StateProps, {}>({
   mapStateToProps: (state) => ({
-    darkMode: state.darkMode,
-    isAuthenticated: state.hasLoggedIn
+    darkMode: state.user.darkMode,
+    isAuthenticated: state.user.isLoggedin
   }),
   mapDispatchToProps: ({
     setDarkMode

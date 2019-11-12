@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonSlides, IonSlide, IonIcon } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
-import { setHasSeenTutorial } from '../data/actions';
+import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
 import { connect } from '../data/connect';
 import { RouteComponentProps } from 'react-router';
@@ -20,7 +20,7 @@ const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial }) => {
   
   const startApp = async () => { 
     await setHasSeenTutorial(true);
-    history.push('/', { direction: 'none' });
+    history.push('/tabs/schedule', { direction: 'none' });
   };
 
   const handleSlideChangeStart = () => { 

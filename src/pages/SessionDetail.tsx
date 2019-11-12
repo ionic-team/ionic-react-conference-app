@@ -2,12 +2,12 @@ import React from 'react';
 import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonButton, IonIcon, IonText, IonList, IonItem, IonLabel } from '@ionic/react';
 import { connect } from '../data/connect';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Session } from '../models/Session';
 import * as selectors from '../data/selectors';
 import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
 import './SessionDetail.scss';
 import { Time } from '../components/Time';
-import { addFavorite, removeFavorite } from '../data/actions';
+import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
+import { Session } from '../models/Session';
 
 interface OwnProps extends RouteComponentProps { };
 
@@ -98,7 +98,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state, OwnProps) => ({
     session: selectors.getSession(state, OwnProps),
-    favoriteSessions: state.favorites
+    favoriteSessions: state.data.favorites
   }),
   mapDispatchToProps: {
     addFavorite,

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { IonItemSliding, IonAlert, IonItem, IonLabel, IonItemOptions, IonItemOption, AlertButton } from '@ionic/react';
-import { Session } from '../models/Session';
 import { connect } from '../data/connect';
-import { addFavorite, removeFavorite } from '../data/actions';
+import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 import { Time } from './Time';
+import { Session } from '../models/Session';
 
 interface OwnProps {
   session: Session;
@@ -32,7 +32,7 @@ const SessionListItemInner: React.FC<Props> = ({ addFavorite, removeFavorite, fa
     setShowAlert(false);
     setAlertHeader('');
     setAlertButtons([]);
-    ionItemSlidingRef.current!.close();
+    ionItemSlidingRef.current && ionItemSlidingRef.current.close();
   }
 
   const removeFavoriteSession = () => {
@@ -48,7 +48,7 @@ const SessionListItemInner: React.FC<Props> = ({ addFavorite, removeFavorite, fa
       },
       {
         text: 'Remove',
-        handler: removeFavorite(session.id)
+        handler: () => removeFavorite(session.id)
       }
     ]);
   }
@@ -110,7 +110,7 @@ const SessionListItemInner: React.FC<Props> = ({ addFavorite, removeFavorite, fa
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => {
     return {
-      favoriteSessions: state.favorites
+      favoriteSessions: state.data.favorites
     }
   },
   mapDispatchToProps: {

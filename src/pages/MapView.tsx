@@ -36,7 +36,7 @@ const MapView: React.FC<MapViewProps> = ({ locations, mapCenter }) => (
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    locations: state.locations,
+    locations: state.data.locations,
     mapCenter: selectors.mapCenter(state)
   }),
   component: MapView

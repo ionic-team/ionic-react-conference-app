@@ -1,6 +1,7 @@
-import { Session } from "../models/Session";
-import { Speaker } from "../models/Speaker";
 import { Plugins } from '@capacitor/core';
+import { Session } from '../models/Session';
+import { Speaker } from '../models/Speaker';
+import { Location } from '../models/Location';
 
 const { Storage } = Plugins;
 
@@ -12,20 +13,14 @@ const HAS_LOGGED_IN = 'hasLoggedIn';
 const HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 const USERNAME = 'username';
 
-export const getData = async () => {
+export const getConfData = async () => {
   const response = await Promise.all([
     fetch(sessionsUrl),
     fetch(locationsUrl),
-    fetch(speakersUrl),
-    Storage.get({ key: HAS_LOGGED_IN }),
-    Storage.get({ key: HAS_SEEN_TUTORIAL }),
-    Storage.get({ key: USERNAME })]);
+    fetch(speakersUrl)]);
   const sessions = await response[0].json() as Session[];
   const locations = await response[1].json() as Location[];
   const speakers = await response[2].json() as Speaker[];
-  const hasLoggedIn = await response[3].value === 'true';
-  const hasSeenTutorial = await response[4].value === 'true';
-  const username = await response[5].value;
   const allTracks = sessions
     .reduce((all, session) => all.concat(session.tracks), [] as string[])
     .filter((trackName, index, array) => array.indexOf(trackName) === index)
@@ -35,8 +30,21 @@ export const getData = async () => {
     locations,
     speakers,
     allTracks,
-    filteredTracks: [...allTracks],
-    hasLoggedIn,
+    filteredTracks: [...allTracks]
+  }
+  return data;
+}
+
+export const getUserData = async () => {
+  const response = await Promise.all([
+    Storage.get({ key: HAS_LOGGED_IN }),
+    Storage.get({ key: HAS_SEEN_TUTORIAL }),
+    Storage.get({ key: USERNAME })]);
+  const isLoggedin = await response[0].value === 'true';
+  const hasSeenTutorial = await response[1].value === 'true';
+  const username = await response[2].value || undefined;
+  const data = {
+    isLoggedin,
     hasSeenTutorial,
     username
   }

@@ -12,7 +12,7 @@ const HomeOrTutorial: React.FC<StateProps> = ({ hasSeenTutorial }) => {
 
 export default connect<{}, StateProps, {}>({
   mapStateToProps: (state) => ({
-    hasSeenTutorial: state.hasSeenTutorial
+    hasSeenTutorial: state.user.hasSeenTutorial
   }),
   component: HomeOrTutorial
 });

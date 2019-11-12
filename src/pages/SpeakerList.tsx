@@ -20,6 +20,7 @@ interface DispatchProps { };
 interface SpeakerListProps extends OwnProps, StateProps, DispatchProps { };
 
 const SpeakerList: React.FC<SpeakerListProps> = ({ speakers, speakerSessions }) => {
+
   return (
     <IonPage id="speaker-list">
       <IonHeader>
@@ -31,7 +32,7 @@ const SpeakerList: React.FC<SpeakerListProps> = ({ speakers, speakerSessions }) 
         </IonToolbar>
       </IonHeader>
 
-      <IonContent class="outer-content speaker-list">
+      <IonContent className={`outer-content`}>
         <IonList>
           <IonGrid fixed>
             <IonRow align-items-stretch>
