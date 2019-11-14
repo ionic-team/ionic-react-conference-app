@@ -17,7 +17,8 @@ interface DispatchProps { }
 
 interface MapViewProps extends OwnProps, StateProps, DispatchProps { };
 
-const MapView: React.FC<MapViewProps> = ({ locations, mapCenter }) => (
+const MapView: React.FC<MapViewProps> = ({ locations, mapCenter }) => {
+  return (
   <IonPage id="map-view">
     <IonHeader>
       <IonToolbar>
@@ -32,7 +33,7 @@ const MapView: React.FC<MapViewProps> = ({ locations, mapCenter }) => (
       <Map locations={locations} mapCenter={mapCenter} />
     </IonContent>
   </IonPage>
-);
+)};
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({

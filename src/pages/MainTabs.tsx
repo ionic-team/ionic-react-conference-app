@@ -6,7 +6,7 @@ import SchedulePage from './SchedulePage';
 import SpeakerList from './SpeakerList';
 import SpeakerDetail from './SpeakerDetail';
 import SessionDetail from './SessionDetail';
-import Map from './MapView';
+import MapView from './MapView';
 import About from './About';
 
 interface MainTabsProps { }
@@ -17,13 +17,17 @@ const MainTabs: React.FC<MainTabsProps> = () => {
     <IonTabs>
       <IonRouterOutlet>
         <Redirect exact path="/tabs" to="/tabs/schedule" />
-        <Route path="/tabs/schedule" component={SchedulePage} exact={true} />
-        <Route path="/tabs/speakers" component={SpeakerList} exact={true} />
+        {/* 
+          Using the render method prop cuts down the number of renders your components will have due to route changes.
+          Use the component prop when your component depends on the RouterComponentProps passed in automatically.        
+        */}
+        <Route path="/tabs/schedule" render={() => <SchedulePage />} exact={true} />
+        <Route path="/tabs/speakers" render={() => <SpeakerList />} exact={true} />
         <Route path="/tabs/speakers/:id" component={SpeakerDetail} exact={true} />
         <Route path="/tabs/schedule/:id" component={SessionDetail} />
         <Route path="/tabs/speakers/sessions/:id" component={SessionDetail} />
-        <Route path="/tabs/map" component={Map} exact={true} />
-        <Route path="/tabs/about" component={About} exact={true} />
+        <Route path="/tabs/map" render={() => <MapView />} exact={true} />
+        <Route path="/tabs/about" render={() => <About />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="schedule" href="/tabs/schedule">

@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { IonToolbar, IonContent, IonPage, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonIcon, IonSearchbar, IonRefresher, IonRefresherContent, IonToast, IonModal, IonHeader, getConfig } from '@ionic/react';
 import { connect } from '../data/connect';
 import { options } from 'ionicons/icons';
-import { SessionList } from '../components/SessionList';
+import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
 import './SchedulePage.scss'
 import * as selectors from '../data/selectors';
-import { setSearchText } from '../data/sessions/sessions.actions';
+import { setSearchText, addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 import ShareSocialFab from '../components/ShareSocialFab';
 import { SessionGroup } from '../models/SessionGroup';
 
@@ -108,15 +108,13 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
 };
 
 export default connect<OwnProps, StateProps, DispatchProps>({
-  mapStateToProps: (state) => {
-    return {
-      sessionGroups: selectors.getGroupedSessions(state),
-      favoriteGroups: selectors.getGroupedFavorites(state),
-      mode: getConfig()!.get('mode')
-    }
-  },
+  mapStateToProps: (state) => ({
+    sessionGroups: selectors.getGroupedSessions(state),
+    favoriteGroups: selectors.getGroupedFavorites(state),
+    mode: getConfig()!.get('mode')
+  }),
   mapDispatchToProps: {
     setSearchText
   },
-  component: SchedulePage
+  component: React.memo(SchedulePage)
 });

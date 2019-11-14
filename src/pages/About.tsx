@@ -78,4 +78,4 @@ const About: React.FC<AboutProps> = () => {
   );
 };
 
-export default About;
+export default React.memo(About);

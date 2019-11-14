@@ -5,10 +5,9 @@ import { Speaker } from '../models/Speaker';
 import { Session } from '../models/Session';
 import { connect } from '../data/connect';
 import * as selectors from '../data/selectors';
-import { RouteComponentProps } from 'react-router';
 import './SpeakerList.scss';
 
-interface OwnProps extends RouteComponentProps { };
+interface OwnProps { };
 
 interface StateProps {
   speakers: Speaker[];
@@ -58,5 +57,5 @@ export default connect<OwnProps, StateProps, DispatchProps>({
     speakers: selectors.getSpeakers(state),
     speakerSessions: selectors.getSpeakerSessions(state)
   }),
-  component: SpeakerList
+  component: React.memo(SpeakerList)
 });
