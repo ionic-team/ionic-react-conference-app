@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "ionic-react-conference-app",
+  "appId": "me.dog.himadu",
+  "appName": "himadu",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
