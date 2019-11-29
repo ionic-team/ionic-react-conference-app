@@ -1,3 +1,3 @@
-# Ionic React Conference Demo App
+# Himadu Website Private Testing
 
-You can see a live demo here. (https://ionic-react-conference-app.firebaseapp.com/)
+This is for private testing, do not use anything in this repo unless you are authourized.
