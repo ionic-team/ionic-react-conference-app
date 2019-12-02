@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@capacitor/core": "1.3.0",
-    "@ionic/react": "^4.11.4",
-    "@ionic/react-router": "^4.11.4",
+    "@ionic/react": "^4.11.5",
+    "@ionic/react-router": "^4.11.5",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.5",
     "@types/react": "^16.9.2",
