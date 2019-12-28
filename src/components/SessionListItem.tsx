@@ -14,7 +14,7 @@ interface SessionListItemProps {
 
 const SessionListItem: React.FC<SessionListItemProps> = ({ isFavorite, onAddFavorite, onRemoveFavorite, onShowAlert, session, listType }) => {
   const ionItemSlidingRef = useRef<HTMLIonItemSlidingElement>(null)
-  
+
   const dismissAlert = () => {
     ionItemSlidingRef.current && ionItemSlidingRef.current.close();
   }

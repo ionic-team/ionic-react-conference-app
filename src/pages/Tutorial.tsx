@@ -17,13 +17,13 @@ interface TutorialProps extends OwnProps, DispatchProps { };
 const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial }) => {
   const [showSkip, setShowSkip] = useState(true);
   const slideRef = useRef<HTMLIonSlidesElement>(null);
-  
-  const startApp = async () => { 
+
+  const startApp = async () => {
     await setHasSeenTutorial(true);
     history.push('/tabs/schedule', { direction: 'none' });
   };
 
-  const handleSlideChangeStart = () => { 
+  const handleSlideChangeStart = () => {
     slideRef.current!.isEnd().then(isEnd => setShowSkip(!isEnd));
   };
 
