@@ -72,7 +72,7 @@ const About: React.FC<AboutProps> = () => {
         event={popoverEvent}
         onDidDismiss={() => setShowPopover(false)}
       >
-        <AboutPopover dismiss={() => setShowPopover(false)} /> 
+        <AboutPopover dismiss={() => setShowPopover(false)} />
       </IonPopover>
     </IonPage>
   );

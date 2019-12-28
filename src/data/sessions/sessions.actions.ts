@@ -30,13 +30,13 @@ export const removeFavorite = (sessionId: number) => ({
 } as const);
 
 export const updateFilteredTracks = (filteredTracks: string[]) => ({
-  type: 'update-filtered-tracks', 
-  filteredTracks 
+  type: 'update-filtered-tracks',
+  filteredTracks
 } as const);
 
-export const setSearchText = (searchText?: string) => ({ 
-  type: 'set-search-text', 
-  searchText 
+export const setSearchText = (searchText?: string) => ({
+  type: 'set-search-text',
+  searchText
 } as const);
 
 export type SessionsActions =

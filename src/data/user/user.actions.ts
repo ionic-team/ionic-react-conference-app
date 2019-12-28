@@ -47,7 +47,7 @@ export const setHasSeenTutorial = (hasSeenTutorial: boolean) => async (dispatch:
     type: 'set-has-seen-tutorial',
     hasSeenTutorial
   } as const);
-} 
+}
 
 export const setDarkMode = (darkMode: boolean) => ({
   type: 'set-dark-mode',

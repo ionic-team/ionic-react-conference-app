@@ -30,12 +30,12 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
   }
 
   const isFavorite = favoriteSessions.indexOf(session.id) > -1;
-  
-  const toggleFavorite = () => { 
+
+  const toggleFavorite = () => {
     isFavorite ? removeFavorite(session.id) : addFavorite(session.id);
   };
   const shareSession = () => { };
-  const sessionClick = (text: string) => { 
+  const sessionClick = (text: string) => {
     console.log(`Clicked ${text}`);
   };
 

@@ -6,11 +6,11 @@ const ShareSocialFab: React.FC = () => {
   const [loadingMessage, setLoadingMessage] = useState('')
   const [showLoading, setShowLoading] = useState(false);
 
-  const openSocial = (network: string) => { 
+  const openSocial = (network: string) => {
     setLoadingMessage(`Posting to ${network}`);
     setShowLoading(true);
   };
-  
+
   return(
     <>
       <IonLoading

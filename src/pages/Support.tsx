@@ -66,9 +66,9 @@ const Support: React.FC<SupportProps> = () => {
             </IonCol>
           </IonRow>
         </form>
-       
+
       </IonContent>
-     
+
       <IonToast
         isOpen={showToast}
         duration={3000}
