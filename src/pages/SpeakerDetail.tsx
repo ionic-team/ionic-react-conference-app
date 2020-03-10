@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IonIcon, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonButton, IonBackButton, IonPage } from '@ionic/react'
+
 import './SpeakerDetail.scss';
-import { logoTwitter, logoGithub, logoInstagram } from 'ionicons/icons';
+
+import { ActionSheetButton } from '@ionic/core';
+import { IonActionSheet, IonChip, IonIcon, IonHeader, IonLabel, IonToolbar, IonButtons, IonContent, IonButton, IonBackButton, IonPage } from '@ionic/react'
+import { callOutline, callSharp, logoTwitter, logoGithub, logoInstagram, shareOutline, shareSharp } from 'ionicons/icons';
+
 import { connect } from '../data/connect';
 import * as selectors from '../data/selectors';
+
 import { Speaker } from '../models/Speaker';
+
 
 interface OwnProps extends RouteComponentProps {
   speaker?: Speaker;
@@ -18,39 +24,114 @@ interface DispatchProps {};
 interface SpeakerDetailProps extends OwnProps, StateProps, DispatchProps {};
 
 const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
-  
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const [actionSheetButtons, setActionSheetButtons] = useState<ActionSheetButton[]>([]);
+  const [actionSheetHeader, setActionSheetHeader] = useState('');
+
+  function openSpeakerShare(speaker: Speaker) {
+    setActionSheetButtons([
+      {
+        text: 'Copy Link',
+        handler: () => {
+          console.log('Copy Link clicked');
+        }
+      },
+      {
+        text: 'Share via ...',
+        handler: () => {
+          console.log('Share via clicked');
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }
+    ]);
+    setActionSheetHeader(`Share ${speaker.name}`);
+    setShowActionSheet(true);
+  }
+
+  function openContact(speaker: Speaker) {
+    setActionSheetButtons([
+      {
+        text: `Email ( ${speaker.email} )`,
+        handler: () => {
+          window.open('mailto:' + speaker.email);
+        }
+      },
+      {
+        text: `Call ( ${speaker.phone} )`,
+        handler: () => {
+          window.open('tel:' + speaker.phone);
+        }
+      }
+    ]);
+    setActionSheetHeader(`Share ${speaker.name}`);
+    setShowActionSheet(true);
+  }
+
+  function openExternalUrl(url: string) {
+    window.open(url, '_blank');
+  }
+
   if (!speaker) {
     return <div>Speaker not found</div>
   }
 
   return (
     <IonPage id="speaker-detail">
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/tabs/speakers" />
-          </IonButtons>
-          <IonTitle>{speaker.name}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <IonContent>
+        <IonHeader className="ion-no-border">
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonBackButton defaultHref="/tabs/speakers" />
+            </IonButtons>
+            <IonButtons slot="end">
+              <IonButton onClick={() => openContact(speaker)}>
+                <IonIcon slot="icon-only" ios={callOutline} md={callSharp}></IonIcon>
+              </IonButton>
+              <IonButton onClick={() => openSpeakerShare(speaker)}>
+                <IonIcon slot="icon-only" ios={shareOutline} md={shareSharp}></IonIcon>
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
 
-      <IonContent className="ion-padding speaker-detail speaker-page-list">
-        <div className="ion-text-center">
-          <img src={speaker.profilePic} alt={speaker.name} />
-          <br />
-          <IonButton fill="clear" size="small" color="twitter">
-            <IonIcon icon={logoTwitter} slot="icon-only"></IonIcon>
-          </IonButton>
-          <IonButton fill="clear" size="small" color="github">
-            <IonIcon icon={logoGithub} slot="icon-only"></IonIcon>
-          </IonButton>
-          <IonButton fill="clear" size="small" color="instagram">
-            <IonIcon icon={logoInstagram} slot="icon-only"></IonIcon>
-          </IonButton>
+        <div className="speaker-background">
+          <img src={speaker.profilePic} alt={speaker.name}/>
+          <h2>{speaker.name}</h2>
         </div>
 
-        <p>{speaker.about}</p>
+        <div className="ion-padding speaker-detail">
+          <p>{speaker.about} Say hello on social media!</p>
+
+          <hr/>
+
+          <IonChip color="twitter" onClick={() => openExternalUrl(`https://twitter.com/${speaker.twitter}`)}>
+            <IonIcon icon={logoTwitter}></IonIcon>
+            <IonLabel>Twitter</IonLabel>
+          </IonChip>
+
+          <IonChip color="dark" onClick={() => openExternalUrl('https://github.com/ionic-team/ionic')}>
+            <IonIcon icon={logoGithub}></IonIcon>
+            <IonLabel>GitHub</IonLabel>
+          </IonChip>
+
+          <IonChip color="instagram" onClick={() => openExternalUrl('https://instagram.com/ionicframework')}>
+            <IonIcon icon={logoInstagram}></IonIcon>
+            <IonLabel>Instagram</IonLabel>
+          </IonChip>
+        </div>
       </IonContent>
+      <IonActionSheet
+        isOpen={showActionSheet}
+        header={actionSheetHeader}
+        onDidDismiss={() => setShowActionSheet(false)}
+        buttons={actionSheetButtons}
+      />
     </IonPage>
   );
 };

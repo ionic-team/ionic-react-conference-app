@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Session } from '../models/Session';
 import { Speaker } from '../models/Speaker';
-import { IonCard, IonCardHeader, IonItem, IonLabel, IonAvatar, IonCardContent, IonList, IonActionSheet } from '@ionic/react';
-import { ActionSheetButton } from '@ionic/core';
+import { IonCard, IonCardHeader, IonItem, IonLabel, IonAvatar, IonCardContent, IonList } from '@ionic/react';
+
 
 interface SpeakerItemProps {
   speaker: Speaker;
@@ -10,55 +10,6 @@ interface SpeakerItemProps {
 }
 
 const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
-  const [showActionSheet, setShowActionSheet] = useState(false);
-  const [actionSheetButtons] = useState<ActionSheetButton[]>([]);
-  const [actionSheetHeader] = useState('');
-
-  // function openSpeakerShare(speaker: Speaker) {
-  //   setActionSheetButtons([
-  //     {
-  //       text: 'Copy Link',
-  //       handler: () => {
-  //         console.log('Copy Link clicked');
-  //       }
-  //     },
-  //     {
-  //       text: 'Share via ...',
-  //       handler: () => {
-  //         console.log('Share via clicked');
-  //       }
-  //     },
-  //     {
-  //       text: 'Cancel',
-  //       role: 'cancel',
-  //       handler: () => {
-  //         console.log('Cancel clicked');
-  //       }
-  //     }
-  //   ]);
-  //   setActionSheetHeader(`Share ${speaker.name}`);
-  //   setShowActionSheet(true);
-  // }
-
-  // function openContact(speaker: Speaker) {
-  //   setActionSheetButtons([
-  //     {
-  //       text: `Email ( ${speaker.email} )`,
-  //       handler: () => {
-  //         window.open('mailto:' + speaker.email);
-  //       }
-  //     },
-  //     {
-  //       text: `Call ( ${speaker.phone} )`,
-  //       handler: () => {
-  //         window.open('tel:' + speaker.phone);
-  //       }
-  //     }
-  //   ]);
-  //   setActionSheetHeader(`Share ${speaker.name}`);
-  //   setShowActionSheet(true);
-  // }
-
   return (
     <>
       <IonCard className="speaker-card">
@@ -91,12 +42,6 @@ const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
           </IonList>
         </IonCardContent>
       </IonCard>
-      <IonActionSheet
-        isOpen={showActionSheet}
-        header={actionSheetHeader}
-        onDidDismiss={() => setShowActionSheet(false)}
-        buttons={actionSheetButtons}
-      />
     </>
   );
 };
