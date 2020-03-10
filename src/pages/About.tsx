@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonButton, IonIcon, IonDatetime, IonSelectOption, IonList, IonItem, IonLabel, IonSelect, IonPopover } from '@ionic/react';
 import './About.scss';
-import { calendar, pin, more } from 'ionicons/icons';
+import { calendar, pin, ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 import AboutPopover from '../components/AboutPopover';
 
 interface AboutProps { }
@@ -27,7 +27,7 @@ const About: React.FC<AboutProps> = () => {
           <IonTitle>About</IonTitle>
           <IonButtons slot="end">
             <IonButton icon-only onClick={presentPopover}>
-              <IonIcon slot="icon-only" icon={more}></IonIcon>
+              <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -50,8 +50,8 @@ const About: React.FC<AboutProps> = () => {
             <IonItem>
               <IonIcon icon={pin} slot="start"></IonIcon>
               <IonLabel position="stacked">Location</IonLabel>
-              <IonSelect>
-                <IonSelectOption value="madison" selected>Madison, WI</IonSelectOption>
+              <IonSelect value="madison">
+                <IonSelectOption value="madison">Madison, WI</IonSelectOption>
                 <IonSelectOption value="austin">Austin, TX</IonSelectOption>
                 <IonSelectOption value="chicago">Chicago, IL</IonSelectOption>
                 <IonSelectOption value="seattle">Seattle, WA</IonSelectOption>
@@ -72,7 +72,7 @@ const About: React.FC<AboutProps> = () => {
         event={popoverEvent}
         onDidDismiss={() => setShowPopover(false)}
       >
-        <AboutPopover dismiss={() => setShowPopover(false)} /> 
+        <AboutPopover dismiss={() => setShowPopover(false)} />
       </IonPopover>
     </IonPage>
   );
