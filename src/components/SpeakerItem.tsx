@@ -11,8 +11,8 @@ interface SpeakerItemProps {
 
 const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
   const [showActionSheet, setShowActionSheet] = useState(false);
-  const [actionSheetButtons, setActionSheetButtons] = useState<ActionSheetButton[]>([]);
-  const [actionSheetHeader, setActionSheetHeader] = useState('');
+  const [actionSheetButtons] = useState<ActionSheetButton[]>([]);
+  const [actionSheetHeader] = useState('');
 
   // function openSpeakerShare(speaker: Speaker) {
   //   setActionSheetButtons([
@@ -40,24 +40,24 @@ const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
   //   setShowActionSheet(true);
   // }
 
-  function openContact(speaker: Speaker) {
-    setActionSheetButtons([
-      {
-        text: `Email ( ${speaker.email} )`,
-        handler: () => {
-          window.open('mailto:' + speaker.email);
-        }
-      },
-      {
-        text: `Call ( ${speaker.phone} )`,
-        handler: () => {
-          window.open('tel:' + speaker.phone);
-        }
-      }
-    ]);
-    setActionSheetHeader(`Share ${speaker.name}`);
-    setShowActionSheet(true);
-  }
+  // function openContact(speaker: Speaker) {
+  //   setActionSheetButtons([
+  //     {
+  //       text: `Email ( ${speaker.email} )`,
+  //       handler: () => {
+  //         window.open('mailto:' + speaker.email);
+  //       }
+  //     },
+  //     {
+  //       text: `Call ( ${speaker.phone} )`,
+  //       handler: () => {
+  //         window.open('tel:' + speaker.phone);
+  //       }
+  //     }
+  //   ]);
+  //   setActionSheetHeader(`Share ${speaker.name}`);
+  //   setShowActionSheet(true);
+  // }
 
   return (
     <>
