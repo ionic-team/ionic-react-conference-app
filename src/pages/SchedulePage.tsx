@@ -138,6 +138,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
         onDidDismiss={() => setShowFilterModal(false)}
         swipeToClose={true}
         presentingElement={pageRef.current!}
+        cssClass="session-list-filter"
       >
         <SessionListFilter
           onDismissModal={() => setShowFilterModal(false)}
