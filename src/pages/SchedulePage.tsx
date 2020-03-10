@@ -30,6 +30,8 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
   const ionRefresherRef = useRef<HTMLIonRefresherElement>(null);
   const [showCompleteToast, setShowCompleteToast] = useState(false);
 
+  const pageRef = useRef<HTMLElement>(null)
+
   const doRefresh = () => {
     setTimeout(() => {
       ionRefresherRef.current!.complete();
@@ -38,7 +40,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
   };
 
   return (
-    <IonPage id="schedule-page">
+    <IonPage ref={pageRef}  id="schedule-page">
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
@@ -95,6 +97,8 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
       <IonModal
         isOpen={showFilterModal}
         onDidDismiss={() => setShowFilterModal(false)}
+        swipeToClose={true}
+        presentingElement={pageRef.current!}
       >
         <SessionListFilter
           onDismissModal={() => setShowFilterModal(false)}
