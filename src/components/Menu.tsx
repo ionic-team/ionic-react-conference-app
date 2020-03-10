@@ -1,29 +1,20 @@
-import {
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonTitle,
-  IonToolbar,
-  IonToggle
-} from '@ionic/react';
-import { calendar, hammer, help, informationCircle, logIn, logOut, map, people, person, personAdd } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { connect } from '../data/connect';
 import { RouteComponentProps, withRouter } from 'react-router';
+
+import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonToggle } from '@ionic/react';
+import { calendarOutline, hammer, moonOutline, help, informationCircleOutline, logIn, logOut, mapOutline, peopleOutline, person, personAdd } from 'ionicons/icons';
+
+import { connect } from '../data/connect';
 import { setDarkMode } from '../data/user/user.actions';
+
+import './Menu.css'
 
 const routes = {
   appPages: [
-    { title: 'Schedule', path: '/tabs/schedule', icon: calendar },
-    { title: 'Speakers', path: '/tabs/speakers', icon: people },
-    { title: 'Map', path: '/tabs/map', icon: map },
-    { title: 'About', path: '/tabs/about', icon: informationCircle }
+    { title: 'Schedule', path: '/tabs/schedule', icon: calendarOutline },
+    { title: 'Speakers', path: '/tabs/speakers', icon: peopleOutline },
+    { title: 'Map', path: '/tabs/map', icon: mapOutline },
+    { title: 'About', path: '/tabs/about', icon: informationCircleOutline }
   ],
   loggedInPages: [
     { title: 'Account', path: '/account', icon: person },
@@ -62,7 +53,7 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
       .filter(route => !!route.path)
       .map(p => (
         <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem button routerLink={p.path} routerDirection="none">
+          <IonItem detail={false} routerLink={p.path} routerDirection="none">
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
           </IonItem>
@@ -72,21 +63,21 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
 
   return (
     <IonMenu type="overlay" disabled={disableMenu} contentId="main">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent class="outer-content">
-        <IonList>
-          <IonListHeader>Navigate</IonListHeader>
+      <IonContent forceOverscroll={false}>
+        <IonList lines="none">
+          <IonListHeader>Conference</IonListHeader>
           {renderlistItems(routes.appPages)}
         </IonList>
-        <IonList>
+        <IonList lines="none">
           <IonListHeader>Account</IonListHeader>
           {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.loggedOutPages)}
+          <IonItem>
+            <IonIcon slot="start" icon={moonOutline}></IonIcon>
+            <IonLabel>Dark Mode</IonLabel>
+            <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
+          </IonItem>
         </IonList>
-        <IonList>
+        <IonList lines="none">
           <IonListHeader>Tutorial</IonListHeader>
           <IonItem onClick={() => {
             setDisableMenu(true);
@@ -94,12 +85,6 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
           }}>
             <IonIcon slot="start" icon={hammer} />
             Show Tutorial
-          </IonItem>
-        </IonList>
-        <IonList>
-          <IonItem>
-            <IonLabel>Dark Theme</IonLabel>
-            <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
           </IonItem>
         </IonList>
       </IonContent>
