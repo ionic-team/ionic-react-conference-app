@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Session } from '../models/Session';
 import { Speaker } from '../models/Speaker';
-import { IonCard, IonCardHeader, IonItem, IonAvatar, IonCardContent, IonList, IonActionSheet } from '@ionic/react';
+import { IonCard, IonCardHeader, IonItem, IonLabel, IonAvatar, IonCardContent, IonList, IonActionSheet } from '@ionic/react';
 import { ActionSheetButton } from '@ionic/core';
 
 interface SpeakerItemProps {
@@ -63,23 +63,30 @@ const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
     <>
       <IonCard className="speaker-card">
         <IonCardHeader>
-          <IonItem button detail={false} routerLink={`/tabs/speakers/${speaker.id}`} lines="none">
+          <IonItem button detail={false} lines="none" className="speaker-item" routerLink={`/tabs/speakers/${speaker.id}`}>
             <IonAvatar slot="start">
               <img src={process.env.PUBLIC_URL + speaker.profilePic} alt="Speaker profile pic" />
             </IonAvatar>
-            {speaker.name}
+            <IonLabel>
+              <h2>{speaker.name}</h2>
+              <p>{speaker.title}</p>
+            </IonLabel>
           </IonItem>
         </IonCardHeader>
 
-        <IonCardContent class="outer-content">
-          <IonList>
+        <IonCardContent>
+          <IonList lines="none">
             {sessions.map(session => (
-              <IonItem routerLink={`/tabs/speakers/sessions/${session.id}`} key={session.name}>
-                <h3>{session.name}</h3>
+              <IonItem detail={false} routerLink={`/tabs/speakers/sessions/${session.id}`} key={session.name}>
+                <IonLabel>
+                  <h3>{session.name}</h3>
+                </IonLabel>
               </IonItem>
             ))}
-            <IonItem button routerLink={`/tabs/speakers/${speaker.id}`}>
-              <h3>About {speaker.name}</h3>
+            <IonItem detail={false} routerLink={`/tabs/speakers/${speaker.id}`}>
+              <IonLabel>
+                <h3>About {speaker.name}</h3>
+              </IonLabel>
             </IonItem>
           </IonList>
         </IonCardContent>

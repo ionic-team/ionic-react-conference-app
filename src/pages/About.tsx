@@ -87,7 +87,6 @@ const About: React.FC<AboutProps> = () => {
               <IonLabel>
                 Date
               </IonLabel>
-              {/* TODO update value on change */}
               <IonDatetime
                 displayFormat="MMM DD, YYYY"
                 max="2056"
