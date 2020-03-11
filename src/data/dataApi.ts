@@ -25,6 +25,7 @@ export const getConfData = async () => {
     .reduce((all, session) => all.concat(session.tracks), [] as string[])
     .filter((trackName, index, array) => array.indexOf(trackName) === index)
     .sort();
+
   const data = {
     sessions,
     locations,
