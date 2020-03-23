@@ -39,6 +39,11 @@ export const setSearchText = (searchText?: string) => ({
   searchText 
 } as const);
 
+export const setMenuEnabled = (menuEnabled: boolean) => ({ 
+  type: 'set-menu-enabled', 
+  menuEnabled
+} as const);
+
 export type SessionsActions =
   | ActionType<typeof setLoading>
   | ActionType<typeof setData>
@@ -46,3 +51,4 @@ export type SessionsActions =
   | ActionType<typeof removeFavorite>
   | ActionType<typeof updateFilteredTracks>
   | ActionType<typeof setSearchText>
+  | ActionType<typeof setMenuEnabled>

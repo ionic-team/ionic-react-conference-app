@@ -37,6 +37,7 @@ interface Pages {
 interface StateProps {
   darkMode: boolean;
   isAuthenticated: boolean;
+  menuEnabled: boolean;
 }
 
 interface DispatchProps {
@@ -45,10 +46,8 @@ interface DispatchProps {
 
 interface MenuProps extends RouteComponentProps, StateProps, DispatchProps { }
 
-const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDarkMode }) => {
+const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDarkMode, menuEnabled }) => {
   const location = useLocation();
-
-  const [disableMenu, setDisableMenu] = useState(false);
 
   function renderlistItems(list: Pages[]) {
     return list
@@ -64,7 +63,7 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
   }
 
   return (
-    <IonMenu type="overlay" disabled={disableMenu} contentId="main">
+    <IonMenu  type="overlay" disabled={!menuEnabled} contentId="main">
       <IonContent forceOverscroll={false}>
         <IonList lines="none">
           <IonListHeader>Conference</IonListHeader>
@@ -82,7 +81,6 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
         <IonList lines="none">
           <IonListHeader>Tutorial</IonListHeader>
           <IonItem button onClick={() => {
-            setDisableMenu(true);
             history.push('/tutorial');
           }}>
             <IonIcon slot="start" icon={hammer} />
@@ -97,7 +95,8 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
 export default connect<{}, StateProps, {}>({
   mapStateToProps: (state) => ({
     darkMode: state.user.darkMode,
-    isAuthenticated: state.user.isLoggedin
+    isAuthenticated: state.user.isLoggedin,
+    menuEnabled: state.data.menuEnabled
   }),
   mapDispatchToProps: ({
     setDarkMode

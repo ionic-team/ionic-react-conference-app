@@ -21,5 +21,8 @@ export const sessionsReducer = (state: ConfState, action: SessionsActions): Conf
     case 'set-search-text': {
       return { ...state, searchText: action.searchText };
     }
+    case 'set-menu-enabled': {
+      return { ...state, menuEnabled: action.menuEnabled };
+    }
   }
 }

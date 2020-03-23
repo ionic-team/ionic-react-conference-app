@@ -12,4 +12,5 @@ export interface ConfState {
   mapCenterId?: number;
   loading?: boolean;
   allTracks: string[];
+  menuEnabled: boolean;
 }

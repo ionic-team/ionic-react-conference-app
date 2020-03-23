@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonSlides, IonSlide, IonIcon } from '@ionic/react';
+import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonSlides, IonSlide, IonIcon, useIonViewWillEnter } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
+import { setMenuEnabled } from '../data/sessions/sessions.actions';
 import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
 import { connect } from '../data/connect';
@@ -9,17 +10,23 @@ import { RouteComponentProps } from 'react-router';
 interface OwnProps extends RouteComponentProps {};
 
 interface DispatchProps {
-  setHasSeenTutorial: typeof setHasSeenTutorial
+  setHasSeenTutorial: typeof setHasSeenTutorial;
+  setMenuEnabled: typeof setMenuEnabled;
 }
 
 interface TutorialProps extends OwnProps, DispatchProps { };
 
-const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial }) => {
+const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial, setMenuEnabled }) => {
   const [showSkip, setShowSkip] = useState(true);
   const slideRef = useRef<HTMLIonSlidesElement>(null);
+
+  useIonViewWillEnter(() => {
+    setMenuEnabled(false);
+  });
   
   const startApp = async () => { 
     await setHasSeenTutorial(true);
+    await setMenuEnabled(true);
     history.push('/tabs/schedule', { direction: 'none' });
   };
 
@@ -81,7 +88,8 @@ const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial }) => {
 
 export default connect<OwnProps, {}, DispatchProps>({
   mapDispatchToProps: ({
-    setHasSeenTutorial
+    setHasSeenTutorial,
+    setMenuEnabled
   }),
   component: Tutorial
 });
