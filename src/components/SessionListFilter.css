@@ -1,4 +1,32 @@
+/*
+ * Material Design
+ */
 
-.filter-icon {
-  margin: 7px 16px 7px 0;
+.session-list-filter .md ion-toolbar ion-button {
+  text-transform: capitalize;
+  letter-spacing: 0;
+}
+
+.session-list-filter .md ion-checkbox {
+  --background-checked: transparent;
+  --border-color: transparent;
+  --border-color-checked: transparent;
+  --checkmark-color: var(--ion-color-primary);
+}
+
+.session-list-filter .md ion-list {
+  background: inherit;
+}
+
+
+/*
+ * iOS
+ */
+
+.session-list-filter .ios ion-list-header {
+  margin-top: 10px;
+}
+
+.session-list-filter .ios ion-label {
+  color: var(--ion-color-primary);
 }

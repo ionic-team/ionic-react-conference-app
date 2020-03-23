@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { AppContext } from './AppContext';
 import { DispatchObject } from '../util/types';
 import { AppState } from './state';
@@ -36,11 +36,13 @@ export function connect<TOwnProps = any, TStateProps = any, TDispatchProps = any
         dispatchFuncs[key] = newFunc
       });
       return dispatchFuncs;
+      // eslint-disable-next-line
     }, [mapDispatchToProps])
 
 
     const props = useMemo(() => {
       return Object.assign({}, ownProps, mapStateToProps(context.state, ownProps), dispatchFuncs);
+      // eslint-disable-next-line
     }, [ownProps, context.state]);
 
     return React.createElement<TOwnProps>(component, props);
