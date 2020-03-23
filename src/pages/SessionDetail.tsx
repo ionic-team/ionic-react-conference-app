@@ -7,12 +7,12 @@ import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
 import './SessionDetail.scss';
 import { Time } from '../components/Time';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
-import { Session } from '../models/Session';
+import { Schedule } from '../models/Schedule';
 
 interface OwnProps extends RouteComponentProps { };
 
 interface StateProps {
-  session?: Session;
+  session?: Schedule;
   favoriteSessions: number[],
 };
 

@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 import { parseISO as parseDate } from 'date-fns';
-import { Session } from '../models/Session';
+import { Schedule } from '../models/Schedule';
 import { SessionGroup } from '../models/SessionGroup';
 import { AppState } from './state';
 
-const getSessions = (state: AppState) => state.data.sessions;
+const getSessions = (state: AppState) => state.data.schedule;
 export const getSpeakers = (state: AppState) => state.data.speakers;
 const getFilteredTracks = (state: AppState) => state.data.filteredTracks;
 const getFavoriteIds = (state: AppState) => state.data.favorites;
@@ -64,7 +64,7 @@ export const getSession = createSelector(
   (sessions, id) => sessions.find(x => x.id === id)
 );
 
-function groupSessions(sessions: Session[]) {
+function groupSessions(sessions: Schedule[]) {
   return sessions
     .sort((a, b) => (
       parseDate(a.dateTimeStart).valueOf() - parseDate(b.dateTimeStart).valueOf()
@@ -95,7 +95,7 @@ export const getSpeaker = createSelector(
 export const getSpeakerSessions = createSelector(
   getSessions,
   (sessions) => {
-    const speakerSessions: {[key: number]: Session[]} = {};
+    const speakerSessions: {[key: number]: Schedule[]} = {};
     sessions.forEach(session => {
       session.speakerIds.forEach(speakerId => {
         if(speakerSessions[speakerId]) {

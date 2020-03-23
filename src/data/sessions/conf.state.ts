@@ -1,8 +1,8 @@
 import { Location } from '../../models/Location';
 import { Speaker } from '../../models/Speaker';
-import { Session } from '../../models/Session';
-export interface SessionsState {
-  sessions: Session[];
+import { Schedule } from '../../models/Schedule';
+export interface ConfState {
+  schedule: Schedule;
   speakers: Speaker[];
   favorites: number[];
   locations: Location[];

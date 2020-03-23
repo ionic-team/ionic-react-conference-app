@@ -1,6 +1,6 @@
 import { getConfData } from '../dataApi';
 import { ActionType } from '../../util/types';
-import { SessionsState } from './sessions.state';
+import { ConfState } from './conf.state';
 
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   dispatch(setLoading(true));
@@ -14,7 +14,7 @@ export const setLoading = (isLoading: boolean) => ({
   isLoading
 } as const);
 
-export const setData = (data: Partial<SessionsState>) => ({
+export const setData = (data: Partial<ConfState>) => ({
   type: 'set-conf-data',
   data
 } as const);

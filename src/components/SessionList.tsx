@@ -1,6 +1,6 @@
 import { IonItemDivider, IonItemGroup, IonLabel, IonList, IonListHeader, IonAlert, AlertButton } from '@ionic/react';
 import React, { useState, useCallback } from 'react';
-import { Session } from '../models/Session';
+import { Schedule } from '../models/Schedule';
 import SessionListItem from './SessionListItem';
 import { SessionGroup } from '../models/SessionGroup';
 import { Time } from '../components/Time';
@@ -56,7 +56,7 @@ const SessionList: React.FC<SessionListProps> = ({ addFavorite, removeFavorite, 
                 <Time date={group.startTime} />
               </IonLabel>
             </IonItemDivider>
-            {group.sessions.map((session: Session, sessionIndex: number) => (
+            {group.sessions.map((session: Schedule, sessionIndex: number) => (
               <SessionListItem
                 onShowAlert={handleShowAlert}
                 isFavorite={favoriteSessions.indexOf(session.id) > -1}

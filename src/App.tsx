@@ -34,7 +34,7 @@ import Signup from './pages/Signup';
 import Support from './pages/Support';
 import Tutorial from './pages/Tutorial';
 import HomeOrTutorial from './components/HomeOrTutorial';
-import { Session } from "./models/Session";
+import { Schedule } from "./models/Schedule";
 
 const App: React.FC = () => {
   return (
@@ -46,7 +46,7 @@ const App: React.FC = () => {
 
 interface StateProps {
   darkMode: boolean,
-  sessions: Session[],
+  sessions: Schedule[],
 }
 
 interface DispatchProps {
@@ -100,7 +100,7 @@ export default App;
 const IonicAppConnected = connect<{}, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
     darkMode: state.user.darkMode,
-    sessions: state.data.sessions
+    sessions: state.data.schedule
   }),
   mapDispatchToProps: { loadConfData, loadUserData, setIsLoggedIn, setUsername },
   component: IonicApp

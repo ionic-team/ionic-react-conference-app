@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, AlertButton } from '@ionic/react';
 import { Time } from './Time';
-import { Session } from '../models/Session';
+import { Schedule } from '../models/Schedule';
 
 interface SessionListItemProps {
-  session: Session;
+  session: Schedule;
   listType: "all" | "favorites";
   onAddFavorite: (id: number) => void;
   onRemoveFavorite: (id: number) => void;
