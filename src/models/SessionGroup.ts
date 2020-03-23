@@ -1,5 +1,5 @@
-import { Schedule } from './Schedule';
+import { Session } from './Schedule';
 export interface SessionGroup {
   startTime: string;
-  sessions: Schedule[];
+  sessions: Session[];
 }

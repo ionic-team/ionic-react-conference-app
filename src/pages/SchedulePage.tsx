@@ -8,17 +8,17 @@ import SessionListFilter from '../components/SessionListFilter';
 import './SchedulePage.scss'
 
 import ShareSocialFab from '../components/ShareSocialFab';
-import { SessionGroup } from '../models/SessionGroup';
 
 import * as selectors from '../data/selectors';
 import { connect } from '../data/connect';
 import { setSearchText } from '../data/sessions/sessions.actions';
+import { Schedule } from '../models/Schedule';
 
 interface OwnProps { }
 
 interface StateProps {
-  sessionGroups: SessionGroup[];
-  favoriteGroups: SessionGroup[];
+  schedule: Schedule;
+  favoritesSchedule: Schedule;
   mode: 'ios' | 'md'
 }
 
@@ -28,7 +28,7 @@ interface DispatchProps {
 
 type SchedulePageProps = OwnProps & StateProps & DispatchProps;
 
-const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGroups, setSearchText, mode }) => {
+const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule, setSearchText, mode }) => {
   const [segment, setSegment] = useState<'all' | 'favorites'>('all');
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
@@ -47,15 +47,15 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
   };
 
   return (
-    <IonPage ref={pageRef}  id="schedule-page">
+    <IonPage ref={pageRef} id="schedule-page">
       <IonHeader translucent={true}>
         <IonToolbar>
-          { !showSearchbar &&
+          {!showSearchbar &&
             <IonButtons slot="start">
               <IonMenuButton />
             </IonButtons>
           }
-          { ios &&
+          {ios &&
             <IonSegment value={segment} onIonChange={(e) => setSegment(e.detail.value as any)}>
               <IonSegmentButton value="all">
                 All
@@ -64,21 +64,21 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
                 Favorites
               </IonSegmentButton>
             </IonSegment>
-            }
-            { !ios && !showSearchbar &&
-              <IonTitle>Schedule</IonTitle>
-            }
-            { showSearchbar &&
-              <IonSearchbar showCancelButton="always" placeholder="Search" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value)} onIonCancel={() => setShowSearchbar(false)}></IonSearchbar>
-            }
+          }
+          {!ios && !showSearchbar &&
+            <IonTitle>Schedule</IonTitle>
+          }
+          {showSearchbar &&
+            <IonSearchbar showCancelButton="always" placeholder="Search" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value)} onIonCancel={() => setShowSearchbar(false)}></IonSearchbar>
+          }
 
           <IonButtons slot="end">
-            { !ios && !showSearchbar &&
+            {!ios && !showSearchbar &&
               <IonButton onClick={() => setShowSearchbar(true)}>
                 <IonIcon slot="icon-only" icon={search}></IonIcon>
               </IonButton>
             }
-            { !showSearchbar &&
+            {!showSearchbar &&
               <IonButton onClick={() => setShowFilterModal(true)}>
                 {mode === 'ios' ? 'Filter' : <IonIcon icon={options} slot="icon-only" />}
               </IonButton>
@@ -86,7 +86,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
           </IonButtons>
         </IonToolbar>
 
-        { !ios &&
+        {!ios &&
           <IonToolbar>
             <IonSegment value={segment} onIonChange={(e) => setSegment(e.detail.value as any)}>
               <IonSegmentButton value="all">
@@ -122,12 +122,13 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
         />
 
         <SessionList
-          sessionGroups={sessionGroups}
+          schedule={schedule}
           listType={segment}
           hide={segment === 'favorites'}
         />
         <SessionList
-          sessionGroups={favoriteGroups}
+          // schedule={schedule}
+          schedule={favoritesSchedule}
           listType={segment}
           hide={segment === 'all'}
         />
@@ -153,8 +154,8 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoriteGroups, sessionGrou
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    sessionGroups: selectors.getGroupedSessions(state),
-    favoriteGroups: selectors.getGroupedFavorites(state),
+    schedule: selectors.getSearchedSchedule(state),
+    favoritesSchedule: selectors.getGroupedFavorites(state),
     mode: getConfig()!.get('mode')
   }),
   mapDispatchToProps: {

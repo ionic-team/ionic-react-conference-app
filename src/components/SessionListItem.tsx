@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
 import { IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, AlertButton } from '@ionic/react';
-import { Time } from './Time';
-import { Schedule } from '../models/Schedule';
+import { Session } from '../models/Schedule';
 
 interface SessionListItemProps {
-  session: Schedule;
+  session: Session;
   listType: "all" | "favorites";
   onAddFavorite: (id: number) => void;
   onRemoveFavorite: (id: number) => void;
@@ -59,8 +58,8 @@ const SessionListItem: React.FC<SessionListItemProps> = ({ isFavorite, onAddFavo
         <IonLabel>
           <h3>{session.name}</h3>
           <p>
-            <Time date={session.dateTimeStart} /> &mdash;&nbsp;
-            <Time date={session.dateTimeEnd} /> &mdash;&nbsp;
+            {session.timeStart}&mdash;&nbsp;
+            {session.timeStart}&mdash;&nbsp;
             {session.location}
           </p>
         </IonLabel>

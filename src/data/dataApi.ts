@@ -1,5 +1,5 @@
 import { Plugins } from '@capacitor/core';
-import { Schedule } from '../models/Schedule';
+import { Schedule, Session } from '../models/Schedule';
 import { Speaker } from '../models/Speaker';
 import { Location } from '../models/Location';
 
@@ -17,17 +17,18 @@ export const getConfData = async () => {
     fetch(dataUrl),
     fetch(locationsUrl)]);
   const responseData = await response[0].json();
-  const schedule = responseData.schedule as Schedule;
+  const schedule = responseData.schedule[0] as Schedule;
+  const sessions = parseSessions(schedule);
   const speakers = responseData.speakers as Speaker[];
   const locations = await response[1].json() as Location[];
-  const allTracks: string[] = [];
-  // const allTracks = schedule.sessions
-  //   .reduce((all, session) => all.concat(session.tracks), [] as string[])
-  //   .filter((trackName, index, array) => array.indexOf(trackName) === index)
-  //   .sort();
+  const allTracks = sessions
+    .reduce((all, session) => all.concat(session.tracks), [] as string[])
+    .filter((trackName, index, array) => array.indexOf(trackName) === index)
+    .sort();
 
   const data = {
     schedule,
+    sessions,
     locations,
     speakers,
     allTracks,
@@ -66,4 +67,12 @@ export const setUsernameData = async (username?: string) => {
   } else {
     await Storage.set({ key: USERNAME, value: username });
   }
+}
+
+function parseSessions(schedule: Schedule) {
+  const sessions: Session[] = [];
+  schedule.groups.forEach(g => {
+    g.sessions.forEach(s => sessions.push(s))
+  });
+  return sessions;
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Schedule } from '../models/Schedule';
+import { Session } from '../models/Schedule';
 import { Speaker } from '../models/Speaker';
 import { IonCard, IonCardHeader, IonItem, IonLabel, IonAvatar, IonCardContent, IonList } from '@ionic/react';
 
 
 interface SpeakerItemProps {
   speaker: Speaker;
-  sessions: Schedule[];
+  sessions: Session[];
 }
 
 const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
