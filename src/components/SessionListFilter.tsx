@@ -1,7 +1,11 @@
 import React from 'react';
-import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonFooter, IonIcon } from '@ionic/react';
+
+import { getMode } from '@ionic/core';
+import { IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonList, IonListHeader, IonItem, IonLabel, IonCheckbox, IonFooter, IonIcon } from '@ionic/react';
 import { logoAngular, call, document, logoIonic, hammer, restaurant, cog, colorPalette, construct, compass } from 'ionicons/icons';
+
 import './SessionListFilter.css'
+
 import { connect } from '../data/connect';
 import { updateFilteredTracks } from '../data/sessions/sessions.actions';
 
@@ -21,6 +25,7 @@ interface DispatchProps {
 type SessionListFilterProps = OwnProps & StateProps & DispatchProps;
 
 const SessionListFilter: React.FC<SessionListFilterProps> = ({ allTracks, filteredTracks, onDismissModal, updateFilteredTracks }) => {
+  const ios = getMode() === 'ios';
 
   const toggleTrackFilter = (track: string) => {
     if (filteredTracks.indexOf(track) > -1) {
@@ -53,45 +58,60 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({ allTracks, filter
 
   return (
     <>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
+          <IonButtons slot="start">
+            { ios &&
+              <IonButton onClick={onDismissModal}>Cancel</IonButton>
+            }
+            { !ios &&
+              <IonButton onClick={handleDeselectAll}>Reset</IonButton>
+            }
+          </IonButtons>
+
           <IonTitle>
             Filter Sessions
-            </IonTitle>
+          </IonTitle>
+
           <IonButtons slot="end">
             <IonButton onClick={onDismissModal} strong>Done</IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent class="outer-content">
-        <IonList>
+      <IonContent>
+        <IonList lines={ ios ? 'inset' : 'full'}>
           <IonListHeader>Tracks</IonListHeader>
+
           {allTracks.map((track, index) => (
             <IonItem key={track}>
-              <IonIcon className="filter-icon" icon={iconMap[track]} color="medium" />
+              { ios &&
+                <IonIcon slot="start" icon={iconMap[track]} color="medium" />
+              }
               <IonLabel>{track}</IonLabel>
-              <IonToggle
+              <IonCheckbox
                 onClick={() => toggleTrackFilter(track)}
                 checked={filteredTracks.indexOf(track) !== -1}
-                color="success"
+                color="primary"
                 value={track}
-              ></IonToggle>
+              ></IonCheckbox>
             </IonItem>
           ))}
         </IonList>
       </IonContent>
 
-      <IonFooter>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonButton onClick={handleDeselectAll}>Deselect All</IonButton>
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonButton onClick={handleSelectAll}>Select All</IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonFooter>
+      { ios &&
+        <IonFooter>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonButton onClick={handleDeselectAll}>Deselect All</IonButton>
+            </IonButtons>
+            <IonButtons slot="end">
+              <IonButton onClick={handleSelectAll}>Select All</IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonFooter>
+      }
     </>
   );
 };

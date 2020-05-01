@@ -1,91 +1,108 @@
 import { createSelector } from 'reselect';
-import { parseISO as parseDate } from 'date-fns';
-import { Session } from '../models/Session';
-import { SessionGroup } from '../models/SessionGroup';
+import { Schedule, Session, ScheduleGroup } from '../models/Schedule';
 import { AppState } from './state';
 
-const getSessions = (state: AppState) => state.data.sessions;
+const getSchedule = (state: AppState) => {
+
+  return state.data.schedule
+};
 export const getSpeakers = (state: AppState) => state.data.speakers;
+const getSessions = (state: AppState) => state.data.sessions;
 const getFilteredTracks = (state: AppState) => state.data.filteredTracks;
 const getFavoriteIds = (state: AppState) => state.data.favorites;
 const getSearchText = (state: AppState) => state.data.searchText;
 
-export const getFilteredSessions = createSelector(
-  getSessions, getFilteredTracks,
-  (sessions, filteredTracks) => {
-    return sessions.filter(session => {
-      let include = false;
-      session.tracks.forEach(track => {
-        if (filteredTracks.indexOf(track) > -1) {
-          include = true;
+export const getFilteredSchedule = createSelector(
+  getSchedule, getFilteredTracks,
+  (schedule, filteredTracks) => {
+    const groups: ScheduleGroup[] = [];
+    schedule.groups.forEach(group => {
+      const sessions: Session[] = [];
+      group.sessions.forEach(session => {
+        session.tracks.forEach(track => {
+          if (filteredTracks.indexOf(track) > -1) {
+            sessions.push(session);
+          }
+        })
+      })
+      if (sessions.length) {
+        const groupToAdd: ScheduleGroup = {
+          time: group.time,
+          sessions
         }
-      });
-      return include;
+        groups.push(groupToAdd);
+      }
     });
+
+    return {
+      date: schedule.date,
+      groups
+    } as Schedule;
   }
 );
 
-export const getSearchedSessions = createSelector(
-  getFilteredSessions, getSearchText,
-  (sessions, searchText) => {
+export const getSearchedSchedule = createSelector(
+  getFilteredSchedule, getSearchText,
+  (schedule, searchText) => {
     if (!searchText) {
-      return sessions;
+      return schedule;
     }
-    return sessions.filter(session => session.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1);
+    const groups: ScheduleGroup[] = [];
+    schedule.groups.forEach(group => {
+
+      const sessions = group.sessions.filter(s => s.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1)
+      if (sessions.length) {
+        const groupToAdd: ScheduleGroup = {
+          time: group.time,
+          sessions
+        }
+        groups.push(groupToAdd);
+      }
+    });
+    return {
+      date: schedule.date,
+      groups
+    } as Schedule;
   }
 )
 
-export const getGroupedSessions = createSelector(
-  getSearchedSessions,
-  (sessions) => {
-    return groupSessions(sessions);
-  }
-);
-
-export const getFavorites = createSelector(
-  getSearchedSessions, getFavoriteIds,
-  (sessions, favoriteIds) => sessions.filter(x => favoriteIds.indexOf(x.id) > -1)
+export const getScheduleList = createSelector(
+  getSearchedSchedule,
+  (schedule) => schedule
 );
 
 export const getGroupedFavorites = createSelector(
-  getFavorites,
-  (sessions) => {
-    return groupSessions(sessions);
+  getScheduleList, getFavoriteIds,
+  (schedule, favoriteIds) => {
+    const groups: ScheduleGroup[] = [];
+    schedule.groups.forEach(group => {
+      const sessions = group.sessions.filter(s => favoriteIds.indexOf(s.id) > -1)
+      if (sessions.length) {
+        const groupToAdd: ScheduleGroup = {
+          time: group.time,
+          sessions
+        }
+        groups.push(groupToAdd);
+      }
+    });
+    return {
+      date: schedule.date,
+      groups
+    } as Schedule;
   }
-)
+);
+
 
 const getIdParam = (_state: AppState, props: any) => {
-  const stringParam = props.match.params['id'];
-  return parseInt(stringParam, 10);
+  return props.match.params['id'];
 }
 
 export const getSession = createSelector(
   getSessions, getIdParam,
-  (sessions, id) => sessions.find(x => x.id === id)
+  (sessions, id) => {
+    return sessions.find(s => s.id === id);
+  }
 );
-
-function groupSessions(sessions: Session[]) {
-  return sessions
-    .sort((a, b) => (
-      parseDate(a.dateTimeStart).valueOf() - parseDate(b.dateTimeStart).valueOf()
-    ))
-    .reduce((groups, session) => {
-      let starterHour = parseDate(session.dateTimeStart);
-      starterHour.setMinutes(0);
-      starterHour.setSeconds(0);
-      const starterHourStr = starterHour.toJSON();
-      const foundGroup = groups.find(group => group.startTime === starterHourStr);
-      if (foundGroup) {
-        foundGroup.sessions.push(session);
-      } else {
-        groups.push({
-          startTime: starterHourStr,
-          sessions: [session]
-        });
-      }
-      return groups;
-    }, [] as SessionGroup[]);
-}
 
 export const getSpeaker = createSelector(
   getSpeakers, getIdParam,
@@ -95,13 +112,14 @@ export const getSpeaker = createSelector(
 export const getSpeakerSessions = createSelector(
   getSessions,
   (sessions) => {
-    const speakerSessions: {[key: number]: Session[]} = {};
+    const speakerSessions: { [key: string]: Session[] } = {};
+
     sessions.forEach(session => {
-      session.speakerIds.forEach(speakerId => {
-        if(speakerSessions[speakerId]) {
-          speakerSessions[speakerId].push(session);
+      session.speakerNames && session.speakerNames.forEach(name => {
+        if (speakerSessions[name]) {
+          speakerSessions[name].push(session);
         } else {
-          speakerSessions[speakerId] = [session];
+          speakerSessions[name] = [session];
         }
       })
     });

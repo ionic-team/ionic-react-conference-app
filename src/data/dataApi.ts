@@ -1,13 +1,12 @@
 import { Plugins } from '@capacitor/core';
-import { Session } from '../models/Session';
+import { Schedule, Session } from '../models/Schedule';
 import { Speaker } from '../models/Speaker';
 import { Location } from '../models/Location';
 
 const { Storage } = Plugins;
 
+const dataUrl = '/assets/data/data.json';
 const locationsUrl = '/assets/data/locations.json';
-const sessionsUrl = '/assets/data/sessions.json';
-const speakersUrl = '/assets/data/speakers.json';
 
 const HAS_LOGGED_IN = 'hasLoggedIn';
 const HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
@@ -15,17 +14,20 @@ const USERNAME = 'username';
 
 export const getConfData = async () => {
   const response = await Promise.all([
-    fetch(sessionsUrl),
-    fetch(locationsUrl),
-    fetch(speakersUrl)]);
-  const sessions = await response[0].json() as Session[];
+    fetch(dataUrl),
+    fetch(locationsUrl)]);
+  const responseData = await response[0].json();
+  const schedule = responseData.schedule[0] as Schedule;
+  const sessions = parseSessions(schedule);
+  const speakers = responseData.speakers as Speaker[];
   const locations = await response[1].json() as Location[];
-  const speakers = await response[2].json() as Speaker[];
   const allTracks = sessions
     .reduce((all, session) => all.concat(session.tracks), [] as string[])
     .filter((trackName, index, array) => array.indexOf(trackName) === index)
     .sort();
+
   const data = {
+    schedule,
     sessions,
     locations,
     speakers,
@@ -65,4 +67,12 @@ export const setUsernameData = async (username?: string) => {
   } else {
     await Storage.set({ key: USERNAME, value: username });
   }
+}
+
+function parseSessions(schedule: Schedule) {
+  const sessions: Session[] = [];
+  schedule.groups.forEach(g => {
+    g.sessions.forEach(s => sessions.push(s))
+  });
+  return sessions;
 }

@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { IonItemSliding, IonAlert, IonItem, IonLabel, IonItemOptions, IonItemOption, AlertButton } from '@ionic/react';
-import { Time } from './Time';
-import { Session } from '../models/Session';
+import React, { useRef } from 'react';
+import { IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, AlertButton } from '@ionic/react';
+import { Session } from '../models/Schedule';
 
 interface SessionListItemProps {
   session: Session;
@@ -14,7 +13,7 @@ interface SessionListItemProps {
 
 const SessionListItem: React.FC<SessionListItemProps> = ({ isFavorite, onAddFavorite, onRemoveFavorite, onShowAlert, session, listType }) => {
   const ionItemSlidingRef = useRef<HTMLIonItemSlidingElement>(null)
-  
+
   const dismissAlert = () => {
     ionItemSlidingRef.current && ionItemSlidingRef.current.close();
   }
@@ -59,8 +58,8 @@ const SessionListItem: React.FC<SessionListItemProps> = ({ isFavorite, onAddFavo
         <IonLabel>
           <h3>{session.name}</h3>
           <p>
-            <Time date={session.dateTimeStart} /> &mdash;&nbsp;
-            <Time date={session.dateTimeEnd} /> &mdash;&nbsp;
+            {session.timeStart}&mdash;&nbsp;
+            {session.timeStart}&mdash;&nbsp;
             {session.location}
           </p>
         </IonLabel>

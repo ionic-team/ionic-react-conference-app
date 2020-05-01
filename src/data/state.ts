@@ -4,6 +4,7 @@ import { userReducer } from './user/user.reducer';
 
 export const initialState: AppState = {
   data: {
+    schedule: { groups: [] } as any,
     sessions: [],
     speakers: [],
     favorites: [],
@@ -11,7 +12,8 @@ export const initialState: AppState = {
     allTracks: [],
     filteredTracks: [],
     mapCenterId: 0,
-    loading: false
+    loading: false,
+    menuEnabled: true
   },
   user: {
     hasSeenTutorial: false,
