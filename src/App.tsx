@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -35,6 +35,7 @@ import Support from './pages/Support';
 import Tutorial from './pages/Tutorial';
 import HomeOrTutorial from './components/HomeOrTutorial';
 import { Schedule } from "./models/Schedule";
+import RedirectToLogin from './components/RedirectToLogin';
 
 const App: React.FC = () => {
   return (
@@ -75,16 +76,21 @@ const IonicApp: React.FC<IonicAppProps> = ({ darkMode, schedule, setIsLoggedIn, 
             <IonSplitPane contentId="main">
               <Menu />
               <IonRouterOutlet id="main">
-                <Route path="/tabs" component={MainTabs} />
+                {/*
+                We use IonRoute here to keep the tabs state intact,
+                which makes transitions between tabs and non tab pages smooth
+                */}
+                <Route path="/tabs" render={() => <MainTabs />} />
                 <Route path="/account" component={Account} />
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/support" component={Support} />
                 <Route path="/tutorial" component={Tutorial} />
                 <Route path="/logout" render={() => {
-                  setIsLoggedIn(false);
-                  setUsername(undefined);
-                  return <Redirect to="/tabs" />
+                  return <RedirectToLogin
+                    setIsLoggedIn={setIsLoggedIn}
+                    setUsername={setUsername}
+                  />;
                 }} />
                 <Route path="/" component={HomeOrTutorial} exact />
               </IonRouterOutlet>
