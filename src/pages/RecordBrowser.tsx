@@ -28,8 +28,8 @@ interface DispatchProps {
 
 type SchedulePageProps = OwnProps & StateProps & DispatchProps;
 
-const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule, setSearchText, mode }) => {
-  const [segment, setSegment] = useState<'all' | 'favorites'>('all');
+const RecordBrowserPage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule, setSearchText, mode }) => {
+  const [segment, setSegment] = useState<'all' | 'toSync'>('all');
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const ionRefresherRef = useRef<HTMLIonRefresherElement>(null);
@@ -60,13 +60,13 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
               <IonSegmentButton value="all">
                 All
               </IonSegmentButton>
-              <IonSegmentButton value="favorites">
+              <IonSegmentButton value="toSync">
                 Favorites
               </IonSegmentButton>
             </IonSegment>
           }
           {!ios && !showSearchbar &&
-            <IonTitle>Schedule</IonTitle>
+            <IonTitle>Record Browser</IonTitle>
           }
           {showSearchbar &&
             <IonSearchbar showCancelButton="always" placeholder="Search" onIonChange={(e: CustomEvent) => setSearchText(e.detail.value)} onIonCancel={() => setShowSearchbar(false)}></IonSearchbar>
@@ -90,10 +90,10 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
           <IonToolbar>
             <IonSegment value={segment} onIonChange={(e) => setSegment(e.detail.value as any)}>
               <IonSegmentButton value="all">
-                All
+                All Activities
               </IonSegmentButton>
-              <IonSegmentButton value="favorites">
-                Favorites
+              <IonSegmentButton value="toSync">
+                Activities to Upload
               </IonSegmentButton>
             </IonSegment>
           </IonToolbar>
@@ -124,7 +124,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
         <SessionList
           schedule={schedule}
           listType={segment}
-          hide={segment === 'favorites'}
+          hide={segment === 'toSync'}
         />
         <SessionList
           // schedule={schedule}
@@ -161,5 +161,5 @@ export default connect<OwnProps, StateProps, DispatchProps>({
   mapDispatchToProps: {
     setSearchText
   },
-  component: React.memo(SchedulePage)
+  component: React.memo(RecordBrowserPage)
 });

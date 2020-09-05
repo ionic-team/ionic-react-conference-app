@@ -29,7 +29,7 @@ interface DispatchProps {
 type SchedulePageProps = OwnProps & StateProps & DispatchProps;
 
 const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule, setSearchText, mode }) => {
-  const [segment, setSegment] = useState<'all' | 'favorites'>('all');
+  const [segment, setSegment] = useState<'all' | 'toSync'>('all');
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const ionRefresherRef = useRef<HTMLIonRefresherElement>(null);
@@ -60,7 +60,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
               <IonSegmentButton value="all">
                 All
               </IonSegmentButton>
-              <IonSegmentButton value="favorites">
+              <IonSegmentButton value="toSync">
                 Favorites
               </IonSegmentButton>
             </IonSegment>
@@ -92,7 +92,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
               <IonSegmentButton value="all">
                 All
               </IonSegmentButton>
-              <IonSegmentButton value="favorites">
+              <IonSegmentButton value="toSync">
                 Favorites
               </IonSegmentButton>
             </IonSegment>
@@ -124,7 +124,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
         <SessionList
           schedule={schedule}
           listType={segment}
-          hide={segment === 'favorites'}
+          hide={segment === 'toSync'}
         />
         <SessionList
           // schedule={schedule}

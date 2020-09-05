@@ -4,7 +4,7 @@ import { Session } from '../models/Schedule';
 
 interface SessionListItemProps {
   session: Session;
-  listType: "all" | "favorites";
+  listType: "all" | "toSync";
   onAddFavorite: (id: number) => void;
   onRemoveFavorite: (id: number) => void;
   onShowAlert: (header: string, buttons: AlertButton[]) => void;
@@ -65,12 +65,12 @@ const SessionListItem: React.FC<SessionListItemProps> = ({ isFavorite, onAddFavo
         </IonLabel>
       </IonItem>
       <IonItemOptions>
-        {listType === "favorites" ?
+        {listType === "toSync" ?
           <IonItemOption color="danger" onClick={() => removeFavoriteSession()}>
             Remove
           </IonItemOption>
           :
-          <IonItemOption color="favorite" onClick={addFavoriteSession}>
+          <IonItemOption color="toSync" onClick={addFavoriteSession}>
             Favorite
           </IonItemOption>
         }

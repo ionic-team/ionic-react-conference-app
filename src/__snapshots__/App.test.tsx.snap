@@ -156,7 +156,7 @@ exports[`renders without crashing 1`] = `
                         All
                       </ion-segment-button>
                       <ion-segment-button
-                        value="favorites"
+                        value="toSync"
                       >
                         Favorites
                       </ion-segment-button>

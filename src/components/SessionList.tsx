@@ -7,7 +7,7 @@ import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 
 interface OwnProps {
   schedule: Schedule;
-  listType: 'all' | 'favorites';
+  listType: 'all' | 'toSync';
   hide: boolean;
 }
 
