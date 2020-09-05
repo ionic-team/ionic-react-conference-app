@@ -72,21 +72,15 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
           </IonText>
         </div>
         <IonList>
-          <IonItem onClick={() => sessionClick('watch')} button>
-            <IonLabel color="primary">Watch</IonLabel>
+          <IonItem onClick={() => sessionClick('view or edit')} button>
+            <IonLabel color="primary">View or Edit</IonLabel>
           </IonItem>
-          <IonItem onClick={() => sessionClick('add to calendar')} button>
-            <IonLabel color="primary">Add to Calendar</IonLabel>
+          <IonItem onClick={() => sessionClick('mark as reviewed')} button>
+            <IonLabel color="primary">Mark as Reviewed</IonLabel>
           </IonItem>
-          <IonItem onClick={() => sessionClick('mark as unwatched')} button>
-            <IonLabel color="primary">Mark as Unwatched</IonLabel>
-          </IonItem>
-          <IonItem onClick={() => sessionClick('download video')} button>
-            <IonLabel color="primary">Download Video</IonLabel>
+          <IonItem onClick={() => sessionClick('download media')} button>
+            <IonLabel color="primary">Download Media</IonLabel>
             <IonIcon slot="end" color="primary" size="small" icon={cloudDownload}></IonIcon>
-          </IonItem>
-          <IonItem onClick={() => sessionClick('leave feedback')} button>
-            <IonLabel color="primary">Leave Feedback</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
