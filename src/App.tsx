@@ -86,12 +86,13 @@ const IonicApp: React.FC<IonicAppProps> = ({ darkMode, schedule, setIsLoggedIn, 
                 <Route path="/signup" component={Signup} />
                 <Route path="/support" component={Support} />
                 <Route path="/tutorial" component={Tutorial} />
-                <Route path="/logout" render={() => {
+                {/* <Route path="/logout" render={() => {
                   return <RedirectToLogin
                     setIsLoggedIn={setIsLoggedIn}
                     setUsername={setUsername}
+                    //history={history}
                   />;
-                }} />
+                }} /> */}
                 <Route path="/" component={HomeOrTutorial} exact />
               </IonRouterOutlet>
             </IonSplitPane>
