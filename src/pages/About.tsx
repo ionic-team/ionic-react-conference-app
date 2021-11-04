@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonMenuButton, IonButton, IonIcon, IonDatetime, IonSelectOption, IonList, IonItem, IonLabel, IonSelect, IonPopover } from '@ionic/react';
+import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonMenuButton, IonButton, IonIcon, IonDatetime, IonSelectOption, IonList, IonItem, IonLabel, IonSelect, IonPopover, IonText } from '@ionic/react';
 import './About.scss';
 import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 import AboutPopover from '../components/AboutPopover';
@@ -71,15 +71,19 @@ const About: React.FC<AboutProps> = () => {
                 <IonSelectOption value="seattle">Seattle, WA</IonSelectOption>
               </IonSelect>
             </IonItem>
-            <IonItem>
+            <IonItem button={true} id="open-date-input">
               <IonLabel>
                 Date
               </IonLabel>
-              <IonDatetime
-                max="2056"
-                value={conferenceDate}
-                onIonChange={(e) => setConferenceDate(e.detail.value as any)}>
-              </IonDatetime>
+              <IonText slot="end">{displayDate(conferenceDate, 'MMM dd, yyyy')}</IonText>
+              <IonPopover id="date-input-popover" trigger="open-date-input" showBackdrop={false} side="top" alignment="end">
+                <IonDatetime
+                  max="2056"
+                  value={conferenceDate}
+                  onIonChange={(e) => setConferenceDate(e.detail.value!)}
+                  presentation="date">
+                </IonDatetime>
+              </IonPopover>
             </IonItem>
           </IonList>
 

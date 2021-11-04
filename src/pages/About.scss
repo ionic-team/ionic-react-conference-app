@@ -94,3 +94,7 @@
   }
 
 }
+
+#date-input-popover {
+  --offset-y: -80px; // ensure bottom doesn't get cut off on phones
+}
