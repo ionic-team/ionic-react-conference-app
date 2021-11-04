@@ -1,4 +1,8 @@
-export function combineReducers<R extends any>(reducers: R) {
+interface R {
+  [key: string]: (...args: any) => any
+}
+
+export function combineReducers(reducers: R) {
   type keys = keyof typeof reducers;
   type returnType = { [K in keys]: ReturnType<typeof reducers[K]> }
   const combinedReducer = (state: any, action: any) => {
