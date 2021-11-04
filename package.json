@@ -12,6 +12,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
+    "date-fns": "^2.25.0",
     "ionicons": "^5.0.1",
     "mini-create-react-context": "^0.4.1",
     "node-sass": "^4.13.0",

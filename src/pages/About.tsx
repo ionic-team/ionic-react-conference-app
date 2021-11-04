@@ -3,13 +3,14 @@ import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonMenuButton, 
 import './About.scss';
 import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 import AboutPopover from '../components/AboutPopover';
+import { format, parseISO } from 'date-fns';
 
 interface AboutProps { }
 
 const About: React.FC<AboutProps> = () => {
 
   const [showPopover, setShowPopover] = useState(false);
-  const [popoverEvent, setPopoverEvent] = useState();
+  const [popoverEvent, setPopoverEvent] = useState<MouseEvent>();
   const [location, setLocation] = useState<'madison' | 'austin' | 'chicago' | 'seattle'>('madison');
   const [conferenceDate, setConferenceDate] = useState('2047-05-17T00:00:00-05:00');
 
@@ -22,21 +23,8 @@ const About: React.FC<AboutProps> = () => {
     setShowPopover(true);
   };
 
-  // momentjs would be a better way to do this https://momentjs.com/
-  function displayDate(date: string, format: string) {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    const d = new Date(date);
-    const year = d.getFullYear();
-
-    if (format === 'y') {
-      return year;
-    } else {
-      const month = monthNames[d.getMonth()];
-      const day = d.getDate();
-
-      return month + ' ' + day + ', ' + year;
-    }
+  function displayDate(date: string, dateFormat: string) {
+    return format(parseISO(date), dateFormat);
   }
 
   return (
@@ -66,7 +54,7 @@ const About: React.FC<AboutProps> = () => {
           <h3 className="ion-padding-top ion-padding-start">About</h3>
 
           <p className="ion-padding-start ion-padding-end">
-            The Ionic Conference is a one-day conference on { displayDate(conferenceDate, 'mediumDate') } featuring talks from the Ionic team. It is focused on Ionic applications being built with Ionic Framework. This includes migrating apps to the latest version of the framework, Angular concepts, Webpack, Sass, and many other technologies used in Ionic 2. Tickets are completely sold out, and we’re expecting more than 1000 developers – making this the largest Ionic conference ever!
+            The Ionic Conference is a one-day conference on {displayDate(conferenceDate, 'MMM dd, yyyy') } featuring talks from the Ionic team. It is focused on Ionic applications being built with Ionic Framework. This includes migrating apps to the latest version of the framework, Angular concepts, Webpack, Sass, and many other technologies used in Ionic 2. Tickets are completely sold out, and we’re expecting more than 1000 developers – making this the largest Ionic conference ever!
           </p>
 
           <h3 className="ion-padding-top ion-padding-start">Details</h3>
@@ -88,7 +76,6 @@ const About: React.FC<AboutProps> = () => {
                 Date
               </IonLabel>
               <IonDatetime
-                displayFormat="MMM DD, YYYY"
                 max="2056"
                 value={conferenceDate}
                 onIonChange={(e) => setConferenceDate(e.detail.value as any)}>
