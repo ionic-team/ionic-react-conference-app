@@ -1,9 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonSlides, IonSlide, IonIcon, useIonViewWillEnter } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, useIonViewWillEnter } from '@ionic/react';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Swiper as SwiperCore } from 'swiper';
 import { arrowForward } from 'ionicons/icons';
 import { setMenuEnabled } from '../data/sessions/sessions.actions';
 import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
+import 'swiper/swiper.min.css';
+import '@ionic/react/css/ionic-swiper.css';
 import { connect } from '../data/connect';
 import { RouteComponentProps } from 'react-router';
 
@@ -18,7 +22,7 @@ interface TutorialProps extends OwnProps, DispatchProps { };
 
 const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial, setMenuEnabled }) => {
   const [showSkip, setShowSkip] = useState(true);
-  const slideRef = useRef<HTMLIonSlidesElement>(null);
+  let [swiper, setSwiper] = useState<SwiperCore>();
 
   useIonViewWillEnter(() => {
     setMenuEnabled(false);
@@ -31,7 +35,8 @@ const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial, setMen
   };
 
   const handleSlideChangeStart = () => { 
-    slideRef.current!.isEnd().then(isEnd => setShowSkip(!isEnd));
+    if(!swiper) return;
+    setShowSkip(!swiper.isEnd);
   };
 
   return (
@@ -45,8 +50,8 @@ const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial, setMen
       </IonHeader>
       <IonContent fullscreen>
 
-        <IonSlides ref={slideRef} onIonSlideWillChange={handleSlideChangeStart} pager={false}>
-          <IonSlide>
+        <Swiper onSwiper={setSwiper} onSlideChangeTransitionStart={handleSlideChangeStart}>
+          <SwiperSlide>
             <img src="assets/img/ica-slidebox-img-1.png" alt="" className="slide-image" />
             <h2 className="slide-title">
               Welcome to <b>ICA</b>
@@ -54,33 +59,33 @@ const Tutorial: React.FC<TutorialProps> = ({ history, setHasSeenTutorial, setMen
             <p>
               The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a demonstration of proper code use.
             </p>
-          </IonSlide>
+          </SwiperSlide>
 
-          <IonSlide>
+          <SwiperSlide>
             <img src="assets/img/ica-slidebox-img-2.png" alt="" className="slide-image" />
             <h2 className="slide-title">What is Ionic?</h2>
             <p>
               <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.
             </p>
-          </IonSlide>
+          </SwiperSlide>
 
-          <IonSlide>
+          <SwiperSlide>
             <img src="assets/img/ica-slidebox-img-3.png" alt="" className="slide-image" />
             <h2 className="slide-title">What is Ionic Appflow?</h2>
             <p>
               <b>Ionic Appflow</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally new level of app development agility to mobile dev teams.
             </p>
-          </IonSlide>
+          </SwiperSlide>
 
-          <IonSlide>
+          <SwiperSlide>
             <img src="assets/img/ica-slidebox-img-4.png" alt="" className="slide-image" />
             <h2 className="slide-title">Ready to Play?</h2>
             <IonButton fill="clear" onClick={startApp}>
               Continue
               <IonIcon slot="end" icon={arrowForward} />
             </IonButton>
-          </IonSlide>
-        </IonSlides>
+          </SwiperSlide>
+        </Swiper>
       </IonContent>
     </IonPage>
   );

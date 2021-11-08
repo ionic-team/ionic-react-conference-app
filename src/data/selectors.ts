@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 import { Schedule, Session, ScheduleGroup } from '../models/Schedule';
+import { Speaker } from '../models/Speaker';
+import { Location } from '../models/Location';
 import { AppState } from './state';
 
 const getSchedule = (state: AppState) => {
@@ -16,7 +18,7 @@ export const getFilteredSchedule = createSelector(
   getSchedule, getFilteredTracks,
   (schedule, filteredTracks) => {
     const groups: ScheduleGroup[] = [];
-    schedule.groups.forEach(group => {
+    schedule.groups.forEach((group: ScheduleGroup) => {
       const sessions: Session[] = [];
       group.sessions.forEach(session => {
         session.tracks.forEach(track => {
@@ -100,13 +102,13 @@ const getIdParam = (_state: AppState, props: any) => {
 export const getSession = createSelector(
   getSessions, getIdParam,
   (sessions, id) => {
-    return sessions.find(s => s.id === id);
+    return sessions.find((s: Session) => s.id === id);
   }
 );
 
 export const getSpeaker = createSelector(
   getSpeakers, getIdParam,
-  (speakers, id) => speakers.find(x => x.id === id)
+  (speakers, id) => speakers.find((x: Speaker) => x.id === id)
 );
 
 export const getSpeakerSessions = createSelector(
@@ -114,7 +116,7 @@ export const getSpeakerSessions = createSelector(
   (sessions) => {
     const speakerSessions: { [key: string]: Session[] } = {};
 
-    sessions.forEach(session => {
+    sessions.forEach((session: Session) => {
       session.speakerNames && session.speakerNames.forEach(name => {
         if (speakerSessions[name]) {
           speakerSessions[name].push(session);
@@ -128,7 +130,7 @@ export const getSpeakerSessions = createSelector(
 );
 
 export const mapCenter = (state: AppState) => {
-  const item = state.data.locations.find(l => l.id === state.data.mapCenterId);
+  const item = state.data.locations.find((l: Location) => l.id === state.data.mapCenterId);
   if (item == null) {
     return {
       id: 1,

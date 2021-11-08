@@ -58,7 +58,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({ allTracks, filter
 
   return (
     <>
-      <IonHeader translucent={true}>
+      <IonHeader translucent={true} className="session-list-filter">
         <IonToolbar>
           <IonButtons slot="start">
             { ios &&
@@ -79,7 +79,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({ allTracks, filter
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent className="session-list-filter">
         <IonList lines={ ios ? 'inset' : 'full'}>
           <IonListHeader>Tracks</IonListHeader>
 
