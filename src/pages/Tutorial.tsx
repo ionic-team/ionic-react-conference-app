@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, useIonViewWillEnter } from '@ionic/react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { Swiper as SwiperCore } from 'swiper';
 import { arrowForward } from 'ionicons/icons';
 import { setMenuEnabled } from '../data/sessions/sessions.actions';
 import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
-import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
 import { connect } from '../data/connect';
 import { RouteComponentProps } from 'react-router';
