@@ -11,6 +11,7 @@ const locationsUrl = '/assets/data/locations.json';
 const HAS_LOGGED_IN = 'hasLoggedIn';
 const HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 const USERNAME = 'username';
+const DARKMODE = 'darkMode';
 
 export const getConfData = async () => {
   const response = await Promise.all([
@@ -41,13 +42,16 @@ export const getUserData = async () => {
   const response = await Promise.all([
     Storage.get({ key: HAS_LOGGED_IN }),
     Storage.get({ key: HAS_SEEN_TUTORIAL }),
+    Storage.get({ key: DARKMODE }),
     Storage.get({ key: USERNAME })]);
   const isLoggedin = await response[0].value === 'true';
   const hasSeenTutorial = await response[1].value === 'true';
-  const username = await response[2].value || undefined;
+  const darkMode = await response[2].value === 'true';
+  const username = await response[3].value || undefined;
   const data = {
     isLoggedin,
     hasSeenTutorial,
+    darkMode,
     username
   }
   return data;
@@ -59,6 +63,10 @@ export const setIsLoggedInData = async (isLoggedIn: boolean) => {
 
 export const setHasSeenTutorialData = async (hasSeenTutorial: boolean) => {
   await Storage.set({ key: HAS_SEEN_TUTORIAL, value: JSON.stringify(hasSeenTutorial) });
+}
+
+export const setDarkModeData = async (darkMode: boolean) => {
+  await Storage.set({ key: DARKMODE, value: JSON.stringify(darkMode) });
 }
 
 export const setUsernameData = async (username?: string) => {
