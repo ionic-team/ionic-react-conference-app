@@ -1,14 +1,13 @@
 import React from 'react';
 import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonButton, IonIcon, IonText, IonList, IonItem, IonLabel } from '@ionic/react';
 import { connect } from '../data/connect';
-import { withRouter, RouteComponentProps } from 'react-router';
 import * as selectors from '../data/selectors';
 import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
 import './SessionDetail.scss';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 import { Session } from '../models/Schedule';
 
-interface OwnProps extends RouteComponentProps { };
+interface OwnProps  { };
 
 interface StateProps {
   session?: Session;
@@ -29,12 +28,12 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
   }
 
   const isFavorite = favoriteSessions.indexOf(session.id) > -1;
-  
-  const toggleFavorite = () => { 
+
+  const toggleFavorite = () => {
     isFavorite ? removeFavorite(session.id) : addFavorite(session.id);
   };
   const shareSession = () => { };
-  const sessionClick = (text: string) => { 
+  const sessionClick = (text: string) => {
     console.log(`Clicked ${text}`);
   };
 
@@ -103,5 +102,5 @@ export default connect<OwnProps, StateProps, DispatchProps>({
     addFavorite,
     removeFavorite
   },
-  component: withRouter(SessionDetail)
+  component: SessionDetail
 })

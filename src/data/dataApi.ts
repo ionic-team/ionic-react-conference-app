@@ -1,9 +1,7 @@
-import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/storage';
 import { Schedule, Session } from '../models/Schedule';
 import { Speaker } from '../models/Speaker';
 import { Location } from '../models/Location';
-
-const { Storage } = Plugins;
 
 const dataUrl = '/assets/data/data.json';
 const locationsUrl = '/assets/data/locations.json';
@@ -42,9 +40,9 @@ export const getUserData = async () => {
     Storage.get({ key: HAS_LOGGED_IN }),
     Storage.get({ key: HAS_SEEN_TUTORIAL }),
     Storage.get({ key: USERNAME })]);
-  const isLoggedin = await response[0].value === 'true';
-  const hasSeenTutorial = await response[1].value === 'true';
-  const username = await response[2].value || undefined;
+  const isLoggedin = response[0].value === 'true';
+  const hasSeenTutorial = response[1].value === 'true';
+  const username = response[2].value || undefined;
   const data = {
     isLoggedin,
     hasSeenTutorial,

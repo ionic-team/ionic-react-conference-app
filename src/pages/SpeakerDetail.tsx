@@ -139,7 +139,7 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
 
 export default connect({
   mapStateToProps: (state, ownProps) => ({
-    speaker: selectors.getSpeaker(state, ownProps)
+    speaker: selectors.getSpeaker(state,ownProps),
   }),
   component: SpeakerDetail
 });
