@@ -15,7 +15,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
 
   return (
     <IonTabs>
-      <IonRouterOutlet>
+      <IonRouterOutlet ionPage>
         <Redirect exact path="/tabs" to="/tabs/schedule" />
         {/*
           Using the render method prop cuts down the number of renders your components will have due to route changes.
