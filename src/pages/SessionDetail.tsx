@@ -95,8 +95,8 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
 };
 
 export default connect<OwnProps, StateProps, DispatchProps>({
-  mapStateToProps: (state, OwnProps) => ({
-    session: selectors.getSession(state, OwnProps),
+  mapStateToProps: (state, ownProps) => ({
+    session: selectors.getSession(state, ownProps),
     favoriteSessions: state.data.favorites
   }),
   mapDispatchToProps: {
