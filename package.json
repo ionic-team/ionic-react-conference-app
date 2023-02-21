@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; ng build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
