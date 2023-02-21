@@ -1,6 +1,5 @@
 {
-  "engines": { "node": "v18.10.0"
-},
+
   "name": "ionic-react-conference-app",
   "version": "0.0.2",
   "private": true,
@@ -27,7 +26,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
