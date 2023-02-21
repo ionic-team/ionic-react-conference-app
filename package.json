@@ -1,5 +1,7 @@
 {
-  "engines": { "node": "v12.20.1" },
+  "engines": { "node": "v12.20.1",
+  "npm":"6.14.10"
+},
   "name": "ionic-react-conference-app",
   "version": "0.0.1",
   "private": true,
