@@ -22,7 +22,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
-    "precommit": "npm run format && lint-staged"
+    "precommit": "npm run format && lint-staged",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
