@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonText, IonTextarea, IonToast } from '@ionic/react';
-import './Login.scss';
-import { connect } from '../data/connect';
+import React, { useState } from "react";
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonButtons,
+  IonMenuButton,
+  IonRow,
+  IonCol,
+  IonButton,
+  IonList,
+  IonItem,
+  IonText,
+  IonTextarea,
+  IonToast,
+} from "@ionic/react";
+import "./Login.scss";
+import { connect } from "../data/connect";
 
-interface OwnProps { }
+interface OwnProps {}
 
-interface DispatchProps { }
+interface DispatchProps {}
 
-interface SupportProps extends OwnProps, DispatchProps { }
+interface SupportProps extends OwnProps, DispatchProps {}
 
 const Support: React.FC<SupportProps> = () => {
-
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [messageError, setMessageError] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -23,7 +38,7 @@ const Support: React.FC<SupportProps> = () => {
       setMessageError(true);
     }
     if (message) {
-      setMessage('');
+      setMessage("");
       setShowToast(true);
     }
   };
@@ -39,7 +54,6 @@ const Support: React.FC<SupportProps> = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-
         <div className="login-logo">
           <img src="assets/img/appicon.svg" alt="Ionic logo" />
         </div>
@@ -47,37 +61,47 @@ const Support: React.FC<SupportProps> = () => {
         <form noValidate onSubmit={send}>
           <IonList>
             <IonItem>
-              <IonLabel position="stacked" color="primary">Enter your support message below</IonLabel>
-              <IonTextarea name="message" value={message} spellCheck={false} autocapitalize="off" rows={6} onIonChange={e => setMessage(e.detail.value!)}
-                required>
+              <IonTextarea
+                label="Enter your support message below"
+                labelPlacement="stacked"
+                color="primary"
+                name="message"
+                value={message}
+                spellCheck={false}
+                autocapitalize="off"
+                rows={6}
+                onIonChange={(e) => setMessage(e.detail.value!)}
+                required
+              >
+                {formSubmitted && messageError && (
+                  <IonText color="danger" slot="error">
+                    <p>Support message is required</p>
+                  </IonText>
+                )}
               </IonTextarea>
             </IonItem>
-
-            {formSubmitted && messageError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Support message is required
-              </p>
-            </IonText>}
           </IonList>
 
           <IonRow>
             <IonCol>
-              <IonButton type="submit" expand="block">Submit</IonButton>
+              <IonButton type="submit" expand="block">
+                Submit
+              </IonButton>
             </IonCol>
           </IonRow>
         </form>
-       
       </IonContent>
-     
+
       <IonToast
         isOpen={showToast}
         duration={3000}
         message="Your support request has been sent"
-        onDidDismiss={() => setShowToast(false)} />
+        onDidDismiss={() => setShowToast(false)}
+      />
     </IonPage>
   );
 };
 
 export default connect<OwnProps, {}, DispatchProps>({
-  component: Support
-})
+  component: Support,
+});

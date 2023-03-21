@@ -4,8 +4,10 @@
     --border-color: transparent;
   }
 
-  .swiper-slide {
-    display: block;
+  .swiper-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .slide-title {
@@ -33,5 +35,4 @@
       color: var(--ion-text-color, #000000);
     }
   }
-
 }

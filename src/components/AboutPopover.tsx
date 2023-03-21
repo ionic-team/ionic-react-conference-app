@@ -14,7 +14,7 @@ const AboutPopover: React.FC<AboutPopoverProps> = ({dismiss}) => {
 
   return (
     <IonList>
-      <IonItem button onClick={() => close('https://ionicframework.com/getting-started')}>
+      <IonItem button onClick={() => close('https://ionicframework.com/docs')}>
         <IonLabel>Learn Ionic</IonLabel>
       </IonItem>
       <IonItem button onClick={() => close('https://ionicframework.com/docs/react')}>
@@ -23,7 +23,7 @@ const AboutPopover: React.FC<AboutPopoverProps> = ({dismiss}) => {
       <IonItem button onClick={() => close('https://showcase.ionicframework.com')}>
         <IonLabel>Showcase</IonLabel>
       </IonItem>
-      <IonItem button onClick={() => close('https://github.com/ionic-team/ionic')}>
+      <IonItem button onClick={() => close('https://github.com/ionic-team/ionic-framework')}>
         <IonLabel>GitHub Repo</IonLabel>
       </IonItem>
       <IonItem button onClick={dismiss}>
