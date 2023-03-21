@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -15,9 +15,9 @@ import {
   IonText,
   IonTextarea,
   IonToast,
-} from "@ionic/react";
-import "./Login.scss";
-import { connect } from "../data/connect";
+} from '@ionic/react';
+import './Login.scss';
+import { connect } from '../data/connect';
 
 interface OwnProps {}
 
@@ -26,7 +26,7 @@ interface DispatchProps {}
 interface SupportProps extends OwnProps, DispatchProps {}
 
 const Support: React.FC<SupportProps> = () => {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [messageError, setMessageError] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -38,7 +38,7 @@ const Support: React.FC<SupportProps> = () => {
       setMessageError(true);
     }
     if (message) {
-      setMessage("");
+      setMessage('');
       setShowToast(true);
     }
   };

@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { Location } from "../models/Location";
+import React, { useRef, useEffect } from 'react';
+import { Location } from '../models/Location';
 
 interface MapProps {
   locations: Location[];
@@ -21,9 +21,9 @@ const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
 
     addMarkers();
 
-    google.maps.event.addListenerOnce(map.current, "idle", () => {
+    google.maps.event.addListenerOnce(map.current, 'idle', () => {
       if (mapEle.current) {
-        mapEle.current.classList.add("show-map");
+        mapEle.current.classList.add('show-map');
       }
     });
 
@@ -39,7 +39,7 @@ const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
           title: markerData.name,
         });
 
-        marker.addListener("click", () => {
+        marker.addListener('click', () => {
           infoWindow.open(map.current!, marker);
         });
       });

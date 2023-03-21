@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from 'react';
 import {
   IonContent,
   IonPage,
@@ -8,17 +8,17 @@ import {
   IonButton,
   IonIcon,
   useIonViewWillEnter,
-} from "@ionic/react";
-import { arrowForward } from "ionicons/icons";
-import { setMenuEnabled } from "../data/sessions/sessions.actions";
-import { setHasSeenTutorial } from "../data/user/user.actions";
-import "./Tutorial.scss";
-import "swiper/swiper.min.css";
-import "@ionic/react/css/ionic-swiper.css";
-import { connect } from "../data/connect";
-import { RouteComponentProps } from "react-router";
+} from '@ionic/react';
+import { arrowForward } from 'ionicons/icons';
+import { setMenuEnabled } from '../data/sessions/sessions.actions';
+import { setHasSeenTutorial } from '../data/user/user.actions';
+import './Tutorial.scss';
+import 'swiper/swiper.min.css';
+import '@ionic/react/css/ionic-swiper.css';
+import { connect } from '../data/connect';
+import { RouteComponentProps } from 'react-router';
 
-import { register } from "swiper/element/bundle";
+import { register } from 'swiper/element/bundle';
 
 interface OwnProps extends RouteComponentProps {}
 
@@ -44,7 +44,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   const startApp = async () => {
     await setHasSeenTutorial(true);
     await setMenuEnabled(true);
-    history.push("/tabs/schedule", { direction: "none" });
+    history.push('/tabs/schedule', { direction: 'none' });
   };
 
   const handleSlideChange = (event: any) => {
@@ -60,9 +60,9 @@ const Tutorial: React.FC<TutorialProps> = ({
   useEffect(() => {
     const swipeContainer = swipeContainerRef.current;
     if (swipeContainer) {
-      swipeContainer.addEventListener("slidechange", handleSlideChange);
+      swipeContainer.addEventListener('slidechange', handleSlideChange);
       return () => {
-        swipeContainer.removeEventListener("slidechange", handleSlideChange);
+        swipeContainer.removeEventListener('slidechange', handleSlideChange);
       };
     }
   }, [swipeContainerRef]);

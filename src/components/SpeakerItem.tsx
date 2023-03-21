@@ -1,6 +1,6 @@
-import React from "react";
-import { Session } from "../models/Schedule";
-import { Speaker } from "../models/Speaker";
+import React from 'react';
+import { Session } from '../models/Schedule';
+import { Speaker } from '../models/Speaker';
 import {
   IonCard,
   IonCardHeader,
@@ -9,7 +9,7 @@ import {
   IonAvatar,
   IonCardContent,
   IonList,
-} from "@ionic/react";
+} from '@ionic/react';
 
 interface SpeakerItemProps {
   speaker: Speaker;

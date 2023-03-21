@@ -1,7 +1,7 @@
-import React, { useContext, useMemo } from "react";
-import { AppContext } from "./AppContext";
-import { DispatchObject } from "../util/types";
-import { AppState } from "./state";
+import React, { useContext, useMemo } from 'react';
+import { AppContext } from './AppContext';
+import { DispatchObject } from '../util/types';
+import { AppState } from './state';
 
 interface ConnectParams<TOwnProps, TStateProps, TDispatchProps> {
   mapStateToProps?: (state: AppState, props: TOwnProps) => TStateProps;
@@ -32,11 +32,11 @@ export function connect<
           const oldFunc = (mapDispatchToProps as any)[key];
           const newFunc = (...args: any) => {
             const dispatchFunc = oldFunc(...args);
-            if (typeof dispatchFunc === "object") {
+            if (typeof dispatchFunc === 'object') {
               context.dispatch(dispatchFunc);
             } else {
               const result = dispatchFunc(context.dispatch);
-              if (typeof result === "object" && result.then) {
+              if (typeof result === 'object' && result.then) {
                 result.then((dispatchObject?: DispatchObject) => {
                   if (dispatchObject && dispatchObject.type) {
                     context.dispatch(dispatchObject);

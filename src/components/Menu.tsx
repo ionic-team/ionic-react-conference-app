@@ -1,5 +1,5 @@
-import React from "react";
-import { RouteComponentProps, withRouter, useLocation } from "react-router";
+import React from 'react';
+import { RouteComponentProps, withRouter, useLocation } from 'react-router';
 
 import {
   IonContent,
@@ -11,7 +11,7 @@ import {
   IonMenu,
   IonMenuToggle,
   IonToggle,
-} from "@ionic/react";
+} from '@ionic/react';
 import {
   calendarOutline,
   hammer,
@@ -24,29 +24,29 @@ import {
   peopleOutline,
   person,
   personAdd,
-} from "ionicons/icons";
+} from 'ionicons/icons';
 
-import { connect } from "../data/connect";
-import { setDarkMode } from "../data/user/user.actions";
+import { connect } from '../data/connect';
+import { setDarkMode } from '../data/user/user.actions';
 
-import "./Menu.css";
+import './Menu.css';
 
 const routes = {
   appPages: [
-    { title: "Schedule", path: "/tabs/schedule", icon: calendarOutline },
-    { title: "Speakers", path: "/tabs/speakers", icon: peopleOutline },
-    { title: "Map", path: "/tabs/map", icon: mapOutline },
-    { title: "About", path: "/tabs/about", icon: informationCircleOutline },
+    { title: 'Schedule', path: '/tabs/schedule', icon: calendarOutline },
+    { title: 'Speakers', path: '/tabs/speakers', icon: peopleOutline },
+    { title: 'Map', path: '/tabs/map', icon: mapOutline },
+    { title: 'About', path: '/tabs/about', icon: informationCircleOutline },
   ],
   loggedInPages: [
-    { title: "Account", path: "/account", icon: person },
-    { title: "Support", path: "/support", icon: help },
-    { title: "Logout", path: "/logout", icon: logOut },
+    { title: 'Account', path: '/account', icon: person },
+    { title: 'Support', path: '/support', icon: help },
+    { title: 'Logout', path: '/logout', icon: logOut },
   ],
   loggedOutPages: [
-    { title: "Login", path: "/login", icon: logIn },
-    { title: "Support", path: "/support", icon: help },
-    { title: "Signup", path: "/signup", icon: personAdd },
+    { title: 'Login', path: '/login', icon: logIn },
+    { title: 'Support', path: '/support', icon: help },
+    { title: 'Signup', path: '/signup', icon: personAdd },
   ],
 };
 
@@ -87,7 +87,7 @@ const Menu: React.FC<MenuProps> = ({
             routerLink={p.path}
             routerDirection="none"
             className={
-              location.pathname.startsWith(p.path) ? "selected" : undefined
+              location.pathname.startsWith(p.path) ? 'selected' : undefined
             }
           >
             <IonIcon slot="start" icon={p.icon} />
@@ -128,7 +128,7 @@ const Menu: React.FC<MenuProps> = ({
           <IonItem
             button
             onClick={() => {
-              history.push("/tutorial");
+              history.push('/tutorial');
             }}
           >
             <IonIcon slot="start" icon={hammer} />

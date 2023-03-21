@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { getMode } from "@ionic/core";
+import { getMode } from '@ionic/core';
 import {
   IonHeader,
   IonToolbar,
@@ -15,7 +15,7 @@ import {
   IonCheckbox,
   IonFooter,
   IonIcon,
-} from "@ionic/react";
+} from '@ionic/react';
 import {
   logoAngular,
   call,
@@ -27,12 +27,12 @@ import {
   colorPalette,
   construct,
   compass,
-} from "ionicons/icons";
+} from 'ionicons/icons';
 
-import "./SessionListFilter.css";
+import './SessionListFilter.css';
 
-import { connect } from "../data/connect";
-import { updateFilteredTracks } from "../data/sessions/sessions.actions";
+import { connect } from '../data/connect';
+import { updateFilteredTracks } from '../data/sessions/sessions.actions';
 
 interface OwnProps {
   onDismissModal: () => void;
@@ -55,7 +55,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
   onDismissModal,
   updateFilteredTracks,
 }) => {
-  const ios = getMode() === "ios";
+  const ios = getMode() === 'ios';
 
   const toggleTrackFilter = (track: string) => {
     if (filteredTracks.indexOf(track) > -1) {
@@ -106,7 +106,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
       </IonHeader>
 
       <IonContent className="session-list-filter">
-        <IonList lines={ios ? "inset" : "full"}>
+        <IonList lines={ios ? 'inset' : 'full'}>
           <IonListHeader>Tracks</IonListHeader>
 
           {allTracks.map((track) => (

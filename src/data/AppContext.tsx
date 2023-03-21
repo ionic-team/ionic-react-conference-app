@@ -1,5 +1,5 @@
-import React, { createContext, PropsWithChildren, useReducer } from "react";
-import { initialState, AppState, reducers } from "./state";
+import React, { createContext, PropsWithChildren, useReducer } from 'react';
+import { initialState, AppState, reducers } from './state';
 
 export interface AppContextState {
   state: AppState;

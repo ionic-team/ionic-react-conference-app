@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -14,11 +14,11 @@ import {
   IonItem,
   IonInput,
   IonText,
-} from "@ionic/react";
-import "./Login.scss";
-import { setIsLoggedIn, setUsername } from "../data/user/user.actions";
-import { connect } from "../data/connect";
-import { RouteComponentProps } from "react-router";
+} from '@ionic/react';
+import './Login.scss';
+import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
+import { connect } from '../data/connect';
+import { RouteComponentProps } from 'react-router';
 
 interface OwnProps extends RouteComponentProps {}
 
@@ -34,8 +34,8 @@ const Login: React.FC<LoginProps> = ({
   history,
   setUsername: setUsernameAction,
 }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -53,7 +53,7 @@ const Login: React.FC<LoginProps> = ({
     if (username && password) {
       await setIsLoggedIn(true);
       await setUsernameAction(username);
-      history.push("/tabs/schedule", { direction: "none" });
+      history.push('/tabs/schedule', { direction: 'none' });
     }
   };
 

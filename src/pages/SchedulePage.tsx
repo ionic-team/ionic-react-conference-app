@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react';
 
 import {
   IonToolbar,
@@ -18,26 +18,26 @@ import {
   IonModal,
   IonHeader,
   getConfig,
-} from "@ionic/react";
-import { options, search } from "ionicons/icons";
+} from '@ionic/react';
+import { options, search } from 'ionicons/icons';
 
-import SessionList from "../components/SessionList";
-import SessionListFilter from "../components/SessionListFilter";
-import "./SchedulePage.scss";
+import SessionList from '../components/SessionList';
+import SessionListFilter from '../components/SessionListFilter';
+import './SchedulePage.scss';
 
-import ShareSocialFab from "../components/ShareSocialFab";
+import ShareSocialFab from '../components/ShareSocialFab';
 
-import * as selectors from "../data/selectors";
-import { connect } from "../data/connect";
-import { setSearchText } from "../data/sessions/sessions.actions";
-import { Schedule } from "../models/Schedule";
+import * as selectors from '../data/selectors';
+import { connect } from '../data/connect';
+import { setSearchText } from '../data/sessions/sessions.actions';
+import { Schedule } from '../models/Schedule';
 
 interface OwnProps {}
 
 interface StateProps {
   schedule: Schedule;
   favoritesSchedule: Schedule;
-  mode: "ios" | "md";
+  mode: 'ios' | 'md';
 }
 
 interface DispatchProps {
@@ -52,7 +52,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
   setSearchText,
   mode,
 }) => {
-  const [segment, setSegment] = useState<"all" | "favorites">("all");
+  const [segment, setSegment] = useState<'all' | 'favorites'>('all');
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const ionRefresherRef = useRef<HTMLIonRefresherElement>(null);
@@ -60,7 +60,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
 
   const pageRef = useRef<HTMLElement>(null);
 
-  const ios = mode === "ios";
+  const ios = mode === 'ios';
 
   const doRefresh = () => {
     setTimeout(() => {
@@ -105,8 +105,8 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
             )}
             {!showSearchbar && (
               <IonButton onClick={() => setShowFilterModal(true)}>
-                {mode === "ios" ? (
-                  "Filter"
+                {mode === 'ios' ? (
+                  'Filter'
                 ) : (
                   <IonIcon icon={options} slot="icon-only" />
                 )}
@@ -159,12 +159,12 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
         <SessionList
           schedule={schedule}
           listType={segment}
-          hide={segment === "favorites"}
+          hide={segment === 'favorites'}
         />
         <SessionList
           schedule={favoritesSchedule}
           listType={segment}
-          hide={segment === "all"}
+          hide={segment === 'all'}
         />
       </IonContent>
 
@@ -185,7 +185,7 @@ export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
     schedule: selectors.getSearchedSchedule(state),
     favoritesSchedule: selectors.getGroupedFavorites(state),
-    mode: getConfig()!.get("mode"),
+    mode: getConfig()!.get('mode'),
   }),
   mapDispatchToProps: {
     setSearchText,

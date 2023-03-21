@@ -1,4 +1,12 @@
-import { IonItemDivider, IonItemGroup, IonLabel, IonList, IonListHeader, IonAlert, AlertButton } from '@ionic/react';
+import {
+  IonItemDivider,
+  IonItemGroup,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonAlert,
+  AlertButton,
+} from '@ionic/react';
 import React, { useState, useCallback } from 'react';
 import { Schedule, Session } from '../models/Schedule';
 import SessionListItem from './SessionListItem';
@@ -20,26 +28,35 @@ interface DispatchProps {
   removeFavorite: typeof removeFavorite;
 }
 
-interface SessionListProps extends OwnProps, StateProps, DispatchProps { };
+interface SessionListProps extends OwnProps, StateProps, DispatchProps {}
 
-const SessionList: React.FC<SessionListProps> = ({ addFavorite, removeFavorite, favoriteSessions, hide, schedule, listType }) => {
-
+const SessionList: React.FC<SessionListProps> = ({
+  addFavorite,
+  removeFavorite,
+  favoriteSessions,
+  hide,
+  schedule,
+  listType,
+}) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertHeader, setAlertHeader] = useState('');
-  const [alertButtons, setAlertButtons] = useState<(AlertButton | string)[]>([]);
+  const [alertButtons, setAlertButtons] = useState<(AlertButton | string)[]>(
+    []
+  );
 
-  const handleShowAlert = useCallback((header: string, buttons: AlertButton[]) => {
-    setAlertHeader(header);
-    setAlertButtons(buttons);
-    setShowAlert(true);
-  }, []);
+  const handleShowAlert = useCallback(
+    (header: string, buttons: AlertButton[]) => {
+      setAlertHeader(header);
+      setAlertButtons(buttons);
+      setShowAlert(true);
+    },
+    []
+  );
 
   if (schedule.groups.length === 0 && !hide) {
     return (
       <IonList>
-        <IonListHeader>
-          No Sessions Found
-        </IonListHeader>
+        <IonListHeader>No Sessions Found</IonListHeader>
       </IonList>
     );
   }
@@ -50,9 +67,7 @@ const SessionList: React.FC<SessionListProps> = ({ addFavorite, removeFavorite, 
         {schedule.groups.map((group, index: number) => (
           <IonItemGroup key={`group-${index}`}>
             <IonItemDivider sticky>
-              <IonLabel>
-                {group.time}
-              </IonLabel>
+              <IonLabel>{group.time}</IonLabel>
             </IonItemDivider>
             {group.sessions.map((session: Session, sessionIndex: number) => (
               <SessionListItem
@@ -80,11 +95,11 @@ const SessionList: React.FC<SessionListProps> = ({ addFavorite, removeFavorite, 
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    favoriteSessions: state.data.favorites
+    favoriteSessions: state.data.favorites,
   }),
-  mapDispatchToProps: ({
+  mapDispatchToProps: {
     addFavorite,
-    removeFavorite
-  }),
-  component: SessionList
+    removeFavorite,
+  },
+  component: SessionList,
 });

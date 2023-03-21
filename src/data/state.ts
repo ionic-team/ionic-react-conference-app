@@ -13,19 +13,19 @@ export const initialState: AppState = {
     filteredTracks: [],
     mapCenterId: 0,
     loading: false,
-    menuEnabled: true
+    menuEnabled: true,
   },
   user: {
     hasSeenTutorial: false,
     darkMode: false,
     isLoggedin: false,
-    loading: false
-  }
+    loading: false,
+  },
 };
 
 export const reducers = combineReducers({
   data: sessionsReducer,
-  user: userReducer
+  user: userReducer,
 });
 
 export type AppState = ReturnType<typeof reducers>;
