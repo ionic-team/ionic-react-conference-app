@@ -21,7 +21,6 @@ import { RouteComponentProps } from 'react-router';
 import { register } from 'swiper/element/bundle';
 
 interface OwnProps extends RouteComponentProps {}
-
 interface DispatchProps {
   setHasSeenTutorial: typeof setHasSeenTutorial;
   setMenuEnabled: typeof setMenuEnabled;
