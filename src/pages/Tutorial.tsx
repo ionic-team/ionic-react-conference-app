@@ -49,7 +49,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   const handleSlideChange = (event: any) => {
     const ev = event as CustomEvent<any>;
     if (!swipeContainerRef.current) return;
-    setShowSkip(!ev.detail.isEnd);
+    setShowSkip(!ev.detail[0].isEnd);
   };
 
   useEffect(() => {
