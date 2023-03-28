@@ -8,7 +8,7 @@
 }
 
 .md .session-list-filter ion-checkbox {
-  --background-checked: transparent;
+  --checkbox-background-checked: transparent;
   --border-color: transparent;
   --border-color-checked: transparent;
   --checkmark-color: var(--ion-color-primary);
@@ -18,7 +18,6 @@
   background: inherit;
 }
 
-
 /*
  * iOS
  */
@@ -27,6 +26,6 @@
   margin-top: 10px;
 }
 
-.ios .session-list-filter ion-label {
+.ios .session-list-filter ion-checkbox {
   color: var(--ion-color-primary);
 }
