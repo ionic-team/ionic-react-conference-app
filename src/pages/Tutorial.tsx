@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import {
   IonContent,
   IonPage,
@@ -13,12 +13,8 @@ import { arrowForward } from 'ionicons/icons';
 import { setMenuEnabled } from '../data/sessions/sessions.actions';
 import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
-import 'swiper/swiper.min.css';
-import '@ionic/react/css/ionic-swiper.css';
 import { connect } from '../data/connect';
 import { RouteComponentProps } from 'react-router';
-
-import { register } from 'swiper/element/bundle';
 
 interface OwnProps extends RouteComponentProps {}
 interface DispatchProps {
@@ -33,9 +29,6 @@ const Tutorial: React.FC<TutorialProps> = ({
   setHasSeenTutorial,
   setMenuEnabled,
 }) => {
-  const [showSkip, setShowSkip] = useState(true);
-  const swipeContainerRef = useRef<HTMLElement>(null);
-
   useIonViewWillEnter(() => {
     setMenuEnabled(false);
   });
@@ -46,42 +39,20 @@ const Tutorial: React.FC<TutorialProps> = ({
     history.push('/tabs/schedule', { direction: 'none' });
   };
 
-  const handleSlideChange = (event: any) => {
-    const ev = event as CustomEvent<any>;
-    if (!swipeContainerRef.current) return;
-    setShowSkip(!ev.detail[0].isEnd);
-  };
-
-  useEffect(() => {
-    register();
-  }, []);
-
-  useEffect(() => {
-    const swipeContainer = swipeContainerRef.current;
-    if (swipeContainer) {
-      swipeContainer.addEventListener('slidechange', handleSlideChange);
-      return () => {
-        swipeContainer.removeEventListener('slidechange', handleSlideChange);
-      };
-    }
-  }, [swipeContainerRef]);
-
   return (
     <IonPage id="tutorial-page">
       <IonHeader no-border>
         <IonToolbar>
           <IonButtons slot="end">
-            {showSkip && (
-              <IonButton color="primary" onClick={startApp}>
-                Skip
-              </IonButton>
-            )}
+            <IonButton color="primary" onClick={startApp}>
+              Skip
+            </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <swiper-container ref={swipeContainerRef}>
-          <swiper-slide>
+        <div className="slider">
+          <section>
             <div className="swiper-item">
               <img
                 src="assets/img/ica-slidebox-img-1.png"
@@ -97,8 +68,8 @@ const Tutorial: React.FC<TutorialProps> = ({
                 use.
               </p>
             </div>
-          </swiper-slide>
-          <swiper-slide>
+          </section>
+          <section>
             <div className="swiper-item">
               <img
                 src="assets/img/ica-slidebox-img-2.png"
@@ -112,8 +83,8 @@ const Tutorial: React.FC<TutorialProps> = ({
                 technologies like HTML, CSS, and JavaScript.
               </p>
             </div>
-          </swiper-slide>
-          <swiper-slide>
+          </section>
+          <section>
             <div className="swiper-item">
               <img
                 src="assets/img/ica-slidebox-img-3.png"
@@ -127,8 +98,8 @@ const Tutorial: React.FC<TutorialProps> = ({
                 of app development agility to mobile dev teams.
               </p>
             </div>
-          </swiper-slide>
-          <swiper-slide>
+          </section>
+          <section>
             <div className="swiper-item">
               <img
                 src="assets/img/ica-slidebox-img-4.png"
@@ -141,8 +112,8 @@ const Tutorial: React.FC<TutorialProps> = ({
                 <IonIcon slot="end" icon={arrowForward} />
               </IonButton>
             </div>
-          </swiper-slide>
-        </swiper-container>
+          </section>
+        </div>
       </IonContent>
     </IonPage>
   );
