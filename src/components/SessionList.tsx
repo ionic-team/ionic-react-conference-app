@@ -40,13 +40,15 @@ const SessionList: React.FC<SessionListProps> = ({
 }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertHeader, setAlertHeader] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
   const [alertButtons, setAlertButtons] = useState<(AlertButton | string)[]>(
     []
   );
 
   const handleShowAlert = useCallback(
-    (header: string, buttons: AlertButton[]) => {
+    (header: string, message: string, buttons: AlertButton[]) => {
       setAlertHeader(header);
+      setAlertMessage(message);
       setAlertButtons(buttons);
       setShowAlert(true);
     },
@@ -86,6 +88,7 @@ const SessionList: React.FC<SessionListProps> = ({
       <IonAlert
         isOpen={showAlert}
         header={alertHeader}
+        message={alertMessage}
         buttons={alertButtons}
         onDidDismiss={() => setShowAlert(false)}
       ></IonAlert>

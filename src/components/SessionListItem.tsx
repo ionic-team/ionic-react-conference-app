@@ -14,7 +14,11 @@ interface SessionListItemProps {
   listType: 'all' | 'favorites';
   onAddFavorite: (id: number) => void;
   onRemoveFavorite: (id: number) => void;
-  onShowAlert: (header: string, buttons: AlertButton[]) => void;
+  onShowAlert: (
+    header: string,
+    message: string,
+    buttons: AlertButton[]
+  ) => void;
   isFavorite: boolean;
 }
 
@@ -34,19 +38,23 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
 
   const removeFavoriteSession = () => {
     onAddFavorite(session.id);
-    onShowAlert('Favorite already added', [
-      {
-        text: 'Cancel',
-        handler: dismissAlert,
-      },
-      {
-        text: 'Remove',
-        handler: () => {
-          onRemoveFavorite(session.id);
-          dismissAlert();
+    onShowAlert(
+      'Remove Favorite',
+      'Would you like to remove this session from your favorites?',
+      [
+        {
+          text: 'Cancel',
+          handler: dismissAlert,
         },
-      },
-    ]);
+        {
+          text: 'Remove',
+          handler: () => {
+            onRemoveFavorite(session.id);
+            dismissAlert();
+          },
+        },
+      ]
+    );
   };
 
   const addFavoriteSession = () => {
@@ -57,7 +65,7 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
     } else {
       // remember this session as a user favorite
       onAddFavorite(session.id);
-      onShowAlert('Favorite Added', [
+      onShowAlert('Favorite Added', '', [
         {
           text: 'OK',
           handler: dismissAlert,
