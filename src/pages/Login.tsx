@@ -84,7 +84,7 @@ const Login: React.FC<LoginProps> = ({
                 value={username}
                 spellCheck={false}
                 autocapitalize="off"
-                onIonChange={(e) => setUsername(e.detail.value as string)}
+                onIonInput={(e) => setUsername(e.detail.value as string)}
                 required
               >
                 {formSubmitted && usernameError && (
@@ -103,7 +103,7 @@ const Login: React.FC<LoginProps> = ({
                 name="password"
                 type="password"
                 value={password}
-                onIonChange={(e) => setPassword(e.detail.value as string)}
+                onIonInput={(e) => setPassword(e.detail.value as string)}
               >
                 {formSubmitted && passwordError && (
                   <IonText color="danger" slot="error">

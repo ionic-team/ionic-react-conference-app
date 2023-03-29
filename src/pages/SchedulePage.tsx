@@ -92,7 +92,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
             <IonSearchbar
               showCancelButton="always"
               placeholder="Search"
-              onIonChange={(e: CustomEvent) => setSearchText(e.detail.value)}
+              onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
               onIonCancel={() => setShowSearchbar(false)}
             ></IonSearchbar>
           )}
@@ -136,7 +136,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
           <IonToolbar>
             <IonSearchbar
               placeholder="Search"
-              onIonChange={(e: CustomEvent) => setSearchText(e.detail.value)}
+              onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
             ></IonSearchbar>
           </IonToolbar>
         </IonHeader>

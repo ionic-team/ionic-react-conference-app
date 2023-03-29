@@ -70,7 +70,7 @@ const Support: React.FC<SupportProps> = () => {
                 spellCheck={false}
                 autocapitalize="off"
                 rows={6}
-                onIonChange={(e) => setMessage(e.detail.value!)}
+                onIonInput={(e) => setMessage(e.detail.value!)}
                 required
               >
                 {formSubmitted && messageError && (
