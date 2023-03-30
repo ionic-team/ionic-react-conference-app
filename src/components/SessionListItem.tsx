@@ -6,6 +6,7 @@ import {
   IonItemOptions,
   IonItemOption,
   AlertButton,
+  useIonToast,
 } from '@ionic/react';
 import { Session } from '../models/Schedule';
 
@@ -30,16 +31,17 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
   session,
   listType,
 }) => {
+  const [presentToast] = useIonToast();
   const ionItemSlidingRef = useRef<HTMLIonItemSlidingElement>(null);
 
   const dismissAlert = () => {
     ionItemSlidingRef.current && ionItemSlidingRef.current.close();
   };
 
-  const removeFavoriteSession = () => {
+  const removeFavoriteSession = (title: string) => {
     onAddFavorite(session.id);
     onShowAlert(
-      'Remove Favorite',
+      title,
       'Would you like to remove this session from your favorites?',
       [
         {
@@ -57,20 +59,28 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
     );
   };
 
-  const addFavoriteSession = () => {
+  const addFavoriteSession = async () => {
     if (isFavorite) {
-      // woops, they already favorited it! What shall we do!?
-      // prompt them to remove it
-      removeFavoriteSession();
+      // Prompt to remove favorite
+      removeFavoriteSession('Favorite already added');
     } else {
-      // remember this session as a user favorite
+      // Add as a favorite
       onAddFavorite(session.id);
-      onShowAlert('Favorite Added', '', [
-        {
-          text: 'OK',
-          handler: dismissAlert,
-        },
-      ]);
+
+      // Close the open item
+      ionItemSlidingRef.current && ionItemSlidingRef.current.close();
+
+      // Create a toast
+      presentToast({
+        message: `${session.name} was successfully added as a favorite.`,
+        duration: 3000,
+        buttons: [
+          {
+            text: 'Close',
+            role: 'cancel',
+          },
+        ],
+      });
     }
   };
 
@@ -91,7 +101,10 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
       </IonItem>
       <IonItemOptions>
         {listType === 'favorites' ? (
-          <IonItemOption color="danger" onClick={() => removeFavoriteSession()}>
+          <IonItemOption
+            color="danger"
+            onClick={() => removeFavoriteSession('Remove Favorite')}
+          >
             Remove
           </IonItemOption>
         ) : (
