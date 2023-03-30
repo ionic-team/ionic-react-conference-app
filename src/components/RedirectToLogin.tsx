@@ -15,7 +15,7 @@ const RedirectToLogin: React.FC<RedirectToLoginProps> = ({
     setIsLoggedIn(false);
     setUsername(undefined);
     ionRouterContext.push('/tabs/schedule');
-  }, [setIsLoggedIn, setUsername, ionRouterContext]);
+  }, [setIsLoggedIn, setUsername]);
   return null;
 };
 
