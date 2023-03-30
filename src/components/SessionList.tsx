@@ -7,7 +7,7 @@ import {
   IonAlert,
   AlertButton,
 } from '@ionic/react';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Schedule, Session } from '../models/Schedule';
 import SessionListItem from './SessionListItem';
 import { connect } from '../data/connect';
@@ -38,6 +38,7 @@ const SessionList: React.FC<SessionListProps> = ({
   schedule,
   listType,
 }) => {
+  const scheduleListRef = useRef<HTMLIonListElement>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertHeader, setAlertHeader] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
@@ -55,6 +56,12 @@ const SessionList: React.FC<SessionListProps> = ({
     []
   );
 
+  useEffect(() => {
+    if (scheduleListRef.current) {
+      scheduleListRef.current.closeSlidingItems();
+    }
+  }, [hide]);
+
   if (schedule.groups.length === 0 && !hide) {
     return (
       <IonList>
@@ -65,7 +72,7 @@ const SessionList: React.FC<SessionListProps> = ({
 
   return (
     <>
-      <IonList style={hide ? { display: 'none' } : {}}>
+      <IonList ref={scheduleListRef} style={hide ? { display: 'none' } : {}}>
         {schedule.groups.map((group, index: number) => (
           <IonItemGroup key={`group-${index}`}>
             <IonItemDivider sticky>
