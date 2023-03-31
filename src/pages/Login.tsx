@@ -1,5 +1,20 @@
 import React, { useState } from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText } from '@ionic/react';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonButtons,
+  IonMenuButton,
+  IonRow,
+  IonCol,
+  IonButton,
+  IonList,
+  IonItem,
+  IonInput,
+  IonText,
+} from '@ionic/react';
 import './Login.scss';
 import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
@@ -12,10 +27,13 @@ interface DispatchProps {
   setUsername: typeof setUsername;
 }
 
-interface LoginProps extends OwnProps,  DispatchProps { }
+interface LoginProps extends OwnProps, DispatchProps {}
 
-const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUsernameAction}) => {
-
+const Login: React.FC<LoginProps> = ({
+  setIsLoggedIn,
+  history,
+  setUsername: setUsernameAction,
+}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -25,17 +43,17 @@ const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUs
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
-    if(!username) {
+    if (!username) {
       setUsernameError(true);
     }
-    if(!password) {
+    if (!password) {
       setPasswordError(true);
     }
 
-    if(username && password) {
+    if (username && password) {
       await setIsLoggedIn(true);
       await setUsernameAction(username);
-      history.push('/tabs/schedule', {direction: 'none'});
+      history.push('/tabs/schedule', { direction: 'none' });
     }
   };
 
@@ -50,7 +68,6 @@ const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUs
         </IonToolbar>
       </IonHeader>
       <IonContent>
-
         <div className="login-logo">
           <img src="assets/img/appicon.svg" alt="Ionic logo" />
         </div>
@@ -58,43 +75,59 @@ const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUs
         <form noValidate onSubmit={login}>
           <IonList>
             <IonItem>
-              <IonLabel position="stacked" color="primary">Username</IonLabel>
-              <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => setUsername(e.detail.value!)}
-                required>
+              <IonInput
+                label="Username"
+                labelPlacement="stacked"
+                color="primary"
+                name="username"
+                type="text"
+                value={username}
+                spellCheck={false}
+                autocapitalize="off"
+                onIonInput={(e) => setUsername(e.detail.value as string)}
+                required
+              >
+                {formSubmitted && usernameError && (
+                  <IonText color="danger" slot="error">
+                    <p>Username is required</p>
+                  </IonText>
+                )}
               </IonInput>
             </IonItem>
-
-            {formSubmitted && usernameError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Username is required
-              </p>
-            </IonText>}
 
             <IonItem>
-              <IonLabel position="stacked" color="primary">Password</IonLabel>
-              <IonInput name="password" type="password" value={password} onIonChange={e => setPassword(e.detail.value!)}>
+              <IonInput
+                label="Password"
+                labelPlacement="stacked"
+                color="primary"
+                name="password"
+                type="password"
+                value={password}
+                onIonInput={(e) => setPassword(e.detail.value as string)}
+              >
+                {formSubmitted && passwordError && (
+                  <IonText color="danger" slot="error">
+                    <p>Password is required</p>
+                  </IonText>
+                )}
               </IonInput>
             </IonItem>
-
-            {formSubmitted && passwordError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Password is required
-              </p>
-            </IonText>}
           </IonList>
 
           <IonRow>
             <IonCol>
-              <IonButton type="submit" expand="block">Login</IonButton>
+              <IonButton type="submit" expand="block">
+                Login
+              </IonButton>
             </IonCol>
             <IonCol>
-              <IonButton routerLink="/signup" color="light" expand="block">Signup</IonButton>
+              <IonButton routerLink="/signup" color="light" expand="block">
+                Signup
+              </IonButton>
             </IonCol>
           </IonRow>
         </form>
-
       </IonContent>
-
     </IonPage>
   );
 };
@@ -102,7 +135,7 @@ const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUs
 export default connect<OwnProps, {}, DispatchProps>({
   mapDispatchToProps: {
     setIsLoggedIn,
-    setUsername
+    setUsername,
   },
-  component: Login
-})
+  component: Login,
+});
