@@ -28,32 +28,32 @@ https://github.com/ionic-team/ionic-vue-conference-app
 
 ## App Preview
 
-### [Menu](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/pages/menu/menu.html)
+### [Menu](https://github.com/ionic-team/ionic-react-conference-app/blob/main/src/components/Menu.tsx)
 
 | Material Design  | iOS  |
 | -----------------| -----|
 | ![Android Menu](/resources/screenshots/android-menu.png) | ![iOS Menu](/resources/screenshots/ios-menu.png) |
 
 
-### [Schedule Page](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/pages/schedule/schedule.html)
+### [Schedule Page](https://github.com/ionic-team/ionic-react-conference-app/blob/main/src/pages/SchedulePage.tsx)
 
 | Material Design  | iOS  |
 | -----------------| -----|
 | ![Android Schedule](/resources/screenshots/android-schedule.png) | ![iOS Schedule](/resources/screenshots/ios-schedule.png) |
 
-### [Speakers Page](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/pages/speaker-list/speaker-list.html)
+### [Speakers Page](https://github.com/ionic-team/ionic-react-conference-app/blob/main/src/pages/SpeakerList.tsx)
 
 | Material Design  | iOS  |
 | -----------------| -----|
 | ![Android Speakers](/resources/screenshots/android-speakers.png) | ![iOS Speakers](/resources/screenshots/ios-speakers.png) |
 
-### [Speaker Detail Page](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/pages/speaker-detail/speaker-detail.html)
+### [Speaker Detail Page](https://github.com/ionic-team/ionic-react-conference-app/blob/main/src/pages/SpeakerDetail.tsx)
 
 | Material Design  | iOS  |
 | -----------------| -----|
 | ![Android Speaker Detail](/resources/screenshots/android-speaker-detail.png) | ![iOS Speaker Detail](/resources/screenshots/ios-speaker-detail.png) |
 
-### [About Page](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/pages/about/about.html)
+### [About Page](https://github.com/ionic-team/ionic-react-conference-app/blob/main/src/pages/About.tsx)
 
 | Material Design  | iOS  |
 | -----------------| -----|
