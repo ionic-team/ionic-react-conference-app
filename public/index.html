@@ -27,13 +27,11 @@
 <div id="root"></div>
 
 <script type="text/javascript">
-
-      !async function(){try{let e="6dd1aa1b-e4e8-46d5-888b-497bdda4d488",w="api.txtbox.in",a="https://app.txtbox.in",o="",n="",c="",i=3e3,d="https://tenali.txtbox.in";async function t(){o=a+"/v1/conversive/button/run/"+e+"?latitude="+n+"&longitude="+c;let t=await fetch(o).then((t=>t.json())).then((t=>t)).catch((t=>{}));if("success"===t.response.status){let e=t.response;if(document.getElementById(e.data.button_config.scriptLocation))displayButton(e.data);else{const t=document.getElementsByTagName("head")[0],a=document.createElement("link"),o=document.createElement("script"),n=document.createElement("link"),c=document.createElement("script");a.rel="stylesheet",a.type="text/css",a.href=e.data.button_config.cssLocation,a.onload=()=>{t.appendChild(o)},t.appendChild(a),o.type="text/javascript",o.id=e.data.button_config.scriptLocation,o.src=e.data.button_config.scriptLocation,o.onload=()=>{displayButton(e.data)},n.rel="stylesheet",n.type="text/css",c.id=e.data.chatbot_config.chatbotCSS,n.href=e.data.chatbot_config.chatbotCSS,n.onload=()=>{t.appendChild(c)},t.appendChild(n),c.type="text/javascript",c.id=e.data.chatbot_config.chatbotJS,c.src=e.data.chatbot_config.chatbotJS,c.onload=()=>{loadChatBot(d,w,e.data)}}}}navigator.geolocation&&navigator.geolocation.getCurrentPosition((e=>{n=e.coords.latitude,c=e.coords.longitude,t()}),(e=>{t()}),{timeout:i}),setTimeout(t,i)}catch(s){}}();
+  !async function(){try{let e="fb2b18fe-25d3-4a97-8c7d-77f0a9a74831",w="aus-api.sms-magic.com",a="https://aus-app.sms-magic.com",o="",n="",c="",i=3e3,d="https://tenali.sms-magic.com";async function t(){o=a+"/v1/conversive/button/run/"+e+"?latitude="+n+"&longitude="+c;let t=await fetch(o).then((t=>t.json())).then((t=>t)).catch((t=>{}));if("success"===t.response.status){let e=t.response;if(document.getElementById(e.data.button_config.scriptLocation))displayButton(e.data);else{const t=document.getElementsByTagName("head")[0],a=document.createElement("link"),o=document.createElement("script"),n=document.createElement("link"),c=document.createElement("script");a.rel="stylesheet",a.type="text/css",a.href=e.data.button_config.cssLocation,a.onload=()=>{t.appendChild(o)},t.appendChild(a),o.type="text/javascript",o.id=e.data.button_config.scriptLocation,o.src=e.data.button_config.scriptLocation,o.onload=()=>{displayButton(e.data)},n.rel="stylesheet",n.type="text/css",c.id=e.data.chatbot_config.chatbotCSS,n.href=e.data.chatbot_config.chatbotCSS,n.onload=()=>{t.appendChild(c)},t.appendChild(n),c.type="text/javascript",c.id=e.data.chatbot_config.chatbotJS,c.src=e.data.chatbot_config.chatbotJS,c.onload=()=>{loadChatBot(d,w,e.data)}}}}navigator.geolocation&&navigator.geolocation.getCurrentPosition((e=>{n=e.coords.latitude,c=e.coords.longitude,t()}),(e=>{t()}),{timeout:i}),setTimeout(t,i)}catch(s){}}();
   </script>
   
   
-  
-  
+
 
   
   
