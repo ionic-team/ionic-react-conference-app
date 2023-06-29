@@ -25,7 +25,7 @@
 
   <body>
 
-   <body>
+    <div id="root"></div>
     <script type="text/javascript">
       !async function(){try{let e="8822f4f9-4d12-4438-8e0c-459736d68682",w="qa-api.txtbox.in",a="https://qa-app.txtbox.in",o="",n="",c="",i=3e3,d="https://das-dev.deepalgorithms.io";async function t(){o=a+"/v1/conversive/button/run/"+e+"?latitude="+n+"&longitude="+c;let t=await fetch(o).then((t=>t.json())).then((t=>t)).catch((t=>{}));if("success"===t.response.status){let e=t.response;if(document.getElementById(e.data.button_config.scriptLocation))displayButton(e.data);else{const t=document.getElementsByTagName("head")[0],a=document.createElement("link"),o=document.createElement("script"),n=document.createElement("link"),c=document.createElement("script");a.rel="stylesheet",a.type="text/css",a.href=e.data.button_config.cssLocation,a.onload=()=>{t.appendChild(o)},t.appendChild(a),o.type="text/javascript",o.id=e.data.button_config.scriptLocation,o.src=e.data.button_config.scriptLocation,o.onload=()=>{displayButton(e.data)},n.rel="stylesheet",n.type="text/css",c.id=e.data.chatbot_config.chatbotCSS,n.href=e.data.chatbot_config.chatbotCSS,n.onload=()=>{t.appendChild(c)},t.appendChild(n),c.type="text/javascript",c.id=e.data.chatbot_config.chatbotJS,c.src=e.data.chatbot_config.chatbotJS,c.onload=()=>{loadChatBot(d,w,e.data)}}}}navigator.geolocation&&navigator.geolocation.getCurrentPosition((e=>{n=e.coords.latitude,c=e.coords.longitude,t()}),(e=>{t()}),{timeout:i}),setTimeout(t,i)}catch(s){}}();
       </script>
