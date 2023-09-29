@@ -88,6 +88,8 @@ ion-menu.ios ion-item.selected ion-icon {
   color: var(--ion-color-primary);
 }
 
-.tutorial-button {
-  word-break: break-all;
+.tutorial-label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
