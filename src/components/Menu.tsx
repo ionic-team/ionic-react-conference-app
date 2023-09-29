@@ -127,6 +127,7 @@ const Menu: React.FC<MenuProps> = ({
           <IonListHeader>Tutorial</IonListHeader>
           <IonItem
             button
+            className="tutorial-button"
             onClick={() => {
               history.push('/tutorial');
             }}
