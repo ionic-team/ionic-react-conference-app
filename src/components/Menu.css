@@ -27,7 +27,7 @@ ion-menu.md ion-list-header {
 
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-size: min(1.375rem, 32px);
+  font-size: min(0.875rem, 32px);
   font-weight: 450;
 }
 
