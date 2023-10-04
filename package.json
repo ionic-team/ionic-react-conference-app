@@ -8,7 +8,7 @@
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "date-fns": "^2.25.0",
-    "ionicons": "^5.0.1",
+    "ionicons": "^7.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^5.3.4",

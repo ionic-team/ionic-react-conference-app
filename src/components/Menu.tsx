@@ -132,7 +132,7 @@ const Menu: React.FC<MenuProps> = ({
             }}
           >
             <IonIcon slot="start" icon={hammer} />
-            Show Tutorial
+            <IonLabel>Show Tutorial</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
