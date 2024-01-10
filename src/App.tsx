@@ -33,8 +33,8 @@ import '@ionic/react/css/display.css';
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-// @import "@ionic/react/css/themes/dark.always.css";
-// @import "@ionic/react/css/themes/dark.system.css";
+// import "@ionic/react/css/themes/dark.always.css";
+// import "@ionic/react/css/themes/dark.system.css";
 import "@ionic/react/css/themes/dark.class.css";
 
 /* Theme variables */
