@@ -26,8 +26,20 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
+/**
+ * Ionic Dark Theme
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+// @import "@ionic/react/css/themes/dark.always.css";
+// @import "@ionic/react/css/themes/dark.system.css";
+import "@ionic/react/css/themes/dark.class.css";
+
 /* Theme variables */
 import './theme/variables.css';
+
 /* Global styles */
 import './App.scss';
 import MainTabs from './pages/MainTabs';
@@ -89,7 +101,7 @@ const IonicApp: React.FC<IonicAppProps> = ({
   return schedule.groups.length === 0 ? (
     <div></div>
   ) : (
-    <IonApp className={`${darkMode ? 'dark-theme' : ''}`}>
+    <IonApp className={`${darkMode ? 'ion-theme-dark' : ''}`}>
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <Menu />
