@@ -8,9 +8,12 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
   const mapEle = useRef<HTMLDivElement>(null);
-  const map = useRef<google.maps.Map>();
-
+  const map = useRef<google.maps.Map>(null);
   useEffect(() => {
+    if (!mapEle.current) {
+      return;
+    }
+
     map.current = new google.maps.Map(mapEle.current, {
       center: {
         lat: mapCenter.lat,
