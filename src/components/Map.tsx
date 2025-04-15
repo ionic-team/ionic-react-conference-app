@@ -9,6 +9,7 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
   const mapEle = useRef<HTMLDivElement>(null);
   const map = useRef<google.maps.Map>(null);
+
   useEffect(() => {
     if (!mapEle.current) {
       return;
@@ -32,18 +33,19 @@ const Map: React.FC<MapProps> = ({ mapCenter, locations }) => {
 
     function addMarkers() {
       locations.forEach((markerData) => {
-        let infoWindow = new google.maps.InfoWindow({
+        const infoWindow = new google.maps.InfoWindow({
           content: `<h5>${markerData.name}</h5>`,
         });
 
-        let marker = new google.maps.Marker({
-          position: new google.maps.LatLng(markerData.lat, markerData.lng),
+        const position = new google.maps.LatLng(markerData.lat, markerData.lng);
+        const markerView = new google.maps.marker.AdvancedMarkerElement({
           map: map.current!,
+          position,
           title: markerData.name,
         });
 
-        marker.addListener('click', () => {
-          infoWindow.open(map.current!, marker);
+        markerView.addListener('gmp-click', () => {
+          infoWindow.open(map.current!, markerView);
         });
       });
     }
