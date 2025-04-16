@@ -1,6 +1,7 @@
 import { combineReducers } from './combineReducers';
 import { sessionsReducer } from './sessions/sessions.reducer';
 import { userReducer } from './user/user.reducer';
+import { locationsReducer } from './locations/locations.reducer';
 
 export const initialState: AppState = {
   data: {
@@ -21,11 +22,15 @@ export const initialState: AppState = {
     isLoggedin: false,
     loading: false,
   },
+  locations: {
+    locations: [],
+  },
 };
 
 export const reducers = combineReducers({
   data: sessionsReducer,
   user: userReducer,
+  locations: locationsReducer,
 });
 
 export type AppState = ReturnType<typeof reducers>;

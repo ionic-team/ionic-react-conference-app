@@ -40,6 +40,9 @@ import '@ionic/react/css/palettes/dark.class.css';
 /* Theme variables */
 import './theme/variables.css';
 
+/* Leaflet CSS */
+import 'leaflet/dist/leaflet.css';
+
 /* Global styles */
 import './App.scss';
 import MainTabs from './pages/MainTabs';
