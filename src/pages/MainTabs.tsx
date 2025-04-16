@@ -22,18 +22,30 @@ const MainTabs: React.FC<MainTabsProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
+        <Redirect exact path="/tabs" to="/tabs/schedule" />
+        {/*
+          Using the render method prop cuts down the number of renders your components will have due to route changes.
+          Use the component prop when your component depends on the RouterComponentProps passed in automatically.
+        */}
         <Route
-          path="/tabs"
-          render={() => <Redirect to="/tabs/schedule" />}
+          path="/tabs/schedule"
+          render={() => <SchedulePage />}
           exact={true}
         />
-        <Route path="/tabs/schedule" component={SchedulePage} exact={true} />
-        <Route path="/tabs/speakers" component={SpeakerList} exact={true} />
-        <Route path="/tabs/speakers/:id" component={SpeakerDetail} />
+        <Route
+          path="/tabs/speakers"
+          render={() => <SpeakerList />}
+          exact={true}
+        />
+        <Route
+          path="/tabs/speakers/:id"
+          component={SpeakerDetail}
+          exact={true}
+        />
         <Route path="/tabs/schedule/:id" component={SessionDetail} />
         <Route path="/tabs/speakers/sessions/:id" component={SessionDetail} />
-        <Route path="/tabs/map" component={MapView} />
-        <Route path="/tabs/about" component={About} />
+        <Route path="/tabs/map" render={() => <MapView />} exact={true} />
+        <Route path="/tabs/about" render={() => <About />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="schedule" href="/tabs/schedule">
