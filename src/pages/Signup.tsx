@@ -22,7 +22,10 @@ interface SignupProps {
   setUsername: typeof setUsername;
 }
 
-const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsernameAction }) => {
+const Signup: React.FC<SignupProps> = ({
+  setIsLoggedIn,
+  setUsername: setUsernameAction,
+}) => {
   const history = useHistory();
   const [signup, setSignup] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -62,8 +65,12 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
               value={signup.username}
               name="username"
               type="text"
-              errorText={submitted && !signup.username ? 'Username is required' : ''}
-              onIonInput={(e) => setSignup({ ...signup, username: e.detail.value! })}
+              errorText={
+                submitted && !signup.username ? 'Username is required' : ''
+              }
+              onIonInput={(e) =>
+                setSignup({ ...signup, username: e.detail.value! })
+              }
               required
             />
 
@@ -74,14 +81,20 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
               value={signup.password}
               name="password"
               type="password"
-              errorText={submitted && !signup.password ? 'Password is required' : ''}
-              onIonInput={(e) => setSignup({ ...signup, password: e.detail.value! })}
+              errorText={
+                submitted && !signup.password ? 'Password is required' : ''
+              }
+              onIonInput={(e) =>
+                setSignup({ ...signup, password: e.detail.value! })
+              }
               required
             />
 
             <IonRow>
               <IonCol>
-                <IonButton type="submit" expand="block">Create</IonButton>
+                <IonButton type="submit" expand="block">
+                  Create
+                </IonButton>
               </IonCol>
             </IonRow>
           </form>

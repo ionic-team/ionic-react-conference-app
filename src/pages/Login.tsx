@@ -22,7 +22,10 @@ interface LoginProps {
   setUsername: typeof setUsername;
 }
 
-const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAction }) => {
+const Login: React.FC<LoginProps> = ({
+  setIsLoggedIn,
+  setUsername: setUsernameAction,
+}) => {
   const history = useHistory();
   const [login, setLogin] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -68,8 +71,12 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
               type="text"
               spellCheck={false}
               autocapitalize="off"
-              errorText={submitted && !login.username ? 'Username is required' : ''}
-              onIonInput={(e) => setLogin({ ...login, username: e.detail.value! })}
+              errorText={
+                submitted && !login.username ? 'Username is required' : ''
+              }
+              onIonInput={(e) =>
+                setLogin({ ...login, username: e.detail.value! })
+              }
               required
             />
 
@@ -80,17 +87,25 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
               value={login.password}
               name="password"
               type="password"
-              errorText={submitted && !login.password ? 'Password is required' : ''}
-              onIonInput={(e) => setLogin({ ...login, password: e.detail.value! })}
+              errorText={
+                submitted && !login.password ? 'Password is required' : ''
+              }
+              onIonInput={(e) =>
+                setLogin({ ...login, password: e.detail.value! })
+              }
               required
             />
 
             <IonRow>
               <IonCol>
-                <IonButton type="submit" expand="block">Login</IonButton>
+                <IonButton type="submit" expand="block">
+                  Login
+                </IonButton>
               </IonCol>
               <IonCol>
-                <IonButton onClick={onSignup} color="light" expand="block">Signup</IonButton>
+                <IonButton onClick={onSignup} color="light" expand="block">
+                  Signup
+                </IonButton>
               </IonCol>
             </IonRow>
           </form>

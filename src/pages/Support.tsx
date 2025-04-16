@@ -67,14 +67,20 @@ const Support: React.FC = () => {
               value={supportMessage}
               name="supportQuestion"
               rows={6}
-              errorText={submitted && !supportMessage ? 'Support message is required' : ''}
+              errorText={
+                submitted && !supportMessage
+                  ? 'Support message is required'
+                  : ''
+              }
               onIonInput={(e) => setSupportMessage(e.detail.value!)}
               required
             />
 
             <IonRow>
               <IonCol>
-                <IonButton expand="block" type="submit">Submit</IonButton>
+                <IonButton expand="block" type="submit">
+                  Submit
+                </IonButton>
               </IonCol>
             </IonRow>
           </form>
