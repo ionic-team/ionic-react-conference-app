@@ -1,6 +1,9 @@
 {
   "name": "ionic-react-conference-app",
-  "version": "0.0.1",
+  "version": "0.0.0",
+  "description": "Ionic Conference App",
+  "author": "Ionic Team <hi@ionicframework.com>",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@capacitor/android": "7.0.1",
@@ -45,7 +48,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "description": "An Ionic project",
   "devDependencies": {
     "@capacitor/cli": "^7.0.0",
     "@testing-library/react": "^9.3.1",
