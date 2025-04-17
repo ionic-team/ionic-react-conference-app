@@ -12,6 +12,9 @@ import { connect } from '../data/connect';
 import { loadLocations } from '../data/locations/locations.actions';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+// Fix for marker icons in Vercel
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
+import 'leaflet-defaulticon-compatibility';
 import './MapView.scss';
 
 interface StateProps {
