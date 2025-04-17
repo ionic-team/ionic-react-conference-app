@@ -68,4 +68,4 @@ We welcome contributions! Please see our [Contributing Guide](.github/CONTRIBUTI
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT [License](./LICENSE).
