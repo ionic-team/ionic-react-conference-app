@@ -6,13 +6,16 @@ interface RedirectToLoginProps {
   setUsername: Function;
 }
 
-const RedirectToLogin: React.FC<RedirectToLoginProps> = ({ setIsLoggedIn, setUsername }) => {
+const RedirectToLogin: React.FC<RedirectToLoginProps> = ({
+  setIsLoggedIn,
+  setUsername,
+}) => {
   const ionRouterContext = useContext(IonRouterContext);
   useEffect(() => {
     setIsLoggedIn(false);
     setUsername(undefined);
-    ionRouterContext.push('/tabs/schedule')
-  }, [setIsLoggedIn, setUsername, ionRouterContext]);
+    ionRouterContext.push('/tabs/schedule');
+  }, [setIsLoggedIn, setUsername]);
   return null;
 };
 

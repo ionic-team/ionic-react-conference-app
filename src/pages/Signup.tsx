@@ -1,41 +1,43 @@
 import React, { useState } from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText } from '@ionic/react';
-import './Login.scss';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonButtons,
+  IonMenuButton,
+  IonRow,
+  IonCol,
+  IonButton,
+  IonInput,
+} from '@ionic/react';
+import { useHistory } from 'react-router';
+import './Signup.scss';
 import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
-import { RouteComponentProps } from 'react-router';
 
-interface OwnProps extends RouteComponentProps {}
-
-interface DispatchProps {
+interface SignupProps {
   setIsLoggedIn: typeof setIsLoggedIn;
   setUsername: typeof setUsername;
 }
 
-interface LoginProps extends OwnProps,  DispatchProps { }
+const Signup: React.FC<SignupProps> = ({
+  setIsLoggedIn,
+  setUsername: setUsernameAction,
+}) => {
+  const history = useHistory();
+  const [signup, setSignup] = useState({ username: '', password: '' });
+  const [submitted, setSubmitted] = useState(false);
 
-const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUsernameAction}) => {
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-
-  const login = async (e: React.FormEvent) => {
+  const onSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    if(!username) {
-      setUsernameError(true);
-    }
-    if(!password) {
-      setPasswordError(true);
-    }
+    setSubmitted(true);
 
-    if(username && password) {
+    if (signup.username && signup.password) {
       await setIsLoggedIn(true);
-      await setUsernameAction(username);
-      history.push('/tabs/schedule', {direction: 'none'});
+      await setUsernameAction(signup.username);
+      history.push('/tabs/schedule');
     }
   };
 
@@ -50,62 +52,62 @@ const Login: React.FC<LoginProps> = ({setIsLoggedIn, history, setUsername: setUs
         </IonToolbar>
       </IonHeader>
       <IonContent>
-
-        <div className="login-logo">
-          <img src="assets/img/appicon.svg" alt="Ionic logo" />
+        <div className="signup-logo">
+          <img src="/assets/img/appicon.svg" alt="Ionic Logo" />
         </div>
 
-        <form noValidate onSubmit={login}>
-          <IonList>
-            <IonItem>
-              <IonLabel position="stacked" color="primary">Username</IonLabel>
-              <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => {
-                setUsername(e.detail.value!);
-                setUsernameError(false);
-              }}
-                required>
-              </IonInput>
-            </IonItem>
+        <div className="signup-form">
+          <form onSubmit={onSignup} noValidate>
+            <IonInput
+              label="Username"
+              labelPlacement="stacked"
+              fill="solid"
+              value={signup.username}
+              name="username"
+              type="text"
+              errorText={
+                submitted && !signup.username ? 'Username is required' : ''
+              }
+              onIonInput={(e) =>
+                setSignup({ ...signup, username: e.detail.value! })
+              }
+              required
+            />
 
-            {formSubmitted && usernameError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Username is required
-              </p>
-            </IonText>}
+            <IonInput
+              label="Password"
+              labelPlacement="stacked"
+              fill="solid"
+              value={signup.password}
+              name="password"
+              type="password"
+              errorText={
+                submitted && !signup.password ? 'Password is required' : ''
+              }
+              onIonInput={(e) =>
+                setSignup({ ...signup, password: e.detail.value! })
+              }
+              required
+            />
 
-            <IonItem>
-              <IonLabel position="stacked" color="primary">Password</IonLabel>
-              <IonInput name="password" type="password" value={password} onIonChange={e => {
-                setPassword(e.detail.value!);
-                setPasswordError(false);
-              }}>
-              </IonInput>
-            </IonItem>
-
-            {formSubmitted && passwordError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Password is required
-              </p>
-            </IonText>}
-          </IonList>
-
-          <IonRow>
-            <IonCol>
-              <IonButton type="submit" expand="block">Create</IonButton>
-            </IonCol>
-          </IonRow>
-        </form>
-
+            <IonRow>
+              <IonCol>
+                <IonButton type="submit" expand="block">
+                  Create
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          </form>
+        </div>
       </IonContent>
-
     </IonPage>
   );
 };
 
-export default connect<OwnProps, {}, DispatchProps>({
+export default connect<{}, {}, SignupProps>({
   mapDispatchToProps: {
     setIsLoggedIn,
-    setUsername
+    setUsername,
   },
-  component: Login
-})
+  component: Signup,
+});

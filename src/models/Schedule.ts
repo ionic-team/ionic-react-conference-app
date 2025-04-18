@@ -1,6 +1,6 @@
 export interface Schedule {
   date: string;
-  groups: ScheduleGroup[]
+  groups: ScheduleGroup[];
 }
 
 export interface ScheduleGroup {
