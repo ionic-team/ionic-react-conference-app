@@ -1,54 +1,56 @@
-ion-toolbar {
-  --background: transparent;
-  --border-color: transparent;
-}
+#tutorial-page {
+  ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
+  }
 
-.slide-title {
-  margin-top: 2.8rem;
-}
+  .slide-title {
+    margin-top: 2.8rem;
+  }
 
-.slider {
-  display: grid;
-  grid-template-columns: repeat(4, 100%);
-  grid-template-rows: 1fr;
+  .slider {
+    display: grid;
+    grid-template-columns: repeat(4, 100%);
+    grid-template-rows: 1fr;
 
-  height: 100%;
+    height: 100%;
 
-  overflow: scroll;
-  scroll-snap-type: x mandatory;
-}
+    overflow: scroll;
+    scroll-snap-type: x mandatory;
+  }
 
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
-  width: 100%;
+    width: 100%;
 
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-}
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
 
-.slide-image {
-  max-height: 50%;
-  max-width: 60%;
-  margin: -5vh 0 0;
-  pointer-events: none;
-}
-
-b {
-  font-weight: 500;
-}
-
-p {
-  padding: 0 40px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ion-color-step-600, #60646b);
+  .slide-image {
+    max-height: 50%;
+    max-width: 60%;
+    margin: -5vh 0 0;
+    pointer-events: none;
+  }
 
   b {
-    color: var(--ion-text-color, #000000);
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ion-color-step-600, #60646b);
+
+    b {
+      color: var(--ion-text-color, #000000);
+    }
   }
 }
