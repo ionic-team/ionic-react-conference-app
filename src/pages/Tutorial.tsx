@@ -49,7 +49,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   };
 
   return (
-    <IonPage>
+    <IonPage id="tutorial-page">
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="end">
