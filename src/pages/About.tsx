@@ -90,14 +90,14 @@ const About: React.FC<AboutProps> = () => {
           <h3 className="ion-padding-top ion-padding-start">About</h3>
 
           <p className="ion-padding-start ion-padding-end">
-            The Ionic Conference is a one-day conference on{' '}
-            {displayDate(conferenceDate, 'MMM dd, yyyy')} featuring talks from
-            the Ionic team. It is focused on Ionic applications being built with
-            Ionic Framework. This includes migrating apps to the latest version
-            of the framework, Angular concepts, Webpack, Sass, and many other
-            technologies used in Ionic 2. Tickets are completely sold out, and
-            we’re expecting more than 1000 developers – making this the largest
-            Ionic conference ever!
+            The Ionic Conference is a one-day event happening on {' '}
+            {displayDate(conferenceDate, 'MMM dd, yyyy')}, featuring talks from the
+            Ionic team. The conference focuses on building applications with Ionic
+            Framework, including topics such as app migration to the latest version,
+            React best practices, Webpack, Sass, and other technologies
+            commonly used in the Ionic ecosystem. Tickets are completely sold out,
+            and we're expecting over 1,000 developers — making this the largest
+            Ionic conference to date!
           </p>
 
           <h3 className="ion-padding-top ion-padding-start">Details</h3>

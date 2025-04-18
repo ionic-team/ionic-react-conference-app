@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   IonContent,
   IonPage,
@@ -29,8 +29,17 @@ const Tutorial: React.FC<TutorialProps> = ({
   setHasSeenTutorial,
   setMenuEnabled,
 }) => {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
   useIonViewWillEnter(() => {
     setMenuEnabled(false);
+    // Scroll to first slide when entering the tutorial
+    if (sliderRef.current) {
+      sliderRef.current.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
   });
 
   const startApp = async () => {
@@ -40,8 +49,8 @@ const Tutorial: React.FC<TutorialProps> = ({
   };
 
   return (
-    <IonPage id="tutorial-page">
-      <IonHeader no-border>
+    <IonPage>
+      <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="end">
             <IonButton color="primary" onClick={startApp}>
@@ -51,7 +60,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <div className="slider">
+        <div className="slider" ref={sliderRef}>
           <section>
             <div className="swiper-item">
               <img

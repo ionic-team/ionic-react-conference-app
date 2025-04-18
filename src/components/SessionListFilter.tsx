@@ -17,7 +17,7 @@ import {
   IonIcon,
 } from '@ionic/react';
 import {
-  logoAngular,
+  logoReact,
   call,
   document,
   logoIonic,
@@ -74,7 +74,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
   };
 
   const iconMap: { [key: string]: any } = {
-    Angular: logoAngular,
+    React: logoReact,
     Documentation: document,
     Food: restaurant,
     Ionic: logoIonic,

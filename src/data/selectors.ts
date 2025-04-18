@@ -18,7 +18,29 @@ export const getFilteredSchedule = createSelector(
   getFilteredTracks,
   (schedule, filteredTracks) => {
     const groups: ScheduleGroup[] = [];
-    schedule.groups.forEach((group: ScheduleGroup) => {
+
+    // Helper function to convert 12-hour time to 24-hour time for proper sorting
+    const convertTo24Hour = (timeStr: string) => {
+      const [time, period] = timeStr.toLowerCase().split(' ');
+      let [hours, minutes] = time.split(':').map(Number);
+
+      if (period === 'pm' && hours !== 12) {
+        hours += 12;
+      } else if (period === 'am' && hours === 12) {
+        hours = 0;
+      }
+
+      return `${hours.toString().padStart(2, '0')}:${minutes || '00'}`;
+    };
+
+    // Sort the groups by time
+    const sortedGroups = [...schedule.groups].sort((a, b) => {
+      const timeA = convertTo24Hour(a.time);
+      const timeB = convertTo24Hour(b.time);
+      return timeA.localeCompare(timeB);
+    });
+
+    sortedGroups.forEach((group: ScheduleGroup) => {
       const sessions: Session[] = [];
       group.sessions.forEach((session) => {
         session.tracks.forEach((track) => {
@@ -27,10 +49,18 @@ export const getFilteredSchedule = createSelector(
           }
         });
       });
+
       if (sessions.length) {
+        // Sort sessions within each group by start time
+        const sortedSessions = sessions.sort((a, b) => {
+          const timeA = convertTo24Hour(a.timeStart);
+          const timeB = convertTo24Hour(b.timeStart);
+          return timeA.localeCompare(timeB);
+        });
+
         const groupToAdd: ScheduleGroup = {
           time: group.time,
-          sessions,
+          sessions: sortedSessions,
         };
         groups.push(groupToAdd);
       }
