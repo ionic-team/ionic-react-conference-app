@@ -36,7 +36,8 @@
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
     "precommit": "npm run format && lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "tsc:watch": "tsc --watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -67,5 +68,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

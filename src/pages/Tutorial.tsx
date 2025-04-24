@@ -48,6 +48,21 @@ const Tutorial: React.FC<TutorialProps> = ({
     history.push('/tabs/schedule', { direction: 'none' });
   };
 
+  // attach to next button to scroll the tutorial right
+  const scrolRight = () => {
+    // need to check if the ref is set or if the component is still rendering
+    if(sliderRef.current){
+      const currentScroll = sliderRef.current.scrollLeft;
+      const screenWidth = window.innerWidth;
+      sliderRef.current.scrollTo({
+        left: currentScroll + screenWidth,
+        behavior: 'smooth'
+      });
+    }else{
+      // do soemthing?
+    }
+  };
+  
   return (
     <IonPage id="tutorial-page">
       <IonHeader className="ion-no-border">
@@ -123,6 +138,9 @@ const Tutorial: React.FC<TutorialProps> = ({
             </div>
           </section>
         </div>
+	<IonButton id='button' onClick={scrolRight()}>
+	  ->
+	</IonButton>
       </IonContent>
     </IonPage>
   );
