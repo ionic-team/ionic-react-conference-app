@@ -15,7 +15,7 @@
     "@types/leaflet": "^1.9.17",
     "@types/react-redux": "^7.1.34",
     "date-fns": "^2.25.0",
-    "ionicons": "^7.1.2",
+    "ionicons": "7.4.1-dev.11746148895.17a2f833",
     "leaflet": "^1.9.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
