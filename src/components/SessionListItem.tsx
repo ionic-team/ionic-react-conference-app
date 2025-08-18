@@ -97,6 +97,11 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
             {session.timeEnd}:&nbsp;
             {session.location}
           </p>
+          {session?.speakerNames && session.speakerNames.map(speaker => {
+            return (
+              <p>- {speaker}</p>
+            )
+          })}
         </IonLabel>
       </IonItem>
       <IonItemOptions>
