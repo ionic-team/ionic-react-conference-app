@@ -11,6 +11,7 @@ import {
   useIonToast,
 } from '@ionic/react';
 import { Session } from '../models/Schedule';
+import SessionInfoLabel from './SessionInfoLabel';
 
 interface SessionListItemProps {
   session: Session;
@@ -93,18 +94,7 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
     >
       <IonItem routerLink={`/tabs/schedule/${session.id}`}>
         <IonLabel>
-          <h3>{session.name}</h3>
-          <p>
-            {session.timeStart} &mdash;&nbsp;
-            {session.timeEnd}:&nbsp;
-            {session.location}
-          </p>
-          {session?.speakerNames && session.speakerNames.map((speaker, index) => {
-            return (
-              <p key={index}>- {speaker}</p>
-            )
-          })}
-
+          <SessionInfoLabel session={session} name={true} speakers={true}/>
         </IonLabel>
       </IonItem>
       <IonItemOptions>

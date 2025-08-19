@@ -20,6 +20,7 @@ import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
 import './SessionDetail.scss';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 import { Session } from '../models/Schedule';
+import SessionInfoLabel from '../components/SessionInfoLabel';
 
 interface OwnProps extends RouteComponentProps {}
 
@@ -89,9 +90,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({
           ))}
           <p>{session.description}</p>
           <IonText color="medium">
-            {session.timeStart} &ndash; {session.timeEnd}
-            <br />
-            {session.location}
+            <SessionInfoLabel session={session} speakers={true}/>
           </IonText>
         </div>
         <IonList>
