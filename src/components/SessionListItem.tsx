@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import {
+  IonAccordion,
+  IonAccordionGroup,
   IonItemSliding,
   IonItem,
   IonLabel,
@@ -97,11 +99,12 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
             {session.timeEnd}:&nbsp;
             {session.location}
           </p>
-          {session?.speakerNames && session.speakerNames.map(speaker => {
+          {session?.speakerNames && session.speakerNames.map((speaker, index) => {
             return (
-              <p>- {speaker}</p>
+              <p key={index}>- {speaker}</p>
             )
           })}
+
         </IonLabel>
       </IonItem>
       <IonItemOptions>
