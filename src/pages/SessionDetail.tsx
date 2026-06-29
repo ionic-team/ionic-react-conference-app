@@ -14,14 +14,16 @@ import {
   IonLabel,
 } from '@ionic/react';
 import { connect } from '../data/connect';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router-dom';
 import * as selectors from '../data/selectors';
 import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
 import './SessionDetail.scss';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 import { Session } from '../models/Schedule';
 
-interface OwnProps extends RouteComponentProps {}
+interface OwnProps {
+  id?: string;
+}
 
 interface StateProps {
   session?: Session;
@@ -122,14 +124,21 @@ const SessionDetail: React.FC<SessionDetailProps> = ({
   );
 };
 
-export default connect<OwnProps, StateProps, DispatchProps>({
+const SessionDetailConnected = connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state, ownProps) => ({
     session: selectors.getSession(state, ownProps),
-    favoriteSessions: state.data.favorites
+    favoriteSessions: state.data.favorites,
   }),
   mapDispatchToProps: {
     addFavorite,
     removeFavorite,
   },
-  component: withRouter(SessionDetail),
+  component: SessionDetail,
 });
+
+const SessionDetailContainer: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  return <SessionDetailConnected id={id} />;
+};
+
+export default SessionDetailContainer;

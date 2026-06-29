@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps, withRouter, useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import {
   IonContent,
@@ -11,6 +11,7 @@ import {
   IonMenu,
   IonMenuToggle,
   IonToggle,
+  useIonRouter,
 } from '@ionic/react';
 import {
   calendarOutline,
@@ -66,16 +67,16 @@ interface DispatchProps {
   setDarkMode: typeof setDarkMode;
 }
 
-interface MenuProps extends RouteComponentProps, StateProps, DispatchProps {}
+interface MenuProps extends StateProps, DispatchProps {}
 
 const Menu: React.FC<MenuProps> = ({
   darkMode,
-  history,
   isAuthenticated,
   setDarkMode,
   menuEnabled,
 }) => {
   const location = useLocation();
+  const router = useIonRouter();
 
   function renderlistItems(list: Pages[]) {
     return list
@@ -129,7 +130,7 @@ const Menu: React.FC<MenuProps> = ({
             button
             detail={false}
             onClick={() => {
-              history.push('/tutorial');
+              router.push('/tutorial');
             }}
           >
             <IonIcon slot="start" icon={hammer} />
@@ -150,5 +151,5 @@ export default connect<{}, StateProps, {}>({
   mapDispatchToProps: {
     setDarkMode,
   },
-  component: withRouter(Menu),
+  component: Menu,
 });

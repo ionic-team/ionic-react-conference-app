@@ -7,7 +7,7 @@ import {
   IonIcon,
   IonLabel,
 } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { Route, Navigate } from 'react-router-dom';
 import { calendar, location, informationCircle, people } from 'ionicons/icons';
 import SchedulePage from './SchedulePage';
 import SpeakerList from './SpeakerList';
@@ -22,30 +22,19 @@ const MainTabs: React.FC<MainTabsProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect exact path="/tabs" to="/tabs/schedule" />
         {/*
-          Using the render method prop cuts down the number of renders your components will have due to route changes.
-          Use the component prop when your component depends on the RouterComponentProps passed in automatically.
+          Paths are relative to the parent "/tabs/*" route defined in App.tsx.
+          Routes that share a tab's path prefix (e.g. schedule/:id) render
+          inside that tab and keep its navigation stack intact.
         */}
-        <Route
-          path="/tabs/schedule"
-          render={() => <SchedulePage />}
-          exact={true}
-        />
-        <Route
-          path="/tabs/speakers"
-          render={() => <SpeakerList />}
-          exact={true}
-        />
-        <Route
-          path="/tabs/speakers/:id"
-          component={SpeakerDetail}
-          exact={true}
-        />
-        <Route path="/tabs/schedule/:id" component={SessionDetail} />
-        <Route path="/tabs/speakers/sessions/:id" component={SessionDetail} />
-        <Route path="/tabs/map" render={() => <MapView />} exact={true} />
-        <Route path="/tabs/about" render={() => <About />} exact={true} />
+        <Route path="schedule" element={<SchedulePage />} />
+        <Route path="schedule/:id" element={<SessionDetail />} />
+        <Route path="speakers" element={<SpeakerList />} />
+        <Route path="speakers/:id" element={<SpeakerDetail />} />
+        <Route path="speakers/sessions/:id" element={<SessionDetail />} />
+        <Route path="map" element={<MapView />} />
+        <Route path="about" element={<About />} />
+        <Route index element={<Navigate to="schedule" replace />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="schedule" href="/tabs/schedule">

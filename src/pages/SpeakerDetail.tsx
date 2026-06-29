@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 import './SpeakerDetail.scss';
 
@@ -32,11 +32,13 @@ import * as selectors from '../data/selectors';
 
 import { Speaker } from '../models/Speaker';
 
-interface OwnProps extends RouteComponentProps {
-  speaker?: Speaker;
+interface OwnProps {
+  id?: string;
 }
 
-interface StateProps {}
+interface StateProps {
+  speaker?: Speaker;
+}
 
 interface DispatchProps {}
 
@@ -180,9 +182,16 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
   );
 };
 
-export default connect({
+const SpeakerDetailConnected = connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state, ownProps) => ({
     speaker: selectors.getSpeaker(state, ownProps),
   }),
   component: SpeakerDetail,
 });
+
+const SpeakerDetailContainer: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  return <SpeakerDetailConnected id={id} />;
+};
+
+export default SpeakerDetailContainer;

@@ -8,15 +8,15 @@ import {
   IonButton,
   IonIcon,
   useIonViewWillEnter,
+  useIonRouter,
 } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
 import { setMenuEnabled } from '../data/sessions/sessions.actions';
 import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
 import { connect } from '../data/connect';
-import { RouteComponentProps } from 'react-router';
 
-interface OwnProps extends RouteComponentProps {}
+interface OwnProps {}
 interface DispatchProps {
   setHasSeenTutorial: typeof setHasSeenTutorial;
   setMenuEnabled: typeof setMenuEnabled;
@@ -25,10 +25,10 @@ interface DispatchProps {
 interface TutorialProps extends OwnProps, DispatchProps {}
 
 const Tutorial: React.FC<TutorialProps> = ({
-  history,
   setHasSeenTutorial,
   setMenuEnabled,
 }) => {
+  const router = useIonRouter();
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useIonViewWillEnter(() => {
@@ -37,7 +37,7 @@ const Tutorial: React.FC<TutorialProps> = ({
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
         left: 0,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   });
@@ -45,7 +45,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   const startApp = async () => {
     await setHasSeenTutorial(true);
     await setMenuEnabled(true);
-    history.push('/tabs/schedule', { direction: 'none' });
+    router.push('/tabs/schedule', 'none');
   };
 
   return (

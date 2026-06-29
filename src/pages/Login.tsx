@@ -11,8 +11,8 @@ import {
   IonCol,
   IonButton,
   IonInput,
+  useIonRouter,
 } from '@ionic/react';
-import { useHistory } from 'react-router';
 import './Login.scss';
 import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
@@ -26,7 +26,7 @@ const Login: React.FC<LoginProps> = ({
   setIsLoggedIn,
   setUsername: setUsernameAction,
 }) => {
-  const history = useHistory();
+  const router = useIonRouter();
   const [login, setLogin] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
 
@@ -37,12 +37,12 @@ const Login: React.FC<LoginProps> = ({
     if (login.username && login.password) {
       await setIsLoggedIn(true);
       await setUsernameAction(login.username);
-      history.push('/tabs/schedule');
+      router.push('/tabs/schedule');
     }
   };
 
   const onSignup = () => {
-    history.push('/signup');
+    router.push('/signup');
   };
 
   return (
