@@ -110,27 +110,25 @@ const IonicApp: React.FC<IonicAppProps> = ({
           <Menu />
           <IonRouterOutlet id="main">
             {/*
-                We use IonRoute here to keep the tabs state intact,
+                The /tabs/* route keeps the tabs state intact,
                 which makes transitions between tabs and non tab pages smooth
                 */}
-            <Route path="/tabs" render={() => <MainTabs />} />
-            <Route path="/account" component={Account} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/support" component={Support} />
-            <Route path="/tutorial" component={Tutorial} />
+            <Route path="/tabs/*" element={<MainTabs />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/tutorial" element={<Tutorial />} />
             <Route
               path="/logout"
-              render={() => {
-                return (
-                  <RedirectToLogin
-                    setIsLoggedIn={setIsLoggedIn}
-                    setUsername={setUsername}
-                  />
-                );
-              }}
+              element={
+                <RedirectToLogin
+                  setIsLoggedIn={setIsLoggedIn}
+                  setUsername={setUsername}
+                />
+              }
             />
-            <Route path="/" component={HomeOrTutorial} exact />
+            <Route path="/" element={<HomeOrTutorial />} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

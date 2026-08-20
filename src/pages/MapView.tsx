@@ -12,16 +12,16 @@ import { connect } from '../data/connect';
 import { loadLocations } from '../data/locations/locations.actions';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import markerIconUrl from "leaflet/dist/images/marker-icon.png";
-import markerIconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
-import markerShadowUrl from "leaflet/dist/images/marker-shadow.png";
+import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
+import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import './MapView.scss';
 
 // Fix for marker icons in Vite
 L.Icon.Default.prototype.options.iconUrl = markerIconUrl;
 L.Icon.Default.prototype.options.iconRetinaUrl = markerIconRetinaUrl;
 L.Icon.Default.prototype.options.shadowUrl = markerShadowUrl;
-L.Icon.Default.imagePath = "";
+L.Icon.Default.imagePath = '';
 
 interface StateProps {
   locations: Location[];

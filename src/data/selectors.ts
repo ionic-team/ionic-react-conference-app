@@ -130,7 +130,7 @@ export const getGroupedFavorites = createSelector(
 );
 
 const getIdParam = (_state: AppState, props: any) => {
-  return props.match.params['id'];
+  return props.id;
 };
 
 export const getSession = createSelector(
