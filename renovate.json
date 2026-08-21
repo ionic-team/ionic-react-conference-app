@@ -12,7 +12,7 @@
       "groupName": "ionic"
     },
     {
-      "matchPackageNames": ["react", "react-dom", "@types/react/**"],
+      "matchPackageNames": ["react", "react-dom", "@types/react*"],
       "groupName": "react"
     },
     {
