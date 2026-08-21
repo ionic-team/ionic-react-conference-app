@@ -7,12 +7,12 @@
   "dependencyDashboard": true,
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@ionic/"],
+      "matchPackageNames": ["@ionic/**"],
       "minimumReleaseAge": "0 days",
       "groupName": "ionic"
     },
     {
-      "matchPackagePatterns": ["^react", "^@types/react"],
+      "matchPackageNames": ["react", "react-dom", "@types/react/**"],
       "groupName": "react"
     },
     {
@@ -20,15 +20,15 @@
       "groupName": "react-router"
     },
     {
-      "matchPackagePatterns": ["^@capacitor/"],
+      "matchPackageNames": ["@capacitor/**"],
       "groupName": "capacitor"
     },
     {
-      "matchPackagePatterns": ["vite", "@vitejs/plugin-react"],
+      "matchPackageNames": ["vite", "@vitejs/plugin-react"],
       "groupName": "vite"
     },
     {
-      "matchPackagePatterns": ["@testing-library", "prettier"],
+      "matchPackageNames": ["@testing-library/**", "prettier"],
       "groupName": "dev-tools"
     }
   ]
