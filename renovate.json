@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommitTypeAll(chore)"],
+  "minimumReleaseAge": "3 days",
+  "schedule": ["every monday before 11am"],
+  "semanticCommits": "enabled",
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["@ionic/**"],
+      "minimumReleaseAge": "0 days",
+      "groupName": "ionic"
+    },
+    {
+      "matchPackageNames": ["react", "react-dom", "@types/react*"],
+      "groupName": "react"
+    },
+    {
+      "matchPackageNames": ["react-router", "react-router-dom"],
+      "groupName": "react-router",
+      "allowedVersions": "<7",
+      "description": "@ionic/react-router@9 requires react-router >=6.4.0 and <7"
+    },
+    {
+      "matchPackageNames": ["@capacitor/**"],
+      "groupName": "capacitor"
+    },
+    {
+      "matchPackageNames": ["vite", "@vitejs/**"],
+      "groupName": "vite"
+    },
+    {
+      "matchPackageNames": ["leaflet", "@types/leaflet", "react-leaflet"],
+      "groupName": "leaflet"
+    },
+    {
+      "matchPackageNames": [
+        "@testing-library/react",
+        "@types/jest"
+      ],
+      "groupName": "testing"
+    },
+    {
+      "matchPackageNames": ["prettier", "husky", "lint-staged", "typescript"],
+      "groupName": "dev-tools"
+    }
+  ]
+}
