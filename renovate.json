@@ -4,11 +4,12 @@
     "config:recommended",
     ":semanticCommitTypeAll(chore)"
   ],
+  "description": "Renovate may only open or update PRs on Mondays, 6-10am ET.",
   "timezone": "America/New_York",
   "minimumReleaseAge": "3 days",
   "schedule": ["* 6-10 * * 1"],
   "semanticCommits": "enabled",
-  "dependencyDashboard": true,
+  "ignorePaths": ["android/**", "ios/**"],
   "packageRules": [
     {
       "matchPackageNames": ["@ionic/**"],
