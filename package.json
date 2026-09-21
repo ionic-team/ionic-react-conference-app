@@ -50,7 +50,7 @@
   "devDependencies": {
     "@capacitor/cli": "^8.0.0",
     "@testing-library/react": "^9.3.1",
-    "@types/jest": "24.0.18",
+    "@types/jest": "24.9.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
