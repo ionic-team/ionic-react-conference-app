@@ -46,7 +46,7 @@
       "groupName": "testing"
     },
     {
-      "matchPackageNames": ["prettier", "husky", "lint-staged", "typescript"],
+      "matchPackageNames": ["prettier", "typescript"],
       "groupName": "dev-tools"
     }
   ]
