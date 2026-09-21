@@ -23,7 +23,7 @@
     "react-redux": "^9.2.0",
     "react-router": "^6.30.4",
     "react-router-dom": "^6.30.4",
-    "reselect": "^4.0.0",
+    "reselect": "^5.0.0",
     "sass": "^1.85.1",
     "swiper": "^9.1.1"
   },
