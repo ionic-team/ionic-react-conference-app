@@ -1,7 +1,7 @@
 PODS:
-  - Capacitor (8.5.0):
+  - Capacitor (8.5.2):
     - CapacitorCordova
-  - CapacitorCordova (8.5.0)
+  - CapacitorCordova (8.5.2)
   - CapacitorPreferences (8.0.1):
     - Capacitor
 
@@ -19,8 +19,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/preferences"
 
 SPEC CHECKSUMS:
-  Capacitor: 00b87168591cc006ea6f5c0de681ec5c39a2c8eb
-  CapacitorCordova: 9d3acbb574048e7167d2af127a0af2123e619f2f
+  Capacitor: 89067779e14fb7ea56af07b4817f45d1f0c2a269
+  CapacitorCordova: 5bec5648cbd09a176ce34ce5e7b6cdabb2c8a327
   CapacitorPreferences: cca2021f386efb75947c850334447d9ff22b14f1
 
 PODFILE CHECKSUM: bc4412675d30bc194ab5961211929e1e7de79579
