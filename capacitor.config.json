@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "io.ionic.conference.react",
   "appName": "ionic-react-conference-app",
   "bundledWebRuntime": false,
   "npmClient": "npm",

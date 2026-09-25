@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.ionic.conference.react;
 
 import com.getcapacitor.BridgeActivity;
 
