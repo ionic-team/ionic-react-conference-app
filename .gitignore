@@ -81,3 +81,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .stencil/
+.idea/

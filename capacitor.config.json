@@ -1,8 +1,15 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "io.ionic.conference.react",
   "appName": "ionic-react-conference-app",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",
-  "cordova": {}
+  "cordova": {},
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#ffffffff",
+      "androidScaleType": "CENTER_CROP"
+    }
+  }
 }
