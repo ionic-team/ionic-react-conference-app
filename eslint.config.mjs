@@ -17,8 +17,6 @@ export default defineConfig([
       },
     },
     rules: {
-      // Ionic's base level; `recommended` makes it an error, which is meant for libraries.
-      '@typescript-eslint/explicit-module-boundary-types': 'warn',
       // Every page exports both the component and a `connect()`-wrapped default,
       // which fast refresh can't follow. Revisit if the custom connect HOC in
       // data/connect.tsx is replaced with hooks.

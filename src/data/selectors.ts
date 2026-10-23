@@ -9,7 +9,7 @@ import type { AppState } from './state';
 const getSchedule = (state: AppState) => {
   return state.data.schedule;
 };
-export const getSpeakers = (state: AppState) => state.data.speakers;
+export const getSpeakers = (state: AppState): Speaker[] => state.data.speakers;
 const getSessions = (state: AppState) => state.data.sessions;
 const getFilteredTracks = (state: AppState) => state.data.filteredTracks;
 const getFavoriteIds = (state: AppState) => state.data.favorites;
@@ -141,7 +141,7 @@ export const getSpeakerSessions = createSelector(getSessions, (sessions) => {
   return speakerSessions;
 });
 
-export const mapCenter = (state: AppState) => {
+export const mapCenter = (state: AppState): Location => {
   const item = state.data.locations.find((l: Location) => l.id === state.data.mapCenterId);
   if (item == null) {
     return {

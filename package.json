@@ -36,7 +36,7 @@
     "preview": "vite preview",
     "lint": "npm run eslint && npm run prettier -- --check",
     "lint:fix": "npm run eslint -- --fix && npm run prettier -- --write",
-    "eslint": "eslint",
+    "eslint": "eslint --max-warnings 0",
     "prettier": "prettier \"**/*.{ts,tsx}\""
   },
   "browserslist": [
