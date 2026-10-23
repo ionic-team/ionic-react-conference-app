@@ -4,6 +4,8 @@ import type { Location } from '../models/Location';
 import type { Schedule, Session } from '../models/Schedule';
 import type { Speaker } from '../models/Speaker';
 
+import type { ConfState } from './sessions/conf.state';
+
 const dataUrl = '/assets/data/data.json';
 const locationsUrl = '/assets/data/locations.json';
 
@@ -11,7 +13,9 @@ const HAS_LOGGED_IN = 'hasLoggedIn';
 const HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 const USERNAME = 'username';
 
-export const getConfData = async () => {
+export const getConfData = async (): Promise<
+  Pick<ConfState, 'schedule' | 'sessions' | 'locations' | 'speakers' | 'allTracks' | 'filteredTracks'>
+> => {
   const response = await Promise.all([fetch(dataUrl), fetch(locationsUrl)]);
   const responseData = await response[0].json();
   const schedule = responseData.schedule[0] as Schedule;
@@ -34,7 +38,11 @@ export const getConfData = async () => {
   return data;
 };
 
-export const getUserData = async () => {
+export const getUserData = async (): Promise<{
+  isLoggedin: boolean;
+  hasSeenTutorial: boolean;
+  username: string | undefined;
+}> => {
   const response = await Promise.all([
     Storage.get({ key: HAS_LOGGED_IN }),
     Storage.get({ key: HAS_SEEN_TUTORIAL }),
@@ -51,18 +59,18 @@ export const getUserData = async () => {
   return data;
 };
 
-export const setIsLoggedInData = async (isLoggedIn: boolean) => {
+export const setIsLoggedInData = async (isLoggedIn: boolean): Promise<void> => {
   await Storage.set({ key: HAS_LOGGED_IN, value: JSON.stringify(isLoggedIn) });
 };
 
-export const setHasSeenTutorialData = async (hasSeenTutorial: boolean) => {
+export const setHasSeenTutorialData = async (hasSeenTutorial: boolean): Promise<void> => {
   await Storage.set({
     key: HAS_SEEN_TUTORIAL,
     value: JSON.stringify(hasSeenTutorial),
   });
 };
 
-export const setUsernameData = async (username?: string) => {
+export const setUsernameData = async (username?: string): Promise<void> => {
   if (!username) {
     await Storage.remove({ key: USERNAME });
   } else {

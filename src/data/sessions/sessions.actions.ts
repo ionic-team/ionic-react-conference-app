@@ -3,12 +3,14 @@ import { getConfData } from '../dataApi';
 
 import type { ConfState } from './conf.state';
 
-export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
-  dispatch(setLoading(true));
-  const data = await getConfData();
-  dispatch(setData(data));
-  dispatch(setLoading(false));
-};
+export const loadConfData =
+  () =>
+  async (dispatch: React.Dispatch<any>): Promise<void> => {
+    dispatch(setLoading(true));
+    const data = await getConfData();
+    dispatch(setData(data));
+    dispatch(setLoading(false));
+  };
 
 export const setLoading = (isLoading: boolean) =>
   ({
