@@ -1,5 +1,5 @@
-import React from 'react';
 import { IonList, IonItem, IonLabel } from '@ionic/react';
+import React from 'react';
 
 interface AboutPopoverProps {
   dismiss: () => void;
@@ -16,22 +16,13 @@ const AboutPopover: React.FC<AboutPopoverProps> = ({ dismiss }) => {
       <IonItem button onClick={() => close('https://ionicframework.com/docs')}>
         <IonLabel>Learn Ionic</IonLabel>
       </IonItem>
-      <IonItem
-        button
-        onClick={() => close('https://ionicframework.com/docs/react')}
-      >
+      <IonItem button onClick={() => close('https://ionicframework.com/docs/react')}>
         <IonLabel>Documentation</IonLabel>
       </IonItem>
-      <IonItem
-        button
-        onClick={() => close('https://showcase.ionicframework.com')}
-      >
+      <IonItem button onClick={() => close('https://showcase.ionicframework.com')}>
         <IonLabel>Showcase</IonLabel>
       </IonItem>
-      <IonItem
-        button
-        onClick={() => close('https://github.com/ionic-team/ionic-framework')}
-      >
+      <IonItem button onClick={() => close('https://github.com/ionic-team/ionic-framework')}>
         <IonLabel>GitHub Repo</IonLabel>
       </IonItem>
       <IonItem button onClick={dismiss}>

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -14,6 +13,7 @@ import {
   useIonToast,
   useIonViewWillEnter,
 } from '@ionic/react';
+import React, { useState } from 'react';
 import './Support.scss';
 
 const Support: React.FC = () => {
@@ -67,11 +67,7 @@ const Support: React.FC = () => {
               value={supportMessage}
               name="supportQuestion"
               rows={6}
-              errorText={
-                submitted && !supportMessage
-                  ? 'Support message is required'
-                  : ''
-              }
+              errorText={submitted && !supportMessage ? 'Support message is required' : ''}
               onIonInput={(e) => setSupportMessage(e.detail.value!)}
               required
             />

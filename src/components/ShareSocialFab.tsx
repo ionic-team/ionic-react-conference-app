@@ -1,17 +1,5 @@
-import {
-  IonLoading,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonFabList,
-} from '@ionic/react';
-import {
-  shareSocial,
-  logoVimeo,
-  logoInstagram,
-  logoTwitter,
-  logoFacebook,
-} from 'ionicons/icons';
+import { IonLoading, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
+import { shareSocial, logoVimeo, logoInstagram, logoTwitter, logoFacebook } from 'ionicons/icons';
 import React, { useState } from 'react';
 
 const ShareSocialFab: React.FC = () => {
@@ -40,10 +28,7 @@ const ShareSocialFab: React.FC = () => {
           <IonFabButton color="vimeo" onClick={() => openSocial('Vimeo')}>
             <IonIcon icon={logoVimeo} />
           </IonFabButton>
-          <IonFabButton
-            color="instagram"
-            onClick={() => openSocial('Instagram')}
-          >
+          <IonFabButton color="instagram" onClick={() => openSocial('Instagram')}>
             <IonIcon icon={logoInstagram} />
           </IonFabButton>
           <IonFabButton color="twitter" onClick={() => openSocial('Twitter')}>

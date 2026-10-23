@@ -1,7 +1,9 @@
 import React, { useContext, useMemo } from 'react';
+
+import type { DispatchObject } from '../util/types';
+
 import { AppContext } from './AppContext';
-import { DispatchObject } from '../util/types';
-import { AppState } from './state';
+import type { AppState } from './state';
 
 interface ConnectParams<TOwnProps, TStateProps, TDispatchProps> {
   mapStateToProps?: (state: AppState, props: TOwnProps) => TStateProps;
@@ -9,19 +11,11 @@ interface ConnectParams<TOwnProps, TStateProps, TDispatchProps> {
   component: React.ComponentType<any>;
 }
 
-export function connect<
-  TOwnProps = any,
-  TStateProps = any,
-  TDispatchProps = any
->({
-  mapStateToProps = () => ({} as TStateProps),
+export function connect<TOwnProps = any, TStateProps = any, TDispatchProps = any>({
+  mapStateToProps = () => ({}) as TStateProps,
   mapDispatchToProps = {} as TDispatchProps,
   component,
-}: ConnectParams<
-  TOwnProps,
-  TStateProps,
-  TDispatchProps
->): React.FunctionComponent<TOwnProps> {
+}: ConnectParams<TOwnProps, TStateProps, TDispatchProps>): React.FunctionComponent<TOwnProps> {
   const Connect = (ownProps: TOwnProps) => {
     const context = useContext(AppContext);
 
@@ -53,12 +47,7 @@ export function connect<
     }, [mapDispatchToProps]);
 
     const props = useMemo(() => {
-      return Object.assign(
-        {},
-        ownProps,
-        mapStateToProps(context.state, ownProps),
-        dispatchFuncs
-      );
+      return Object.assign({}, ownProps, mapStateToProps(context.state, ownProps), dispatchFuncs);
       // eslint-disable-next-line
     }, [ownProps, context.state]);
 
