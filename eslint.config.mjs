@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default defineConfig([
-  { ignores: ['dist/**', 'android/**', 'ios/**'] },
+  { ignores: ['dist/**', 'android/**', 'ios/**', 'playwright-report/**', 'test-results/**', 'blob-report/**'] },
   ionic,
   {
     files: ['**/*.{ts,tsx}'],
@@ -28,12 +28,10 @@ export default defineConfig([
     },
   },
   {
-    // The snapshot test predates the current tooling and has no runner; it is
-    // still typechecked by `tsc`, so keep it linted with jest globals defined.
     files: ['**/*.test.{ts,tsx}'],
     languageOptions: {
       globals: {
-        ...globals.jest,
+        ...globals.vitest,
       },
     },
   },

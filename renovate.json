@@ -40,10 +40,7 @@
       "groupName": "leaflet"
     },
     {
-      "matchPackageNames": [
-        "@testing-library/react",
-        "@types/jest"
-      ],
+      "matchPackageNames": ["@testing-library/**", "vitest", "jsdom", "@playwright/test"],
       "groupName": "testing"
     },
     {
