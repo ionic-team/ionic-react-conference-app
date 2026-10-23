@@ -17,8 +17,6 @@ export default defineConfig([
       },
     },
     rules: {
-      // Ionic's base level; `recommended` makes it an error, which is meant for libraries.
-      '@typescript-eslint/explicit-module-boundary-types': 'warn',
       // Pages export a component wrapped in the custom `connect()` HOC from data/connect.tsx.
       'react-refresh/only-export-components': [
         'error',

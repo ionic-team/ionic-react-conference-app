@@ -33,34 +33,7 @@ const MapView: React.FC<StateProps & DispatchProps> = ({ locations, loadLocation
   // Add useEffect to load locations when component mounts
   useEffect(() => {
     loadLocations();
-  }, []);
-
-  const initMap = () => {
-    if (!locations?.length || !mapCanvas.current || map.current) return;
-
-    map.current = L.map(mapCanvas.current, {
-      zoomControl: true,
-      attributionControl: true,
-    });
-
-    // Get the center location (first item marked as center, or first item if none marked)
-    const centerLocation = locations.find((loc) => loc.center) || locations[0];
-    map.current.setView([centerLocation.lat, centerLocation.lng], 16);
-
-    // Add tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-    }).addTo(map.current);
-
-    // Add markers for all locations
-    locations.forEach((location: Location) => {
-      const marker = L.marker([location.lat, location.lng]).addTo(map.current!).bindPopup(`${location.name}`);
-      markers.current.push(marker);
-    });
-
-    // Show map
-    mapCanvas.current.classList.add('show-map');
-  };
+  }, [loadLocations]);
 
   const resizeMap = () => {
     if (map.current) {
@@ -70,10 +43,39 @@ const MapView: React.FC<StateProps & DispatchProps> = ({ locations, loadLocation
 
   // Initialize map
   useEffect(() => {
+    const currentMarkers = markers.current;
+
+    const initMap = () => {
+      if (!locations?.length || !mapCanvas.current || map.current) return;
+
+      map.current = L.map(mapCanvas.current, {
+        zoomControl: true,
+        attributionControl: true,
+      });
+
+      // Get the center location (first item marked as center, or first item if none marked)
+      const centerLocation = locations.find((loc) => loc.center) || locations[0];
+      map.current.setView([centerLocation.lat, centerLocation.lng], 16);
+
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(map.current);
+
+      // Add markers for all locations
+      locations.forEach((location: Location) => {
+        const marker = L.marker([location.lat, location.lng]).addTo(map.current!).bindPopup(`${location.name}`);
+        markers.current.push(marker);
+      });
+
+      // Show map
+      mapCanvas.current.classList.add('show-map');
+    };
+
     initMap();
     return () => {
       if (map.current) {
-        markers.current.forEach((marker) => marker.remove());
+        currentMarkers.forEach((marker) => marker.remove());
         map.current.remove();
         map.current = null;
       }
