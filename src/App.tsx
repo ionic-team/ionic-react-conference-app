@@ -1,22 +1,10 @@
-import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 
-import HomeOrTutorial from './components/HomeOrTutorial';
 import Menu from './components/Menu';
-import RedirectToLogin from './components/RedirectToLogin';
-import { AppContextProvider } from './data/AppContext';
-import { connect } from './data/connect';
-import { loadConfData } from './data/sessions/sessions.actions';
-import { setIsLoggedIn, setUsername, loadUserData } from './data/user/user.actions';
-import type { Schedule } from './models/Schedule';
-import Account from './pages/Account';
-import Login from './pages/Login';
-import MainTabs from './pages/MainTabs';
-import Signup from './pages/Signup';
-import Support from './pages/Support';
-import Tutorial from './pages/Tutorial';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -53,6 +41,19 @@ import 'leaflet/dist/leaflet.css';
 
 /* Global styles */
 import './App.scss';
+import MainTabs from './pages/MainTabs';
+import { connect } from './data/connect';
+import { AppContextProvider } from './data/AppContext';
+import { loadConfData } from './data/sessions/sessions.actions';
+import { setIsLoggedIn, setUsername, loadUserData } from './data/user/user.actions';
+import Account from './pages/Account';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Support from './pages/Support';
+import Tutorial from './pages/Tutorial';
+import HomeOrTutorial from './components/HomeOrTutorial';
+import type { Schedule } from './models/Schedule';
+import RedirectToLogin from './components/RedirectToLogin';
 
 setupIonicReact();
 
