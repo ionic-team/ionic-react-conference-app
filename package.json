@@ -40,7 +40,8 @@
     "eslint": "eslint --max-warnings 0",
     "prettier": "prettier \"**/*.{ts,tsx}\" \"*.{js,mjs,cjs,mts}\"",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "vitest",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
     "test:e2e": "playwright test"
   },
   "browserslist": [
