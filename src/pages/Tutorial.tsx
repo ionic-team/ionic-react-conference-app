@@ -1,3 +1,5 @@
+/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
+import React, { useRef } from 'react';
 import {
   IonContent,
   IonPage,
@@ -10,12 +12,10 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
-import React, { useRef } from 'react';
-
-import { connect } from '../data/connect';
 import { setMenuEnabled } from '../data/sessions/sessions.actions';
 import { setHasSeenTutorial } from '../data/user/user.actions';
 import './Tutorial.scss';
+import { connect } from '../data/connect';
 
 interface OwnProps {}
 interface DispatchProps {
