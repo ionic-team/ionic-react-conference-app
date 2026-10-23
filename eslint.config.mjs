@@ -28,12 +28,10 @@ export default defineConfig([
     },
   },
   {
-    // The snapshot test predates the current tooling and has no runner; it is
-    // still typechecked by `tsc`, so keep it linted with jest globals defined.
     files: ['**/*.test.{ts,tsx}'],
     languageOptions: {
       globals: {
-        ...globals.jest,
+        ...globals.vitest,
       },
     },
   },
