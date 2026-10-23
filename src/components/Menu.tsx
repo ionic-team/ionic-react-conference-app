@@ -1,6 +1,3 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-
 import {
   IonContent,
   IonIcon,
@@ -26,6 +23,8 @@ import {
   person,
   personAdd,
 } from 'ionicons/icons';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { connect } from '../data/connect';
 import { setDarkMode } from '../data/user/user.actions';
@@ -69,12 +68,7 @@ interface DispatchProps {
 
 interface MenuProps extends StateProps, DispatchProps {}
 
-const Menu: React.FC<MenuProps> = ({
-  darkMode,
-  isAuthenticated,
-  setDarkMode,
-  menuEnabled,
-}) => {
+const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, menuEnabled }) => {
   const location = useLocation();
   const router = useIonRouter();
 
@@ -87,9 +81,7 @@ const Menu: React.FC<MenuProps> = ({
             detail={false}
             routerLink={p.path}
             routerDirection="none"
-            className={
-              location.pathname.startsWith(p.path) ? 'selected' : undefined
-            }
+            className={location.pathname.startsWith(p.path) ? 'selected' : undefined}
           >
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
@@ -107,19 +99,10 @@ const Menu: React.FC<MenuProps> = ({
         </IonList>
         <IonList lines="none">
           <IonListHeader>Account</IonListHeader>
-          {isAuthenticated
-            ? renderlistItems(routes.loggedInPages)
-            : renderlistItems(routes.loggedOutPages)}
+          {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.loggedOutPages)}
           <IonItem>
-            <IonIcon
-              slot="start"
-              icon={moonOutline}
-              aria-hidden="true"
-            ></IonIcon>
-            <IonToggle
-              checked={darkMode}
-              onClick={() => setDarkMode(!darkMode)}
-            >
+            <IonIcon slot="start" icon={moonOutline} aria-hidden="true"></IonIcon>
+            <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)}>
               Dark Mode
             </IonToggle>
           </IonItem>

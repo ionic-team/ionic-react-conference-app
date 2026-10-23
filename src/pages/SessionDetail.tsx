@@ -1,3 +1,4 @@
+/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
 import React from 'react';
 import {
   IonHeader,
@@ -19,7 +20,7 @@ import * as selectors from '../data/selectors';
 import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
 import './SessionDetail.scss';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
-import { Session } from '../models/Schedule';
+import type { Session } from '../models/Schedule';
 
 interface OwnProps {
   id?: string;
@@ -37,12 +38,7 @@ interface DispatchProps {
 
 type SessionDetailProps = OwnProps & StateProps & DispatchProps;
 
-const SessionDetail: React.FC<SessionDetailProps> = ({
-  session,
-  addFavorite,
-  removeFavorite,
-  favoriteSessions,
-}) => {
+const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, removeFavorite, favoriteSessions }) => {
   if (!session) {
     return <div>Session not found</div>;
   }
@@ -82,10 +78,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({
         <div className="ion-padding">
           <h1>{session.name}</h1>
           {session.tracks.map((track) => (
-            <span
-              key={track}
-              className={`session-track-${track.toLowerCase()}`}
-            >
+            <span key={track} className={`session-track-${track.toLowerCase()}`}>
               {track}
             </span>
           ))}
@@ -108,12 +101,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({
           </IonItem>
           <IonItem onClick={() => sessionClick('download video')} button>
             <IonLabel color="primary">Download Video</IonLabel>
-            <IonIcon
-              slot="end"
-              color="primary"
-              size="small"
-              icon={cloudDownload}
-            ></IonIcon>
+            <IonIcon slot="end" color="primary" size="small" icon={cloudDownload}></IonIcon>
           </IonItem>
           <IonItem onClick={() => sessionClick('leave feedback')} button>
             <IonLabel color="primary">Leave Feedback</IonLabel>

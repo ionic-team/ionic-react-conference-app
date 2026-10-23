@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
+import React, { useRef } from 'react';
 import {
   IonContent,
   IonPage,
@@ -24,10 +25,7 @@ interface DispatchProps {
 
 interface TutorialProps extends OwnProps, DispatchProps {}
 
-const Tutorial: React.FC<TutorialProps> = ({
-  setHasSeenTutorial,
-  setMenuEnabled,
-}) => {
+const Tutorial: React.FC<TutorialProps> = ({ setHasSeenTutorial, setMenuEnabled }) => {
   const router = useIonRouter();
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -63,55 +61,36 @@ const Tutorial: React.FC<TutorialProps> = ({
         <div className="slider" ref={sliderRef}>
           <section>
             <div className="slide-content">
-              <img
-                src="assets/img/ica-slidebox-img-1.png"
-                alt=""
-                className="slide-image"
-              />
+              <img src="assets/img/ica-slidebox-img-1.png" alt="" className="slide-image" />
               <h2 className="slide-title">
                 Welcome to <b>ICA</b>
               </h2>
               <p>
-                The <b>ionic conference app</b> is a practical preview of the
-                ionic framework in action, and a demonstration of proper code
-                use.
+                The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a
+                demonstration of proper code use.
               </p>
             </div>
           </section>
           <section>
             <div className="slide-content">
-              <img
-                src="assets/img/ica-slidebox-img-2.png"
-                alt=""
-                className="slide-image"
-              />
+              <img src="assets/img/ica-slidebox-img-2.png" alt="" className="slide-image" />
               <h2 className="slide-title">What is Ionic?</h2>
               <p>
-                <b>Ionic Framework</b> is an open source SDK that enables
-                developers to build high quality mobile apps with web
-                technologies like HTML, CSS, and JavaScript.
+                <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps
+                with web technologies like HTML, CSS, and JavaScript.
               </p>
             </div>
           </section>
           <section>
-            <img
-              src="assets/img/ica-slidebox-img-3.png"
-              alt=""
-              className="slide-image"
-            />
+            <img src="assets/img/ica-slidebox-img-3.png" alt="" className="slide-image" />
             <h2 className="slide-title">What is Ionic Appflow?</h2>
             <p>
-              <b>Ionic Appflow</b> is a powerful set of services and features
-              built on top of Ionic Framework that brings a totally new level of
-              app development agility to mobile dev teams.
+              <b>Ionic Appflow</b> is a powerful set of services and features built on top of Ionic Framework that
+              brings a totally new level of app development agility to mobile dev teams.
             </p>
           </section>
           <section>
-            <img
-              src="assets/img/ica-slidebox-img-4.png"
-              alt=""
-              className="slide-image"
-            />
+            <img src="assets/img/ica-slidebox-img-4.png" alt="" className="slide-image" />
             <h2 className="slide-title">Ready to Play?</h2>
             <IonButton fill="clear" onClick={startApp}>
               Continue

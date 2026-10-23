@@ -13,7 +13,7 @@
   "gitIgnoredAuthors": ["hi@ionicframework.com"],
   "packageRules": [
     {
-      "matchPackageNames": ["@ionic/**"],
+      "matchPackageNames": ["@ionic/**", "!@ionic/eslint-config", "!@ionic/prettier-config"],
       "minimumReleaseAge": "0 days",
       "groupName": "ionic"
     },
@@ -47,7 +47,15 @@
       "groupName": "testing"
     },
     {
-      "matchPackageNames": ["prettier", "typescript"],
+      "matchPackageNames": [
+        "eslint",
+        "eslint-plugin-react-*",
+        "@ionic/eslint-config",
+        "@ionic/prettier-config",
+        "globals",
+        "prettier",
+        "typescript"
+      ],
       "groupName": "dev-tools"
     }
   ]

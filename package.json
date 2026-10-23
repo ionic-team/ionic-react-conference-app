@@ -34,10 +34,10 @@
     "ionic:build": "tsc && vite build",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\""
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "lint": "npm run eslint && npm run prettier -- --check",
+    "lint:fix": "npm run eslint -- --fix && npm run prettier -- --write",
+    "eslint": "eslint",
+    "prettier": "prettier \"**/*.{ts,tsx}\""
   },
   "browserslist": [
     ">0.2%",
@@ -47,13 +47,20 @@
   ],
   "devDependencies": {
     "@capacitor/cli": "^8.0.0",
+    "@ionic/eslint-config": "^0.5.0",
+    "@ionic/prettier-config": "^4.0.0",
     "@testing-library/react": "^9.3.1",
     "@types/jest": "24.9.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
-    "prettier": "^2.8.6",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
     "typescript": "^5.8.2",
     "vite": "^6.2.0"
-  }
+  },
+  "prettier": "@ionic/prettier-config"
 }

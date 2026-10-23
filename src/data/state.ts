@@ -1,7 +1,7 @@
 import { combineReducers } from './combineReducers';
+import { locationsReducer } from './locations/locations.reducer';
 import { sessionsReducer } from './sessions/sessions.reducer';
 import { userReducer } from './user/user.reducer';
-import { locationsReducer } from './locations/locations.reducer';
 
 export const initialState: AppState = {
   data: {
