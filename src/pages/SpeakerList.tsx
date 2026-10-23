@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -11,11 +10,13 @@ import {
   IonRow,
   IonCol,
 } from '@ionic/react';
+import React from 'react';
+
 import SpeakerItem from '../components/SpeakerItem';
-import { Speaker } from '../models/Speaker';
-import { Session } from '../models/Schedule';
 import { connect } from '../data/connect';
 import * as selectors from '../data/selectors';
+import type { Session } from '../models/Schedule';
+import type { Speaker } from '../models/Speaker';
 import './SpeakerList.scss';
 
 interface OwnProps {}
@@ -29,10 +30,7 @@ interface DispatchProps {}
 
 interface SpeakerListProps extends OwnProps, StateProps, DispatchProps {}
 
-const SpeakerList: React.FC<SpeakerListProps> = ({
-  speakers,
-  speakerSessions,
-}) => {
+const SpeakerList: React.FC<SpeakerListProps> = ({ speakers, speakerSessions }) => {
   return (
     <IonPage id="speaker-list">
       <IonHeader translucent={true}>
@@ -55,11 +53,7 @@ const SpeakerList: React.FC<SpeakerListProps> = ({
           <IonRow>
             {speakers.map((speaker) => (
               <IonCol size="12" size-md="6" key={speaker.id}>
-                <SpeakerItem
-                  key={speaker.id}
-                  speaker={speaker}
-                  sessions={speakerSessions[speaker.name]}
-                />
+                <SpeakerItem key={speaker.id} speaker={speaker} sessions={speakerSessions[speaker.name]} />
               </IonCol>
             ))}
           </IonRow>

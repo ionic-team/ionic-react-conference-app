@@ -1,15 +1,8 @@
+import { IonCard, IonCardHeader, IonItem, IonLabel, IonAvatar, IonCardContent, IonList } from '@ionic/react';
 import React from 'react';
-import { Session } from '../models/Schedule';
-import { Speaker } from '../models/Speaker';
-import {
-  IonCard,
-  IonCardHeader,
-  IonItem,
-  IonLabel,
-  IonAvatar,
-  IonCardContent,
-  IonList,
-} from '@ionic/react';
+
+import type { Session } from '../models/Schedule';
+import type { Speaker } from '../models/Speaker';
 
 interface SpeakerItemProps {
   speaker: Speaker;
@@ -41,11 +34,7 @@ const SpeakerItem: React.FC<SpeakerItemProps> = ({ speaker, sessions }) => {
         <IonCardContent>
           <IonList lines="none">
             {sessions.map((session) => (
-              <IonItem
-                detail={false}
-                routerLink={`/tabs/speakers/sessions/${session.id}`}
-                key={session.name}
-              >
+              <IonItem detail={false} routerLink={`/tabs/speakers/sessions/${session.id}`} key={session.name}>
                 <IonLabel>
                   <h3>{session.name}</h3>
                 </IonLabel>

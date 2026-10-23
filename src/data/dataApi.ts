@@ -1,7 +1,8 @@
 import { Preferences as Storage } from '@capacitor/preferences';
-import { Schedule, Session } from '../models/Schedule';
-import { Speaker } from '../models/Speaker';
-import { Location } from '../models/Location';
+
+import type { Location } from '../models/Location';
+import type { Schedule, Session } from '../models/Schedule';
+import type { Speaker } from '../models/Speaker';
 
 const dataUrl = '/assets/data/data.json';
 const locationsUrl = '/assets/data/locations.json';

@@ -1,9 +1,4 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import './SpeakerDetail.scss';
-
-import { ActionSheetButton } from '@ionic/core';
+import type { ActionSheetButton } from '@ionic/core';
 import {
   IonActionSheet,
   IonChip,
@@ -26,11 +21,13 @@ import {
   shareOutline,
   shareSharp,
 } from 'ionicons/icons';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { connect } from '../data/connect';
 import * as selectors from '../data/selectors';
-
-import { Speaker } from '../models/Speaker';
+import type { Speaker } from '../models/Speaker';
+import './SpeakerDetail.scss';
 
 interface OwnProps {
   id?: string;
@@ -46,9 +43,7 @@ interface SpeakerDetailProps extends OwnProps, StateProps, DispatchProps {}
 
 const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
   const [showActionSheet, setShowActionSheet] = useState(false);
-  const [actionSheetButtons, setActionSheetButtons] = useState<
-    ActionSheetButton[]
-  >([]);
+  const [actionSheetButtons, setActionSheetButtons] = useState<ActionSheetButton[]>([]);
   const [actionSheetHeader, setActionSheetHeader] = useState('');
 
   function openSpeakerShare(speaker: Speaker) {
@@ -114,18 +109,10 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
             </IonButtons>
             <IonButtons slot="end">
               <IonButton onClick={() => openContact(speaker)}>
-                <IonIcon
-                  slot="icon-only"
-                  ios={callOutline}
-                  md={callSharp}
-                ></IonIcon>
+                <IonIcon slot="icon-only" ios={callOutline} md={callSharp}></IonIcon>
               </IonButton>
               <IonButton onClick={() => openSpeakerShare(speaker)}>
-                <IonIcon
-                  slot="icon-only"
-                  ios={shareOutline}
-                  md={shareSharp}
-                ></IonIcon>
+                <IonIcon slot="icon-only" ios={shareOutline} md={shareSharp}></IonIcon>
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -141,32 +128,17 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
 
           <hr />
 
-          <IonChip
-            color="twitter"
-            onClick={() =>
-              openExternalUrl(`https://twitter.com/${speaker.twitter}`)
-            }
-          >
+          <IonChip color="twitter" onClick={() => openExternalUrl(`https://twitter.com/${speaker.twitter}`)}>
             <IonIcon icon={logoTwitter}></IonIcon>
             <IonLabel>Twitter</IonLabel>
           </IonChip>
 
-          <IonChip
-            color="dark"
-            onClick={() =>
-              openExternalUrl('https://github.com/ionic-team/ionic-framework')
-            }
-          >
+          <IonChip color="dark" onClick={() => openExternalUrl('https://github.com/ionic-team/ionic-framework')}>
             <IonIcon icon={logoGithub}></IonIcon>
             <IonLabel>GitHub</IonLabel>
           </IonChip>
 
-          <IonChip
-            color="instagram"
-            onClick={() =>
-              openExternalUrl('https://instagram.com/ionicframework')
-            }
-          >
+          <IonChip color="instagram" onClick={() => openExternalUrl('https://instagram.com/ionicframework')}>
             <IonIcon icon={logoInstagram}></IonIcon>
             <IonLabel>Instagram</IonLabel>
           </IonChip>
