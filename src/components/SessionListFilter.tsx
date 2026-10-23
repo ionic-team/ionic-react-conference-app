@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getMode } from '@ionic/core';
 import {
   IonHeader,
@@ -11,7 +9,6 @@ import {
   IonList,
   IonListHeader,
   IonItem,
-  IonLabel,
   IonCheckbox,
   IonFooter,
   IonIcon,
@@ -28,6 +25,7 @@ import {
   construct,
   compass,
 } from 'ionicons/icons';
+import React from 'react';
 
 import './SessionListFilter.css';
 
@@ -111,14 +109,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
 
           {allTracks.map((track) => (
             <IonItem key={track}>
-              {ios && (
-                <IonIcon
-                  slot="start"
-                  icon={iconMap[track]}
-                  color="medium"
-                  aria-hidden="true"
-                />
-              )}
+              {ios && <IonIcon slot="start" icon={iconMap[track]} color="medium" aria-hidden="true" />}
               <IonCheckbox
                 onIonChange={() => toggleTrackFilter(track)}
                 checked={filteredTracks.indexOf(track) !== -1}

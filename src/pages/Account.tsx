@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -11,9 +10,11 @@ import {
   IonItem,
   IonAlert,
 } from '@ionic/react';
+import React, { useState } from 'react';
+
 import './Account.scss';
-import { setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
+import { setUsername } from '../data/user/user.actions';
 
 interface OwnProps {}
 
@@ -47,21 +48,12 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
       <IonContent>
         {username && (
           <div className="ion-padding-top ion-text-center">
-            <img
-              src="https://www.gravatar.com/avatar?d=mm&s=140"
-              alt="avatar"
-            />
+            <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
             <h2>{username}</h2>
             <IonList inset>
-              <IonItem onClick={() => clicked('Update Picture')}>
-                Update Picture
-              </IonItem>
-              <IonItem onClick={() => setShowAlert(true)}>
-                Change Username
-              </IonItem>
-              <IonItem onClick={() => clicked('Change Password')}>
-                Change Password
-              </IonItem>
+              <IonItem onClick={() => clicked('Update Picture')}>Update Picture</IonItem>
+              <IonItem onClick={() => setShowAlert(true)}>Change Username</IonItem>
+              <IonItem onClick={() => clicked('Change Password')}>Change Password</IonItem>
               <IonItem routerLink="/support" routerDirection="none">
                 Support
               </IonItem>

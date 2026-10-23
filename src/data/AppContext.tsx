@@ -1,5 +1,8 @@
-import React, { createContext, PropsWithChildren, useReducer } from 'react';
-import { initialState, AppState, reducers } from './state';
+import type { PropsWithChildren } from 'react';
+import React, { createContext, useReducer } from 'react';
+
+import type { AppState } from './state';
+import { initialState, reducers } from './state';
 
 export interface AppContextState {
   state: AppState;
@@ -11,9 +14,7 @@ export const AppContext = createContext<AppContextState>({
   dispatch: () => undefined,
 });
 
-export const AppContextProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [store, dispatch] = useReducer(reducers, initialState);
 
   return (

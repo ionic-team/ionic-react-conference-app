@@ -1,10 +1,7 @@
-import { SessionsActions } from './sessions.actions';
-import { ConfState } from './conf.state';
+import type { ConfState } from './conf.state';
+import type { SessionsActions } from './sessions.actions';
 
-export const sessionsReducer = (
-  state: ConfState,
-  action: SessionsActions
-): ConfState => {
+export const sessionsReducer = (state: ConfState, action: SessionsActions): ConfState => {
   switch (action.type) {
     case 'set-conf-loading': {
       return { ...state, loading: action.isLoading };
