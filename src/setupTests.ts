@@ -4,10 +4,18 @@ import '@testing-library/jest-dom/vitest';
 // jsdom doesn't implement matchMedia, which Ionic uses for platform and dark mode checks.
 window.matchMedia =
   window.matchMedia ||
-  function () {
+  function (query: string): MediaQueryList {
     return {
       matches: false,
-      addListener: function () {},
-      removeListener: function () {},
+      media: query,
+      onchange: null,
+      addListener: () => undefined,
+      removeListener: () => undefined,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+      dispatchEvent: () => false,
     };
   };
+
+// jsdom doesn't implement element scrolling, which the tutorial slides use.
+Element.prototype.scrollTo = Element.prototype.scrollTo || (() => undefined);
