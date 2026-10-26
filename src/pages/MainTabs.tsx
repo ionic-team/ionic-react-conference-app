@@ -1,12 +1,6 @@
+/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
 import React from 'react';
-import {
-  IonTabs,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonIcon,
-  IonLabel,
-} from '@ionic/react';
+import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { Route, Navigate } from 'react-router-dom';
 import { calendar, location, informationCircle, people } from 'ionicons/icons';
 import SchedulePage from './SchedulePage';

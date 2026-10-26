@@ -1,6 +1,7 @@
+import type { ActionType } from '../../util/types';
 import { getConfData } from '../dataApi';
-import { ActionType } from '../../util/types';
-import { ConfState } from './conf.state';
+
+import type { ConfState } from './conf.state';
 
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   dispatch(setLoading(true));
@@ -13,43 +14,43 @@ export const setLoading = (isLoading: boolean) =>
   ({
     type: 'set-conf-loading',
     isLoading,
-  } as const);
+  }) as const;
 
 export const setData = (data: Partial<ConfState>) =>
   ({
     type: 'set-conf-data',
     data,
-  } as const);
+  }) as const;
 
 export const addFavorite = (sessionId: number) =>
   ({
     type: 'add-favorite',
     sessionId,
-  } as const);
+  }) as const;
 
 export const removeFavorite = (sessionId: number) =>
   ({
     type: 'remove-favorite',
     sessionId,
-  } as const);
+  }) as const;
 
 export const updateFilteredTracks = (filteredTracks: string[]) =>
   ({
     type: 'update-filtered-tracks',
     filteredTracks,
-  } as const);
+  }) as const;
 
 export const setSearchText = (searchText?: string) =>
   ({
     type: 'set-search-text',
     searchText,
-  } as const);
+  }) as const;
 
 export const setMenuEnabled = (menuEnabled: boolean) =>
   ({
     type: 'set-menu-enabled',
     menuEnabled,
-  } as const);
+  }) as const;
 
 export type SessionsActions =
   | ActionType<typeof setLoading>

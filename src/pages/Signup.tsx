@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -13,19 +12,18 @@ import {
   IonInput,
   useIonRouter,
 } from '@ionic/react';
+import React, { useState } from 'react';
+
 import './Signup.scss';
-import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
+import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 
 interface SignupProps {
   setIsLoggedIn: typeof setIsLoggedIn;
   setUsername: typeof setUsername;
 }
 
-const Signup: React.FC<SignupProps> = ({
-  setIsLoggedIn,
-  setUsername: setUsernameAction,
-}) => {
+const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsernameAction }) => {
   const router = useIonRouter();
   const [signup, setSignup] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -65,12 +63,8 @@ const Signup: React.FC<SignupProps> = ({
               value={signup.username}
               name="username"
               type="text"
-              errorText={
-                submitted && !signup.username ? 'Username is required' : ''
-              }
-              onIonInput={(e) =>
-                setSignup({ ...signup, username: e.detail.value! })
-              }
+              errorText={submitted && !signup.username ? 'Username is required' : ''}
+              onIonInput={(e) => setSignup({ ...signup, username: e.detail.value! })}
               required
             />
 
@@ -81,12 +75,8 @@ const Signup: React.FC<SignupProps> = ({
               value={signup.password}
               name="password"
               type="password"
-              errorText={
-                submitted && !signup.password ? 'Password is required' : ''
-              }
-              onIonInput={(e) =>
-                setSignup({ ...signup, password: e.detail.value! })
-              }
+              errorText={submitted && !signup.password ? 'Password is required' : ''}
+              onIonInput={(e) => setSignup({ ...signup, password: e.detail.value! })}
               required
             />
 

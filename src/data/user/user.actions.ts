@@ -1,11 +1,7 @@
-import {
-  getUserData,
-  setIsLoggedInData,
-  setUsernameData,
-  setHasSeenTutorialData,
-} from '../dataApi';
-import { ActionType } from '../../util/types';
-import { UserState } from './user.state';
+import type { ActionType } from '../../util/types';
+import { getUserData, setIsLoggedInData, setUsernameData, setHasSeenTutorialData } from '../dataApi';
+
+import type { UserState } from './user.state';
 
 export const loadUserData = () => async (dispatch: React.Dispatch<any>) => {
   dispatch(setLoading(true));
@@ -18,51 +14,48 @@ export const setLoading = (isLoading: boolean) =>
   ({
     type: 'set-user-loading',
     isLoading,
-  } as const);
+  }) as const;
 
 export const setData = (data: Partial<UserState>) =>
   ({
     type: 'set-user-data',
     data,
-  } as const);
+  }) as const;
 
 export const logoutUser = () => async (dispatch: React.Dispatch<any>) => {
   await setIsLoggedInData(false);
   dispatch(setUsername());
 };
 
-export const setIsLoggedIn =
-  (loggedIn: boolean) => async (dispatch: React.Dispatch<any>) => {
-    await setIsLoggedInData(loggedIn);
-    return {
-      type: 'set-is-loggedin',
-      loggedIn,
-    } as const;
-  };
+export const setIsLoggedIn = (loggedIn: boolean) => async (_dispatch: React.Dispatch<any>) => {
+  await setIsLoggedInData(loggedIn);
+  return {
+    type: 'set-is-loggedin',
+    loggedIn,
+  } as const;
+};
 
-export const setUsername =
-  (username?: string) => async (dispatch: React.Dispatch<any>) => {
-    await setUsernameData(username);
-    return {
-      type: 'set-username',
-      username,
-    } as const;
-  };
+export const setUsername = (username?: string) => async (_dispatch: React.Dispatch<any>) => {
+  await setUsernameData(username);
+  return {
+    type: 'set-username',
+    username,
+  } as const;
+};
 
-export const setHasSeenTutorial =
-  (hasSeenTutorial: boolean) => async (dispatch: React.Dispatch<any>) => {
-    await setHasSeenTutorialData(hasSeenTutorial);
-    return {
-      type: 'set-has-seen-tutorial',
-      hasSeenTutorial,
-    } as const;
-  };
+export const setHasSeenTutorial = (hasSeenTutorial: boolean) => async (_dispatch: React.Dispatch<any>) => {
+  await setHasSeenTutorialData(hasSeenTutorial);
+  return {
+    type: 'set-has-seen-tutorial',
+    hasSeenTutorial,
+  } as const;
+};
 
 export const setDarkMode = (darkMode: boolean) =>
   ({
     type: 'set-dark-mode',
     darkMode,
-  } as const);
+  }) as const;
 
 export type UserActions =
   | ActionType<typeof setLoading>
