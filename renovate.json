@@ -40,10 +40,7 @@
       "groupName": "leaflet"
     },
     {
-      "matchPackageNames": [
-        "@testing-library/react",
-        "@types/jest"
-      ],
+      "matchPackageNames": ["@testing-library/**", "vitest", "jsdom", "@playwright/test"],
       "groupName": "testing"
     },
     {
@@ -57,6 +54,11 @@
         "typescript"
       ],
       "groupName": "dev-tools"
+    },
+    {
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<25",
+      "description": "Keep Node's types on the major version CI runs (24)"
     }
   ]
 }
