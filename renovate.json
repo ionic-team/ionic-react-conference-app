@@ -54,6 +54,11 @@
         "typescript"
       ],
       "groupName": "dev-tools"
+    },
+    {
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<25",
+      "description": "Keep Node's types on the major version CI runs (24)"
     }
   ]
 }
