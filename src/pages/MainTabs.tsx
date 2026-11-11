@@ -1,14 +1,14 @@
-/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
-import React from 'react';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
-import { Route, Navigate } from 'react-router-dom';
 import { calendar, location, informationCircle, people } from 'ionicons/icons';
-import SchedulePage from './SchedulePage';
-import SpeakerList from './SpeakerList';
-import SpeakerDetail from './SpeakerDetail';
-import SessionDetail from './SessionDetail';
-import MapView from './MapView';
+import React from 'react';
+import { Route, Navigate } from 'react-router-dom';
+
 import About from './About';
+import MapView from './MapView';
+import SchedulePage from './SchedulePage';
+import SessionDetail from './SessionDetail';
+import SpeakerDetail from './SpeakerDetail';
+import SpeakerList from './SpeakerList';
 
 interface MainTabsProps {}
 

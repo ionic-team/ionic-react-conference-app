@@ -1,14 +1,14 @@
-/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
-import React, { useEffect, useRef } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
-import type { Location } from '../models/Location';
+import L from 'leaflet';
+import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
+import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
+import React, { useEffect, useRef } from 'react';
+
 import { connect } from '../data/connect';
 import { loadLocations } from '../data/locations/locations.actions';
-import L from 'leaflet';
+import type { Location } from '../models/Location';
 import 'leaflet/dist/leaflet.css';
-import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
-import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import './MapView.scss';
 
 // Fix for marker icons in Vite

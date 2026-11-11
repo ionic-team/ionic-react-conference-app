@@ -1,5 +1,3 @@
-/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
-import React from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -14,13 +12,15 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/react';
-import { connect } from '../data/connect';
-import { useParams } from 'react-router-dom';
-import * as selectors from '../data/selectors';
 import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
-import './SessionDetail.scss';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+import { connect } from '../data/connect';
+import * as selectors from '../data/selectors';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
 import type { Session } from '../models/Schedule';
+import './SessionDetail.scss';
 
 interface OwnProps {
   id?: string;
