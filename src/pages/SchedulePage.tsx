@@ -88,12 +88,12 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
 
           <IonButtons slot="end">
             {!ios && !showSearchbar && (
-              <IonButton onClick={() => setShowSearchbar(true)}>
+              <IonButton aria-label="Search" onClick={() => setShowSearchbar(true)}>
                 <IonIcon slot="icon-only" icon={search}></IonIcon>
               </IonButton>
             )}
             {!showSearchbar && (
-              <IonButton onClick={() => setShowFilterModal(true)}>
+              <IonButton aria-label="Filter" onClick={() => setShowFilterModal(true)}>
                 {mode === 'ios' ? 'Filter' : <IonIcon icon={options} slot="icon-only" />}
               </IonButton>
             )}

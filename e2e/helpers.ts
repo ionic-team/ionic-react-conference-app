@@ -25,15 +25,16 @@ export const visibleTitle = (page: Page): Locator => page.locator('ion-title').f
 export const sessionLink = (page: Page, name: string): Locator =>
   visiblePage(page, 'schedule-page').getByRole('link', { name: new RegExp(`^${escapeRegExp(name)} \\d`) });
 
-// The schedule's toolbar buttons only show an icon and have no accessible name, so find them by position.
-const scheduleEndButtons = (page: Page): Locator =>
-  visiblePage(page, 'schedule-page').locator('ion-header ion-buttons[slot="end"] ion-button');
-export const searchButton = (page: Page): Locator => scheduleEndButtons(page).first();
-export const filterButton = (page: Page): Locator => scheduleEndButtons(page).last();
+export const searchButton = (page: Page): Locator =>
+  visiblePage(page, 'schedule-page').getByRole('button', { name: 'Search', exact: true });
+export const filterButton = (page: Page): Locator =>
+  visiblePage(page, 'schedule-page').getByRole('button', { name: 'Filter', exact: true });
 
-// The session detail's favorite button is the first icon-only button at the end of its toolbar.
+// The session detail's favorite button is labelled with what pressing it does.
 export const favoriteButton = (page: Page): Locator =>
-  visiblePage(page, 'session-detail-page').locator('ion-buttons[slot="end"] ion-button').first();
+  visiblePage(page, 'session-detail-page').getByRole('button', { name: 'Favorite', exact: true });
+export const removeFavoriteButton = (page: Page): Locator =>
+  visiblePage(page, 'session-detail-page').getByRole('button', { name: 'Remove favorite', exact: true });
 
 export const openMenu = async (page: Page): Promise<Locator> => {
   const menu = page.getByRole('navigation', { name: 'menu' });

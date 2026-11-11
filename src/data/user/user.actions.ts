@@ -24,13 +24,6 @@ export const setData = (data: Partial<UserState>) =>
     data,
   }) as const;
 
-export const logoutUser =
-  () =>
-  async (dispatch: React.Dispatch<any>): Promise<void> => {
-    await setIsLoggedInData(false);
-    dispatch(setUsername());
-  };
-
 export const setIsLoggedIn =
   (loggedIn: boolean) =>
   async (_dispatch: React.Dispatch<any>): Promise<{ readonly type: 'set-is-loggedin'; readonly loggedIn: boolean }> => {

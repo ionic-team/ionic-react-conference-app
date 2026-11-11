@@ -29,7 +29,6 @@ const SessionListItem: React.FC<SessionListItemProps> = ({
   };
 
   const removeFavoriteSession = (title: string) => {
-    onAddFavorite(session.id);
     onShowAlert(title, 'Would you like to remove this session from your favorites?', [
       {
         text: 'Cancel',

@@ -14,12 +14,15 @@ import {
   useIonViewWillEnter,
 } from '@ionic/react';
 import React, { useState } from 'react';
+
 import './Support.scss';
+import { validationClasses } from '../util/validation';
 
 const Support: React.FC = () => {
-  const [present] = useIonToast();
+  const [present, dismiss] = useIonToast();
   const [supportMessage, setSupportMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [touched, setTouched] = useState(false);
 
   useIonViewWillEnter(() => {
     present({
@@ -35,7 +38,11 @@ const Support: React.FC = () => {
     if (supportMessage) {
       setSupportMessage('');
       setSubmitted(false);
+      setTouched(false);
 
+      // The hook only shows one toast at a time and ignores new ones while one is open, such as the notice
+      // shown when the page opens, so close that first.
+      await dismiss();
       present({
         message: 'Your support request has been sent.',
         duration: 3000,
@@ -67,7 +74,9 @@ const Support: React.FC = () => {
               value={supportMessage}
               name="supportQuestion"
               rows={6}
-              errorText={submitted && !supportMessage ? 'Support message is required' : ''}
+              className={validationClasses(!!supportMessage, submitted || touched)}
+              errorText="Support message is required"
+              onIonBlur={() => setTouched(true)}
               onIonInput={(e) => setSupportMessage(e.detail.value!)}
               required
             />

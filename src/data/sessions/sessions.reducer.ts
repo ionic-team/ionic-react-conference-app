@@ -10,6 +10,9 @@ export const sessionsReducer = (state: ConfState, action: SessionsActions): Conf
       return { ...state, ...action.data };
     }
     case 'add-favorite': {
+      if (state.favorites.includes(action.sessionId)) {
+        return state;
+      }
       return { ...state, favorites: [...state.favorites, action.sessionId] };
     }
     case 'remove-favorite': {

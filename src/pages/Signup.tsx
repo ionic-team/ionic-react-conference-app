@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 import './Signup.scss';
 import { connect } from '../data/connect';
 import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
+import { validationClasses } from '../util/validation';
 
 interface SignupProps {
   setIsLoggedIn: typeof setIsLoggedIn;
@@ -27,6 +28,8 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
   const router = useIonRouter();
   const [signup, setSignup] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
+  // An input shows its error once it has been left, or the form has been submitted.
+  const [touched, setTouched] = useState({ username: false, password: false });
 
   const onSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +66,9 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
               value={signup.username}
               name="username"
               type="text"
-              errorText={submitted && !signup.username ? 'Username is required' : ''}
+              className={validationClasses(!!signup.username, submitted || touched.username)}
+              errorText="Username is required"
+              onIonBlur={() => setTouched((current) => ({ ...current, username: true }))}
               onIonInput={(e) => setSignup({ ...signup, username: e.detail.value! })}
               required
             />
@@ -75,7 +80,9 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
               value={signup.password}
               name="password"
               type="password"
-              errorText={submitted && !signup.password ? 'Password is required' : ''}
+              className={validationClasses(!!signup.password, submitted || touched.password)}
+              errorText="Password is required"
+              onIonBlur={() => setTouched((current) => ({ ...current, password: true }))}
               onIonInput={(e) => setSignup({ ...signup, password: e.detail.value! })}
               required
             />

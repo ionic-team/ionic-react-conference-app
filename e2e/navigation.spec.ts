@@ -82,7 +82,6 @@ test.describe('Navigation', () => {
     const support = visiblePage(page, 'support-page');
     const notice = page.getByText('This does not actually send a support request.');
     await expect(notice).toBeVisible();
-    // The page can only show one toast at a time and skips the confirmation while the notice is open.
     await expect(notice).toBeHidden({ timeout: 10_000 });
 
     const message = support.getByRole('textbox', { name: 'Enter your support message below' });
@@ -94,20 +93,44 @@ test.describe('Navigation', () => {
     await expect(page.getByText('Support message is required')).toBeHidden();
   });
 
+  test('the support page shows the confirmation even while the notice is still open', async ({ page }) => {
+    await navigateFromMenu(page, 'Support');
+    const support = visiblePage(page, 'support-page');
+    const notice = page.getByText('This does not actually send a support request.');
+    await expect(notice).toBeVisible();
+
+    await support.getByRole('textbox', { name: 'Enter your support message below' }).fill('The app is great!');
+    await support.getByRole('button', { name: 'Submit' }).click();
+
+    await expect(page.getByText('Your support request has been sent.')).toBeVisible();
+    await expect(notice).toBeHidden();
+  });
+
   test('the Support page does not send an empty message', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     const support = visiblePage(page, 'support-page');
-    // Wait for the notice to close, since no other toast can show while it is open.
-    const notice = page.getByText('This does not actually send a support request.');
-    await expect(notice).toBeVisible();
-    await expect(notice).toBeHidden({ timeout: 10_000 });
+    await expect(support.getByText('Support message is required')).toBeHidden();
 
     await support.getByRole('button', { name: 'Submit' }).click();
 
-    // The "Support message is required" error text isn't shown, so check nothing was sent.
-    await expect(support.getByRole('textbox', { name: 'Enter your support message below' })).toBeVisible();
+    await expect(support.getByText('Support message is required')).toBeVisible();
     // The confirmation would show right away, so it not showing within a second means nothing was sent.
     await expect(page.getByText('Your support request has been sent.').waitFor({ timeout: 1000 })).rejects.toThrow();
+
+    // Typing a message clears the error.
+    await support.getByRole('textbox', { name: 'Enter your support message below' }).fill('Hello');
+    await expect(support.getByText('Support message is required')).toBeHidden();
+  });
+
+  test('the support message shows its required message when left empty', async ({ page }) => {
+    await navigateFromMenu(page, 'Support');
+    const support = visiblePage(page, 'support-page');
+    const message = support.getByRole('textbox', { name: 'Enter your support message below' });
+
+    await message.focus();
+    await message.blur();
+
+    await expect(support.getByText('Support message is required')).toBeVisible();
   });
 
   test('the Support page leaves without asking when the message is empty', async ({ page }) => {
@@ -122,6 +145,24 @@ test.describe('Navigation', () => {
     await expect(page).toHaveURL(/\/tabs\/schedule$/);
     await expect(visibleTitle(page)).toHaveText('Schedule');
     await expect(page.getByRole('alertdialog')).toHaveCount(0);
+  });
+
+  test('the share button opens the social share buttons', async ({ page }) => {
+    const schedule = visiblePage(page, 'schedule-page');
+    await schedule.getByRole('button', { name: 'Share', exact: true }).click();
+    for (const name of ['Instagram', 'Twitter', 'Facebook']) {
+      await expect(schedule.getByRole('button', { name, exact: true })).toBeVisible();
+    }
+    await schedule.getByRole('button', { name: 'Vimeo', exact: true }).click();
+
+    await expect(page.getByText('Posting to Vimeo')).toBeVisible();
+  });
+
+  test('the About page opens its options from the More options button', async ({ page }) => {
+    await page.getByRole('tab', { name: 'About' }).click();
+    await visiblePage(page, 'about-page').getByRole('button', { name: 'More options', exact: true }).click();
+
+    await expect(page.getByText('Learn Ionic')).toBeVisible();
   });
 
   test('the dark mode toggle switches the dark palette', async ({ page }) => {
