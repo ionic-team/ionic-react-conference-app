@@ -58,6 +58,39 @@ describe('getFilteredSchedule', () => {
     expect(getFilteredSchedule(state).groups.map((group) => group.time)).toEqual(['12:00 am', '11:00 am', '12:30 pm']);
   });
 
+  it('sorts by the minutes as numbers, so 9:05 comes before 9:30 and 10:00', () => {
+    const at = (id: number, timeStart: string) => makeSession({ id, name: timeStart, timeStart });
+    const state = makeState({
+      data: {
+        schedule: {
+          date: '2047-05-17',
+          groups: [
+            { time: '10:00 am', sessions: [at(10, '10:00 am')] },
+            { time: '9:05 am', sessions: [at(11, '9:30 am'), at(12, '9:05 am')] },
+          ],
+        },
+      },
+    });
+
+    expect(summarize(getFilteredSchedule(state))).toEqual([
+      ['9:05 am', ['9:05 am', '9:30 am']],
+      ['10:00 am', ['10:00 am']],
+    ]);
+  });
+
+  it('lists a session once when more than one of its tracks is selected', () => {
+    const workshop = makeSession({ id: 10, name: 'Ionic React Workshop', tracks: ['Ionic', 'React'] });
+    const state = makeState({
+      data: { schedule: { date: '2047-05-17', groups: [{ time: '9:00 am', sessions: [workshop] }] } },
+    });
+
+    expect(summarize(getFilteredSchedule(state))).toEqual([['9:00 am', ['Ionic React Workshop']]]);
+    // It is still listed when only one of its tracks is selected.
+    expect(summarize(getFilteredSchedule({ ...state, data: { ...state.data, filteredTracks: ['React'] } }))).toEqual([
+      ['9:00 am', ['Ionic React Workshop']],
+    ]);
+  });
+
   it('leaves out the sessions of excluded tracks and groups left empty', () => {
     const state = makeState({ data: { filteredTracks: ['Ionic', 'React', 'Tooling'] } });
 

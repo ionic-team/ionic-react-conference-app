@@ -53,6 +53,8 @@ test.describe('Account', () => {
     await login.getByRole('button', { name: 'Login' }).click();
 
     await expect(page).toHaveURL(/\/login$/);
+    await expect(login.getByText('Password is required')).toBeVisible();
+    await expect(login.getByText('Username is required')).toHaveCount(0);
     await expectLoggedOut(page);
   });
 
@@ -67,7 +69,41 @@ test.describe('Account', () => {
       await signup.getByRole('button', { name: 'Create' }).click();
 
       await expect(page).toHaveURL(/\/signup$/);
+      await expect(signup.getByText(`${fields.missing} is required`)).toBeVisible();
+      await expect(signup.getByText(`${fields.filled} is required`)).toHaveCount(0);
       await expectLoggedOut(page);
+    });
+  }
+
+  for (const form of [
+    { menu: 'Login', pageId: 'login-page', button: 'Login' },
+    { menu: 'Signup', pageId: 'signup-page', button: 'Create' },
+  ]) {
+    test(`${form.menu} shows the required messages when submitted empty`, async ({ page }) => {
+      await navigateFromMenu(page, form.menu);
+      const formPage = visiblePage(page, form.pageId);
+      await expect(formPage.getByText('Username is required')).toBeHidden();
+
+      await formPage.getByRole('button', { name: form.button }).click();
+
+      await expect(formPage.getByText('Username is required')).toBeVisible();
+      await expect(formPage.getByText('Password is required')).toBeVisible();
+      await expect(page).toHaveURL(new RegExp(`/${form.menu.toLowerCase()}$`));
+    });
+
+    test(`${form.menu} shows a required message when an empty field is left`, async ({ page }) => {
+      await navigateFromMenu(page, form.menu);
+      const formPage = visiblePage(page, form.pageId);
+      const username = formPage.getByRole('textbox', { name: 'Username' });
+
+      await username.focus();
+      await username.blur();
+
+      await expect(formPage.getByText('Username is required')).toBeVisible();
+      await expect(formPage.getByText('Password is required')).toBeHidden();
+
+      await username.fill('ionitron');
+      await expect(formPage.getByText('Username is required')).toBeHidden();
     });
   }
 
