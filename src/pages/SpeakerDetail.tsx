@@ -1,9 +1,3 @@
-/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import './SpeakerDetail.scss';
-
 import type { ActionSheetButton } from '@ionic/core';
 import {
   IonActionSheet,
@@ -27,11 +21,13 @@ import {
   shareOutline,
   shareSharp,
 } from 'ionicons/icons';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { connect } from '../data/connect';
 import * as selectors from '../data/selectors';
-
 import type { Speaker } from '../models/Speaker';
+import './SpeakerDetail.scss';
 
 interface OwnProps {
   id?: string;

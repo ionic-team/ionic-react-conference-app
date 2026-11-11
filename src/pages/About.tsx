@@ -1,5 +1,3 @@
-/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
-import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -18,10 +16,12 @@ import {
   IonPopover,
   IonText,
 } from '@ionic/react';
-import './About.scss';
-import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
-import AboutPopover from '../components/AboutPopover';
 import { format, parseISO } from 'date-fns';
+import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
+import React, { useState } from 'react';
+
+import AboutPopover from '../components/AboutPopover';
+import './About.scss';
 
 interface AboutProps {}
 

@@ -1,6 +1,3 @@
-/* eslint-disable import-x/order -- stylesheet imports must keep their original order */
-import React, { useState, useRef } from 'react';
-
 import {
   IonToolbar,
   IonContent,
@@ -21,17 +18,16 @@ import {
   getConfig,
 } from '@ionic/react';
 import { options, search } from 'ionicons/icons';
+import React, { useState, useRef } from 'react';
 
 import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
-import './SchedulePage.scss';
-
 import ShareSocialFab from '../components/ShareSocialFab';
-
-import * as selectors from '../data/selectors';
 import { connect } from '../data/connect';
+import * as selectors from '../data/selectors';
 import { setSearchText } from '../data/sessions/sessions.actions';
 import type { Schedule } from '../models/Schedule';
+import './SchedulePage.scss';
 
 interface OwnProps {}
 
