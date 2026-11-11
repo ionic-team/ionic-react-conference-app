@@ -5,6 +5,7 @@
   "author": "Ionic Team <hi@ionicframework.com>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@capacitor/android": "^8.0.0",
     "@capacitor/core": "^8.0.0",
