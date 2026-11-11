@@ -36,7 +36,7 @@
       "groupName": "vite"
     },
     {
-      "matchPackageNames": ["leaflet", "@types/leaflet", "react-leaflet"],
+      "matchPackageNames": ["leaflet", "@types/leaflet"],
       "groupName": "leaflet"
     },
     {
