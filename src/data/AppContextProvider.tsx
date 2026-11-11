@@ -1,18 +1,8 @@
 import type { PropsWithChildren } from 'react';
-import React, { createContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 
-import type { AppState } from './state';
+import { AppContext } from './AppContext';
 import { initialState, reducers } from './state';
-
-export interface AppContextState {
-  state: AppState;
-  dispatch: React.Dispatch<any>;
-}
-
-export const AppContext = createContext<AppContextState>({
-  state: initialState,
-  dispatch: () => undefined,
-});
 
 export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [store, dispatch] = useReducer(reducers, initialState);

@@ -19,10 +19,11 @@ export default defineConfig([
     rules: {
       // Ionic's base level; `recommended` makes it an error, which is meant for libraries.
       '@typescript-eslint/explicit-module-boundary-types': 'warn',
-      // Every page exports both the component and a `connect()`-wrapped default,
-      // which fast refresh can't follow. Revisit if the custom connect HOC in
-      // data/connect.tsx is replaced with hooks.
-      'react-refresh/only-export-components': 'off',
+      // Pages export a component wrapped in the custom `connect()` HOC from data/connect.tsx.
+      'react-refresh/only-export-components': [
+        'error',
+        { allowConstantExport: true, allowCompoundComponents: true, extraHOCs: ['connect'] },
+      ],
       // `connect()` and several page props use `{}` as an empty-props generic.
       '@typescript-eslint/no-empty-object-type': 'off',
       // The demo uses `cond && fn()` and ternaries for side effects throughout.
