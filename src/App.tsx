@@ -42,7 +42,7 @@ import { Route } from 'react-router-dom';
 import HomeOrTutorial from './components/HomeOrTutorial';
 import Menu from './components/Menu';
 import RedirectToLogin from './components/RedirectToLogin';
-import { AppContextProvider } from './data/AppContext';
+import { AppContextProvider } from './data/AppContextProvider';
 import { connect } from './data/connect';
 import { loadConfData } from './data/sessions/sessions.actions';
 import { setIsLoggedIn, setUsername, loadUserData } from './data/user/user.actions';
