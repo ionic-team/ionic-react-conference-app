@@ -3,9 +3,11 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { afterEach } from 'vitest';
 
-// Testing Library only cleans up automatically when Vitest globals are enabled.
 afterEach(() => {
+  // Testing Library only cleans up automatically when Vitest globals are enabled.
   cleanup();
+  // Capacitor Preferences stores data in localStorage on the web, so clear it to keep tests independent.
+  localStorage.clear();
 });
 
 // jsdom doesn't implement matchMedia, which Ionic uses for platform and dark mode checks.

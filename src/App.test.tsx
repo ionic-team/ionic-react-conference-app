@@ -14,7 +14,7 @@ beforeEach(() => {
       // Other requests (such as ionicons loading SVGs) get an empty response.
       const body =
         typeof url === 'string' && url.startsWith('/assets/data/')
-          ? readFileSync(join(process.cwd(), 'public', url), 'utf8')
+          ? readFileSync(join(import.meta.dirname, '../public', url), 'utf8')
           : '';
       return Promise.resolve(new Response(body));
     }),

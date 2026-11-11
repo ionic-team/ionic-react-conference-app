@@ -28,12 +28,4 @@ export default defineConfig([
       '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    languageOptions: {
-      globals: {
-        ...globals.vitest,
-      },
-    },
-  },
 ]);
