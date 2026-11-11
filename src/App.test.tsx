@@ -28,5 +28,6 @@ afterEach(() => {
 it('opens the tutorial on first launch', async () => {
   render(<App />);
 
-  expect(await screen.findByText('Skip')).toBeInTheDocument();
+  // Loading the data and routing to the tutorial can take longer than findBy's default 1s on slow CI runners.
+  expect(await screen.findByText('Skip', {}, { timeout: 5000 })).toBeInTheDocument();
 });
