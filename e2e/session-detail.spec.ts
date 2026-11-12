@@ -73,7 +73,7 @@ test.describe('Session detail', () => {
     await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
   });
 
-  test("the favorite button's label says whether it adds or removes the favorite", async ({ page }) => {
+  test('the favorite button label says whether it adds or removes the favorite', async ({ page }) => {
     await sessionLink(page, 'Ionic Tooling').click();
     await expect(removeFavoriteButton(page)).toHaveCount(0);
 
