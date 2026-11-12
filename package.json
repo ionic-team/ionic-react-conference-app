@@ -38,7 +38,7 @@
     "lint": "npm run eslint && npm run prettier -- --check",
     "lint:fix": "npm run eslint -- --fix && npm run prettier -- --write",
     "eslint": "eslint",
-    "prettier": "prettier \"**/*.{ts,tsx}\""
+    "prettier": "prettier \"**/*.{ts,tsx}\" \"*.{js,mjs,cjs,mts}\""
   },
   "browserslist": [
     ">0.2%",
