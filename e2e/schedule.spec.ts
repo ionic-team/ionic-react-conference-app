@@ -140,6 +140,22 @@ test.describe('Schedule', () => {
     await expect(sessionLink(page, 'Ionic Workshop')).toBeVisible();
   });
 
+  test('checking every track after Reset brings every session back', async ({ page }) => {
+    await filterButton(page).click();
+    await filterModal(page).getByRole('button', { name: 'Reset' }).click();
+    await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(0);
+
+    // In md mode the filter only has Reset, so the tracks are checked again one at a time.
+    for (const checkbox of await filterModal(page).locator('ion-checkbox').all()) {
+      await checkbox.click();
+    }
+    await filterModal(page).getByRole('button', { name: 'Done' }).click();
+    await expect(filterModal(page)).toBeHidden();
+
+    await expect(visibleSessions(page)).toHaveCount(20);
+    await expect(timeGroups(page)).toHaveCount(8);
+  });
+
   test('search and the track filter combine', async ({ page }) => {
     // The filter button is hidden while searching, so filter first.
     await filterButton(page).click();

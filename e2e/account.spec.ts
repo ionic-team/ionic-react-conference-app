@@ -163,6 +163,16 @@ test.describe('Account', () => {
     await expectLoggedOut(page);
   });
 
+  test('logging out from the account page returns to the logged out state', async ({ page }) => {
+    await login(page, 'ionitron');
+    await navigateFromMenu(page, 'Account');
+
+    await visiblePage(page, 'account-page').getByRole('link', { name: 'Logout' }).click();
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expectLoggedOut(page);
+  });
+
   test('signing up logs the user in', async ({ page }) => {
     await navigateFromMenu(page, 'Signup');
     await submitCredentials(page, 'signup-page', 'Create', 'newbie');
