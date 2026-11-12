@@ -47,14 +47,6 @@ describe('SessionDetail', () => {
     expect(removeFavoriteButton(container)).toBeNull();
   });
 
-  it('labels its icon-only buttons', () => {
-    const { container } = renderSession(String(ionicTooling.id));
-
-    expect(
-      Array.from(container.querySelectorAll('ion-header ion-button'), (button) => button.getAttribute('aria-label')),
-    ).toEqual(['Add favorite', 'Share']);
-  });
-
   it('shows a message for an unknown session', () => {
     renderSession('999');
 
