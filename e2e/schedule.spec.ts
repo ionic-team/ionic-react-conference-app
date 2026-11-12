@@ -148,6 +148,11 @@ test.describe('Schedule', () => {
 
   test('Deselect All hides every session and Select All brings them back', async ({ page }) => {
     await filterButton(page).click();
+    // The filter's toolbar buttons keep their own casing, not Android's uppercase
+    await expect(filterModal(page).getByRole('button', { name: 'Deselect All' })).toHaveCSS(
+      'text-transform',
+      'capitalize',
+    );
     await filterModal(page).getByRole('button', { name: 'Deselect All', exact: true }).click();
     await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(0);
     await filterModal(page).getByRole('button', { name: 'Done' }).click();

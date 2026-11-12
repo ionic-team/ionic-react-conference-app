@@ -123,7 +123,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
         </IonList>
       </IonContent>
 
-      <IonFooter translucent={true}>
+      <IonFooter translucent={true} className="session-list-filter">
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton onClick={handleDeselectAll}>Deselect All</IonButton>
