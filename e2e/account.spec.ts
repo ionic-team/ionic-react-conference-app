@@ -1,7 +1,15 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 
-import { APP_LOAD_TIMEOUT, navigateFromMenu, openMenu, openSchedule, submitCredentials, visiblePage } from './helpers';
+import {
+  APP_LOAD_TIMEOUT,
+  login,
+  navigateFromMenu,
+  openMenu,
+  openSchedule,
+  submitCredentials,
+  visiblePage,
+} from './helpers';
 
 const expectMenuLinks = async (page: Page, shown: string[], hidden: string[]) => {
   const menu = await openMenu(page);
@@ -18,9 +26,15 @@ const expectMenuLinks = async (page: Page, shown: string[], hidden: string[]) =>
 const expectLoggedIn = (page: Page) => expectMenuLinks(page, ['Account', 'Support', 'Logout'], ['Login', 'Signup']);
 const expectLoggedOut = (page: Page) => expectMenuLinks(page, ['Login', 'Support', 'Signup'], ['Account', 'Logout']);
 
-const login = async (page: Page, username: string) => {
-  await navigateFromMenu(page, 'Login');
-  await submitCredentials(page, 'login-page', 'Login', username);
+const openChangeUsername = async (page: Page) => {
+  // Typing into the alert before it has finished opening can be lost, so wait for it to open.
+  const opened = page.evaluate(
+    () =>
+      new Promise<void>((resolve) => document.addEventListener('ionAlertDidPresent', () => resolve(), { once: true })),
+  );
+  await visiblePage(page, 'account-page').getByText('Change Username').click();
+  await opened;
+  return page.getByRole('alertdialog', { name: 'Change Username' });
 };
 
 test.describe('Account', () => {
@@ -42,6 +56,21 @@ test.describe('Account', () => {
     await expectLoggedOut(page);
   });
 
+  for (const fields of [
+    { filled: 'Username', missing: 'Password' },
+    { filled: 'Password', missing: 'Username' },
+  ]) {
+    test(`does not sign up without a ${fields.missing.toLowerCase()}`, async ({ page }) => {
+      await navigateFromMenu(page, 'Signup');
+      const signup = visiblePage(page, 'signup-page');
+      await signup.getByRole('textbox', { name: fields.filled }).fill('newbie');
+      await signup.getByRole('button', { name: 'Create' }).click();
+
+      await expect(page).toHaveURL(/\/signup$/);
+      await expectLoggedOut(page);
+    });
+  }
+
   test('logging in marks the user as logged in', async ({ page }) => {
     await login(page, 'ionitron');
 
@@ -55,16 +84,7 @@ test.describe('Account', () => {
     const account = visiblePage(page, 'account-page');
     await expect(account.getByRole('heading', { name: 'ionitron' })).toBeVisible();
 
-    // Typing into the alert before it has finished opening can be lost, so wait for it to open.
-    const opened = page.evaluate(
-      () =>
-        new Promise<void>((resolve) =>
-          document.addEventListener('ionAlertDidPresent', () => resolve(), { once: true }),
-        ),
-    );
-    await account.getByText('Change Username').click();
-    await opened;
-    const alert = page.getByRole('alertdialog', { name: 'Change Username' });
+    const alert = await openChangeUsername(page);
     const input = alert.getByRole('textbox', { name: 'username' });
     await expect(input).toHaveValue('ionitron');
     await input.fill('capacitor');
@@ -77,6 +97,20 @@ test.describe('Account', () => {
     await expect(visiblePage(page, 'account-page').getByRole('heading', { name: 'capacitor' })).toBeVisible({
       timeout: APP_LOAD_TIMEOUT,
     });
+  });
+
+  test('cancelling the username change keeps the username', async ({ page }) => {
+    await login(page, 'ionitron');
+    await navigateFromMenu(page, 'Account');
+    const account = visiblePage(page, 'account-page');
+
+    const alert = await openChangeUsername(page);
+    await alert.getByRole('textbox', { name: 'username' }).fill('capacitor');
+    await alert.getByRole('button', { name: 'Cancel' }).click();
+
+    await expect(alert).toBeHidden();
+    await expect(account.getByRole('heading', { name: 'ionitron' })).toBeVisible();
+    await expect(account.getByRole('heading', { name: 'capacitor' })).toHaveCount(0);
   });
 
   test('logging out returns to the logged out state', async ({ page }) => {

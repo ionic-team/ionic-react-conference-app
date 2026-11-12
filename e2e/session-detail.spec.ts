@@ -27,6 +27,8 @@ const swipeOpen = async (page: Page, name: string) => {
   await page.mouse.up();
 };
 
+const visibleSessions = (page: Page) => schedule(page).getByRole('link').filter({ visible: true });
+
 const itemOption = (page: Page, name: string) =>
   schedule(page).getByRole('button', { name, exact: true }).filter({ visible: true });
 
@@ -46,6 +48,21 @@ test.describe('Session detail', () => {
     await expect(detail(page)).toContainText('we created Ionic');
   });
 
+  test('opens a session from a direct link', async ({ page }) => {
+    await page.goto('/tabs/schedule/7');
+
+    await expect(detail(page).getByRole('heading', { level: 1 })).toHaveText('The Evolution of Ionicons');
+    await expect(detail(page)).toContainText('Design');
+    await expect(detail(page)).toContainText('10:15 am – 10:30 am');
+    await expect(detail(page)).toContainText('Hall 2');
+
+    // There is no earlier page to go back to, so the back button opens the schedule.
+    await backButton(page, 'session-detail-page').click();
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
+  });
+
   test('favoriting from the detail page adds the session to Favorites', async ({ page }) => {
     await toggleFavoriteFromDetail(page, 'Ionic Tooling');
 
@@ -60,6 +77,29 @@ test.describe('Session detail', () => {
 
     await expect(sessionLink(page, 'Ionic Tooling')).toBeHidden();
     await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
+  });
+
+  test('unfavoriting a session opened from Favorites removes it from the list', async ({ page }) => {
+    await toggleFavoriteFromDetail(page, 'Ionic Tooling');
+
+    await sessionLink(page, 'Ionic Tooling').click();
+    await favoriteButton(page).click();
+    await backButton(page, 'session-detail-page').click();
+
+    await expect(schedule(page).getByRole('tab', { name: 'Favorites' })).toHaveAttribute('aria-selected', 'true');
+    await expect(sessionLink(page, 'Ionic Tooling')).toBeHidden();
+    await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
+  });
+
+  test('the back button returns to the schedule', async ({ page }) => {
+    await sessionLink(page, 'Ionic Tooling').click();
+    await expect(page).toHaveURL(/\/tabs\/schedule\/3$/);
+
+    await backButton(page, 'session-detail-page').click();
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(visiblePage(page, 'session-detail-page')).toHaveCount(0);
+    await expect(visibleSessions(page)).toHaveCount(20);
   });
 
   test('favoriting from the sliding item adds the session to Favorites', async ({ page }) => {

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { navigateFromMenu, openMenu, openSchedule, visiblePage, visibleTitle } from './helpers';
+import { login, navigateFromMenu, openMenu, openSchedule, visiblePage, visibleTitle } from './helpers';
 
 test.describe('Navigation', () => {
   test.beforeEach(async ({ page }) => {
@@ -55,6 +55,16 @@ test.describe('Navigation', () => {
     await expect(visiblePage(page, 'about-page')).toContainText('The Ionic Conference is a one-day event');
   });
 
+  test('the About page shows the conference date and location', async ({ page }) => {
+    await page.getByRole('tab', { name: 'About' }).click();
+
+    const about = visiblePage(page, 'about-page');
+    await expect(about).toContainText('a one-day event happening on May 17, 2047');
+    await expect(about.locator('ion-item').filter({ hasText: 'Date' })).toContainText('May 17, 2047');
+    await expect(about.getByRole('button', { name: 'Location, Madison, WI' })).toBeVisible();
+    await expect(about).toContainText('ica2047');
+  });
+
   test('the map page shows a marker for each location', async ({ page }) => {
     // Keep the test independent of the network by not loading the map tiles.
     await page.route(/tile\.openstreetmap\.org/, (route) => route.abort());
@@ -81,6 +91,7 @@ test.describe('Navigation', () => {
 
     await expect(page.getByText('Your support request has been sent.')).toBeVisible();
     await expect(message).toHaveValue('');
+    await expect(page.getByText('Support message is required')).toBeHidden();
   });
 
   test('the support page does not send an empty message', async ({ page }) => {
@@ -111,5 +122,18 @@ test.describe('Navigation', () => {
 
     await expect(toggle).not.toBeChecked();
     await expect(app).not.toHaveClass(/ion-palette-dark/);
+  });
+
+  test('the dark mode toggle is in the menu while logged in', async ({ page }) => {
+    await login(page, 'ionitron');
+
+    const menu = await openMenu(page);
+    await expect(menu.getByRole('link', { name: 'Logout', exact: true })).toBeVisible();
+    const toggle = menu.getByRole('switch', { name: 'Dark Mode' });
+    await expect(toggle).toBeVisible();
+    await menu.locator('ion-toggle').click();
+
+    await expect(toggle).toBeChecked();
+    await expect(page.locator('ion-app')).toHaveClass(/ion-palette-dark/);
   });
 });
