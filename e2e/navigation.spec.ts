@@ -133,6 +133,49 @@ test.describe('Navigation', () => {
     await expect(support.getByText('Support message is required')).toBeVisible();
   });
 
+  test('the support page asks before leaving with an unsent message', async ({ page }) => {
+    await navigateFromMenu(page, 'Support');
+    const support = visiblePage(page, 'support-page');
+    const message = support.getByRole('textbox', { name: 'Enter your support message below' });
+    await message.fill('Unsent message');
+
+    await navigateFromMenu(page, 'Schedule');
+    const alert = page.getByRole('alertdialog', { name: 'Leave this page?' });
+    await expect(alert).toContainText(
+      'Are you sure you want to leave this page? Your support message will not be submitted.',
+    );
+    await alert.getByRole('button', { name: 'Stay' }).click();
+
+    await expect(alert).toBeHidden();
+    await expect(page).toHaveURL(/\/support$/);
+    await expect(message).toHaveValue('Unsent message');
+
+    await navigateFromMenu(page, 'Schedule');
+    await alert.getByRole('button', { name: 'Leave' }).click();
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(visibleTitle(page)).toHaveText('Schedule');
+
+    // Once the page is left, other pages are left without asking.
+    await navigateFromMenu(page, 'Speakers');
+    await expect(page).toHaveURL(/\/tabs\/speakers$/);
+    await expect(alert).toHaveCount(0);
+  });
+
+  test('the support page asks before showing the tutorial with an unsent message', async ({ page }) => {
+    await navigateFromMenu(page, 'Support');
+    await visiblePage(page, 'support-page')
+      .getByRole('textbox', { name: 'Enter your support message below' })
+      .fill('Unsent message');
+
+    const menu = await openMenu(page);
+    await menu.getByRole('button', { name: 'Show Tutorial' }).click();
+    const alert = page.getByRole('alertdialog', { name: 'Leave this page?' });
+    await alert.getByRole('button', { name: 'Leave' }).click();
+
+    await expect(page).toHaveURL(/\/tutorial$/);
+  });
+
   test('the Support page leaves without asking when the message is empty', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     // A message of only spaces has nothing to lose.

@@ -44,6 +44,7 @@ import Menu from './components/Menu';
 import RedirectToLogin from './components/RedirectToLogin';
 import RequireLogin from './components/RequireLogin';
 import { AppContextProvider } from './data/AppContextProvider';
+import { LeaveGuardProvider } from './data/LeaveGuardProvider';
 import { connect } from './data/connect';
 import { loadConfData } from './data/sessions/sessions.actions';
 import { setIsLoggedIn, setUsername, loadUserData } from './data/user/user.actions';
@@ -60,7 +61,9 @@ setupIonicReact();
 const App: React.FC = () => {
   return (
     <AppContextProvider>
-      <IonicAppConnected />
+      <LeaveGuardProvider>
+        <IonicAppConnected />
+      </LeaveGuardProvider>
     </AppContextProvider>
   );
 };
