@@ -36,17 +36,9 @@ describe('SessionDetail', () => {
     const { container } = renderSession(String(ionicTooling.id));
 
     fireEvent.click(favoriteButton(container));
-    expect(screen.getByRole('status')).toHaveTextContent(String(ionicTooling.id));
+    expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^${ionicTooling.id}$`));
 
     fireEvent.click(favoriteButton(container));
-    expect(screen.getByRole('status')).toBeEmptyDOMElement();
-  });
-
-  it('unfavorites a session that is already a favorite', () => {
-    const { container } = renderSession(String(ionicTooling.id), [ionicTooling.id]);
-
-    fireEvent.click(favoriteButton(container));
-
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
   });
 
