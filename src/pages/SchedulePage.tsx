@@ -82,7 +82,11 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ favoritesSchedule, schedule
               showCancelButton="always"
               placeholder="Search"
               onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
-              onIonCancel={() => setShowSearchbar(false)}
+              onIonCancel={() => {
+                // Cancelling hides the searchbar before it reports its cleared value, so clear the search here.
+                setShowSearchbar(false);
+                setSearchText('');
+              }}
             ></IonSearchbar>
           )}
 
