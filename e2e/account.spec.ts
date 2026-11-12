@@ -79,7 +79,7 @@ test.describe('Account', () => {
     { menu: 'Login', pageId: 'login-page', button: 'Login' },
     { menu: 'Signup', pageId: 'signup-page', button: 'Create' },
   ]) {
-    test(`${form.menu} shows the required messages when submitted empty`, async ({ page }) => {
+    test(`the ${form.menu} page shows the required messages when submitted empty`, async ({ page }) => {
       await navigateFromMenu(page, form.menu);
       const formPage = visiblePage(page, form.pageId);
       await expect(formPage.getByText('Username is required')).toBeHidden();
@@ -91,7 +91,7 @@ test.describe('Account', () => {
       await expect(page).toHaveURL(new RegExp(`/${form.menu.toLowerCase()}$`));
     });
 
-    test(`${form.menu} shows a required message when an empty field is left`, async ({ page }) => {
+    test(`the ${form.menu} page shows a required message when an empty field is left`, async ({ page }) => {
       await navigateFromMenu(page, form.menu);
       const formPage = visiblePage(page, form.pageId);
       const username = formPage.getByRole('textbox', { name: 'Username' });
@@ -173,7 +173,7 @@ test.describe('Account', () => {
     await expectLoggedOut(page);
   });
 
-  test('the account page redirects to login while logged out', async ({ page }) => {
+  test('the Account page redirects to login while logged out', async ({ page }) => {
     await page.goto('/account');
 
     await expect(page).toHaveURL(/\/login$/, { timeout: APP_LOAD_TIMEOUT });
