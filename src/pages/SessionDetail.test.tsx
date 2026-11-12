@@ -22,7 +22,7 @@ const renderSession = (id: string, favorites: number[] = []) =>
 
 // The favorite button's label says what pressing it does.
 const favoriteButton = (container: HTMLElement) =>
-  container.querySelector('ion-button[aria-label="Favorite"]') as HTMLElement;
+  container.querySelector('ion-button[aria-label="Add favorite"]') as HTMLElement;
 const removeFavoriteButton = (container: HTMLElement) =>
   container.querySelector('ion-button[aria-label="Remove favorite"]') as HTMLElement;
 
@@ -52,7 +52,7 @@ describe('SessionDetail', () => {
 
     expect(
       Array.from(container.querySelectorAll('ion-header ion-button'), (button) => button.getAttribute('aria-label')),
-    ).toEqual(['Favorite', 'Share']);
+    ).toEqual(['Add favorite', 'Share']);
   });
 
   it('shows a message for an unknown session', () => {
