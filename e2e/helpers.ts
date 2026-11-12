@@ -32,7 +32,7 @@ export const filterButton = (page: Page): Locator =>
 
 // The session detail's favorite button is labelled with what pressing it does.
 export const favoriteButton = (page: Page): Locator =>
-  visiblePage(page, 'session-detail-page').getByRole('button', { name: 'Favorite', exact: true });
+  visiblePage(page, 'session-detail-page').getByRole('button', { name: 'Add favorite', exact: true });
 export const removeFavoriteButton = (page: Page): Locator =>
   visiblePage(page, 'session-detail-page').getByRole('button', { name: 'Remove favorite', exact: true });
 

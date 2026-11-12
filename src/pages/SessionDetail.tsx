@@ -61,7 +61,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
             <IonBackButton defaultHref="/tabs/schedule"></IonBackButton>
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton aria-label={isFavorite ? 'Remove favorite' : 'Favorite'} onClick={() => toggleFavorite()}>
+            <IonButton aria-label={isFavorite ? 'Remove favorite' : 'Add favorite'} onClick={() => toggleFavorite()}>
               {isFavorite ? (
                 <IonIcon slot="icon-only" icon={star}></IonIcon>
               ) : (
