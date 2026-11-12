@@ -123,18 +123,16 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
         </IonList>
       </IonContent>
 
-      {ios && (
-        <IonFooter>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonButton onClick={handleDeselectAll}>Deselect All</IonButton>
-            </IonButtons>
-            <IonButtons slot="end">
-              <IonButton onClick={handleSelectAll}>Select All</IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonFooter>
-      )}
+      <IonFooter translucent={true}>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={handleDeselectAll}>Deselect All</IonButton>
+          </IonButtons>
+          <IonButtons slot="end">
+            <IonButton onClick={handleSelectAll}>Select All</IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonFooter>
     </>
   );
 };
