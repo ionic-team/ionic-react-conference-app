@@ -42,11 +42,11 @@ test.describe('Account', () => {
     await openSchedule(page);
   });
 
-  test('starts logged out', async ({ page }) => {
+  test('the menu starts logged out', async ({ page }) => {
     await expectLoggedOut(page);
   });
 
-  test('does not log in without a username and password', async ({ page }) => {
+  test('logging in requires a password', async ({ page }) => {
     await navigateFromMenu(page, 'Login');
     const login = visiblePage(page, 'login-page');
     await login.getByRole('textbox', { name: 'Username' }).fill('ionitron');
@@ -60,7 +60,7 @@ test.describe('Account', () => {
     { filled: 'Username', missing: 'Password' },
     { filled: 'Password', missing: 'Username' },
   ]) {
-    test(`does not sign up without a ${fields.missing.toLowerCase()}`, async ({ page }) => {
+    test(`signing up requires a ${fields.missing.toLowerCase()}`, async ({ page }) => {
       await navigateFromMenu(page, 'Signup');
       const signup = visiblePage(page, 'signup-page');
       await signup.getByRole('textbox', { name: fields.filled }).fill('newbie');
@@ -77,7 +77,7 @@ test.describe('Account', () => {
     await expectLoggedIn(page);
   });
 
-  test('the account page shows the username and can change it', async ({ page }) => {
+  test('the Account page shows the username and can change it', async ({ page }) => {
     await login(page, 'ionitron');
     await navigateFromMenu(page, 'Account');
 
@@ -99,7 +99,7 @@ test.describe('Account', () => {
     });
   });
 
-  test('cancelling the username change keeps the username', async ({ page }) => {
+  test('the Account page keeps the username when changing it is cancelled', async ({ page }) => {
     await login(page, 'ionitron');
     await navigateFromMenu(page, 'Account');
     const account = visiblePage(page, 'account-page');
@@ -136,14 +136,14 @@ test.describe('Account', () => {
     await expect(visiblePage(page, 'account-page').getByRole('heading', { name: 'newbie' })).toBeVisible();
   });
 
-  test('the login page links to signup', async ({ page }) => {
+  test('the Login page links to signup', async ({ page }) => {
     await navigateFromMenu(page, 'Login');
     await visiblePage(page, 'login-page').getByRole('button', { name: 'Signup' }).click();
 
     await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test('stays logged in after a reload', async ({ page }) => {
+  test('logging in survives a reload', async ({ page }) => {
     await login(page, 'ionitron');
 
     await page.reload();
