@@ -140,15 +140,20 @@ test.describe('Schedule', () => {
     await expect(sessionLink(page, 'Ionic Workshop')).toBeVisible();
   });
 
-  test('checking every track after Reset brings every session back', async ({ page }) => {
+  test('Deselect All hides every session and Select All brings them back', async ({ page }) => {
     await filterButton(page).click();
-    await filterModal(page).getByRole('button', { name: 'Reset' }).click();
+    await filterModal(page).getByRole('button', { name: 'Deselect All', exact: true }).click();
     await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(0);
+    await filterModal(page).getByRole('button', { name: 'Done' }).click();
+    await expect(filterModal(page)).toBeHidden();
 
-    // In md mode the filter only has Reset, so the tracks are checked again one at a time.
-    for (const checkbox of await filterModal(page).locator('ion-checkbox').all()) {
-      await checkbox.click();
-    }
+    await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
+    await expect(visibleSessions(page)).toHaveCount(0);
+
+    await filterButton(page).click();
+    await filterModal(page).getByRole('button', { name: 'Select All', exact: true }).click();
+    await expect(filterModal(page).getByRole('checkbox', { checked: false })).toHaveCount(0);
+    await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(10);
     await filterModal(page).getByRole('button', { name: 'Done' }).click();
     await expect(filterModal(page)).toBeHidden();
 
