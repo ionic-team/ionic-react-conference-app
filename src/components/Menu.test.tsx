@@ -1,5 +1,7 @@
+import { IonRouterContext, NavContext } from '@ionic/react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { useEffect } from 'react';
+import type { PropsWithChildren } from 'react';
+import { useContext, useEffect } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { ConfirmLeave } from '../data/LeaveGuardContext';
@@ -17,16 +19,35 @@ const AskBeforeLeaving = ({ confirm }: { confirm: ConfirmLeave }) => {
   return null;
 };
 
+// Records the navigations of the menu's links and of the router.
+const RecordNavigation = ({
+  navigate,
+  push,
+  children,
+}: PropsWithChildren<{ navigate: () => void; push: () => void }>) => {
+  const nav = useContext(NavContext);
+  const router = useContext(IonRouterContext);
+  return (
+    <NavContext.Provider value={{ ...nav, navigate }}>
+      <IonRouterContext.Provider value={{ ...router, push }}>{children}</IonRouterContext.Provider>
+    </NavContext.Provider>
+  );
+};
+
 const renderAskingMenu = (url: string) => {
   const confirm = vi.fn();
+  const navigate = vi.fn();
+  const push = vi.fn();
   renderWithState(
-    <LeaveGuardProvider>
-      <AskBeforeLeaving confirm={confirm} />
-      <Menu />
-    </LeaveGuardProvider>,
+    <RecordNavigation navigate={navigate} push={push}>
+      <LeaveGuardProvider>
+        <AskBeforeLeaving confirm={confirm} />
+        <Menu />
+      </LeaveGuardProvider>
+    </RecordNavigation>,
     { state: makeState(), url },
   );
-  return confirm;
+  return { confirm, navigate, push };
 };
 
 describe('Menu', () => {
@@ -73,17 +94,24 @@ describe('Menu', () => {
   });
 
   it('asks the page that is showing before opening another page', async () => {
-    const confirm = renderAskingMenu('/support');
+    const { confirm, navigate, push } = renderAskingMenu('/support');
 
     fireEvent.click(await screen.findByText('Schedule'));
     expect(confirm).toHaveBeenCalledOnce();
 
     fireEvent.click(screen.getByText('Show Tutorial'));
     expect(confirm).toHaveBeenCalledTimes(2);
+
+    // Nothing opens until the page agrees to be left.
+    expect(navigate).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+
+    confirm.mock.calls[0][0]();
+    expect(push).toHaveBeenCalledWith('/tabs/schedule', 'none');
   });
 
   it('does not ask when opening the page that is showing', async () => {
-    const confirm = renderAskingMenu('/support');
+    const { confirm } = renderAskingMenu('/support');
 
     fireEvent.click(await screen.findByText('Support'));
 
