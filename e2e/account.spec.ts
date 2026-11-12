@@ -173,6 +173,14 @@ test.describe('Account', () => {
     await expectLoggedOut(page);
   });
 
+  test('the account page redirects to login while logged out', async ({ page }) => {
+    await page.goto('/account');
+
+    await expect(page).toHaveURL(/\/login$/, { timeout: APP_LOAD_TIMEOUT });
+    await expect(visiblePage(page, 'login-page').getByRole('textbox', { name: 'Username' })).toBeVisible();
+    await expect(page.locator('#account-page')).toHaveCount(0);
+  });
+
   test('signing up logs the user in', async ({ page }) => {
     await navigateFromMenu(page, 'Signup');
     await submitCredentials(page, 'signup-page', 'Create', 'newbie');
