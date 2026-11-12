@@ -156,7 +156,7 @@ describe('getSpeaker', () => {
 });
 
 describe('getSpeakerSessions', () => {
-  it("maps each speaker's name to the sessions they speak at", () => {
+  it('maps each speaker name to the sessions they speak at', () => {
     expect(getSpeakerSessions(makeState())).toEqual({
       [rachel.name]: [ionicTooling, reactSession],
       [ted.name]: [gettingStarted, reactSession],
