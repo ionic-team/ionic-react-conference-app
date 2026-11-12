@@ -37,7 +37,7 @@ describe('SessionList', () => {
 
     fireEvent.click(favoriteOption(container, 'Ionic Tooling'));
 
-    expect(screen.getByRole('status')).toHaveTextContent(String(ionicTooling.id));
+    expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^${ionicTooling.id}$`));
   });
 
   it('does not favorite a session twice when it is already a favorite', () => {
@@ -46,6 +46,6 @@ describe('SessionList', () => {
     // This asks whether to remove the favorite instead, and leaves the favorites alone until it is answered.
     fireEvent.click(favoriteOption(container, 'Ionic Tooling'));
 
-    expect(screen.getByRole('status')).toHaveTextContent(`${ionicTooling.id},${breakfast.id}`);
+    expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^${ionicTooling.id},${breakfast.id}$`));
   });
 });
