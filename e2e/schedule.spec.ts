@@ -146,13 +146,20 @@ test.describe('Schedule', () => {
     await expect(sessionLink(page, 'Ionic Workshop')).toBeVisible();
   });
 
+  test('the filter toolbar buttons keep their casing', async ({ page }) => {
+    await filterButton(page).click();
+
+    // Not Android's uppercase.
+    for (const name of ['Deselect All', 'Select All']) {
+      await expect(filterModal(page).getByRole('button', { name, exact: true })).toHaveCSS(
+        'text-transform',
+        'capitalize',
+      );
+    }
+  });
+
   test('Deselect All hides every session and Select All brings them back', async ({ page }) => {
     await filterButton(page).click();
-    // The filter's toolbar buttons keep their own casing, not Android's uppercase
-    await expect(filterModal(page).getByRole('button', { name: 'Deselect All' })).toHaveCSS(
-      'text-transform',
-      'capitalize',
-    );
     await filterModal(page).getByRole('button', { name: 'Deselect All', exact: true }).click();
     await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(0);
     await filterModal(page).getByRole('button', { name: 'Done' }).click();
