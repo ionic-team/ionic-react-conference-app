@@ -34,7 +34,7 @@ test.describe('Speakers', () => {
     await expect(detail).toContainText('Burt is a Bear.');
   });
 
-  test("opens a speaker's session from the speaker list", async ({ page }) => {
+  test('opens a session from its speaker card', async ({ page }) => {
     await speakerCard(page, 'Burt Bear').getByRole('link', { name: 'The Ionic Package' }).click();
 
     await expect(page).toHaveURL(/\/tabs\/speakers\/sessions\/15$/);
