@@ -43,6 +43,12 @@ test.describe('Schedule', () => {
     );
   });
 
+  test('the icon-only buttons have accessible names', async ({ page }) => {
+    await expect(searchButton(page)).toBeVisible();
+    await expect(filterButton(page)).toBeVisible();
+    await expect(schedule(page).getByRole('button', { name: 'Share', exact: true })).toBeVisible();
+  });
+
   test('search filters the sessions by name and clearing it restores them', async ({ page }) => {
     await searchButton(page).click();
     const searchbox = schedule(page).getByRole('searchbox');
