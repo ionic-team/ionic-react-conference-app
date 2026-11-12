@@ -36,12 +36,21 @@ export const favoriteButton = (page: Page): Locator =>
   visiblePage(page, 'session-detail-page').locator('ion-buttons[slot="end"] ion-button').first();
 
 export const openMenu = async (page: Page): Promise<Locator> => {
-  // Wait for any page transition to finish so only the current page's menu button is showing.
-  const menuButton = page.getByRole('button', { name: 'menu', exact: true }).filter({ visible: true });
-  await expect(menuButton).toHaveCount(1);
-  await menuButton.click();
   const menu = page.getByRole('navigation', { name: 'menu' });
-  await expect(menu).toBeVisible();
+  // Let the menu finish closing if a menu item was just tapped.
+  await expect(menu).toBeHidden();
+  // Right after a navigation the outgoing page's menu button can still be visible and then
+  // disappear mid-click, so retry until the menu is open. Every menu button opens the same menu.
+  await expect(async () => {
+    if (!(await menu.isVisible())) {
+      await page
+        .getByRole('button', { name: 'menu', exact: true })
+        .filter({ visible: true })
+        .first()
+        .click({ timeout: 1000 });
+    }
+    await expect(menu).toBeVisible({ timeout: 1000 });
+  }).toPass();
   return menu;
 };
 
