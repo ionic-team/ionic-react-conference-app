@@ -84,6 +84,20 @@ test.describe('Session detail', () => {
     await expect(detail(page).getByRole('button', { name: 'Share', exact: true })).toBeVisible();
   });
 
+  test('the Share button opens the share options for the session', async ({ page }) => {
+    await sessionLink(page, 'Ionic Tooling').click();
+
+    await detail(page).getByRole('button', { name: 'Share', exact: true }).click();
+
+    const sheet = page.getByRole('dialog', { name: 'Share Ionic Tooling' });
+    await expect(sheet).toBeVisible();
+    await expect(sheet.getByRole('button')).toHaveText(['Copy Link', 'Share via ...', 'Cancel']);
+
+    await sheet.getByRole('button', { name: 'Cancel' }).click();
+
+    await expect(sheet).toBeHidden();
+  });
+
   test('unfavoriting from the detail page removes the session from Favorites', async ({ page }) => {
     await toggleFavoriteFromDetail(page, 'Ionic Tooling', favoriteButton);
     await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
