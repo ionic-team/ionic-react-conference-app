@@ -46,4 +46,15 @@ test.describe('Speakers', () => {
     await backButton(page, 'session-detail-page').click();
     await expect(page).toHaveURL(/\/tabs\/speakers$/);
   });
+
+  test('the back button on the speaker detail returns to the speaker list', async ({ page }) => {
+    await speakerCard(page, 'Burt Bear').getByRole('link', { name: 'About Burt Bear' }).click();
+    await expect(page).toHaveURL(/\/tabs\/speakers\/1$/);
+
+    await backButton(page, 'speaker-detail').click();
+
+    await expect(page).toHaveURL(/\/tabs\/speakers$/);
+    await expect(visiblePage(page, 'speaker-detail')).toHaveCount(0);
+    await expect(speakerList(page).locator('ion-card')).toHaveCount(13);
+  });
 });

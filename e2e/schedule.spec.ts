@@ -127,4 +127,27 @@ test.describe('Schedule', () => {
     await expect(visibleSessions(page)).toHaveCount(1);
     await expect(sessionLink(page, 'Ionic Workshop')).toBeVisible();
   });
+
+  test('search and the track filter combine', async ({ page }) => {
+    // The filter button is hidden while searching, so filter first.
+    await filterButton(page).click();
+    await filterModal(page).getByRole('button', { name: 'Reset' }).click();
+    await trackCheckbox(page, 'React').click();
+    await filterModal(page).getByRole('button', { name: 'Done' }).click();
+    await expect(filterModal(page)).toBeHidden();
+    await expect(visibleSessions(page)).toHaveCount(2);
+
+    await searchButton(page).click();
+    await schedule(page).getByRole('searchbox').fill('ionic');
+
+    // Only the session that matches both the search and the track is left.
+    await expect(visibleSessions(page)).toHaveCount(1);
+    await expect(sessionLink(page, 'Building with React and Ionic')).toBeVisible();
+
+    await schedule(page).getByRole('button', { name: 'reset', exact: true }).click();
+
+    // Clearing the search keeps the track filter.
+    await expect(visibleSessions(page)).toHaveCount(2);
+    await expect(sessionLink(page, "What's New in React")).toBeVisible();
+  });
 });

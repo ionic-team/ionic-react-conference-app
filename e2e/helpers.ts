@@ -87,6 +87,11 @@ export const submitCredentials = async (
   await expect(page).toHaveURL(/\/tabs\/schedule$/);
 };
 
+export const login = async (page: Page, username: string): Promise<void> => {
+  await navigateFromMenu(page, 'Login');
+  await submitCredentials(page, 'login-page', 'Login', username);
+};
+
 function escapeRegExp(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
