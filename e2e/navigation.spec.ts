@@ -93,18 +93,28 @@ test.describe('Navigation', () => {
     await expect(page.getByText('Support message is required')).toBeHidden();
   });
 
-  test('the support page shows the confirmation even while the notice is still open', async ({ page }) => {
+  test('the Support page shows the confirmation even while the notice is still open', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     const support = visiblePage(page, 'support-page');
     const notice = page.getByText('This does not actually send a support request.');
-    await expect(notice).toBeVisible();
+    // The role the notice closes with, which is "timeout" when its own timer closes it.
+    const noticeDismissRole = page.evaluate(
+      () =>
+        new Promise<unknown>((resolve) => {
+          const onDismiss = (ev: Event) => resolve((ev as CustomEvent).detail.role);
+          document.addEventListener('ionToastDidDismiss', onDismiss, { once: true });
+        }),
+    );
 
     await support.getByRole('textbox', { name: 'Enter your support message below' }).fill('The app is great!');
+    await expect(notice).toBeVisible();
     await support.getByRole('button', { name: 'Submit' }).click();
 
     await expect(page.getByText('Your support request has been sent.')).toBeVisible();
-    // Shorter than the notice's own 3s timer, so this fails if submitting stops dismissing it.
-    await expect(notice).toBeHidden({ timeout: 1000 });
+    // Submitting closed the notice, so the confirmation is the only toast.
+    expect(await noticeDismissRole).not.toBe('timeout');
+    await expect(page.locator('ion-toast')).toHaveCount(1);
+    await expect(notice).toBeHidden();
   });
 
   test('the Support page does not send an empty message', async ({ page }) => {
@@ -123,7 +133,7 @@ test.describe('Navigation', () => {
     await expect(support.getByText('Support message is required')).toBeHidden();
   });
 
-  test('the support message shows its required message when left empty', async ({ page }) => {
+  test('the Support page shows the required message when the message is left empty', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     const support = visiblePage(page, 'support-page');
     const message = support.getByRole('textbox', { name: 'Enter your support message below' });
@@ -134,7 +144,7 @@ test.describe('Navigation', () => {
     await expect(support.getByText('Support message is required')).toBeVisible();
   });
 
-  test('the support page asks before leaving with an unsent message', async ({ page }) => {
+  test('the Support page asks before leaving with an unsent message', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     const support = visiblePage(page, 'support-page');
     const message = support.getByRole('textbox', { name: 'Enter your support message below' });
@@ -163,7 +173,7 @@ test.describe('Navigation', () => {
     await expect(alert).toHaveCount(0);
   });
 
-  test('the support page asks before showing the tutorial with an unsent message', async ({ page }) => {
+  test('the Support page asks before showing the tutorial with an unsent message', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     await visiblePage(page, 'support-page')
       .getByRole('textbox', { name: 'Enter your support message below' })
@@ -197,9 +207,17 @@ test.describe('Navigation', () => {
     for (const name of ['Instagram', 'Twitter', 'Facebook']) {
       await expect(schedule.getByRole('button', { name, exact: true })).toBeVisible();
     }
+    // The loading indicator only shows briefly, so read its message when it opens.
+    const loadingMessage = page.evaluate(
+      () =>
+        new Promise<unknown>((resolve) => {
+          const onPresent = (ev: Event) => resolve((ev.target as { message?: unknown }).message);
+          document.addEventListener('ionLoadingDidPresent', onPresent, { once: true });
+        }),
+    );
     await schedule.getByRole('button', { name: 'Vimeo', exact: true }).click();
 
-    await expect(page.getByText('Posting to Vimeo')).toBeVisible();
+    expect(await loadingMessage).toBe('Posting to Vimeo');
   });
 
   test('the About page opens its options from the More options button', async ({ page }) => {
