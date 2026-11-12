@@ -77,12 +77,12 @@ test.describe('Navigation', () => {
     await expect(map.locator('.leaflet-marker-icon')).toHaveCount(4);
   });
 
-  test('the support page sends a message and clears the form', async ({ page }) => {
+  test('the Support page sends a message and clears the form', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     const support = visiblePage(page, 'support-page');
     const notice = page.getByText('This does not actually send a support request.');
     await expect(notice).toBeVisible();
-    // The page can only show one toast at a time and skips the confirmation while the notice is open (see the report).
+    // The page can only show one toast at a time and skips the confirmation while the notice is open.
     await expect(notice).toBeHidden({ timeout: 10_000 });
 
     const message = support.getByRole('textbox', { name: 'Enter your support message below' });
@@ -94,15 +94,34 @@ test.describe('Navigation', () => {
     await expect(page.getByText('Support message is required')).toBeHidden();
   });
 
-  test('the support page does not send an empty message', async ({ page }) => {
+  test('the Support page does not send an empty message', async ({ page }) => {
     await navigateFromMenu(page, 'Support');
     const support = visiblePage(page, 'support-page');
+    // Wait for the notice to close, since no other toast can show while it is open.
+    const notice = page.getByText('This does not actually send a support request.');
+    await expect(notice).toBeVisible();
+    await expect(notice).toBeHidden({ timeout: 10_000 });
 
     await support.getByRole('button', { name: 'Submit' }).click();
 
-    // The "Support message is required" error text isn't shown (see the report), so check nothing was sent.
+    // The "Support message is required" error text isn't shown, so check nothing was sent.
     await expect(support.getByRole('textbox', { name: 'Enter your support message below' })).toBeVisible();
-    await expect(page.getByText('Your support request has been sent.')).toHaveCount(0);
+    // The confirmation would show right away, so it not showing within a second means nothing was sent.
+    await expect(page.getByText('Your support request has been sent.').waitFor({ timeout: 1000 })).rejects.toThrow();
+  });
+
+  test('the Support page leaves without asking when the message is empty', async ({ page }) => {
+    await navigateFromMenu(page, 'Support');
+    // A message of only spaces has nothing to lose.
+    await visiblePage(page, 'support-page')
+      .getByRole('textbox', { name: 'Enter your support message below' })
+      .fill('   ');
+
+    await navigateFromMenu(page, 'Schedule');
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(visibleTitle(page)).toHaveText('Schedule');
+    await expect(page.getByRole('alertdialog')).toHaveCount(0);
   });
 
   test('the dark mode toggle switches the dark palette', async ({ page }) => {
