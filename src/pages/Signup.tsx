@@ -69,7 +69,7 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
               className={validationClasses(!!signup.username, submitted || touched.username)}
               errorText="Username is required"
               onIonBlur={() => setTouched((current) => ({ ...current, username: true }))}
-              onIonInput={(e) => setSignup({ ...signup, username: e.detail.value! })}
+              onIonInput={(e) => setSignup((current) => ({ ...current, username: e.detail.value! }))}
               required
             />
 
@@ -83,7 +83,7 @@ const Signup: React.FC<SignupProps> = ({ setIsLoggedIn, setUsername: setUsername
               className={validationClasses(!!signup.password, submitted || touched.password)}
               errorText="Password is required"
               onIonBlur={() => setTouched((current) => ({ ...current, password: true }))}
-              onIonInput={(e) => setSignup({ ...signup, password: e.detail.value! })}
+              onIonInput={(e) => setSignup((current) => ({ ...current, password: e.detail.value! }))}
               required
             />
 
