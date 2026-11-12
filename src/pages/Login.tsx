@@ -75,7 +75,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
               className={validationClasses(!!login.username, submitted || touched.username)}
               errorText="Username is required"
               onIonBlur={() => setTouched((current) => ({ ...current, username: true }))}
-              onIonInput={(e) => setLogin({ ...login, username: e.detail.value! })}
+              onIonInput={(e) => setLogin((current) => ({ ...current, username: e.detail.value! }))}
               required
             />
 
@@ -89,7 +89,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
               className={validationClasses(!!login.password, submitted || touched.password)}
               errorText="Password is required"
               onIonBlur={() => setTouched((current) => ({ ...current, password: true }))}
-              onIonInput={(e) => setLogin({ ...login, password: e.detail.value! })}
+              onIonInput={(e) => setLogin((current) => ({ ...current, password: e.detail.value! }))}
               required
             />
 
