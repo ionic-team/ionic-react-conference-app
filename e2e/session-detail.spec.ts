@@ -19,6 +19,8 @@ const toggleFavoriteFromDetail = async (page: Page, name: string) => {
 const swipeOpen = async (page: Page, name: string) => {
   const item = sessionLink(page, name);
   await expect(item).toBeVisible();
+  // Wait for an item that was just closed to finish closing, or the swipe is lost.
+  await expect(schedule(page).locator('ion-item-sliding.item-sliding-active-slide')).toHaveCount(0);
   const box = (await item.boundingBox())!;
   const y = box.y + box.height / 2;
   await page.mouse.move(box.x + box.width - 20, y);
@@ -42,7 +44,7 @@ test.describe('Session detail', () => {
 
     await expect(page).toHaveURL(/\/tabs\/schedule\/3$/);
     await expect(detail(page).getByRole('heading', { level: 1 })).toHaveText('Ionic Tooling');
-    await expect(detail(page)).toContainText('Tooling');
+    await expect(detail(page).locator('.session-track-tooling')).toHaveText('Tooling');
     await expect(detail(page)).toContainText('9:45 am – 10:00 am');
     await expect(detail(page)).toContainText('Executive Ballroom');
     await expect(detail(page)).toContainText('we created Ionic');
@@ -52,7 +54,7 @@ test.describe('Session detail', () => {
     await page.goto('/tabs/schedule/7');
 
     await expect(detail(page).getByRole('heading', { level: 1 })).toHaveText('The Evolution of Ionicons');
-    await expect(detail(page)).toContainText('Design');
+    await expect(detail(page).locator('.session-track-design')).toHaveText('Design');
     await expect(detail(page)).toContainText('10:15 am – 10:30 am');
     await expect(detail(page)).toContainText('Hall 2');
 
@@ -60,12 +62,6 @@ test.describe('Session detail', () => {
     await backButton(page, 'session-detail-page').click();
 
     await expect(page).toHaveURL(/\/tabs\/schedule$/);
-    await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
-  });
-
-  test('favoriting from the detail page adds the session to Favorites', async ({ page }) => {
-    await toggleFavoriteFromDetail(page, 'Ionic Tooling');
-
     await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
   });
 
@@ -124,6 +120,37 @@ test.describe('Session detail', () => {
     await alert.getByRole('button', { name: 'Remove' }).click();
 
     await expect(sessionLink(page, 'Ionic Tooling')).toBeHidden();
+    await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
+  });
+
+  test('favoriting a session that is already a favorite asks to remove it, and Cancel keeps it', async ({ page }) => {
+    await swipeOpen(page, 'Ionic Tooling');
+    await itemOption(page, 'Favorite').click();
+    await expect(page.getByText('Ionic Tooling was successfully added as a favorite.')).toBeVisible();
+
+    await swipeOpen(page, 'Ionic Tooling');
+    await itemOption(page, 'Favorite').click();
+    const alert = page.getByRole('alertdialog', { name: 'Favorite already added' });
+    await alert.getByRole('button', { name: 'Cancel' }).click();
+    await expect(alert).toBeHidden();
+
+    await showSegment(page, 'Favorites');
+    await expect(visibleSessions(page)).toHaveCount(1);
+    await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
+  });
+
+  test('Remove in the already-a-favorite prompt unfavorites the session', async ({ page }) => {
+    await swipeOpen(page, 'Ionic Tooling');
+    await itemOption(page, 'Favorite').click();
+
+    await swipeOpen(page, 'Ionic Tooling');
+    await itemOption(page, 'Favorite').click();
+    await page
+      .getByRole('alertdialog', { name: 'Favorite already added' })
+      .getByRole('button', { name: 'Remove' })
+      .click();
+
+    await showSegment(page, 'Favorites');
     await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
   });
 });
