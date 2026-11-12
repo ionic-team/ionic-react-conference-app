@@ -26,6 +26,7 @@ import {
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { useLeaveGuard } from '../data/LeaveGuardContext';
 import { connect } from '../data/connect';
 import { setDarkMode } from '../data/user/user.actions';
 
@@ -71,6 +72,7 @@ interface MenuProps extends StateProps, DispatchProps {}
 const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, menuEnabled }) => {
   const location = useLocation();
   const router = useIonRouter();
+  const { requestLeave } = useLeaveGuard();
 
   function renderlistItems(list: Pages[]) {
     return list
@@ -81,6 +83,13 @@ const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, men
             detail={false}
             routerLink={p.path}
             routerDirection="none"
+            onClick={(e) => {
+              // Let the page that is showing ask before it is left, unless this item opens that same page.
+              if (location.pathname !== p.path) {
+                e.preventDefault();
+                requestLeave(() => router.push(p.path, 'none'));
+              }
+            }}
             className={location.pathname.startsWith(p.path) ? 'selected' : undefined}
           >
             <IonIcon slot="start" icon={p.icon} />
@@ -113,7 +122,7 @@ const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, men
             button
             detail={false}
             onClick={() => {
-              router.push('/tutorial');
+              requestLeave(() => router.push('/tutorial'));
             }}
           >
             <IonIcon slot="start" icon={hammer} />
