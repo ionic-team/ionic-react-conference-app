@@ -3,7 +3,24 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { LeaveGuard } from './LeaveGuardContext';
 import { useLeaveGuard } from './LeaveGuardContext';
-import { LeaveGuardProvider } from './LeaveGuardProvider';
+import { LEAVE_GUARD_BACK_BUTTON_PRIORITY, LeaveGuardProvider } from './LeaveGuardProvider';
+
+// Fires Ionic's hardware back button event and runs the handler the provider registers for it.
+const pressHardwareBack = (): { priority: number; processNextHandler: () => void } => {
+  const processNextHandler = vi.fn();
+  let priority = -1;
+  document.dispatchEvent(
+    new CustomEvent('ionBackButton', {
+      detail: {
+        register: (p: number, handler: (next: () => void) => void) => {
+          priority = p;
+          handler(processNextHandler);
+        },
+      },
+    }),
+  );
+  return { priority, processNextHandler };
+};
 
 const renderGuard = (): LeaveGuard => {
   let guard: LeaveGuard | undefined;
@@ -66,5 +83,25 @@ describe('LeaveGuardProvider', () => {
 
     expect(later).toHaveBeenCalledOnce();
     expect(earlier).not.toHaveBeenCalled();
+  });
+
+  it('lets the hardware back button go back when no page asks first', () => {
+    renderGuard();
+
+    const { priority, processNextHandler } = pressHardwareBack();
+
+    expect(priority).toBe(LEAVE_GUARD_BACK_BUTTON_PRIORITY);
+    expect(processNextHandler).toHaveBeenCalledOnce();
+  });
+
+  it('asks the registered confirmation before the hardware back button goes back', () => {
+    const guard = renderGuard();
+    const confirm = vi.fn();
+    guard.registerConfirmLeave(confirm);
+
+    const { processNextHandler } = pressHardwareBack();
+
+    expect(confirm).toHaveBeenCalledWith(processNextHandler);
+    expect(processNextHandler).not.toHaveBeenCalled();
   });
 });
