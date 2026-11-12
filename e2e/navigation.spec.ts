@@ -103,7 +103,8 @@ test.describe('Navigation', () => {
     await support.getByRole('button', { name: 'Submit' }).click();
 
     await expect(page.getByText('Your support request has been sent.')).toBeVisible();
-    await expect(notice).toBeHidden();
+    // Shorter than the notice's own 3s timer, so this fails if submitting stops dismissing it.
+    await expect(notice).toBeHidden({ timeout: 1000 });
   });
 
   test('the Support page does not send an empty message', async ({ page }) => {
