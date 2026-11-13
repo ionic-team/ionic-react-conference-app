@@ -1,4 +1,5 @@
 import {
+  IonActionSheet,
   IonHeader,
   IonToolbar,
   IonContent,
@@ -13,7 +14,7 @@ import {
   IonLabel,
 } from '@ionic/react';
 import { starOutline, star, share, cloudDownload } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { connect } from '../data/connect';
@@ -39,6 +40,8 @@ interface DispatchProps {
 type SessionDetailProps = OwnProps & StateProps & DispatchProps;
 
 const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, removeFavorite, favoriteSessions }) => {
+  const [showShare, setShowShare] = useState(false);
+
   if (!session) {
     return <div>Session not found</div>;
   }
@@ -48,7 +51,6 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
   const toggleFavorite = () => {
     isFavorite ? removeFavorite(session.id) : addFavorite(session.id);
   };
-  const shareSession = () => {};
   const sessionClick = (text: string) => {
     console.log(`Clicked ${text}`);
   };
@@ -61,14 +63,14 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
             <IonBackButton defaultHref="/tabs/schedule"></IonBackButton>
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton onClick={() => toggleFavorite()}>
+            <IonButton aria-label={isFavorite ? 'Remove favorite' : 'Add favorite'} onClick={() => toggleFavorite()}>
               {isFavorite ? (
                 <IonIcon slot="icon-only" icon={star}></IonIcon>
               ) : (
                 <IonIcon slot="icon-only" icon={starOutline}></IonIcon>
               )}
             </IonButton>
-            <IonButton onClick={() => shareSession}>
+            <IonButton aria-label="Share" onClick={() => setShowShare(true)}>
               <IonIcon slot="icon-only" icon={share}></IonIcon>
             </IonButton>
           </IonButtons>
@@ -108,6 +110,32 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
           </IonItem>
         </IonList>
       </IonContent>
+      <IonActionSheet
+        isOpen={showShare}
+        header={`Share ${session.name}`}
+        onDidDismiss={() => setShowShare(false)}
+        buttons={[
+          {
+            text: 'Copy Link',
+            handler: () => {
+              console.log('Copy Link clicked');
+            },
+          },
+          {
+            text: 'Share via ...',
+            handler: () => {
+              console.log('Share via clicked');
+            },
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            },
+          },
+        ]}
+      />
     </IonPage>
   );
 };

@@ -34,6 +34,14 @@ describe('sessions reducer', () => {
     expect(state.data.favorites).toEqual([2]);
   });
 
+  it('does not add a favorite twice', () => {
+    const state = makeState({ data: { favorites: [4] } });
+    const next = reducers(state, addFavorite(4));
+
+    expect(next.data.favorites).toEqual([4]);
+    expect(next.data).toBe(state.data);
+  });
+
   it('removes every copy of a favorite', () => {
     const state = reducers(makeState({ data: { favorites: [2, 3, 2] } }), removeFavorite(2));
 

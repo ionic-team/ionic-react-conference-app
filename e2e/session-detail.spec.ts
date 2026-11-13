@@ -1,16 +1,24 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 
-import { backButton, favoriteButton, openSchedule, showSegment, sessionLink, visiblePage } from './helpers';
+import {
+  backButton,
+  favoriteButton,
+  openSchedule,
+  removeFavoriteButton,
+  showSegment,
+  sessionLink,
+  visiblePage,
+} from './helpers';
 
 const detail = (page: Page) => visiblePage(page, 'session-detail-page');
 const schedule = (page: Page) => visiblePage(page, 'schedule-page');
 
-const toggleFavoriteFromDetail = async (page: Page, name: string) => {
+const toggleFavoriteFromDetail = async (page: Page, name: string, button: typeof favoriteButton) => {
   await showSegment(page, 'All');
   await sessionLink(page, name).click();
   await expect(detail(page).getByRole('heading', { level: 1 })).toHaveText(name);
-  await favoriteButton(page).click();
+  await button(page).click();
   await backButton(page, 'session-detail-page').click();
   await showSegment(page, 'Favorites');
 };
@@ -65,21 +73,46 @@ test.describe('Session detail', () => {
     await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
   });
 
+  test('the favorite button label says whether it adds or removes the favorite', async ({ page }) => {
+    await sessionLink(page, 'Ionic Tooling').click();
+    await expect(removeFavoriteButton(page)).toHaveCount(0);
+
+    await favoriteButton(page).click();
+
+    await expect(removeFavoriteButton(page)).toBeVisible();
+    await expect(favoriteButton(page)).toHaveCount(0);
+    await expect(detail(page).getByRole('button', { name: 'Share', exact: true })).toBeVisible();
+  });
+
+  test('the Share button opens the share options for the session', async ({ page }) => {
+    await sessionLink(page, 'Ionic Tooling').click();
+
+    await detail(page).getByRole('button', { name: 'Share', exact: true }).click();
+
+    const sheet = page.getByRole('dialog', { name: 'Share Ionic Tooling' });
+    await expect(sheet).toBeVisible();
+    await expect(sheet.getByRole('button')).toHaveText(['Copy Link', 'Share via ...', 'Cancel']);
+
+    await sheet.getByRole('button', { name: 'Cancel' }).click();
+
+    await expect(sheet).toBeHidden();
+  });
+
   test('unfavoriting from the detail page removes the session from Favorites', async ({ page }) => {
-    await toggleFavoriteFromDetail(page, 'Ionic Tooling');
+    await toggleFavoriteFromDetail(page, 'Ionic Tooling', favoriteButton);
     await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
 
-    await toggleFavoriteFromDetail(page, 'Ionic Tooling');
+    await toggleFavoriteFromDetail(page, 'Ionic Tooling', removeFavoriteButton);
 
     await expect(sessionLink(page, 'Ionic Tooling')).toBeHidden();
     await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
   });
 
   test('unfavoriting a session opened from Favorites removes it from the list', async ({ page }) => {
-    await toggleFavoriteFromDetail(page, 'Ionic Tooling');
+    await toggleFavoriteFromDetail(page, 'Ionic Tooling', favoriteButton);
 
     await sessionLink(page, 'Ionic Tooling').click();
-    await favoriteButton(page).click();
+    await removeFavoriteButton(page).click();
     await backButton(page, 'session-detail-page').click();
 
     await expect(schedule(page).getByRole('tab', { name: 'Favorites' })).toHaveAttribute('aria-selected', 'true');

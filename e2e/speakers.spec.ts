@@ -32,6 +32,8 @@ test.describe('Speakers', () => {
     const detail = visiblePage(page, 'speaker-detail');
     await expect(detail.getByRole('heading', { name: 'Burt Bear' })).toBeVisible();
     await expect(detail).toContainText('Burt is a Bear.');
+    await expect(detail.getByRole('button', { name: 'Contact', exact: true })).toBeVisible();
+    await expect(detail.getByRole('button', { name: 'Share', exact: true })).toBeVisible();
   });
 
   test('opens a session from its speaker card', async ({ page }) => {

@@ -18,45 +18,24 @@ const getSearchText = (state: AppState) => state.data.searchText;
 export const getFilteredSchedule = createSelector(getSchedule, getFilteredTracks, (schedule, filteredTracks) => {
   const groups: ScheduleGroup[] = [];
 
-  // Helper function to convert 12-hour time to 24-hour time for proper sorting
-  const convertTo24Hour = (timeStr: string) => {
+  // Converts a 12-hour time such as "9:05 am" to minutes since midnight, for sorting by time.
+  const toMinutes = (timeStr: string) => {
     const [time, period] = timeStr.toLowerCase().split(' ');
-    const [parsedHours, minutes] = time.split(':').map(Number);
-    let hours = parsedHours;
-
-    if (period === 'pm' && hours !== 12) {
-      hours += 12;
-    } else if (period === 'am' && hours === 12) {
-      hours = 0;
-    }
-
-    return `${hours.toString().padStart(2, '0')}:${minutes || '00'}`;
+    const [hours, minutes = 0] = time.split(':').map(Number);
+    const hours24 = (hours % 12) + (period === 'pm' ? 12 : 0);
+    return hours24 * 60 + minutes;
   };
 
   // Sort the groups by time
-  const sortedGroups = [...schedule.groups].sort((a, b) => {
-    const timeA = convertTo24Hour(a.time);
-    const timeB = convertTo24Hour(b.time);
-    return timeA.localeCompare(timeB);
-  });
+  const sortedGroups = [...schedule.groups].sort((a, b) => toMinutes(a.time) - toMinutes(b.time));
 
   sortedGroups.forEach((group: ScheduleGroup) => {
-    const sessions: Session[] = [];
-    group.sessions.forEach((session) => {
-      session.tracks.forEach((track) => {
-        if (filteredTracks.indexOf(track) > -1) {
-          sessions.push(session);
-        }
-      });
-    });
+    // A session is listed once, even when more than one of its tracks is selected.
+    const sessions = group.sessions.filter((session) => session.tracks.some((track) => filteredTracks.includes(track)));
 
     if (sessions.length) {
       // Sort sessions within each group by start time
-      const sortedSessions = sessions.sort((a, b) => {
-        const timeA = convertTo24Hour(a.timeStart);
-        const timeB = convertTo24Hour(b.timeStart);
-        return timeA.localeCompare(timeB);
-      });
+      const sortedSessions = sessions.sort((a, b) => toMinutes(a.timeStart) - toMinutes(b.timeStart));
 
       const groupToAdd: ScheduleGroup = {
         time: group.time,

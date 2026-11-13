@@ -1,10 +1,54 @@
+import { IonRouterContext, NavContext } from '@ionic/react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import type { PropsWithChildren } from 'react';
+import { useContext, useEffect } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 
+import type { ConfirmLeave } from '../data/LeaveGuardContext';
+import { useLeaveGuard } from '../data/LeaveGuardContext';
+import { LeaveGuardProvider } from '../data/LeaveGuardProvider';
 import { makeState } from '../testing/fixtures';
 import { renderWithState } from '../testing/render';
 
 import Menu from './Menu';
+
+// Stands in for a page that asks before it is left.
+const AskBeforeLeaving = ({ confirm }: { confirm: ConfirmLeave }) => {
+  const { registerConfirmLeave } = useLeaveGuard();
+  useEffect(() => registerConfirmLeave(confirm), [confirm, registerConfirmLeave]);
+  return null;
+};
+
+// Records the navigations of the menu's links and of the router.
+const RecordNavigation = ({
+  navigate,
+  push,
+  children,
+}: PropsWithChildren<{ navigate: () => void; push: () => void }>) => {
+  const nav = useContext(NavContext);
+  const router = useContext(IonRouterContext);
+  return (
+    <NavContext.Provider value={{ ...nav, navigate }}>
+      <IonRouterContext.Provider value={{ ...router, push }}>{children}</IonRouterContext.Provider>
+    </NavContext.Provider>
+  );
+};
+
+const renderAskingMenu = (url: string) => {
+  const confirm = vi.fn();
+  const navigate = vi.fn();
+  const push = vi.fn();
+  renderWithState(
+    <RecordNavigation navigate={navigate} push={push}>
+      <LeaveGuardProvider>
+        <AskBeforeLeaving confirm={confirm} />
+        <Menu />
+      </LeaveGuardProvider>
+    </RecordNavigation>,
+    { state: makeState(), url },
+  );
+  return { confirm, navigate, push };
+};
 
 describe('Menu', () => {
   it('links to the conference pages', async () => {
@@ -47,5 +91,30 @@ describe('Menu', () => {
 
     fireEvent.click(toggle);
     await waitFor(() => expect(toggle.checked).toBe(false));
+  });
+
+  it('asks the page that is showing before opening another page', async () => {
+    const { confirm, navigate, push } = renderAskingMenu('/support');
+
+    fireEvent.click(await screen.findByText('Schedule'));
+    expect(confirm).toHaveBeenCalledOnce();
+
+    fireEvent.click(screen.getByText('Show Tutorial'));
+    expect(confirm).toHaveBeenCalledTimes(2);
+
+    // Nothing opens until the page agrees to be left.
+    expect(navigate).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+
+    confirm.mock.calls[0][0]();
+    expect(push).toHaveBeenCalledWith('/tabs/schedule', 'none');
+  });
+
+  it('does not ask when opening the page that is showing', async () => {
+    const { confirm } = renderAskingMenu('/support');
+
+    fireEvent.click(await screen.findByText('Support'));
+
+    expect(confirm).not.toHaveBeenCalled();
   });
 });

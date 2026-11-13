@@ -43,6 +43,12 @@ test.describe('Schedule', () => {
     );
   });
 
+  test('the icon-only buttons have accessible names', async ({ page }) => {
+    await expect(searchButton(page)).toBeVisible();
+    await expect(filterButton(page)).toBeVisible();
+    await expect(schedule(page).getByRole('button', { name: 'Share', exact: true })).toBeVisible();
+  });
+
   test('search filters the sessions by name and clearing it restores them', async ({ page }) => {
     await searchButton(page).click();
     const searchbox = schedule(page).getByRole('searchbox');
@@ -58,6 +64,18 @@ test.describe('Schedule', () => {
     await expect(searchbox).toHaveValue('');
     await expect(visibleSessions(page)).toHaveCount(20);
     await expect(timeGroups(page)).toHaveCount(8);
+  });
+
+  test('cancelling the search hides the searchbar and shows every session again', async ({ page }) => {
+    await searchButton(page).click();
+    const searchbar = schedule(page).locator('ion-searchbar').filter({ visible: true });
+    await schedule(page).getByRole('searchbox').fill('react');
+    await expect(visibleSessions(page)).toHaveCount(2);
+
+    await searchbar.getByRole('button', { name: 'cancel' }).click();
+
+    await expect(searchbar).toHaveCount(0);
+    await expect(visibleSessions(page)).toHaveCount(20);
   });
 
   test('search shows an empty state when no session matches', async ({ page }) => {
@@ -126,6 +144,39 @@ test.describe('Schedule', () => {
 
     await expect(visibleSessions(page)).toHaveCount(1);
     await expect(sessionLink(page, 'Ionic Workshop')).toBeVisible();
+  });
+
+  test('the filter toolbar buttons keep their casing', async ({ page }) => {
+    await filterButton(page).click();
+
+    // Not Android's uppercase.
+    for (const name of ['Deselect All', 'Select All']) {
+      await expect(filterModal(page).getByRole('button', { name, exact: true })).toHaveCSS(
+        'text-transform',
+        'capitalize',
+      );
+    }
+  });
+
+  test('Deselect All hides every session and Select All brings them back', async ({ page }) => {
+    await filterButton(page).click();
+    await filterModal(page).getByRole('button', { name: 'Deselect All', exact: true }).click();
+    await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(0);
+    await filterModal(page).getByRole('button', { name: 'Done' }).click();
+    await expect(filterModal(page)).toBeHidden();
+
+    await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
+    await expect(visibleSessions(page)).toHaveCount(0);
+
+    await filterButton(page).click();
+    await filterModal(page).getByRole('button', { name: 'Select All', exact: true }).click();
+    await expect(filterModal(page).getByRole('checkbox', { checked: false })).toHaveCount(0);
+    await expect(filterModal(page).getByRole('checkbox', { checked: true })).toHaveCount(10);
+    await filterModal(page).getByRole('button', { name: 'Done' }).click();
+    await expect(filterModal(page)).toBeHidden();
+
+    await expect(visibleSessions(page)).toHaveCount(20);
+    await expect(timeGroups(page)).toHaveCount(8);
   });
 
   test('search and the track filter combine', async ({ page }) => {

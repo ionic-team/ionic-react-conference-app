@@ -9,12 +9,13 @@ import {
   IonList,
   IonItem,
   IonAlert,
+  IonRouterContext,
 } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import './Account.scss';
 import { connect } from '../data/connect';
-import { setUsername } from '../data/user/user.actions';
+import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 
 interface OwnProps {}
 
@@ -23,13 +24,21 @@ interface StateProps {
 }
 
 interface DispatchProps {
+  setIsLoggedIn: typeof setIsLoggedIn;
   setUsername: typeof setUsername;
 }
 
 interface AccountProps extends OwnProps, StateProps, DispatchProps {}
 
-const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
+const Account: React.FC<AccountProps> = ({ setIsLoggedIn, setUsername, username }) => {
   const [showAlert, setShowAlert] = useState(false);
+  const ionRouterContext = useContext(IonRouterContext);
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUsername(undefined);
+    ionRouterContext.push('/login', 'none');
+  };
 
   const clicked = (text: string) => {
     console.log(`Clicked ${text}`);
@@ -57,7 +66,7 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
               <IonItem routerLink="/support" routerDirection="none">
                 Support
               </IonItem>
-              <IonItem routerLink="/logout" routerDirection="none">
+              <IonItem button detail={false} onClick={logout}>
                 Logout
               </IonItem>
             </IonList>
@@ -95,6 +104,7 @@ export default connect<OwnProps, StateProps, DispatchProps>({
     username: state.user.username,
   }),
   mapDispatchToProps: {
+    setIsLoggedIn,
     setUsername,
   },
   component: Account,
