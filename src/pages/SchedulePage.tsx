@@ -133,12 +133,14 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
           <IonToolbar>
             <IonTitle size="large">Schedule</IonTitle>
           </IonToolbar>
-          <IonToolbar>
-            <IonSearchbar
-              placeholder="Search"
-              onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
-            ></IonSearchbar>
-          </IonToolbar>
+          {ios && (
+            <IonToolbar>
+              <IonSearchbar
+                placeholder="Search"
+                onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
+              ></IonSearchbar>
+            </IonToolbar>
+          )}
         </IonHeader>
 
         <IonRefresher
