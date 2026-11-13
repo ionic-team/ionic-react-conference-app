@@ -16,7 +16,7 @@ const ShareSocialFab: React.FC = () => {
       <IonLoading
         isOpen={showLoading}
         message={loadingMessage}
-        duration={2000}
+        duration={1000}
         spinner="crescent"
         onDidDismiss={() => setShowLoading(false)}
       />
