@@ -220,6 +220,37 @@ test.describe('Navigation', () => {
     expect(await loadingMessage).toBe('Posting to Vimeo');
   });
 
+  test('the posting message shows for one second', async ({ page }) => {
+    const schedule = visiblePage(page, 'schedule-page');
+    await schedule.getByRole('button', { name: 'Share', exact: true }).click();
+    // Record the duration the loading indicator is given and how long it stays open.
+    const timing = page.evaluate(
+      () =>
+        new Promise<{ duration: number; shownFor: number }>((resolve) => {
+          document.addEventListener(
+            'ionLoadingDidPresent',
+            (presented) => {
+              const shownAt = performance.now();
+              const { duration } = presented.target as HTMLElement & { duration: number };
+              document.addEventListener(
+                'ionLoadingDidDismiss',
+                () => resolve({ duration, shownFor: performance.now() - shownAt }),
+                { once: true },
+              );
+            },
+            { once: true },
+          );
+        }),
+    );
+    await schedule.getByRole('button', { name: 'Vimeo', exact: true }).click();
+
+    const { duration, shownFor } = await timing;
+    expect(duration).toBe(1000);
+    // It closes itself once the duration is up, plus the time its leave animation takes.
+    expect(shownFor).toBeGreaterThanOrEqual(1000);
+    expect(shownFor).toBeLessThan(2000);
+  });
+
   test('the About page opens its options from the More options button', async ({ page }) => {
     await page.getByRole('tab', { name: 'About' }).click();
     await visiblePage(page, 'about-page').getByRole('button', { name: 'More options', exact: true }).click();
