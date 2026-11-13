@@ -25,7 +25,7 @@ import {
   construct,
   compass,
 } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
 
 import './SessionListFilter.css';
 
@@ -54,6 +54,8 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
   updateFilteredTracks,
 }) => {
   const ios = getMode() === 'ios';
+  // The tracks that were included when the filter opened, which Cancel puts back.
+  const [openingTracks] = useState(filteredTracks);
 
   const toggleTrackFilter = (track: string) => {
     if (filteredTracks.indexOf(track) > -1) {
@@ -61,6 +63,11 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
     } else {
       updateFilteredTracks([...filteredTracks, track]);
     }
+  };
+
+  const handleCancel = () => {
+    updateFilteredTracks(openingTracks);
+    onDismissModal();
   };
 
   const handleDeselectAll = () => {
@@ -89,7 +96,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
       <IonHeader translucent={true} className="session-list-filter">
         <IonToolbar>
           <IonButtons slot="start">
-            {ios && <IonButton onClick={onDismissModal}>Cancel</IonButton>}
+            {ios && <IonButton onClick={handleCancel}>Cancel</IonButton>}
             {!ios && <IonButton onClick={handleDeselectAll}>Reset</IonButton>}
           </IonButtons>
 
