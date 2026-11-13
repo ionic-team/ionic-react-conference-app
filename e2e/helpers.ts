@@ -14,6 +14,10 @@ export const openSchedule = async (page: Page): Promise<void> => {
   await expect(sessionLink(page, 'Breakfast')).toBeVisible();
 };
 
+// Ionic picks the mode from the device and sets it on the document.
+export const isIos = (page: Page): Promise<boolean> =>
+  page.evaluate(() => document.documentElement.getAttribute('mode') === 'ios');
+
 /**
  * Ionic keeps pages it has shown in the DOM and hides them, so scope to the page that is showing.
  */
@@ -27,6 +31,17 @@ export const sessionLink = (page: Page, name: string): Locator =>
 
 export const searchButton = (page: Page): Locator =>
   visiblePage(page, 'schedule-page').getByRole('button', { name: 'Search', exact: true });
+
+/**
+ * Shows the schedule's searchbox. iOS shows it below the title, and md shows it from the Search button.
+ */
+export const openSearch = async (page: Page): Promise<Locator> => {
+  if (!(await isIos(page))) {
+    await searchButton(page).click();
+  }
+  return visiblePage(page, 'schedule-page').getByRole('searchbox');
+};
+
 export const filterButton = (page: Page): Locator =>
   visiblePage(page, 'schedule-page').getByRole('button', { name: 'Filter', exact: true });
 
@@ -52,6 +67,10 @@ export const openMenu = async (page: Page): Promise<Locator> => {
     }
     await expect(menu).toBeVisible({ timeout: 1000 });
   }).toPass();
+  // The menu shows as soon as it starts opening, but ignores Escape and taps until it has finished.
+  await expect
+    .poll(() => menu.evaluate((el) => (el as HTMLElement & { isOpen(): Promise<boolean> }).isOpen()))
+    .toBe(true);
   return menu;
 };
 
@@ -72,8 +91,9 @@ export const showSegment = async (page: Page, name: 'All' | 'Favorites'): Promis
   await expect(schedule.getByRole('tab', { name })).toHaveAttribute('aria-selected', 'true');
 };
 
+// The back button is labelled back in md and shows a Back label in iOS.
 export const backButton = (page: Page, pageId: string): Locator =>
-  visiblePage(page, pageId).getByRole('button', { name: 'back', exact: true });
+  visiblePage(page, pageId).getByRole('button', { name: /^back$/i });
 
 export const submitCredentials = async (
   page: Page,
