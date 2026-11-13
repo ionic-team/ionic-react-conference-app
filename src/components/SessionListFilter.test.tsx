@@ -1,7 +1,7 @@
 import { setupIonicReact } from '@ionic/react';
 import { fireEvent, screen } from '@testing-library/react';
 import { useContext } from 'react';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { AppContext } from '../data/AppContext';
 import { makeState } from '../testing/fixtures';
@@ -34,6 +34,26 @@ describe('SessionListFilter', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/^$/);
 
     fireEvent.click(screen.getByText('Select All'));
+    expect(screen.getByRole('status')).toHaveTextContent('Food,Ionic,React,Tooling');
+  });
+});
+
+describe('SessionListFilter in iOS', () => {
+  beforeAll(() => {
+    setupIonicReact({ mode: 'ios' });
+  });
+
+  afterAll(() => {
+    setupIonicReact({ mode: 'md' });
+  });
+
+  it('Cancel puts back the tracks that were included when it opened', () => {
+    renderFilter();
+
+    fireEvent.click(screen.getByText('Deselect All'));
+    expect(screen.getByRole('status')).toHaveTextContent(/^$/);
+
+    fireEvent.click(screen.getByText('Cancel'));
     expect(screen.getByRole('status')).toHaveTextContent('Food,Ionic,React,Tooling');
   });
 });
