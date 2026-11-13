@@ -86,8 +86,12 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
           window.open('tel:' + speaker.phone);
         },
       },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+      },
     ]);
-    setActionSheetHeader(`Share ${speaker.name}`);
+    setActionSheetHeader(`Contact ${speaker.name}`);
     setShowActionSheet(true);
   }
 
