@@ -5,7 +5,9 @@ import {
   backButton,
   favoriteButton,
   filterButton,
+  isIos,
   openSchedule,
+  openSearch,
   searchButton,
   showSegment,
   sessionLink,
@@ -44,14 +46,19 @@ test.describe('Schedule', () => {
   });
 
   test('the icon-only buttons have accessible names', async ({ page }) => {
-    await expect(searchButton(page)).toBeVisible();
+    if (await isIos(page)) {
+      // iOS shows the searchbar instead of a Search button.
+      await expect(searchButton(page)).toHaveCount(0);
+      await expect(schedule(page).getByRole('searchbox')).toBeVisible();
+    } else {
+      await expect(searchButton(page)).toBeVisible();
+    }
     await expect(filterButton(page)).toBeVisible();
     await expect(schedule(page).getByRole('button', { name: 'Share', exact: true })).toBeVisible();
   });
 
   test('search filters the sessions by name and clearing it restores them', async ({ page }) => {
-    await searchButton(page).click();
-    const searchbox = schedule(page).getByRole('searchbox');
+    const searchbox = await openSearch(page);
     await searchbox.fill('react');
 
     await expect(visibleSessions(page)).toHaveCount(2);
@@ -67,6 +74,7 @@ test.describe('Schedule', () => {
   });
 
   test('cancelling the search hides the searchbar and shows every session again', async ({ page }) => {
+    test.skip(await isIos(page), 'iOS always shows the searchbar, without a cancel button.');
     await searchButton(page).click();
     const searchbar = schedule(page).locator('ion-searchbar').filter({ visible: true });
     await schedule(page).getByRole('searchbox').fill('react');
@@ -79,8 +87,7 @@ test.describe('Schedule', () => {
   });
 
   test('search shows an empty state when no session matches', async ({ page }) => {
-    await searchButton(page).click();
-    await schedule(page).getByRole('searchbox').fill('no such session');
+    await (await openSearch(page)).fill('no such session');
 
     await expect(schedule(page).getByText('No Sessions Found')).toBeVisible();
     await expect(visibleSessions(page)).toHaveCount(0);
@@ -133,6 +140,7 @@ test.describe('Schedule', () => {
   });
 
   test('Reset in the filter deselects every track', async ({ page }) => {
+    test.skip(await isIos(page), 'iOS shows Cancel instead of Reset.');
     await filterButton(page).click();
     await filterModal(page).getByRole('button', { name: 'Reset' }).click();
 
@@ -147,6 +155,7 @@ test.describe('Schedule', () => {
   });
 
   test('the filter toolbar buttons keep their casing', async ({ page }) => {
+    test.skip(await isIos(page), 'iOS does not uppercase toolbar buttons.');
     await filterButton(page).click();
 
     // Not Android's uppercase.
@@ -156,6 +165,30 @@ test.describe('Schedule', () => {
         'capitalize',
       );
     }
+  });
+
+  test('Cancel in the filter closes it without applying the changes', async ({ page }) => {
+    test.skip(!(await isIos(page)), 'md shows Reset instead of Cancel.');
+    await filterButton(page).click();
+    await trackCheckbox(page, 'Food').click();
+    await filterModal(page).getByRole('button', { name: 'Done' }).click();
+    await expect(filterModal(page)).toBeHidden();
+    await expect(visibleSessions(page)).toHaveCount(18);
+
+    await filterButton(page).click();
+    await trackCheckbox(page, 'React').click();
+    await expect(filterModal(page).getByRole('checkbox', { name: 'React' })).not.toBeChecked();
+    await filterModal(page).getByRole('button', { name: 'Cancel' }).click();
+    await expect(filterModal(page)).toBeHidden();
+
+    // Only the change made with Done is kept.
+    await expect(visibleSessions(page)).toHaveCount(18);
+    await expect(sessionLink(page, 'Breakfast')).toBeHidden();
+    await expect(sessionLink(page, "What's New in React")).toBeVisible();
+
+    await filterButton(page).click();
+    await expect(filterModal(page).getByRole('checkbox', { name: 'Food' })).not.toBeChecked();
+    await expect(filterModal(page).getByRole('checkbox', { name: 'React' })).toBeChecked();
   });
 
   test('Deselect All hides every session and Select All brings them back', async ({ page }) => {
@@ -182,14 +215,13 @@ test.describe('Schedule', () => {
   test('search and the track filter combine', async ({ page }) => {
     // The filter button is hidden while searching, so filter first.
     await filterButton(page).click();
-    await filterModal(page).getByRole('button', { name: 'Reset' }).click();
+    await filterModal(page).getByRole('button', { name: 'Deselect All', exact: true }).click();
     await trackCheckbox(page, 'React').click();
     await filterModal(page).getByRole('button', { name: 'Done' }).click();
     await expect(filterModal(page)).toBeHidden();
     await expect(visibleSessions(page)).toHaveCount(2);
 
-    await searchButton(page).click();
-    await schedule(page).getByRole('searchbox').fill('ionic');
+    await (await openSearch(page)).fill('ionic');
 
     // Only the session that matches both the search and the track is left.
     await expect(visibleSessions(page)).toHaveCount(1);
