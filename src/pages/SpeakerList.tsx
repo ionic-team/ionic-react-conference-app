@@ -45,7 +45,7 @@ const SpeakerList: React.FC<SpeakerListProps> = ({
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">Speakers</IonTitle>
           </IonToolbar>

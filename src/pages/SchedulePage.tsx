@@ -129,16 +129,18 @@ const SchedulePage: React.FC<SchedulePageProps> = ({
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">Schedule</IonTitle>
           </IonToolbar>
-          <IonToolbar>
-            <IonSearchbar
-              placeholder="Search"
-              onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
-            ></IonSearchbar>
-          </IonToolbar>
+          {ios && (
+            <IonToolbar>
+              <IonSearchbar
+                placeholder="Search"
+                onIonInput={(e: CustomEvent) => setSearchText(e.detail.value)}
+              ></IonSearchbar>
+            </IonToolbar>
+          )}
         </IonHeader>
 
         <IonRefresher
