@@ -142,7 +142,7 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
             <IonLabel>GitHub</IonLabel>
           </IonChip>
 
-          <IonChip color="instagram" onClick={() => openExternalUrl('https://instagram.com/ionicframework')}>
+          <IonChip color="instagram" onClick={() => openExternalUrl(`https://instagram.com/${speaker.instagram}`)}>
             <IonIcon icon={logoInstagram}></IonIcon>
             <IonLabel>Instagram</IonLabel>
           </IonChip>
