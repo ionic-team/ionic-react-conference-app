@@ -9,6 +9,7 @@ import {
   openSchedule,
   submitCredentials,
   visiblePage,
+  visibleTitle,
 } from './helpers';
 
 const expectMenuLinks = async (page: Page, shown: string[], hidden: string[]) => {
@@ -171,6 +172,21 @@ test.describe('Account', () => {
 
     await expect(page).toHaveURL(/\/login$/);
     await expectLoggedOut(page);
+  });
+
+  test('logging in again after logging out from the account page shows the schedule', async ({ page }) => {
+    await login(page, 'ionitron');
+    await navigateFromMenu(page, 'Account');
+    await expect(visiblePage(page, 'account-page')).toBeVisible();
+
+    await navigateFromMenu(page, 'Logout');
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(page.locator('#account-page')).toBeHidden();
+    await login(page, 'ionitron');
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(page.locator('#account-page')).toBeHidden();
+    await expect(visibleTitle(page)).toHaveText('Schedule');
   });
 
   test('the Account page redirects to login while logged out', async ({ page }) => {

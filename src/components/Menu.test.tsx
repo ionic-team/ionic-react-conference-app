@@ -81,6 +81,22 @@ describe('Menu', () => {
     expect(screen.queryByText('Signup')).not.toBeInTheDocument();
   });
 
+  it('Logout logs out and opens the schedule', async () => {
+    const push = vi.fn();
+    renderWithState(
+      <RecordNavigation navigate={vi.fn()} push={push}>
+        <Menu />
+      </RecordNavigation>,
+      { state: makeState({ user: { isLoggedin: true, username: 'ionitron' } }), url: '/account' },
+    );
+
+    fireEvent.click(await screen.findByText('Logout'));
+
+    // It opens the schedule directly, not the /logout route, so Ionic transitions away from the page that is showing.
+    expect(push).toHaveBeenCalledWith('/tabs/schedule', 'none');
+    expect(await screen.findByText('Login')).toBeInTheDocument();
+  });
+
   it('toggles dark mode', async () => {
     renderWithState(<Menu />, { state: makeState() });
     const toggle = (await screen.findByText('Dark Mode')) as HTMLIonToggleElement;

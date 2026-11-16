@@ -15,7 +15,7 @@ interface StateProps {
 interface RequireLoginProps extends OwnProps, StateProps {}
 
 /**
- * Shows its page only while logged in and sends a logged out user to the login page.
+ * Sends a logged out user who opens its page to the login page.
  */
 const RequireLogin: React.FC<RequireLoginProps> = ({ children, isLoggedin, loading }) => {
   const location = useLocation();
@@ -31,7 +31,9 @@ const RequireLogin: React.FC<RequireLoginProps> = ({ children, isLoggedin, loadi
     return <Navigate to="/login" replace />;
   }
 
-  return isLoggedin ? children : null;
+  // Stay mounted while logged out: Ionic keeps a page it has left in the outlet, and a page that unmounts and
+  // mounts again off screen shows over the current page. The redirect above keeps it from being opened.
+  return children;
 };
 
 export default connect<OwnProps, StateProps, {}>({
