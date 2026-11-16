@@ -132,6 +132,20 @@ test.describe('Schedule', () => {
     await expect(visibleSessions(page)).toHaveCount(20);
   });
 
+  test('closing the filter without Done keeps the tracks', async ({ page }) => {
+    await filterButton(page).click();
+    await trackCheckbox(page, 'Food').click();
+    await expect(filterModal(page).getByRole('checkbox', { name: 'Food' })).not.toBeChecked();
+
+    // Escape closes the modal the way swiping the card down or tapping the backdrop does.
+    await page.keyboard.press('Escape');
+    await expect(filterModal(page)).toBeHidden();
+
+    await expect(visibleSessions(page)).toHaveCount(20);
+    await filterButton(page).click();
+    await expect(filterModal(page).getByRole('checkbox', { name: 'Food' })).toBeChecked();
+  });
+
   test('Reset in the filter deselects every track', async ({ page }) => {
     await filterButton(page).click();
     await filterModal(page).getByRole('button', { name: 'Reset' }).click();

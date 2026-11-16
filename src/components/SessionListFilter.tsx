@@ -54,28 +54,24 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
   updateFilteredTracks,
 }) => {
   const ios = getMode() === 'ios';
-  // The tracks that were included when the filter opened, which Cancel puts back.
-  const [openingTracks] = useState(filteredTracks);
+  // The track changes stay here until Done, so Cancel, swiping the iOS card down, or tapping the backdrop discards them.
+  const [draftTracks, setDraftTracks] = useState(filteredTracks);
 
   const toggleTrackFilter = (track: string) => {
-    if (filteredTracks.indexOf(track) > -1) {
-      updateFilteredTracks(filteredTracks.filter((x) => x !== track));
-    } else {
-      updateFilteredTracks([...filteredTracks, track]);
-    }
+    setDraftTracks((tracks) => (tracks.includes(track) ? tracks.filter((x) => x !== track) : [...tracks, track]));
   };
 
-  const handleCancel = () => {
-    updateFilteredTracks(openingTracks);
+  const handleDone = () => {
+    updateFilteredTracks(draftTracks);
     onDismissModal();
   };
 
   const handleDeselectAll = () => {
-    updateFilteredTracks([]);
+    setDraftTracks([]);
   };
 
   const handleSelectAll = () => {
-    updateFilteredTracks([...allTracks]);
+    setDraftTracks([...allTracks]);
   };
 
   const iconMap: { [key: string]: any } = {
@@ -96,14 +92,14 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
       <IonHeader translucent={true} className="session-list-filter">
         <IonToolbar>
           <IonButtons slot="start">
-            {ios && <IonButton onClick={handleCancel}>Cancel</IonButton>}
+            {ios && <IonButton onClick={onDismissModal}>Cancel</IonButton>}
             {!ios && <IonButton onClick={handleDeselectAll}>Reset</IonButton>}
           </IonButtons>
 
           <IonTitle>Filter Sessions</IonTitle>
 
           <IonButtons slot="end">
-            <IonButton onClick={onDismissModal} strong>
+            <IonButton onClick={handleDone} strong>
               Done
             </IonButton>
           </IonButtons>
@@ -119,7 +115,7 @@ const SessionListFilter: React.FC<SessionListFilterProps> = ({
               {ios && <IonIcon slot="start" icon={iconMap[track]} color="medium" aria-hidden="true" />}
               <IonCheckbox
                 onIonChange={() => toggleTrackFilter(track)}
-                checked={filteredTracks.indexOf(track) !== -1}
+                checked={draftTracks.includes(track)}
                 color="primary"
                 value={track}
               >
