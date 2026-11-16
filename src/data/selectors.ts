@@ -72,9 +72,7 @@ export const getSearchedSchedule = createSelector(getFilteredSchedule, getSearch
   } as Schedule;
 });
 
-export const getScheduleList = createSelector(getSearchedSchedule, (schedule) => schedule);
-
-export const getGroupedFavorites = createSelector(getScheduleList, getFavoriteIds, (schedule, favoriteIds) => {
+export const getGroupedFavorites = createSelector(getSearchedSchedule, getFavoriteIds, (schedule, favoriteIds) => {
   const groups: ScheduleGroup[] = [];
   schedule.groups.forEach((group) => {
     const sessions = group.sessions.filter((s) => favoriteIds.indexOf(s.id) > -1);
