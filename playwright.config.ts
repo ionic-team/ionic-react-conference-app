@@ -19,7 +19,7 @@ export default defineConfig({
     },
     {
       // Ionic picks iOS mode from the iPhone user agent, so Chromium is enough to run the iOS mode tests.
-      name: 'Mobile Safari',
+      name: 'Mobile Chrome (iOS mode)',
       use: { ...devices['iPhone 15'], browserName: 'chromium' },
     },
   ],
