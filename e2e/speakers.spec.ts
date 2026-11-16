@@ -110,6 +110,29 @@ test.describe('Speakers', () => {
     ]);
   });
 
+  test('the social chips open the social profiles', async ({ page }) => {
+    await openBurtBear(page);
+    // Record the links instead of leaving the app for the social sites.
+    await page.evaluate(() => {
+      const opened: string[] = [];
+      (window as unknown as { opened: string[] }).opened = opened;
+      window.open = (url) => {
+        opened.push(String(url));
+        return null;
+      };
+    });
+
+    for (const name of ['Twitter', 'GitHub', 'Instagram']) {
+      await speakerDetail(page).locator('ion-chip', { hasText: name }).click();
+    }
+
+    expect(await page.evaluate(() => (window as unknown as { opened: string[] }).opened)).toEqual([
+      'https://twitter.com/ionicframework',
+      'https://github.com/ionic-team/ionic-framework',
+      'https://instagram.com/ionicframework',
+    ]);
+  });
+
   test('the Share button opens the share options for the speaker', async ({ page }) => {
     await openBurtBear(page);
 
