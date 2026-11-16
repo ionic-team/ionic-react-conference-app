@@ -43,12 +43,12 @@ export function connect<TOwnProps = any, TStateProps = any, TDispatchProps = any
         });
       }
       return dispatchFuncs;
-      // eslint-disable-next-line
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mapDispatchToProps]);
 
     const props = useMemo(() => {
       return Object.assign({}, ownProps, mapStateToProps(context.state, ownProps), dispatchFuncs);
-      // eslint-disable-next-line
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ownProps, context.state]);
 
     return React.createElement(component, props);

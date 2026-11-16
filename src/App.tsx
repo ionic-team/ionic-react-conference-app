@@ -89,7 +89,7 @@ const IonicApp: React.FC<IonicAppProps> = ({
   useEffect(() => {
     loadUserData();
     loadConfData();
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return schedule.groups.length === 0 ? (
