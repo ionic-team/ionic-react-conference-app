@@ -1,6 +1,7 @@
-import { Location } from '../../models/Location';
-import { Speaker } from '../../models/Speaker';
-import { Schedule, Session } from '../../models/Schedule';
+import type { Location } from '../../models/Location';
+import type { Schedule, Session } from '../../models/Schedule';
+import type { Speaker } from '../../models/Speaker';
+
 export interface ConfState {
   schedule: Schedule;
   sessions: Session[];

@@ -1,20 +1,14 @@
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import L from 'leaflet';
+import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
+import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import React, { useEffect, useRef } from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  useIonViewDidEnter,
-} from '@ionic/react';
-import { Location } from '../models/Location';
+
 import { connect } from '../data/connect';
 import { loadLocations } from '../data/locations/locations.actions';
-import L from 'leaflet';
+import type { Location } from '../models/Location';
 import 'leaflet/dist/leaflet.css';
-import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
-import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import './MapView.scss';
 
 // Fix for marker icons in Vite
@@ -31,10 +25,7 @@ interface DispatchProps {
   loadLocations: typeof loadLocations;
 }
 
-const MapView: React.FC<StateProps & DispatchProps> = ({
-  locations,
-  loadLocations,
-}) => {
+const MapView: React.FC<StateProps & DispatchProps> = ({ locations, loadLocations }) => {
   const mapCanvas = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const markers = useRef<L.Marker[]>([]);
@@ -63,9 +54,7 @@ const MapView: React.FC<StateProps & DispatchProps> = ({
 
     // Add markers for all locations
     locations.forEach((location: Location) => {
-      const marker = L.marker([location.lat, location.lng])
-        .addTo(map.current!)
-        .bindPopup(`${location.name}`);
+      const marker = L.marker([location.lat, location.lng]).addTo(map.current!).bindPopup(`${location.name}`);
       markers.current.push(marker);
     });
 

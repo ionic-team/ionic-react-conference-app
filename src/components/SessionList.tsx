@@ -1,17 +1,12 @@
-import {
-  IonItemDivider,
-  IonItemGroup,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonAlert,
-  AlertButton,
-} from '@ionic/react';
+import type { AlertButton } from '@ionic/react';
+import { IonItemDivider, IonItemGroup, IonLabel, IonList, IonListHeader, IonAlert } from '@ionic/react';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { Schedule, Session } from '../models/Schedule';
-import SessionListItem from './SessionListItem';
+
 import { connect } from '../data/connect';
 import { addFavorite, removeFavorite } from '../data/sessions/sessions.actions';
+import type { Schedule, Session } from '../models/Schedule';
+
+import SessionListItem from './SessionListItem';
 
 interface OwnProps {
   schedule: Schedule;
@@ -42,19 +37,14 @@ const SessionList: React.FC<SessionListProps> = ({
   const [showAlert, setShowAlert] = useState(false);
   const [alertHeader, setAlertHeader] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
-  const [alertButtons, setAlertButtons] = useState<(AlertButton | string)[]>(
-    []
-  );
+  const [alertButtons, setAlertButtons] = useState<(AlertButton | string)[]>([]);
 
-  const handleShowAlert = useCallback(
-    (header: string, message: string, buttons: AlertButton[]) => {
-      setAlertHeader(header);
-      setAlertMessage(message);
-      setAlertButtons(buttons);
-      setShowAlert(true);
-    },
-    []
-  );
+  const handleShowAlert = useCallback((header: string, message: string, buttons: AlertButton[]) => {
+    setAlertHeader(header);
+    setAlertMessage(message);
+    setAlertButtons(buttons);
+    setShowAlert(true);
+  }, []);
 
   useEffect(() => {
     if (scheduleListRef.current) {

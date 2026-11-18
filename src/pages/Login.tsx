@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   IonHeader,
   IonToolbar,
@@ -13,19 +12,18 @@ import {
   IonInput,
   useIonRouter,
 } from '@ionic/react';
+import React, { useState } from 'react';
+
 import './Login.scss';
-import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 import { connect } from '../data/connect';
+import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
 
 interface LoginProps {
   setIsLoggedIn: typeof setIsLoggedIn;
   setUsername: typeof setUsername;
 }
 
-const Login: React.FC<LoginProps> = ({
-  setIsLoggedIn,
-  setUsername: setUsernameAction,
-}) => {
+const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAction }) => {
   const router = useIonRouter();
   const [login, setLogin] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -71,12 +69,8 @@ const Login: React.FC<LoginProps> = ({
               type="text"
               spellCheck={false}
               autocapitalize="off"
-              errorText={
-                submitted && !login.username ? 'Username is required' : ''
-              }
-              onIonInput={(e) =>
-                setLogin({ ...login, username: e.detail.value! })
-              }
+              errorText={submitted && !login.username ? 'Username is required' : ''}
+              onIonInput={(e) => setLogin({ ...login, username: e.detail.value! })}
               required
             />
 
@@ -87,12 +81,8 @@ const Login: React.FC<LoginProps> = ({
               value={login.password}
               name="password"
               type="password"
-              errorText={
-                submitted && !login.password ? 'Password is required' : ''
-              }
-              onIonInput={(e) =>
-                setLogin({ ...login, password: e.detail.value! })
-              }
+              errorText={submitted && !login.password ? 'Password is required' : ''}
+              onIonInput={(e) => setLogin({ ...login, password: e.detail.value! })}
               required
             />
 
