@@ -51,7 +51,7 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
       {
         text: 'Copy Link',
         handler: () => {
-          console.log('Copy Link clicked');
+          navigator.clipboard.writeText('https://twitter.com/' + speaker.twitter);
         },
       },
       {

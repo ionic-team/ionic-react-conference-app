@@ -1,6 +1,6 @@
 import type { ActionSheetButton } from '@ionic/core';
 import { fireEvent, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { makeState, rachel } from '../testing/fixtures';
 import { renderWithState } from '../testing/render';
@@ -42,5 +42,18 @@ describe('SpeakerDetail', () => {
 
     await waitFor(() => expect(actionSheet().header).toBe(`Share ${rachel.name}`));
     expect(actionSheet().buttons.map(({ text }) => text)).toEqual(['Copy Link', 'Share via ...', 'Cancel']);
+  });
+
+  it('copies the speaker Twitter link from the share sheet', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });
+    const { container } = renderSpeaker();
+
+    fireEvent.click(toolbarButton(container, 'Share'));
+    await waitFor(() => expect(actionSheet().header).toBe(`Share ${rachel.name}`));
+    (actionSheet().buttons.find(({ text }) => text === 'Copy Link')?.handler as () => void)();
+
+    expect(writeText).toHaveBeenCalledWith(`https://twitter.com/${rachel.twitter}`);
+    vi.unstubAllGlobals();
   });
 });

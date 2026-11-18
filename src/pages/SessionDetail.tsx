@@ -118,7 +118,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ session, addFavorite, rem
           {
             text: 'Copy Link',
             handler: () => {
-              console.log('Copy Link clicked');
+              navigator.clipboard.writeText(window.location.href);
             },
           },
           {

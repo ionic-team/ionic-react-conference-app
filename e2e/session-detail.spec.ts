@@ -98,6 +98,18 @@ test.describe('Session detail', () => {
     await expect(sheet).toBeHidden();
   });
 
+  test('Copy Link in the share sheet copies the session link', async ({ context, page }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await sessionLink(page, 'Ionic Tooling').click();
+
+    await detail(page).getByRole('button', { name: 'Share', exact: true }).click();
+    const sheet = page.getByRole('dialog', { name: 'Share Ionic Tooling' });
+    await sheet.getByRole('button', { name: 'Copy Link' }).click();
+
+    await expect(sheet).toBeHidden();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
+  });
+
   test('unfavoriting from the detail page removes the session from Favorites', async ({ page }) => {
     await toggleFavoriteFromDetail(page, 'Ionic Tooling', favoriteButton);
     await expect(sessionLink(page, 'Ionic Tooling')).toBeVisible();
