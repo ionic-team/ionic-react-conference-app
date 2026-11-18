@@ -65,6 +65,36 @@ test.describe('Navigation', () => {
     await expect(about).toContainText('ica2047');
   });
 
+  test('choosing a different location on the About page shows it and its image', async ({ page }) => {
+    await page.getByRole('tab', { name: 'About' }).click();
+    const about = visiblePage(page, 'about-page');
+    await expect(about.locator('.about-image.madison')).toHaveCSS('opacity', '1');
+
+    // The select's host element receives the pointer events, not its inner button.
+    await about.locator('ion-select').click();
+    const alert = page.getByRole('alertdialog', { name: 'Select a Location' });
+    await alert.getByRole('radio', { name: 'Austin, TX' }).click();
+    await alert.getByRole('button', { name: 'OK' }).click();
+
+    await expect(alert).toBeHidden();
+    await expect(about.getByRole('button', { name: 'Location, Austin, TX' })).toBeVisible();
+    await expect(about.locator('.about-image.austin')).toHaveCSS('opacity', '1');
+    await expect(about.locator('.about-image.madison')).toHaveCSS('opacity', '0');
+  });
+
+  test('choosing a different date on the About page shows it', async ({ page }) => {
+    await page.getByRole('tab', { name: 'About' }).click();
+    const about = visiblePage(page, 'about-page');
+    const date = about.locator('ion-item').filter({ hasText: 'Date' });
+
+    await date.click();
+    const datetime = page.locator('ion-datetime').filter({ visible: true });
+    await datetime.getByRole('button', { name: /May 20$/ }).click();
+
+    await expect(date).toContainText('May 20, 2047');
+    await expect(about).toContainText('a one-day event happening on May 20, 2047');
+  });
+
   test('the map page shows a marker for each location', async ({ page }) => {
     // Keep the test independent of the network by not loading the map tiles.
     await page.route(/tile\.openstreetmap\.org/, (route) => route.abort());
