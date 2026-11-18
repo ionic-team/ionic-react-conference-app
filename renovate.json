@@ -36,14 +36,11 @@
       "groupName": "vite"
     },
     {
-      "matchPackageNames": ["leaflet", "@types/leaflet", "react-leaflet"],
+      "matchPackageNames": ["leaflet", "@types/leaflet"],
       "groupName": "leaflet"
     },
     {
-      "matchPackageNames": [
-        "@testing-library/react",
-        "@types/jest"
-      ],
+      "matchPackageNames": ["@testing-library/**", "vitest", "jsdom", "@playwright/test"],
       "groupName": "testing"
     },
     {

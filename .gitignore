@@ -1,5 +1,4 @@
 # Logs
-.firebase
 logs
 *.log
 npm-debug.log*
@@ -82,3 +81,9 @@ yarn-error.log*
 
 .stencil/
 .idea/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
