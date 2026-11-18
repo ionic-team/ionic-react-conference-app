@@ -51,7 +51,7 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
       {
         text: 'Copy Link',
         handler: () => {
-          console.log('Copy Link clicked');
+          navigator.clipboard.writeText('https://twitter.com/' + speaker.twitter);
         },
       },
       {
@@ -86,8 +86,12 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
           window.open('tel:' + speaker.phone);
         },
       },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+      },
     ]);
-    setActionSheetHeader(`Share ${speaker.name}`);
+    setActionSheetHeader(`Contact ${speaker.name}`);
     setShowActionSheet(true);
   }
 
@@ -108,10 +112,10 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
               <IonBackButton defaultHref="/tabs/speakers" />
             </IonButtons>
             <IonButtons slot="end">
-              <IonButton onClick={() => openContact(speaker)}>
+              <IonButton aria-label="Contact" onClick={() => openContact(speaker)}>
                 <IonIcon slot="icon-only" ios={callOutline} md={callSharp}></IonIcon>
               </IonButton>
-              <IonButton onClick={() => openSpeakerShare(speaker)}>
+              <IonButton aria-label="Share" onClick={() => openSpeakerShare(speaker)}>
                 <IonIcon slot="icon-only" ios={shareOutline} md={shareSharp}></IonIcon>
               </IonButton>
             </IonButtons>
@@ -138,7 +142,7 @@ const SpeakerDetail: React.FC<SpeakerDetailProps> = ({ speaker }) => {
             <IonLabel>GitHub</IonLabel>
           </IonChip>
 
-          <IonChip color="instagram" onClick={() => openExternalUrl('https://instagram.com/ionicframework')}>
+          <IonChip color="instagram" onClick={() => openExternalUrl(`https://instagram.com/${speaker.instagram}`)}>
             <IonIcon icon={logoInstagram}></IonIcon>
             <IonLabel>Instagram</IonLabel>
           </IonChip>

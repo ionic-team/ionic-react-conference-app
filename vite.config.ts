@@ -7,10 +7,6 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  define: {
-    'process.env': process.env,
-    __HMR_CONFIG_NAME__: JSON.stringify('vite'),
-  },
   test: {
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',

@@ -20,8 +20,11 @@ const renderSession = (id: string, favorites: number[] = []) =>
     { state: makeState({ data: { favorites } }), url: `/tabs/schedule/${id}`, path: '/tabs/schedule/:id' },
   );
 
-// The favorite button is the first icon-only button in the toolbar, before the share button.
-const favoriteButton = (container: HTMLElement) => container.querySelector('ion-header ion-button') as HTMLElement;
+// The favorite button's label says what pressing it does.
+const favoriteButton = (container: HTMLElement) =>
+  container.querySelector('ion-button[aria-label="Add favorite"]') as HTMLElement;
+const removeFavoriteButton = (container: HTMLElement) =>
+  container.querySelector('ion-button[aria-label="Remove favorite"]') as HTMLElement;
 
 describe('SessionDetail', () => {
   it('shows the session from the URL', () => {
@@ -37,9 +40,11 @@ describe('SessionDetail', () => {
 
     fireEvent.click(favoriteButton(container));
     expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^${ionicTooling.id}$`));
+    expect(favoriteButton(container)).toBeNull();
 
-    fireEvent.click(favoriteButton(container));
+    fireEvent.click(removeFavoriteButton(container));
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    expect(removeFavoriteButton(container)).toBeNull();
   });
 
   it('shows a message for an unknown session', () => {

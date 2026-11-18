@@ -42,7 +42,9 @@ import { Route } from 'react-router-dom';
 import HomeOrTutorial from './components/HomeOrTutorial';
 import Menu from './components/Menu';
 import RedirectToLogin from './components/RedirectToLogin';
+import RequireLogin from './components/RequireLogin';
 import { AppContextProvider } from './data/AppContextProvider';
+import { LeaveGuardProvider } from './data/LeaveGuardProvider';
 import { connect } from './data/connect';
 import { loadConfData } from './data/sessions/sessions.actions';
 import { setIsLoggedIn, setUsername, loadUserData } from './data/user/user.actions';
@@ -59,7 +61,9 @@ setupIonicReact();
 const App: React.FC = () => {
   return (
     <AppContextProvider>
-      <IonicAppConnected />
+      <LeaveGuardProvider>
+        <IonicAppConnected />
+      </LeaveGuardProvider>
     </AppContextProvider>
   );
 };
@@ -105,7 +109,14 @@ const IonicApp: React.FC<IonicAppProps> = ({
                 which makes transitions between tabs and non tab pages smooth
                 */}
             <Route path="/tabs/*" element={<MainTabs />} />
-            <Route path="/account" element={<Account />} />
+            <Route
+              path="/account"
+              element={
+                <RequireLogin>
+                  <Account />
+                </RequireLogin>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/support" element={<Support />} />

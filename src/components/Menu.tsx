@@ -26,8 +26,9 @@ import {
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { useLeaveGuard } from '../data/LeaveGuardContext';
 import { connect } from '../data/connect';
-import { setDarkMode } from '../data/user/user.actions';
+import { setDarkMode, setIsLoggedIn, setUsername } from '../data/user/user.actions';
 
 import './Menu.css';
 
@@ -64,13 +65,31 @@ interface StateProps {
 
 interface DispatchProps {
   setDarkMode: typeof setDarkMode;
+  setIsLoggedIn: typeof setIsLoggedIn;
+  setUsername: typeof setUsername;
 }
 
 interface MenuProps extends StateProps, DispatchProps {}
 
-const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, menuEnabled }) => {
+const Menu: React.FC<MenuProps> = ({
+  darkMode,
+  isAuthenticated,
+  setDarkMode,
+  setIsLoggedIn,
+  setUsername,
+  menuEnabled,
+}) => {
   const location = useLocation();
   const router = useIonRouter();
+  const { requestLeave } = useLeaveGuard();
+
+  // Log out here and go straight to the schedule. Going through the /logout route would leave the current page
+  // showing, since that route has no page for Ionic to transition to.
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUsername(undefined);
+    router.push('/tabs/schedule', 'none');
+  };
 
   function renderlistItems(list: Pages[]) {
     return list
@@ -81,6 +100,13 @@ const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, men
             detail={false}
             routerLink={p.path}
             routerDirection="none"
+            onClick={(e) => {
+              // Let the page that is showing ask before it is left, unless this item opens that same page.
+              if (location.pathname !== p.path) {
+                e.preventDefault();
+                requestLeave(() => (p.path === '/logout' ? logout() : router.push(p.path, 'none')));
+              }
+            }}
             className={location.pathname.startsWith(p.path) ? 'selected' : undefined}
           >
             <IonIcon slot="start" icon={p.icon} />
@@ -113,7 +139,7 @@ const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, men
             button
             detail={false}
             onClick={() => {
-              router.push('/tutorial');
+              requestLeave(() => router.push('/tutorial'));
             }}
           >
             <IonIcon slot="start" icon={hammer} />
@@ -133,6 +159,8 @@ export default connect<{}, StateProps, {}>({
   }),
   mapDispatchToProps: {
     setDarkMode,
+    setIsLoggedIn,
+    setUsername,
   },
   component: Menu,
 });

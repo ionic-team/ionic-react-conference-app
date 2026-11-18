@@ -9,6 +9,7 @@ import {
   openSchedule,
   submitCredentials,
   visiblePage,
+  visibleTitle,
 } from './helpers';
 
 const expectMenuLinks = async (page: Page, shown: string[], hidden: string[]) => {
@@ -53,6 +54,8 @@ test.describe('Account', () => {
     await login.getByRole('button', { name: 'Login' }).click();
 
     await expect(page).toHaveURL(/\/login$/);
+    await expect(login.getByText('Password is required')).toBeVisible();
+    await expect(login.getByText('Username is required')).toHaveCount(0);
     await expectLoggedOut(page);
   });
 
@@ -67,7 +70,41 @@ test.describe('Account', () => {
       await signup.getByRole('button', { name: 'Create' }).click();
 
       await expect(page).toHaveURL(/\/signup$/);
+      await expect(signup.getByText(`${fields.missing} is required`)).toBeVisible();
+      await expect(signup.getByText(`${fields.filled} is required`)).toHaveCount(0);
       await expectLoggedOut(page);
+    });
+  }
+
+  for (const form of [
+    { menu: 'Login', pageId: 'login-page', button: 'Login' },
+    { menu: 'Signup', pageId: 'signup-page', button: 'Create' },
+  ]) {
+    test(`the ${form.menu} page shows the required messages when submitted empty`, async ({ page }) => {
+      await navigateFromMenu(page, form.menu);
+      const formPage = visiblePage(page, form.pageId);
+      await expect(formPage.getByText('Username is required')).toBeHidden();
+
+      await formPage.getByRole('button', { name: form.button }).click();
+
+      await expect(formPage.getByText('Username is required')).toBeVisible();
+      await expect(formPage.getByText('Password is required')).toBeVisible();
+      await expect(page).toHaveURL(new RegExp(`/${form.menu.toLowerCase()}$`));
+    });
+
+    test(`the ${form.menu} page shows a required message when an empty field is left`, async ({ page }) => {
+      await navigateFromMenu(page, form.menu);
+      const formPage = visiblePage(page, form.pageId);
+      const username = formPage.getByRole('textbox', { name: 'Username' });
+
+      await username.focus();
+      await username.blur();
+
+      await expect(formPage.getByText('Username is required')).toBeVisible();
+      await expect(formPage.getByText('Password is required')).toBeHidden();
+
+      await username.fill('ionitron');
+      await expect(formPage.getByText('Username is required')).toBeHidden();
     });
   }
 
@@ -125,6 +162,39 @@ test.describe('Account', () => {
     await page.reload();
     await expect(page.getByRole('button', { name: 'menu' })).toBeVisible({ timeout: APP_LOAD_TIMEOUT });
     await expectLoggedOut(page);
+  });
+
+  test('logging out from the account page opens the login page', async ({ page }) => {
+    await login(page, 'ionitron');
+    await navigateFromMenu(page, 'Account');
+
+    await visiblePage(page, 'account-page').getByRole('button', { name: 'Logout' }).click();
+
+    await expect(page).toHaveURL(/\/login$/);
+    await expectLoggedOut(page);
+  });
+
+  test('logging in again after logging out from the account page shows the schedule', async ({ page }) => {
+    await login(page, 'ionitron');
+    await navigateFromMenu(page, 'Account');
+    await expect(visiblePage(page, 'account-page')).toBeVisible();
+
+    await navigateFromMenu(page, 'Logout');
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(page.locator('#account-page')).toBeHidden();
+    await login(page, 'ionitron');
+
+    await expect(page).toHaveURL(/\/tabs\/schedule$/);
+    await expect(page.locator('#account-page')).toBeHidden();
+    await expect(visibleTitle(page)).toHaveText('Schedule');
+  });
+
+  test('the Account page redirects to login while logged out', async ({ page }) => {
+    await page.goto('/account');
+
+    await expect(page).toHaveURL(/\/login$/, { timeout: APP_LOAD_TIMEOUT });
+    await expect(visiblePage(page, 'login-page').getByRole('textbox', { name: 'Username' })).toBeVisible();
+    await expect(page.locator('#account-page')).toHaveCount(0);
   });
 
   test('signing up logs the user in', async ({ page }) => {

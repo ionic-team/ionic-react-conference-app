@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 import './Login.scss';
 import { connect } from '../data/connect';
 import { setIsLoggedIn, setUsername } from '../data/user/user.actions';
+import { validationClasses } from '../util/validation';
 
 interface LoginProps {
   setIsLoggedIn: typeof setIsLoggedIn;
@@ -27,6 +28,8 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
   const router = useIonRouter();
   const [login, setLogin] = useState({ username: '', password: '' });
   const [submitted, setSubmitted] = useState(false);
+  // An input shows its error once it has been left, or the form has been submitted.
+  const [touched, setTouched] = useState({ username: false, password: false });
 
   const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,8 +72,10 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
               type="text"
               spellCheck={false}
               autocapitalize="off"
-              errorText={submitted && !login.username ? 'Username is required' : ''}
-              onIonInput={(e) => setLogin({ ...login, username: e.detail.value! })}
+              className={validationClasses(!!login.username, submitted || touched.username)}
+              errorText="Username is required"
+              onIonBlur={() => setTouched((current) => ({ ...current, username: true }))}
+              onIonInput={(e) => setLogin((current) => ({ ...current, username: e.detail.value! }))}
               required
             />
 
@@ -81,8 +86,10 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setUsername: setUsernameAc
               value={login.password}
               name="password"
               type="password"
-              errorText={submitted && !login.password ? 'Password is required' : ''}
-              onIonInput={(e) => setLogin({ ...login, password: e.detail.value! })}
+              className={validationClasses(!!login.password, submitted || touched.password)}
+              errorText="Password is required"
+              onIonBlur={() => setTouched((current) => ({ ...current, password: true }))}
+              onIonInput={(e) => setLogin((current) => ({ ...current, password: e.detail.value! }))}
               required
             />
 

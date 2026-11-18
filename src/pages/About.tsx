@@ -53,7 +53,7 @@ const About: React.FC<AboutProps> = () => {
               <IonMenuButton></IonMenuButton>
             </IonButtons>
             <IonButtons slot="end">
-              <IonButton onClick={presentPopover}>
+              <IonButton aria-label="More options" onClick={presentPopover}>
                 <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
               </IonButton>
             </IonButtons>

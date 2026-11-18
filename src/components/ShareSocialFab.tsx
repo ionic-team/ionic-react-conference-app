@@ -16,25 +16,25 @@ const ShareSocialFab: React.FC = () => {
       <IonLoading
         isOpen={showLoading}
         message={loadingMessage}
-        duration={2000}
+        duration={1000}
         spinner="crescent"
         onDidDismiss={() => setShowLoading(false)}
       />
       <IonFab slot="fixed" vertical="bottom" horizontal="end">
-        <IonFabButton>
+        <IonFabButton aria-label="Share">
           <IonIcon icon={shareSocial} />
         </IonFabButton>
         <IonFabList side="top">
-          <IonFabButton color="vimeo" onClick={() => openSocial('Vimeo')}>
+          <IonFabButton color="vimeo" aria-label="Vimeo" onClick={() => openSocial('Vimeo')}>
             <IonIcon icon={logoVimeo} />
           </IonFabButton>
-          <IonFabButton color="instagram" onClick={() => openSocial('Instagram')}>
+          <IonFabButton color="instagram" aria-label="Instagram" onClick={() => openSocial('Instagram')}>
             <IonIcon icon={logoInstagram} />
           </IonFabButton>
-          <IonFabButton color="twitter" onClick={() => openSocial('Twitter')}>
+          <IonFabButton color="twitter" aria-label="Twitter" onClick={() => openSocial('Twitter')}>
             <IonIcon icon={logoTwitter} />
           </IonFabButton>
-          <IonFabButton color="facebook" onClick={() => openSocial('Facebook')}>
+          <IonFabButton color="facebook" aria-label="Facebook" onClick={() => openSocial('Facebook')}>
             <IonIcon icon={logoFacebook} />
           </IonFabButton>
         </IonFabList>
