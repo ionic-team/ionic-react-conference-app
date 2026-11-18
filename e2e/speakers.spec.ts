@@ -146,4 +146,18 @@ test.describe('Speakers', () => {
 
     await expect(sheet).toBeHidden();
   });
+
+  test('Copy Link in the speaker share sheet copies the speaker Twitter link', async ({ context, page }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await openBurtBear(page);
+
+    await speakerDetail(page).getByRole('button', { name: 'Share', exact: true }).click();
+    const sheet = page.getByRole('dialog', { name: 'Share Burt Bear' });
+    await sheet.getByRole('button', { name: 'Copy Link' }).click();
+
+    await expect(sheet).toBeHidden();
+    await expect
+      .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+      .toBe('https://twitter.com/ionicframework');
+  });
 });
