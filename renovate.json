@@ -62,6 +62,11 @@
       "groupName": "dev-tools"
     },
     {
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<6.0.0",
+      "description": "Stay on TypeScript 5.x. typescript-eslint doesn't support TypeScript 7 yet."
+    },
+    {
       "description": "Automerge minor and patch updates once CI passes. Majors and 0.x packages, where a minor can break, still need review.",
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
