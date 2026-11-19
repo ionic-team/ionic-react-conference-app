@@ -62,7 +62,8 @@ describe('SchedulePage', () => {
     });
 
     expect(sessionNames(lists(container).favorites)).toEqual(['Ionic Tooling', "What's New in React"]);
-    expect(lists(container).favorites).toHaveStyle({ display: 'none' });
+    // jsdom returns an empty computed display for ion-list, so check the inline style the page sets.
+    expect(lists(container).favorites.style.display).toBe('none');
   });
 
   it('shows an empty state when no session matches', () => {
